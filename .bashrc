@@ -1,0 +1,180 @@
+#!/bin/bash
+
+# Path
+export PATH="~/admb/bin:$PATH"  # admb
+export PATH="~/bin:$PATH"       # ~/bin
+export PATH="/opt/bin:$PATH"    # /opt/bin
+export PATH=".:$PATH"           # current dir
+
+# Shell
+export LS_COLORS='no=0:fi=0:di=34:ln=37:pi=37:so=37:do=37:bd=37:cd=37:or=37:ex=31'
+export LS_OPTIONS='-F'
+if ls --color=auto                              &>/dev/null; then export LS_OPTIONS="$LS_OPTIONS --color=auto"; fi
+if ls --dereference-command-line-symlink-to-dir &>/dev/null; then export LS_OPTIONS="$LS_OPTIONS --dereference-command-line-symlink-to-dir"; fi
+if ls --group-directories-first                 &>/dev/null; then export LS_OPTIONS="$LS_OPTIONS --group-directories-first"; fi
+if ls --show-control-chars                      &>/dev/null; then export LS_OPTIONS="$LS_OPTIONS --show-control-chars"; fi
+if ls --time-style=+%e\ %b\ %Y\ %k:%M           &>/dev/null; then export LS_OPTIONS="$LS_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M"; fi
+export PROMPT_COMMAND='echo -ne "\e];/`if [[ $PWD == $HOME ]];then echo "~";else basename $PWD;fi`\a"'
+export PS1='\[\e[1;47;37m\]\h\[\e[0m\]\w $ '
+export SHELL=/bin/bash
+
+# Locale
+export LANG=is_IS.UTF-8
+export NLS_LANG=icelandic_america.AL32UTF8  # Oracle UTF-8 output
+export LC_NUMERIC=en_US.UTF-8
+
+# Program: admb
+export ADMB_HOME=~/admb
+
+# Program: emacs
+if [[ -d /opt/emacs/25.2 ]]; then export EDITOR='/opt/emacs/25.2/bin/emacs -nw --no-site-file'; else export EDITOR='/usr/bin/emacs -nw --no-site-file'; fi
+
+# Program: git
+export GIT_FORMAT="%Cred%h%Creset %ai %an - %Cblue %s"
+
+# Program: gmt
+export GMTHOME=/usr/share/GMT
+
+# Program: grep
+export GREP_COLORS='mt=46'
+
+# Program: desktop (gnome, kde, ...)
+export DESKTOP=~
+
+# Program: latex
+export TEXINPUTS='.//:~/latex/cls//:~/latex/sty//:'
+
+# Program: lpr
+export LPDEST=marsvin
+
+# Program: r
+export R_HISTFILE=~/r/.Rhistory
+export R_HISTSIZE=5000
+if [[ -z $R_LIBS_SITE ]]; then export R_LIBS_SITE=~/r/site; fi
+export R_LIBS_USER=~/r/library
+export R_MAKEVARS_USER=~/r/Makevars
+export TMPDIR=/tmp
+# export TZ=UTC
+
+# Alias
+alias ..='cd ..'
+alias a='alpine'
+alias add='git add'
+alias 'admb-ide'='~/bin/emacs -Q -mm -l ~/core/verk/admb/ide/dot/.emacs -f admb-mode'
+alias benchmark='time'
+alias bin='chmod 700 ~/bin/*'
+alias branch='git branch'
+alias 'byte-compile'='emacs -batch -f batch-byte-compile *.el'
+alias capslock='echo press both Shift keys'
+alias cd..='cd ..'
+alias ch755dir='find -type d -exec chmod 755 {} \;'
+alias ci='git commit -a'
+alias clean="Rscript --vanilla -e 'icesTAF::clean()'"
+alias clone='git clone'
+alias co='git checkout'
+alias commit='git commit'
+alias commits='git-commits'
+alias cote='~/var/cote'
+alias cp='cp --preserve=timestamps'
+alias cpuspeed='cat /proc/cpuinfo | grep --color=never MHz'
+alias cpuwatch='watch -n 0.5 -t "cat /proc/cpuinfo | grep MHz"'
+alias d2u='dos2unix'
+alias di='git diff'
+alias diff='colordiff'
+alias dir='ll'
+alias 'dropbox-rsync'='rsync -a --del ~/Dropbox/ArniColin/taf/stocks/ftp/ ~/Dropbox/Public/ftp/'
+alias e='emacs'
+alias eman='emacs -nw -f man'
+alias eR='emacs -e "Rni"'
+alias f='firefox'
+alias file644='find -type f -exec chmod 644 {} \;'
+alias 'find?'='echo "find -name '\''*.R'\'' -exec wc -L {} \;"'
+alias foxit='/opt/foxit/1.1/FoxitReader'
+alias g='gwenview'
+alias 'git-commits'='git log origin/master..master'
+alias 'git-files'='git show --abbrev-commit --format=oneline --name-only'
+alias 'git-files-full'='git show --format="$GIT_FORMAT" --name-only'
+alias 'git-unset-sshaskpass'='unset SSH_ASKPASS'
+alias 'git-url'=url
+alias gr='grep -Iinrs'
+alias grep='grep --color=auto'
+alias htmltidytree='find -iname "*\.html" -printf "\n\n\n*** %h/%f\n" -exec tidy -e -utf8 {} \;'
+alias htmltidytreeq='find -iname "*\.html" -printf "*** %h/%f\n" -exec tidy -e -utf8 -q {} \;'
+alias iconvert='convert'
+alias ifind='find -iname'
+alias 'ip-address'='dig +short myip.opendns.com @resolver1.opendns.com'
+alias J='ssh -X hafstokkur'
+alias j='ssh hafdruna'
+alias l="ls -x $LS_OPTIONS"
+alias 'l.'="ls -dx $LS_OPTIONS .*"
+alias la="ls -Ax $LS_OPTIONS"
+alias latin='export LANG=en_US.ISO8859-1'
+alias ll="ls -l $LS_OPTIONS"
+alias ll.="ls -dl $LS_OPTIONS .*"
+alias lla="ls -Al $LS_OPTIONS"
+alias lld='ls -dl --time-style=+%e\ %b\ %Y\ %k:%M */ | sed "s/\///g"'
+alias llh="ls -lh $LS_OPTIONS"
+alias llk="ls -l --block-size=K $LS_OPTIONS"
+alias lll='ll'
+alias llm="ls -l --block-size=M $LS_OPTIONS"
+alias llr="ls -lR $LS_OPTIONS"
+alias llra="ls -AlR $LS_OPTIONS"
+alias lls="ls -l $LS_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M:%S"
+alias llt='ll --time-style="+%Y-%m-%d %H:%M:%S"'
+alias log='git log --abbrev-commit --format=oneline'
+alias 'log-full'='git log --format="$GIT_FORMAT"'
+alias longlines="export PS1='\n\[\e[1;47;37m\]\h\[\e[0m\]\w\n$ '"
+alias lpbw1='lpr -P marsvin -o sides=one-sided'
+alias lpbw2='lpr -P marsvin -o sides=two-sided-long-edge'
+alias lpcol1='lpr -P marblettur -o sides=one-sided'
+alias lpcol2='lpr -P marblettur -o sides=two-sided-long-edge'
+alias lr="ls -FHRx $LS_OPTIONS"
+alias lra="ls -AFHRx $LS_OPTIONS"
+alias lt='tree -ACF --dirsfirst'
+alias lta='tree -AaCF --dirsfirst'
+alias md='mkdir -p'
+alias mp3info='id3info'
+alias nw='emacs -nw'
+alias optipng='optipng -strip all'
+alias push='git push'
+alias R='R --quiet --save'
+alias rd='rmdir'
+alias rm0='find -maxdepth 1 -size 0 -delete'
+alias roxy='Roxy'
+alias rstudio='/opt/rstudio/bin/rstudio&'
+alias Run='Rscript --vanilla'
+alias s='sudo yum update'
+alias scp='scp -p'
+alias shortlines="export PS1='\[\e[1;47;37m\]\h\[\e[0m\]\w $ '"
+alias show='git show -s --abbrev-commit --format=oneline'
+alias 'show-full'='git show -s --format="$GIT_FORMAT"'
+alias sqlitestudio='/opt/sqlitestudio/sqlitestudio'
+alias stk='cd /opt/stk/0.9.2; run_game.sh'
+alias svnADMB='echo "svn co svn+ssh://admb-project.org/trunk admb-trunk"'
+alias t='emacs *.tex'
+alias taf="Rscript --vanilla -e 'icesTAF::sourceAtoZ()'"
+alias tag='git tag'
+alias tmb='~/bin/emacs -Q -mm --eval "(setq initial-scratch-message nil)" --eval "(add-to-list '\''load-path \"~/emacs/lisp/ess/lisp\")" -l ~/emacs/lisp/tmb/tmb.el -f tmb-mode'
+alias 'tmb-ide'='~/bin/emacs -Q -mm -l ~/core/verk/tmb/ide/dot/.emacs -f tmb-mode'
+alias topme='top -u $USER'
+alias u='cd ..'
+alias u2d='unix2dos'
+alias utf='export LANG=en_US.UTF-8'
+alias uu='cd ../..'
+alias v='sudo vpnc haf'
+alias vstudio='/opt/vstudio/bin/code'
+alias wgets='wget --no-check-certificate'
+alias win7='sudo ntfs-3g /dev/sda2 /media/c'
+alias x='exit'
+
+# Keybindings (only in interactive shell, to avoid login warnings)
+if [[ $- =~ i ]]; then
+    bind '"\C- ":dabbrev-expand'
+    bind '"\e ":call-last-kbd-macro'
+    bind '"\ei":overwrite-mode'
+fi
+
+################################################################################
+## Temporary stuff
+alias ices='google-chrome https://community.ices.dk/TrainingCourses/tcmdfsa/SitePages/HomePage.aspx'
+alias ref='psa | grep -v grep | grep "ref7[^ ]*" | sed 's/.*ref/ref/' | sort | grep "[^ ]*txt"'

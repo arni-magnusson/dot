@@ -1,0 +1,13 @@
+[user]
+	name = Arni Magnusson
+	email = arnima@hafro.is
+[push]
+	default = simple
+[credential]
+	helper = cache --timeout=3600
+[gui]
+	editor = emacs -Q
+[diff]
+	tool = kompare
+[color]
+	ui = auto

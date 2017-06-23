@@ -1,0 +1,14 @@
+# 8-bit readline support
+# Comments after commands are not allowed, so:
+# convert-meta off lets á produce \341 instead of nothing
+set convert-meta off
+# output-meta on lets á produce á, if convert-meta is off
+set output-meta on
+# input-meta on is the same variable as meta-flag, not sure what it does
+set input-meta on
+
+# Suggest completions when tab is pressed once
+set show-all-if-ambiguous on
+
+# Don't wrap long lines
+set horizontal-scroll-mode on
