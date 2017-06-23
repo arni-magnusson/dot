@@ -46,6 +46,7 @@
 (setq scroll-error-top-bottom t                ) ; pgup and pgdn all the way
 (setq user-full-name "Arni Magnusson"          ) ; change-log-mode
 (setq select-enable-clipboard t                ) ; linux clipboard
+(setq vc-follow-symlinks t                     ) ; open symlinks to git files without warning
 (setq-default buffer-file-coding-system 'utf-8 ) ; utf8 instead of latin1
 (setq-default fill-column 80                   ) ; text width
 (setq-default indent-tabs-mode nil             ) ; no tab characters
