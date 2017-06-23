@@ -1,0 +1,2 @@
+CXX=g++
+CXXFLAGS=-fno-gnu-unique -O0 -Wall
