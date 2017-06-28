@@ -154,6 +154,7 @@ alias svnADMB='echo "svn co svn+ssh://admb-project.org/trunk admb-trunk"'
 alias t='emacs *.tex'
 alias taf="Rscript --vanilla -e 'icesTAF::sourceAtoZ()'"
 alias tag='git tag'
+alias 'tag-full'='git show -s --format="%d $GIT_FORMAT" `git tag`'
 alias tmb='~/bin/emacs -Q -mm --eval "(setq initial-scratch-message nil)" --eval "(add-to-list '\''load-path \"~/emacs/lisp/ess/lisp\")" -l ~/emacs/lisp/tmb/tmb.el -f tmb-mode'
 alias 'tmb-ide'='~/bin/emacs -Q -mm -l ~/core/verk/tmb/ide/dot/.emacs -f tmb-mode'
 alias topme='top -u $USER'
