@@ -4324,6 +4324,3 @@ break\n"))
 (put 'scroll-left      'disabled nil)
 (put 'set-goal-column  'disabled nil)
 (put 'upcase-region    'disabled nil)
-
-(defun del40 () "Delete next 40 characters." (interactive)(delete-char 40)(forward-line)(forward-char 79))
-(global-set-key [M-return] 'del40)
