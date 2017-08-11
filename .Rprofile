@@ -129,6 +129,7 @@
   autoload("long2taf",    "icesTAF") # long -> TAF
   autoload("make",        "icesTAF") # run script if needed
   autoload("mkdir",       "icesTAF") # create directory
+  autoload("msg",         "icesTAF") # show message
   autoload("read.dls",    "icesTAF") # read DLS output
   autoload("read.taf",    "icesTAF") # read TAF table
   autoload("sourceAtoZ",  "icesTAF") # run all scripts
