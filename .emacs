@@ -2611,8 +2611,9 @@ This is first.\n
   (local-set-key [f11]         'R-outline                                        )
   (local-set-key [S-f11]       'hs-minor-mode                                    )
   (local-set-key [f12]         'R-template-roxygen                               )
-  (local-set-key [S-f12]       'R-template-plain                                 )
+  (local-set-key [S-f12]       'R-template-general                               )
   (local-set-key [C-f12]       'R-header-to-roxy                                 )
+  (local-set-key [M-f12]       'R-template-minimal                               )
   (local-set-key [?\C-c C-backspace] 'ess-graphics-off                           )
   (local-set-key [M-return]    'ess-eval-region-or-function-or-paragraph-and-step)
   (local-set-key [?\C-c up]    'ess-eval-buffer-from-beg-to-here                 )
@@ -2699,7 +2700,7 @@ This is first.\n
          (goto-char (point-min))(while (re-search-forward "Returns: " nil t)(replace-match "@return\n#'"))
          (goto-char (point-min))(kill-new (buffer-substring-no-properties (point-min)(line-beginning-position 3)))
          (yank)(goto-char (+ (point-min) 3))(titlecase-dwim))
-  (defun R-template-plain () "Insert plain R template." (interactive "*")
+  (defun R-template-general () "Insert general R template." (interactive "*")
          (goto-char (point-min))(if (search-forward "{" nil t)(progn (beginning-of-line)(backward-char))
                                   (progn (insert "temp <- function()\n{\n\n}\n")(backward-char 6)))(insert "
 ################################################################################
@@ -2733,6 +2734,11 @@ This is first.\n
 #'
 #' @export\n
 ")(goto-char (point-min))(delete-char 1)(forward-char 3))
+  (defun R-template-minimal () "Insert minimal R template." (interactive "*")
+         (insert " <- function()
+{\n
+}
+")(forward-line -4))
   (defun R-outline () "Navigate within R code using `outline-mode'." (interactive)
          (outline-mode)(setq outline-regexp " *## [0-9]")(outline-mode)(outline-hide-body)
          (setq outline-previous-mode '(R-mode))))
