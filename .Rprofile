@@ -221,9 +221,6 @@
   autoload("freq2d",   "r2d2") # bivariate frequency
   autoload("shrink2d", "r2d2") # bivariate confset
 
-  ## Curl
-  autoload("getURL", "RCurl") # read webpage/file as string
-
   ## Reshape
   autoload("melt", "reshape") # unxtab
 
