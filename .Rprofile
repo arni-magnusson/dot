@@ -25,7 +25,7 @@
   }
   else
   {
-    options(browser="firefox") # quit gracefully
+    options(browser="google-chrome")
     options(editor="'/opt/emacs/25.2/bin/emacs --no-site-file'")
     options(width=100)
   }
@@ -138,6 +138,7 @@
   autoload("taf2xtab",    "icesTAF") # TAF -> crosstab
   autoload("tt",          "icesTAF") # transpose
   autoload("unix2dos",    "icesTAF") # convert line endings
+  autoload("upload",      "icesTAF") # upload file to server
   autoload("write.dls",   "icesTAF") # write DLS output
   autoload("write.taf",   "icesTAF") # write TAF table
   autoload("xtab2taf",    "icesTAF") # crosstab -> TAF
