@@ -162,6 +162,7 @@
 ;; User packages
 (autoload 'admb-mode         "admb"              "Edit ADMB code."          t)
 (autoload 'cmake-mode        "cmake-mode"        "Edit CMake code."         t)
+(autoload 'csharp-mode       "csharp-mode"       "Edit C# code."            t)
 (autoload 'csv-mode          "csv-mode"          "View CSV (align, sort)."  t)
 (autoload 'csv-nav-mode      "csv-nav"           "View CSV (other window)." t)
 (autoload 'doxymacs-mode     "doxymacs"          "Doxygen minor mode."      t)
@@ -199,6 +200,7 @@
         ("\\.c$"      . c-mode           )("\\.lex$" . c-mode)
         ("\\.cc$"     . c++-mode         )("\\.cpp$" . c++-mode)("\\.cxx$" . c++-mode)("\\.h$" . c++-mode)
         ("\\.hpp$"    . c++-mode         )("\\.htp$" . c++-mode)
+        ("\\.cs$"     . csharp-mode      )
         ("\\.el$"     . emacs-lisp-mode  )("\\.el.gz$" . emacs-lisp-mode)
         ("\\.f90$"    . f90-mode         )("\\.f95$" . f90-mode)
         ("\\.f$"      . fortran-mode     )("\\.for$" . fortran-mode)
@@ -1388,8 +1390,13 @@ if [[ \"$1\" == \"--help\" ]]; then help; exit; fi
 \nwhile getopts \"p:\" A; do\n  case $A in\n    p) arg1=$OPTARG;;\n  esac\ndone\nshift $((OPTIND-1))\n\n") ; keep spaces
          (goto-char (point-min))(search-forward ":   ")(overwrite-mode t)))
 (add-hook 'sh-mode-hook 'arni-sh-hook)
+;;---------
+;; 6.5  C#
+;;---------
+(defun arni-csharp-hook ()(setq c-basic-offset 2))
+(add-hook 'csharp-mode-hook 'arni-csharp-hook)
 ;;----------
-;; 6.5  C++
+;; 6.6  C++
 ;;----------
 (defun arni-c-hook ()
   (setq make-backup-files t)(abbrev-mode 0) ; (setq-default c-electric-flag nil)
@@ -1744,7 +1751,7 @@ clean:
 (add-hook 'doxymacs-mode-hook 'arni-doxymacs-hook)
 (defalias 'flex-mode 'c-mode)
 ;;----------
-;; 6.6  Dos
+;; 6.7  Dos
 ;;----------
 (defun arni-bat-hook ()
   (setq make-backup-files t)(setq indent-line-function 'indent-relative-definitely)(arni-colors)
@@ -1800,7 +1807,7 @@ echo.\n
 :EOF\n")(goto-char (point-min))(search-forward ":   ")(overwrite-mode t)))
 (add-hook 'bat-mode-hook 'arni-bat-hook)
 ;;--------------
-;; 6.7  Fortran
+;; 6.8  Fortran
 ;;--------------
 (defun arni-fortran-hook ()
   (arni-colors)
@@ -1823,7 +1830,7 @@ echo.\n
 (add-hook 'fortran-mode-hook 'arni-fortran-hook)
 (add-hook 'f90-mode-hook 'arni-fortran-hook)
 ;;-----------
-;; 6.8  HTML
+;; 6.9  HTML
 ;;-----------
 (defvar html-links nil "Non-nil if links are currently hilighted. See `html-toggle-links'.")
 (defun arni-html-hook ()
@@ -2016,14 +2023,14 @@ echo.\n
   (set-face-attribute 'font-lock-function-name-face nil :foreground (fg 'font-lock-keyword-face) :weight -)) ; <xml>
 (add-hook 'sgml-mode-hook 'arni-sgml-hook)
 ;;-----------
-;; 6.9  Inno
+;; 6.10 Inno
 ;;-----------
 (defun arni-iss-hook ()
   (setq iss-compiler-path "c:/gnu/inno/")
   (local-set-key [?\C-c ?\C-c] 'iss-compile))
 (add-hook 'iss-mode-hook 'arni-iss-hook)
 ;;-----------
-;; 6.10 Java
+;; 6.11 Java
 ;;-----------
 (defun arni-java-hook ()
   (setq c-basic-offset 2)
@@ -2038,12 +2045,12 @@ echo.\n
            (if (one-window-p)(split-window-right))(shell-command (concat "java " java-class)))))
 (add-hook 'java-mode-hook 'arni-java-hook)
 ;;-----------------
-;; 6.11 JavaScript
+;; 6.12 JavaScript
 ;;-----------------
 (defun arni-js-hook ()(setq js-indent-level 2))
 (add-hook 'js-mode-hook 'arni-js-hook)
 ;;------------
-;; 6.12 LaTeX
+;; 6.13 LaTeX
 ;;------------
 ;; Case-sensitive hooks, so use LaTeX everywhere
 (defvar LaTeX-icelandic-quotes nil
@@ -2399,7 +2406,7 @@ This is first.\n
          (compile (concat "texi2dvi -c -p -t @finalout " (buffer-name)))))
 (add-hook 'texinfo-mode-hook 'arni-texinfo-hook)
 ;;-----------
-;; 6.13 Lisp
+;; 6.14 Lisp
 ;;-----------
 (defun arni-lisp-hook ()
   (setq make-backup-files t)(setq comment-column 0)(arni-colors)
@@ -2438,7 +2445,7 @@ This is first.\n
 (add-hook 'lisp-mode-hook             'arni-lisp-hook)
 (add-hook 'lisp-interaction-mode-hook 'arni-lisp-hook)
 ;;-----------------
-;; 6.14 Postscript
+;; 6.15 Postscript
 ;;-----------------
 (defun arni-ps-hook ()
   (message nil)
@@ -2488,7 +2495,7 @@ This is first.\n
          (shell-command (concat "ghostview \"" (buffer-name) "\"&"))(delete-other-windows)))
 (add-hook 'ps-mode-hook 'arni-ps-hook) ; see also doc-view-mode-hook
 ;;--------
-;; 6.15 R
+;; 6.16 R
 ;;--------
 ;; Hook                    When  *R*  R-mode  Rd-mode  Notes
 ;; ess-mode-load-hook      load   x   x       x        workaround
@@ -2778,7 +2785,7 @@ This is first.\n
 (add-hook 'ess-roxy-mode-hook 'arni-roxy-hook)
 (defun Rni () "Start interactive R session." (interactive)(R)(sleep-for 0.01)(comint-clear-window))
 ;;----------
-;; 6.16 SQL
+;; 6.17 SQL
 ;;----------
 (defun arni-sql-hook ()
   (setq make-backup-files t)(sql-set-product 'oracle)(setq indent-line-function 'indent-relative-definitely)
@@ -2798,7 +2805,7 @@ This is first.\n
                       "SET EMBED ON FEEDBACK OFF PAGESIZE 50000 PAUSE OFF SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (comint-clear-window))
 ;;----------
-;; 6.17 TMB
+;; 6.18 TMB
 ;;----------
 (require 'tmb)
 (defun arni-tmb-hook ()
@@ -2826,7 +2833,7 @@ This is first.\n
   (local-set-key [?\C-c ?\C-v]       'tmb-run            ))
 (add-hook 'tmb-mode-hook 'arni-tmb-hook)
 ;;---------
-;; 6.18 VB
+;; 6.19 VB
 ;;---------
 (defun arni-visual-basic-hook ()
   (abbrev-mode 0)(setq save-abbrevs nil)(setq visual-basic-mode-indent 2)(arni-colors))
@@ -3910,7 +3917,7 @@ break\n"))
 ;; 7.25 Org
 ;;----------
 (defun arni-org-hook ()
-  (setq make-backup-files t)(font-lock-mode 1)(show-all)
+  (setq make-backup-files t)(font-lock-mode 1)(outline-show-all)
   (setq fill-column 72)(setq org-cycle-global-at-bob t)(setq comment-start ": ")
   (org-remove-from-invisibility-spec '(org-link))(setq org-descriptive-links nil) ; [[.]] from `org-toggle-link-display'
   (setq org-export-with-section-numbers 2) ; enumerate heading level 1 and 2
@@ -4008,7 +4015,7 @@ break\n"))
     (local-set-key [?\C-c ?\C-d]       'org-toc-3             ) ; org-deadline
     (local-set-key [?\C-c ?\C-e]       'org-copy-visible      ) ; org-export-dispatch
     (local-set-key [?\C-c ?\C-f]       'org-toc-4             ) ; org-forward-heading-same-level
-    (local-set-key [?\C-c ?\C-l]       'show-all              ) ; org-insert-link
+    (local-set-key [?\C-c ?\C-l]       'outline-show-all      ) ; org-insert-link
     (local-set-key [?\C-c ?\C-r]       'org-insert-R-block    ) ; org-reveal
     (local-set-key [?\C-c ?\C-s]       'org-toc-2             ) ; org-schedule
     (local-set-key [?\C-c ?\C-t]       'org-ascii-write       ) ; org-todo
@@ -4042,7 +4049,8 @@ break\n"))
          (fill-paragraph-forward 1)(forward-line))
   (defun org-mouse-cycle (event) "Position cursor and cycle visibility." (interactive "e")
          (mouse-set-point event)(org-cycle))
-  (defun org-mouse-show (event) "Position cursor and show all." (interactive "e")(mouse-set-point event)(show-all))
+  (defun org-mouse-show (event) "Position cursor and show all." (interactive "e")
+         (mouse-set-point event)(outline-show-all))
   (defun org-return-down () "Insert empty line and move down." (interactive "*")
          (beginning-of-line)(insert "\n")(forward-line))
   (defun org-template () "Insert minimal Org template." (interactive "*")
@@ -4083,7 +4091,7 @@ break\n"))
   (local-set-key [f11]             'outline-return             )
   (local-set-key [?\t]             'outline-toggle-children    )
   (local-set-key [backtab]         'outline-toggle-children    )
-  (local-set-key [C-tab]           'show-all                   )
+  (local-set-key [C-tab]           'outline-show-all           )
   (local-set-key [C-S-tab]         'hide-sublevels             )
   (local-set-key [C-S-iso-lefttab] 'hide-sublevels             ) ; linux C-S-tab
   (local-set-key [?\C-m]           'outline-return             ) ; return
