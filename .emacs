@@ -541,6 +541,8 @@
 (global-set-key [?\C-x ?.]     'forward-word                      ) ; set-fill-prefix
 (global-set-key [?\C-x ?/]     'mark-paragraph                    )
 (global-set-key [?\C-x ?J]     'region-backward-paragraph         )
+(global-set-key [?\C-x ?N]     'new-buffer                        )
+(global-set-key [?\C-x ?T]     'titlecase-dwim                    )
 (global-set-key [?\C-x ?c]     'count-words                       )
 (global-set-key [?\C-x ?f]     'find-file-literally               ) ; set-fill-column
 (global-set-key [?\C-x ?g]     'region-to-line                    )
@@ -551,7 +553,6 @@
 (global-set-key [?\C-x ?m]     'mark-function                     ) ; compose-mail
 (global-set-key [?\C-x ?n]     'narrow-to-defun-or-region         ) ; [map]
 (global-set-key [?\C-x ?p]     'list-packages                     )
-(global-set-key [?\C-x ?T]     'titlecase-dwim                    )
 (global-set-key [?\C-x ?t]     'transpose-words                   )
 (global-set-key [?\C-x ?u]     'google-decode-url                 ) ; undo
 (global-set-key [?\C-x ?w]     'widen                             )
@@ -1370,25 +1371,26 @@ shopt -s expand_aliases
 alias help='echo \"Usage: \"'
 if [[ \"$1\" == \"\" ]]; then help; exit; fi
 if [[ \"$1\" == \"--help\" ]]; then help; exit; fi
-########################################################################################################################
-###                                                                                                                    #
-### Script:                                                                                                            #
-###                                                                                                                    #
-### Purpose:                                                                                                           #
-###                                                                                                                    #
-### Args:                                                                                                              #
-###                                                                                                                    #
-### Notes:                                                                                                             #
-###                                                                                                                    #
-### Warning:                                                                                                           #
-###                                                                                                                    #
-### Requires:                                                                                                          #
-###                                                                                                                    #
-### Returns:                                                                                                           #
-###                                                                                                                    #
-########################################################################################################################
-\nwhile getopts \"p:\" A; do\n  case $A in\n    p) arg1=$OPTARG;;\n  esac\ndone\nshift $((OPTIND-1))\n\n") ; keep spaces
-         (goto-char (point-min))(search-forward ":   ")(overwrite-mode t)))
+################################################################################
+###                                                                            #
+### Script:                                                                    #
+###                                                                            #
+### Purpose:                                                                   #
+###                                                                            #
+### Args:                                                                      #
+###                                                                            #
+### Notes:                                                                     #
+###                                                                            #
+### Warning:                                                                   #
+###                                                                            #
+### Requires:                                                                  #
+###                                                                            #
+### Returns:                                                                   #
+###                                                                            #
+################################################################################
+\nwhile getopts \"p:\" A; do\n  case $A in\n    p) arg1=$OPTARG;;\n  esac\ndone
+shift $((OPTIND-1))\n
+")(goto-char (point-min))(search-forward ":   ")(overwrite-mode t)))
 (add-hook 'sh-mode-hook 'arni-sh-hook)
 ;;---------
 ;; 6.5  C#
@@ -1463,7 +1465,7 @@ if [[ \"$1\" == \"--help\" ]]; then help; exit; fi
          (gdb (concat "gdb --annotate=3 " (file-name-sans-extension (buffer-name)))))
   (defun cpp-template () "Insert C++ template." (interactive "*")
          (goto-char (point-min))(insert "\
-//======================================================================================================================
+//==============================================================================
 // Program:
 // Usage:
 // Purpose:
@@ -1471,18 +1473,18 @@ if [[ \"$1\" == \"--help\" ]]; then help; exit; fi
 // Warning:
 // Includes:  iostream
 // History:
-//======================================================================================================================
+//==============================================================================
 #include <iostream>
 using std::cout;
 using std::endl;\n
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Function: main
 // Purpose:
 // Args:     argc is the number of command line options + 1
-//           argv is a vector containing the program name and command line options
+//           argv is a vector containing the program name and cmd line options
 // Requires: iostream (cout, endl)
 // Returns:  0
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 int main(int argc, char** argv)
 {\n  cout << \"\" << endl;
 }
@@ -1719,7 +1721,8 @@ class.o: class.cpp
 \t$(COMP)\n
 .PHONY: clean
 clean:
-\trm prog class.o prog.o\n")(goto-char (point-min))))
+\trm prog class.o prog.o
+")(goto-char (point-min))))
 (add-hook 'makefile-mode-hook 'arni-makefile-hook)
 (defun doxymacs-mode-with-hook () "Start `doxymacs-mode' and run `doxymacs-mode-hook'." (interactive)
        (doxymacs-mode)(run-mode-hooks 'doxymacs-mode-hook)(redraw-display))
@@ -1777,23 +1780,23 @@ clean:
 setlocal
 if [%1]==[] goto HELP
 if [%1]==[--help] goto HELP
-REM ####################################################################################################################
-REM                                                                                                                    #
-REM Script:                                                                                                            #
-REM                                                                                                                    #
-REM Purpose:                                                                                                           #
-REM                                                                                                                    #
-REM Args:                                                                                                              #
-REM                                                                                                                    #
-REM Notes:                                                                                                             #
-REM                                                                                                                    #
-REM Warning:                                                                                                           #
-REM                                                                                                                    #
-REM Requires:                                                                                                          #
-REM                                                                                                                    #
-REM Returns:                                                                                                           #
-REM                                                                                                                    #
-REM ####################################################################################################################
+REM ############################################################################
+REM                                                                            #
+REM Script:                                                                    #
+REM                                                                            #
+REM Purpose:                                                                   #
+REM                                                                            #
+REM Args:                                                                      #
+REM                                                                            #
+REM Notes:                                                                     #
+REM                                                                            #
+REM Warning:                                                                   #
+REM                                                                            #
+REM Requires:                                                                  #
+REM                                                                            #
+REM Returns:                                                                   #
+REM                                                                            #
+REM ############################################################################
 \nrem Pop args until file=%1
 set par=default
 :STARTLOOP
@@ -1804,7 +1807,8 @@ goto STARTLOOP
 :HELP
 echo Usage:
 echo.\n
-:EOF\n")(goto-char (point-min))(search-forward ":   ")(overwrite-mode t)))
+:EOF
+")(goto-char (point-min))(search-forward ":   ")(overwrite-mode t)))
 (add-hook 'bat-mode-hook 'arni-bat-hook)
 ;;--------------
 ;; 6.8  Fortran
@@ -2190,14 +2194,14 @@ echo.\n
 \\title{}
 \\author{Arni Magnusson}
 \\maketitle\n\n\n
-\\end{document}\n")
-         (goto-char (point-min))(search-forward "title{"))
+\\end{document}
+")(goto-char (point-min))(search-forward "title{"))
   (defun LaTeX-template-mini () "Insert minimal LaTeX template." (interactive "*")
          (goto-char (point-min))(insert "\
 \\documentclass{article}
 \\begin{document}\n\n\n
-\\end{document}\n")
-         (goto-char (point-min))(search-forward "\n\n"))
+\\end{document}
+")(goto-char (point-min))(search-forward "\n\n"))
   (defun LaTeX-toggle-quotes () "Toggle Icelandic quotation marks." (interactive)
          (if LaTeX-icelandic-quotes (progn (setq TeX-open-quote "``")(setq TeX-close-quote "''"))
            (progn (setq TeX-open-quote "\\quotedblbase{}")(setq TeX-close-quote "``")))
@@ -2223,8 +2227,8 @@ echo.\n
 \\documentclass{article}
 \\begin{document}\n
 <<>>=\n2+2\n@\n
-\\end{document}\n")
-         (goto-char (point-min))(search-forward "\n\n")))
+\\end{document}
+")(goto-char (point-min))(search-forward "\n\n")))
 (add-hook 'LaTeX-mode-hook 'arni-LaTeX-hook)
 (defun arni-reftex-hook ()
   (define-key reftex-mode-map [?\C-c ?-] nil) ; reactivate highlight-changes-mode
@@ -3847,7 +3851,8 @@ A [link](http://example.com)\n
 * also bullet\n
 1. item\n
 line\\
-break\n"))
+break
+"))
   (defun markdown-tidy () "Validate HTML document with Tidy." (interactive)
          (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
            (if (one-window-p)(split-window))(get-buffer-create "*Shell Command Output*")
@@ -4074,6 +4079,7 @@ break\n"))
 ;;--------------
 ;; 7.26 Outline
 ;;--------------
+(if (<= emacs-major-version 24)(defun outline-show-all ()(interactive)(outline-flag-region (point-min)(point-max) nil)))
 (defvar outline-previous-mode '(text-mode) "Mode to return to. See `outline-return'.")
 (defvar outline-top-level 1 "Top outline level, to anchor the `outline-hide' cursor to the shortest `outline-regexp'.")
 (defun arni-outline-hook ()
