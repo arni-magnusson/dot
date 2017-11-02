@@ -31,6 +31,10 @@
     options(width=100)
   }
 
+  ## Area plot
+  autoload("areaplot",      "areaplot") # stacked areas
+  autoload("confplot",      "areaplot") # confidence bands
+
   ## MCMC diagnostics
   autoload("autocorr",      "coda") # autocorrelation
   autoload("autocorr.plot", "coda") # diagnostics: thinning
@@ -120,29 +124,42 @@
   autoload("showStock", "icesSD") # one stock, one year
 
   ## ICES Transparent Assessment Framework
-  autoload("catage.long", "icesTAF") # catage example
-  autoload("catage.taf",  "icesTAF") # catage example
-  autoload("catage.xtab", "icesTAF") # catage example
-  autoload("clean",       "icesTAF") # remove TAF directories
-  autoload("cp",          "icesTAF") # copy file
-  autoload("dos2unix",    "icesTAF") # convert line endings
-  autoload("flr2taf",     "icesTAF") # FLR -> TAF
-  autoload("long2taf",    "icesTAF") # long -> TAF
-  autoload("make",        "icesTAF") # run script if needed
-  autoload("mkdir",       "icesTAF") # create directory
-  autoload("msg",         "icesTAF") # show message
-  autoload("read.dls",    "icesTAF") # read DLS output
-  autoload("read.taf",    "icesTAF") # read TAF table
-  autoload("sourceAtoZ",  "icesTAF") # run all scripts
-  autoload("sourceTAF",   "icesTAF") # run script
-  autoload("taf2long",    "icesTAF") # TAF -> long
-  autoload("taf2xtab",    "icesTAF") # TAF -> crosstab
-  autoload("tt",          "icesTAF") # transpose
-  autoload("unix2dos",    "icesTAF") # convert line endings
-  autoload("upload",      "icesTAF") # upload file to server
-  autoload("write.dls",   "icesTAF") # write DLS output
-  autoload("write.taf",   "icesTAF") # write TAF table
-  autoload("xtab2taf",    "icesTAF") # crosstab -> TAF
+  autoload("catage.long",  "icesTAF") # catage example
+  autoload("catage.taf",   "icesTAF") # catage example
+  autoload("catage.xtab",  "icesTAF") # catage example
+  autoload("clean",        "icesTAF") # remove TAF directories
+  autoload("cp",           "icesTAF") # copy file
+  autoload("deps",         "icesTAF") # list dependencies
+  autoload("div",          "icesTAF") # divide column values
+  autoload("dos2unix",     "icesTAF") # convert line endings
+  autoload("download",     "icesTAF") # download binary file
+  autoload("flr2taf",      "icesTAF") # FLR -> TAF
+  autoload("lim",          "icesTAF") # compute axis limits
+  autoload("long2taf",     "icesTAF") # long -> TAF
+  autoload("make",         "icesTAF") # run script if needed
+  autoload("mkdir",        "icesTAF") # create directory
+  autoload("msg",          "icesTAF") # show message
+  autoload("read.dls",     "icesTAF") # read DLS output
+  autoload("read.taf",     "icesTAF") # read TAF table
+  autoload("rnd",          "icesTAF") # round column values
+  autoload("sourceAll",    "icesTAF") # run all scripts
+  autoload("sourceTAF",    "icesTAF") # run script
+  autoload("summary.taf",  "icesTAF") # summary example
+  autoload("taf.blue",     "icesTAF") # TAF colors
+  autoload("taf.dark",     "icesTAF") # TAF colors
+  autoload("taf.green",    "icesTAF") # TAF colors
+  autoload("taf.light",    "icesTAF") # TAF colors
+  autoload("taf.orange",   "icesTAF") # TAF colors
+  autoload("taf.skeleton", "icesTAF") # create TAF template
+  autoload("taf2long",     "icesTAF") # TAF -> long
+  autoload("taf2xtab",     "icesTAF") # TAF -> crosstab
+  autoload("tafpng",       "icesTAF") # open graphics device
+  autoload("tt",           "icesTAF") # transpose
+  autoload("unix2dos",     "icesTAF") # convert line endings
+  autoload("upload",       "icesTAF") # upload file to database
+  autoload("write.dls",    "icesTAF") # write DLS output
+  autoload("write.taf",    "icesTAF") # write TAF table
+  autoload("xtab2taf",     "icesTAF") # crosstab -> TAF
 
   ## ICES Vocab reference codes
   autoload("findAphia",       "icesVocab") # look up species code
@@ -276,14 +293,15 @@
   autoload("sdreport",   "TMB") # calculate standard errors
 
   ## Package development
-  autoload("compactPDF",           "tools") # compress PDF files
-  autoload("dependsOnPkgs",        "tools") # which local pkgs depend on X
-  autoload("file_ext",             "tools") # filename extension
-  autoload("file_path_sans_ext",   "tools") # filename prefix
-  autoload("package_dependencies", "tools") # which local pkgs X depends on
-  autoload("Rdindex",              "tools") # write index of functions
-  autoload("showNonASCII",         "tools") # special characters
-  autoload("write_PACKAGES",       "tools") # create repository
+  autoload("compactPDF",            "tools") # compress PDF files
+  autoload("dependsOnPkgs",         "tools") # which local pkgs depend on X
+  autoload("file_ext",              "tools") # filename extension
+  autoload("file_path_as_absolute", "tools") # full path
+  autoload("file_path_sans_ext",    "tools") # filename prefix
+  autoload("package_dependencies",  "tools") # which local pkgs X depends on
+  autoload("Rdindex",               "tools") # write index of functions
+  autoload("showNonASCII",          "tools") # special characters
+  autoload("write_PACKAGES",        "tools") # create repository
 
   ## Export table
   autoload("xtable", "xtable") # export table
