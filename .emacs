@@ -369,6 +369,7 @@
 ;;--------------
 (global-unset-key [f10]        ) ; menu-bar-open
 (global-unset-key [S-delete]   ) ; kill-region
+(global-unset-key [?\C-\\]     ) ; toggle-input-method
 (global-unset-key [?\C-x ?\C-z]) ; iconify-or-deiconify-frame
 ;;------------
 ;; 4.2  Mouse
