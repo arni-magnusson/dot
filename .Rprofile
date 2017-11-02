@@ -26,7 +26,8 @@
   else
   {
     options(browser="google-chrome")
-    options(editor="'/opt/emacs/25.2/bin/emacs --no-site-file'")
+    options(editor=paste0("'/opt/emacs/", Sys.getenv("EMACS_VERSION"),
+                          "/bin/emacs --no-site-file'"))
     options(width=100)
   }
 
