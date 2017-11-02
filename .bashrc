@@ -111,6 +111,7 @@ alias J='ssh -X hafstokkur'
 alias j='ssh hafdruna'
 alias l="ls -x $LS_OPTIONS"
 alias 'l.'="ls -dx $LS_OPTIONS .*"
+alias l1="ls -1 $LS_OPTIONS"
 alias la="ls -Ax $LS_OPTIONS"
 alias latin='export LANG=en_US.ISO8859-1'
 alias ll="ls -l $LS_OPTIONS"
@@ -127,7 +128,7 @@ alias lls="ls -l $LS_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M:%S"
 alias llt='ll --time-style="+%Y-%m-%d %H:%M:%S"'
 alias log='git log --abbrev-commit --format=oneline'
 alias 'log-full'='git log --format="$GIT_FORMAT"'
-alias longlines="export PS1='\n\[\e[1;47;37m\]\h\[\e[0m\]\w\n$ '"
+alias longlines="export PS1='$ '"
 alias lpbw1='lpr -P marsvin -o sides=one-sided'
 alias lpbw2='lpr -P marsvin -o sides=two-sided-long-edge'
 alias lpcol1='lpr -P marblettur -o sides=one-sided'
@@ -141,6 +142,7 @@ alias merge='git merge'
 alias mp3info='id3info'
 alias nw='emacs -nw'
 alias optipng='optipng -strip all'
+alias prtscr='gnome-screenshot -d 5'
 alias push='git push'
 alias R='R --quiet --save'
 alias rd='rmdir'
@@ -151,6 +153,7 @@ alias rstudio='/opt/rstudio/bin/rstudio&'
 alias Run='Rscript --vanilla'
 alias s='sudo yum update'
 alias scp='scp -p'
+alias 'sejda-console'='/opt/sejda/1.0/bin/sejda-console'
 alias shortlines="export PS1='\[\e[1;47;37m\]\h\[\e[0m\]\w $ '"
 alias show='git show -s --abbrev-commit --format=oneline'
 alias 'show-full'='git show -s --format="$GIT_FORMAT"'
