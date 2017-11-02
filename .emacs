@@ -424,6 +424,7 @@
 (global-set-key [C-S-f6]            'bs-cycle-previous           )
 (global-set-key [f7]                'record-macro                )
 (global-set-key [f8]                'kmacro-call-macro           )
+(global-set-key [f11]               'outline-mode                ) ; toggle-frame-fullscreen
 (global-set-key [?\C-x delete]      'blank-region                )
 (global-set-key [C-backspace]       'backward-delete-word        ) ; backward-kill-word
 (global-set-key [M-backspace]       'backward-delete-word        ) ; backward-kill-word
@@ -851,9 +852,11 @@ See also `highlight-and-count-regexp'."
        (if (use-region-p)(mouse-set-point event)(mouse-save-then-kill event)))
 (defalias 'occur-multi 'multi-occur)
 (defun pos-at-beginning-of-line (&optional n)
-  "Return the position at beginning of line N. See also `line-beginning-position'."
+  "Return the position at beginning of line N.\n
+See also `line-beginning-position'."
   (save-excursion (goto-char (point-min))(line-beginning-position n)))
-(defun pos-at-end-of-line (&optional n) "Return the position at end of line N. See also `line-end-position'."
+(defun pos-at-end-of-line (&optional n) "Return the position at end of line N.\n
+See also `line-end-position'."
        (save-excursion (goto-char (point-min))(line-end-position n)))
 (defun pull-line-down (&optional n) "Pull line down N lines." (let ((auto-fill-function nil))(drag-stuff-line-down n)))
 (defun pull-line-up (&optional n) "Pull line up N lines." (let ((auto-fill-function nil))(drag-stuff-line-up (- n))))
@@ -952,10 +955,11 @@ See also `highlight-and-count-regexp'."
        (deactivate-mark)(if (re-search-forward "[^\u0009-\u000a\u0020-\u007e]" nil t)
                             (message (concat "Non-ASCII char: " (string (char-before))))
                           (message "Only ASCII chars after this point")))
-(defun goto-special-char () "Go to next special character. See also `toggle-red-special'." (interactive)
-       (deactivate-mark)(if (re-search-forward "[^\u0009-\u000a\u0020-\u007e\u00a1-\u00ff]" nil t)
-                            (message (concat "Special char: " (string (char-before))))
-                          (message "Only normal chars after this point")))
+(defun goto-special-char () "Go to next special character.\n
+See also `toggle-red-special'."
+       (interactive)(deactivate-mark)(if (re-search-forward "[^\u0009-\u000a\u0020-\u007e\u00a1-\u00ff]" nil t)
+                                         (message (concat "Special char: " (string (char-before))))
+                                       (message "Only normal chars after this point")))
 (defun gray-background () "Set gray background." (interactive)(set-background-color "gray85"))
 (defalias 'highlight-current-line 'hl-line-mode)
 (defun max-colors () "Apply maximum colors, so every face can be distinguished." (interactive)
@@ -1282,16 +1286,17 @@ which doesn't compile."
        (switch-to-buffer "*ASCII*")(erase-buffer)(set-buffer-multibyte nil)
        (insert "ASCII characters up to number 255.\n")
        (dotimes (i 256)(insert (format "%4d | \\%03o | \\x%02x | %c\n" i i i i)))(goto-char (point-min)))
+(defalias 'current-encoding 'describe-current-coding-brief)
 (defun describe-current-coding-brief () "Show current coding system in minibuffer." (interactive)
        (message (prin1-to-string buffer-file-coding-system)))
 (defun describe-current-coding-full () "Describe current coding systems in detail." (interactive)
        (describe-current-coding-system)(with-current-buffer "*Help*" (setq show-trailing-whitespace nil)))
+(defalias 'display-colors 'list-colors-display)
+(defalias 'display-faces 'list-faces-display)
 (defun latin-1-table () "Show Latin-1 table as multibytes (0-127,unicode)." (interactive)
        (switch-to-buffer "*Latin-1*")(erase-buffer)(set-buffer-multibyte t)
        (insert "Latin-1 characters up to number 255.\n")
        (dotimes (i 256)(insert (format "%4d | \\%03o | \\x%02x | %c\n" i i i i)))(goto-char (point-min)))
-(defun list-colors-fullscreen () "List colors in full screen." (interactive)
-       (list-colors-display)(delete-other-windows (get-buffer-window "*Colors*"))(message nil))
 ;;======================================================================================================================
 ;;
 ;; 6  LANGUAGE MODES
@@ -1336,7 +1341,8 @@ which doesn't compile."
 ;; 6.4  Bash
 ;;-----------
 (defun arni-sh-hook ()
-  (setq make-backup-files t)(setq sh-basic-offset 2)(setq sh-indentation 2)(sh-set-shell "bash")(message nil)
+  (setq make-backup-files t)(setq sh-basic-offset 2)(setq sh-indentation 2)(setq sh-test '("[[  ]]" . 4))
+  (sh-set-shell "bash")(message nil)
   (if (string-match "dos" (prin1-to-string buffer-file-coding-system))
       (progn (set-buffer-file-coding-system 'utf-8-unix t)
              (message "Warning: file had Dos format, changed to Unix file format.")))
@@ -1354,7 +1360,8 @@ which doesn't compile."
   (local-set-key [?\C-m]       'sh-indent-newline-indent-or-delete-region) ; return
   (local-set-key [?\C-c ?\C-c] 'sh-eval-buffer                           ) ; sh-case
   (local-set-key [?\C-c ?\C-v] 'sh-eval-buffer                           )
-  (defun sh-eval-buffer () "Evaluate commands in buffer in inferior shell." (interactive)(sh-send-text (buffer-string)))
+  (defun sh-eval-buffer () "Evaluate commands in buffer in inferior shell.\n
+See also `sh-send-line-or-region-and-step'." (interactive)(sh-send-text (buffer-string)))
   (defun sh-indent-newline-indent () "Indent, insert newline, indent." (interactive "*")
          (insert " ")(indent-according-to-mode)(newline)(clean-trails)(message nil)
          (indent-according-to-mode)) ; handle 'case'
@@ -2606,7 +2613,8 @@ This is first.\n
   (setq make-backup-files t)(setq ess-eval-visibly-p nil)(ess-toggle-underscore nil)
   (setq ess-brace-offset -2)(setq ess-indent-offset 2)
   (add-to-list 'safe-local-variable-values '(ess-indent-offset . 4))
-  (set-face-attribute 'font-lock-constant-face nil :underline  -) ; <-, source, [1] output
+  (font-lock-add-keywords nil '(("tafpng(\"\\(\\w+\\)" (1 font-lock-builtin-face t))))
+  (set-face-attribute 'font-lock-constant-face nil :underline -) ; <-, source, [1] output
   (set-face-attribute 'font-lock-type-face     nil :foreground -) ; TRUE
   (local-unset-key [?\t]     ) ; reactivate indent-or-complete
   (local-unset-key [C-return]) ; reactivate recentf-open-files
@@ -3944,7 +3952,6 @@ break
     "Set keybindings for `org-mode'." (interactive)
     (local-unset-key [mouse-1]  ) ; forget outline-mode
     (local-unset-key [escape]   ) ; forget outline-mode
-    (local-unset-key [f11]      ) ; forget outline-mode
     (local-unset-key [tab]      ) ; forget outline-mode
     (local-unset-key [backtab]  ) ; unindent, rather than visibility
     (local-unset-key [S-tab]    ) ; unindent, rather than visibility
@@ -3996,6 +4003,7 @@ break
     (local-unset-key [?q]       ) ; forget outline-mode
     (local-set-key [M-mouse-1]         'org-mouse-show        )
     (local-set-key [M-mouse-3]         'org-mouse-cycle       )
+    (local-set-key [f11]               'org-cycle             )
     (local-set-key [f12]               'org-template          )
     (local-set-key [?\C-c C-backspace] 'org-html-delete       )
     (local-set-key [?\t]               'org-cycle             ) ; forget outline-mode
