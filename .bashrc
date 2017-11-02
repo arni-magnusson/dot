@@ -27,7 +27,8 @@ export LC_NUMERIC=en_US.UTF-8
 export ADMB_HOME=~/admb
 
 # Program: emacs
-if [[ -d /opt/emacs/25.2 ]]; then export EDITOR='/opt/emacs/25.2/bin/emacs -nw --no-site-file'; else export EDITOR='/usr/bin/emacs -nw --no-site-file'; fi
+export EMACS_VERSION=25.3
+if [[ -d /opt/emacs/$EMACS_VERSION ]]; then export EDITOR="/opt/emacs/$EMACS_VERSION/bin/emacs -nw --no-site-file"; else export EDITOR="/usr/bin/emacs -nw --no-site-file"; fi
 
 # Program: git
 export GIT_FORMAT="%Cred%h%Creset %ai %an - %Cblue %s"
