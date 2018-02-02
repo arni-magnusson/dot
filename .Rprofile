@@ -99,6 +99,8 @@
   autoload("DLS3.2",    "icesAdvice") # DLS method 3.2
   autoload("Fpa",       "icesAdvice") # Fpa from Flim
   autoload("icesRound", "icesAdvice") # rounding method
+  autoload("icod",      "icesAdvice") # retro example
+  autoload("mohn",      "icesAdvice") # retro bias
   autoload("sigmaCI",   "icesAdvice") # sigma from confint
   autoload("sigmaPA",   "icesAdvice") # sigma from refpts
 
@@ -136,14 +138,16 @@
   autoload("flr2taf",      "icesTAF") # FLR -> TAF
   autoload("lim",          "icesTAF") # compute axis limits
   autoload("long2taf",     "icesTAF") # long -> TAF
-  autoload("make",         "icesTAF") # run script if needed
+  autoload("make",         "icesTAF") # run R script if needed
+  autoload("makeTAF",      "icesTAF") # run TAF script if needed
+  autoload("makeAll",      "icesTAF") # run TAF scripts as needed
   autoload("mkdir",        "icesTAF") # create directory
   autoload("msg",          "icesTAF") # show message
   autoload("read.dls",     "icesTAF") # read DLS output
   autoload("read.taf",     "icesTAF") # read TAF table
   autoload("rnd",          "icesTAF") # round column values
-  autoload("sourceAll",    "icesTAF") # run all scripts
-  autoload("sourceTAF",    "icesTAF") # run script
+  autoload("sourceAll",    "icesTAF") # run all TAF scripts
+  autoload("sourceTAF",    "icesTAF") # run TAF script
   autoload("summary.taf",  "icesTAF") # summary example
   autoload("taf.blue",     "icesTAF") # TAF colors
   autoload("taf.dark",     "icesTAF") # TAF colors
