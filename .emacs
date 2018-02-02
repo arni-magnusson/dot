@@ -6,7 +6,7 @@
 (if menu-bar-mode (menu-bar-mode 0)) ; menu bar must be disabled in Windows before Emacs is maximized
 (if (string-match "windows" (prin1-to-string system-type))
     (load "~/.emacs-windows.el" nil t)(load "~/.emacs-linux.el" nil t))
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
 ;;======================================================================================================================
 ;;
 ;; 2  INTERFACE
@@ -15,24 +15,23 @@
 ;;-------------
 ;; 2.1  Visual
 ;;-------------
-(defun arni-window-setup-hook ()(frame-maximize)) ; linux max frame
-(add-hook 'window-setup-hook 'arni-window-setup-hook)
-(blink-cursor-mode 0                                ) ; no blinking
-(column-number-mode t                               ) ; coordinates
-(font-5                                             ) ; default font
-(set-scroll-bar-mode 'right                         ) ; linux scroll bar
-(setq frame-title-format "%b"                       ) ; window title
-(setq inhibit-startup-echo-area-message "arnima"    ) ; blank minibuffer
-(setq inhibit-startup-screen t                      ) ; blank buffer
-(setq initial-scratch-message nil                   ) ; blank buffer, really
-(setq-default show-trailing-whitespace t            ) ; show white trail
-(setq-default truncate-lines t                      ) ; long lines
-(show-paren-mode t                                  ) ; parentheses
-(tool-bar-mode 0                                    ) ; no toolbar
+;; (defun arni-window-setup-hook ()(frame-maximize)) ; linux max frame
+;; (add-hook 'window-setup-hook 'arni-window-setup-hook)
+(blink-cursor-mode 0                            ) ; no blinking
+(column-number-mode t                           ) ; coordinates
+(font-5                                         ) ; default font
+(set-scroll-bar-mode 'right                     ) ; linux scroll bar
+(setq frame-title-format "%b"                   ) ; window title
+(setq inhibit-startup-echo-area-message "arnima") ; blank minibuffer
+(setq inhibit-startup-screen t                  ) ; blank buffer
+(setq initial-scratch-message nil               ) ; blank buffer, really
+(setq-default show-trailing-whitespace t        ) ; show white trail
+(setq-default truncate-lines t                  ) ; long lines
+(show-paren-mode t                              ) ; parentheses
+(tool-bar-mode 0                                ) ; no toolbar
 ;;--------------
 ;; 2.2  Editing
 ;;--------------
-(auto-compression-mode t                       ) ; unzip on the fly
 (defalias 'yes-or-no-p 'y-or-n-p               ) ; ask y or n
 (delete-selection-mode 1                       ) ; replace selected text when typing
 (if (>= emacs-major-version 24)
@@ -83,10 +82,10 @@
         (set-face-attribute 'fringe                              nil :background -                       )
         (set-face-attribute 'isearch                             nil :background "yellow" :foreground -  )
         (set-face-attribute 'isearch-fail                        nil :background "red"                   )
-        (set-face-attribute 'isearch-lazy-highlight-face         nil :background "yellow"                )
+        (set-face-attribute 'lazy-highlight                      nil :background "yellow"                )
         (set-face-attribute 'minibuffer-prompt                   nil :foreground -                       )
-        (set-face-attribute 'show-paren-match-face               nil :background "green"                 )
-        (set-face-attribute 'show-paren-mismatch-face            nil :background "red"                   )
+        (set-face-attribute 'show-paren-match                    nil :background "green"                 )
+        (set-face-attribute 'show-paren-mismatch                 nil :background "red"                   )
         (set-face-attribute 'trailing-whitespace                 nil :background "cyan"                 ))
     (progn
       (set-face-attribute 'default                             nil :background "gray85"                )
@@ -107,10 +106,10 @@
       (set-face-attribute 'fringe                              nil :background -                       )
       (set-face-attribute 'isearch                             nil :background "gold" :foreground -    )
       (set-face-attribute 'isearch-fail                        nil :background "tomato"                )
-      (set-face-attribute 'isearch-lazy-highlight-face         nil :background "palegoldenrod"         )
+      (set-face-attribute 'lazy-highlight                      nil :background "palegoldenrod"         )
       (set-face-attribute 'minibuffer-prompt                   nil :foreground -                       ) ; M-x
-      (set-face-attribute 'show-paren-match-face               nil :background "chartreuse"            )
-      (set-face-attribute 'show-paren-mismatch-face            nil :background "red"                   )
+      (set-face-attribute 'show-paren-match                    nil :background "chartreuse"            )
+      (set-face-attribute 'show-paren-mismatch                 nil :background "red"                   )
       (set-face-attribute 'trailing-whitespace                 nil :background "gray95"             ))))
 (defun bg (face) "Return FACE background color." (face-attribute face :background))
 (defun fg (face) "Return FACE foreground color." (face-attribute face :foreground))
@@ -531,6 +530,8 @@
 (global-set-key [?\C-h ?V]     'apropos-variable                  )
 (global-set-key [?\C-h ?c]     'list-colors-fullscreen            ) ; describe-key-briefly
 (global-set-key [?\C-h ?l]     'apropos-library                   ) ; view-lossage
+(global-set-key [?\C-x ?4]     'enlarge-window-max                )
+(global-set-key [?\C-x ?$]     'insert-euro                       ) ; set-selective-display
 (global-set-key [?\C-x ?-]     'insert-en-dash                    ) ; shrink-window-if-larger-than-buffer
 (global-set-key [?\C-x ?=]     'duplicate                         ) ; what-cursor-position
 (global-set-key [?\C-x ?+]     'split-window-grid                 ) ; balance-windows
@@ -609,8 +610,6 @@
 (global-set-key [?\C-.]     'forward-word              )
 (global-set-key [?\C->]     'region-forward-word       )
 (global-set-key [67108927]  'count-everything          ) ; C-?
-(global-set-key [?\C-a]     'beginning-of-line         ) ; move-beginning-of-line
-(global-set-key [?\C-e]     'end-of-line               ) ; move-end-of-line
 (global-set-key [?\C-j]     'fill-paragraph-forward    ) ; newline
 (global-set-key [?\C-k]     'kill-line-or-region       ) ; kill-line
 (global-set-key [?\C-u]     'man                       ) ; universal-argument
@@ -703,8 +702,8 @@
 ;;
 ;;======================================================================================================================
 ;; File - Edit - View - Insert - Format - Tools - Window - Help
-;; new    copy   narrow lorem    indent   comment split    ascii
-;; close  region        utf8     fill     count            colors
+;; new    copy   narrow lorem    indent   comment enlarge  ascii
+;; close  region        utf8     fill     count   split    colors
 ;; print  goto          seq      tabs     sort
 ;;-----------
 ;; 5.1  File
@@ -1018,7 +1017,8 @@ read or save."
          (insert (cond ((and (zerop (mod i 3))(zerop (mod i 5))) "FizzBuzz")((zerop (mod i 3)) "Fizz")
                        ((zerop (mod i 5)) "Buzz")(t (number-to-string i))) "\n")))
 (defun insert-date () "Insert current date as string." (interactive "*")(insert (format-time-string "%d %b %Y")))
-(defun insert-en-dash () "Insert en dash" (interactive "*")(insert #x2013))
+(defun insert-en-dash () "Insert en dash." (interactive "*")(insert #x2013))
+(defun insert-euro () "Insert euro symbol." (interactive "*")(insert #x20ac))
 (defun insert-tab-char (&optional n) "Insert TAB character." (interactive "*p")(insert-char ?\t n))
 (defun insert-tab-char-1 () "Insert one TAB character." (interactive "*p")(insert "\t")) ; for `indent-line-function'
 (defun lorem (&optional n) "Insert N lorem-ipsum paragraphs." (interactive "*p")
@@ -1249,6 +1249,8 @@ which doesn't compile."
        (and (= (length (window-list)) 2)(window-full-width-p)))
 (defun already-left-right-p () "Return t if selected frame is split in two windows on left and right."
        (and (= (length (window-list)) 2)(window-full-height-p)))
+(defun enlarge-window-max () "Enlarge window vertically as much as possible." (interactive)
+       (split-window-top-bottom)(enlarge-window 1000))
 (defun middle-from-here () "Return the line halfway between current position and end of buffer."
        (/ (count-lines (point)(point-max)) 2))
 (defun pages (&optional n) "Return the number of lines to scroll down N pages."
@@ -1680,12 +1682,10 @@ int main()
 (add-hook 'ebrowse-tree-mode-hook 'arni-ebrowse-hook)
 (defun arni-gdb-hook () ; leave [?\C-x ?\C-a] unbound, otherwise gdb cannot be started
   (message nil)(setq indent-line-function 'gud-gdb-complete-command)(setq gdb-show-main t)
-  (local-set-key [f5]          'gdb-restore-windows) ; revert-buffer
-  (local-set-key [M-up]        'gdb-many-windows-off  ) ; backward-sexp-start
-  (local-set-key [M-down]      'gdb-many-windows-on   ) ; forward-sexp-start
-  (local-set-key [?\C-c ?\C-q] 'comint-quit-subjob    )
-  (defun gdb-many-windows-off () "Disable many GDB windows." (interactive)(gdb-many-windows t))
-  (defun gdb-many-windows-on () "Disable separate IO buffer." (interactive)(gdb-many-windows nil)))
+  (local-set-key [f5]          'gdb-restore-windows)
+  (local-set-key [M-up]        'gdb-many-windows   )
+  (local-set-key [M-down]      'gdb-many-windows   )
+  (local-set-key [?\C-c ?\C-q] 'comint-quit-subjob))
 (add-hook 'gdb-mode-hook 'arni-gdb-hook)
 (defvar makefile-program-name nil "Name of program built using Makefile. See `makefile-run'.")
 (defun arni-makefile-hook ()
@@ -1911,6 +1911,7 @@ echo.\n
   (local-set-key [?\C-\" right]   'html-quote-99                        )
   (local-set-key [?\C-\" down]    'html-quote-99-bottom                 )
   (local-set-key [?\C-c ?8]       'html-8bit-char                       )
+  (local-set-key [?\C-c ?\C-.]    'html-nbsp                            )
   (local-set-key [?\C-c ?\C- ]    'html-td                              )
   (local-set-key [?\C-c ?\C-8]    'html-8bit-char                       )
   (local-set-key [?\C-c ?\C-a]    'tempo-template-html-hyperlink        )
@@ -2006,15 +2007,15 @@ echo.\n
          (compile (concat "tidy -e -utf8 " (buffer-name))))
   (defun html-toggle-links () "Toggle highlighting of links (red:href, yellow:most, green:some)." (interactive)
          (if html-links (hi-lock-mode 0)
-           (progn (hi-lock-face-buffer " href=\"[^\"]*\\.html\"" 'highlight)                          ; html
-                  (hi-lock-face-buffer " href=\"[^\"]*\\.htm\""  'highlight)                          ; htm
-                  (hi-lock-face-buffer " href=\"[^\"]*\\.css\""  'highlight)                          ; css
-                  (hi-lock-face-buffer " href=\"[^\"]*\\.pdf\""  'highlight)                          ; pdf
-                  (hi-lock-face-buffer " href=\"[^\"]*\\.zip\""  'highlight)                          ; zip
-                  (hi-lock-face-buffer " href=\"mailto:[^\"]*\"" 'highlight)                          ; mailto
-                  (hi-lock-face-buffer " href=\"[^\"]*/\""       'highlight)                          ; /
-                  (hi-lock-face-buffer " href=\"[^\"]*#[^\"]*\"" 'highlight)                          ; #
-                  (hi-lock-face-buffer " href=\"http[^\"]*[\?][^\"]*\"" 'isearch-lazy-highlight-face) ; ?
+           (progn (hi-lock-face-buffer " href=\"[^\"]*\\.html\""        'highlight     ) ; html
+                  (hi-lock-face-buffer " href=\"[^\"]*\\.htm\""         'highlight     ) ; htm
+                  (hi-lock-face-buffer " href=\"[^\"]*\\.css\""         'highlight     ) ; css
+                  (hi-lock-face-buffer " href=\"[^\"]*\\.pdf\""         'highlight     ) ; pdf
+                  (hi-lock-face-buffer " href=\"[^\"]*\\.zip\""         'highlight     ) ; zip
+                  (hi-lock-face-buffer " href=\"mailto:[^\"]*\""        'highlight     ) ; mailto
+                  (hi-lock-face-buffer " href=\"[^\"]*/\""              'highlight     ) ; /
+                  (hi-lock-face-buffer " href=\"[^\"]*#[^\"]*\""        'highlight     ) ; #
+                  (hi-lock-face-buffer " href=\"http[^\"]*[\?][^\"]*\"" 'lazy-highlight) ; ?
                   (hi-lock-face-buffer " href=" 'show-paren-mismatch-face)))
          (setq html-links (not html-links))(force-mode-line-update)
          (message "Highlighted links %s" (if html-links "ON" "OFF")))
@@ -2082,7 +2083,6 @@ echo.\n
   (add-to-list 'LaTeX-verbatim-environments-local "lstlisting")(font-latex-set-syntactic-keywords)      ; highlight
   (add-to-list 'LaTeX-verbatim-environments-local "semiverbatim")(font-latex-set-syntactic-keywords) ; Beamer highlight
   (add-to-list 'LaTeX-verbatim-macros-with-delims-local "lstinline")(font-latex-set-syntactic-keywords) ; highlight
-  (add-to-list 'safe-local-variable-values '(TeX-master . "dissertation.tex")) ; don't panic if file defines TeX-master
   (add-to-list 'TeX-command-list '("CompilePDF" "auctex -c -p letter %t" TeX-run-LaTeX nil t))
   (add-to-list 'TeX-command-list '("CompilePDFa4" "auctex -c -p a4 %t" TeX-run-LaTeX nil t))
   (add-to-list 'TeX-command-list '("LaTeX PDF" "pdflatex %t" TeX-run-LaTeX nil t))
@@ -2130,7 +2130,6 @@ echo.\n
   (local-set-key [?\C-c ?\C-m]       'LaTeX-master-open           ) ; TeX-insert-macro
   (local-set-key [?\C-c ?\C-n]       'LaTeX-noindent              ) ; TeX-normal-mode
   (local-set-key [?\C-c ?\C-o]       'LaTeX-master-PDF            )
-  (local-set-key [?\C-c ?\C-p]       'PhD-preamble-open           )
   (local-set-key [?\C-c ?\C-q]       'kill-process-now            ) ; [map], as `TeX-kill-job' doesn't stop Rnw sweaving
   (local-set-key [?\C-c ?\C-r]       'LaTeX-R-block               ) ; TeX-command-region
   (local-set-key [?\C-c ?\C-u]       'LaTeX-usepackage            )
@@ -2218,8 +2217,6 @@ echo.\n
   (defun LaTeX-usepackage () "Insert an empty \\usepackage{}." (interactive "*")
          (if (< (line-beginning-position)(line-end-position))(open-line 1))
          (insert "\\usepackage{}")(search-backward "}"))
-  (defun PhD-preamble-open () "Open LaTeX master document." (interactive)
-         (find-file "f:/phd/dissertation/tex/0a_preamble.tex"))
   (defun reftex-toc-left-right () "Show RefTeX table of contents in left window." (interactive)
          (reftex-toc)(split-window-left-right))
   (defun reftex-toc-fullscreen () "Show RefTeX table of contents in full screen." (interactive)
@@ -2415,7 +2412,7 @@ This is first.\n
          (texinfo-show-structure t))
   (defun texinfo-texi2dvi-pdf () "Compile Texinfo document to PDF." (interactive)
          (save-buffer)(if (one-window-p)(split-window-right))
-         (compile (concat "texi2dvi -c -p -t @finalout " (buffer-name)))))
+         (compile (concat "texi2dvi -c -p -t @finalout " (buffer-name)))(enlarge-window-max)))
 (add-hook 'texinfo-mode-hook 'arni-texinfo-hook)
 ;;-----------
 ;; 6.14 Lisp
@@ -2528,7 +2525,7 @@ This is first.\n
 (add-hook 'ess-pre-run-hook 'arni-ess-pre-run-hook)
 (defun arni-inferior-ess-hook ()
   (set-face-attribute 'comint-highlight-input  nil :foreground "gray20") ; previous commands (bold)
-  (set-face-attribute 'font-lock-constant-face nil :underline -        ) ; <-, source, [1] output
+  (set-face-attribute 'font-lock-constant-face nil :underline -        ) ; <-, library, source, [1] output
   (set-face-attribute 'font-lock-type-face     nil :foreground -       ) ; TRUE
   (local-unset-key [?\C-\M-m]) ; avoid ess-dirs
   (local-unset-key [?\C-y]   ) ; reactivate scroll-down-command
@@ -2610,11 +2607,11 @@ This is first.\n
 (defun arni-ess-hook ()
   (if (string-equal (buffer-name) "*R*")(inferior-ess-mode))
   (require 'which-func)(add-to-list 'which-func-modes 'ess-mode)
-  (setq make-backup-files t)(setq ess-eval-visibly-p nil)(ess-toggle-underscore nil)
+  (setq make-backup-files t)(setq ess-eval-visibly-p nil)(ess-toggle-S-assign nil)
   (setq ess-brace-offset -2)(setq ess-indent-offset 2)
   (add-to-list 'safe-local-variable-values '(ess-indent-offset . 4))
   (font-lock-add-keywords nil '(("tafpng(\"\\(\\w+\\)" (1 font-lock-builtin-face t))))
-  (set-face-attribute 'font-lock-constant-face nil :underline -) ; <-, source, [1] output
+  (set-face-attribute 'font-lock-constant-face nil :underline - ) ; <-, library, source, [1] output
   (set-face-attribute 'font-lock-type-face     nil :foreground -) ; TRUE
   (local-unset-key [?\t]     ) ; reactivate indent-or-complete
   (local-unset-key [C-return]) ; reactivate recentf-open-files
@@ -2786,7 +2783,7 @@ This is first.\n
          (fill-paragraph nil)(clean-trails)(message nil)(forward-paragraph))
   (defun Rd-link () "Insert \\code{\\link{}}." (interactive "*")(insert "\\code{\\link{}}")(search-backward "}}"))
   (defun Rd-outline () "Navigate within .Rd file using `outline-mode'." (interactive)
-         (outline-mode)(setq outline-regexp "\\\\nam\\|\\\\....")(outline-mode)(hide-sublevels 4)
+         (outline-mode)(setq outline-regexp "\\\\nam\\|\\\\....")(outline-mode)(outline-hide-sublevels 4)
          (setq outline-previous-mode '(Rd-mode)))
   (defun Rd-table-sep () "Insert \\tab" (interactive "*")(insert " \\tab "))
   (defun Rd-view-html () "View HTML file with same prefix as current Rd file." (interactive)
@@ -3819,6 +3816,8 @@ This is first.\n
   (setq make-backup-files t)(font-lock-mode 1) ; refresh
   (set-face-attribute 'markdown-pre-face nil :inherit - :foreground "brown4")
   (set-face-attribute 'markdown-inline-code-face nil :inherit markdown-pre-face)
+  (local-unset-key [backtab])
+  (local-unset-key [S-iso-lefttab])
   (local-unset-key [M-left])
   (local-unset-key [M-right])
   (local-unset-key [M-up])
@@ -4007,8 +4006,8 @@ break
     (local-set-key [f12]               'org-template          )
     (local-set-key [?\C-c C-backspace] 'org-html-delete       )
     (local-set-key [?\t]               'org-cycle             ) ; forget outline-mode
-    (local-set-key [C-S-tab]           'org-collapse-tree     ) ; hide-sublevels
-    (local-set-key [C-S-iso-lefttab]   'org-collapse-tree     ) ; hide-sublevels
+    (local-set-key [C-S-tab]           'org-collapse-tree     )
+    (local-set-key [C-S-iso-lefttab]   'org-collapse-tree     )
     (local-set-key [?\C-m]             'org-return            ) ; forget outline-mode
     (local-set-key [M-return]          'org-open-at-point     ) ; org-meta-return
     (local-set-key [M-home]            'org-insert-h3-down    )
@@ -4041,7 +4040,7 @@ break
   (defun org-ascii-write () "Export buffer to text file." (interactive)
          (org-ascii-export-to-ascii)(arni-org-hook))
   (defun org-collapse-tree () "Collapse tree and return to beginning of file." (interactive)
-         (hide-sublevels 1)(goto-char (point-min)))
+         (outline-hide-sublevels 1)(goto-char (point-min)))
   (defun org-colon-paragraph () "Put colon in front of paragraph and move down." (interactive)
          (region-forward-paragraph 1)(comment-line-or-region)(forward-line))
   (defun org-html-delete () "Delete HTML file corresponding to Org file." (interactive)
@@ -4107,8 +4106,8 @@ break
   (local-set-key [?\t]             'outline-toggle-children    )
   (local-set-key [backtab]         'outline-toggle-children    )
   (local-set-key [C-tab]           'outline-show-all           )
-  (local-set-key [C-S-tab]         'hide-sublevels             )
-  (local-set-key [C-S-iso-lefttab] 'hide-sublevels             ) ; linux C-S-tab
+  (local-set-key [C-S-tab]         'outline-hide-sublevels     )
+  (local-set-key [C-S-iso-lefttab] 'outline-hide-sublevels     ) ; linux C-S-tab
   (local-set-key [?\C-m]           'outline-return             ) ; return
   (local-set-key [left]            'hide-entry                 )
   (local-set-key [right]           'show-entry                 )
@@ -4134,11 +4133,11 @@ break
   (local-set-key [?q]              'outline-return             )
   (defun outline-hide () "Hide subheadings and return to upper heading." (interactive)
          (deactivate-mark)(outline-back-to-heading)(if (> (outline-level) outline-top-level)(outline-up-heading 1))
-         (hide-subtree))
+         (outline-hide-subtree))
   (defun outline-mouse-select () "Select position and return to `outline-previous-mode'." (interactive)
          (outline-return)(beginning-of-line))
   (defun outline-return () "Return to `outline-previous-mode'." (interactive)(eval outline-previous-mode))
-  (defun outline-show () "Show subheadings." (interactive)(deactivate-mark)(show-branches))
+  (defun outline-show () "Show subheadings." (interactive)(deactivate-mark)(outline-show-branches))
   (defun outline-window-or-return () "Delete other windows or return to `outline-previous-mode'." (interactive)
          (if (> (length (window-list)) 1)(delete-other-windows)(outline-return))))
 (add-hook 'outline-mode-hook 'arni-outline-hook)
@@ -4332,7 +4331,7 @@ break
 (defun arni-message-hook ()(set-face-attribute 'message-cited-text nil :foreground - :inherit font-lock-comment-face))
 (add-hook 'message-mode-hook 'arni-message-hook)
 (defalias 'longlines-mode 'visual-line-mode)
-(setq visual-line-fringe-indicators '(nil right-curly-arrow))
+;; (setq visual-line-fringe-indicators '(nil right-curly-arrow))
 ;;---------
 ;; 7.36 VC
 ;;---------
