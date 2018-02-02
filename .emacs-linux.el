@@ -58,11 +58,11 @@
 (defun frame-maximize () "Maximize window." (interactive)(modify-frame-parameters nil '((fullscreen . maximized))))
 (defun frame-restore () "Restore window." (interactive)(modify-frame-parameters nil '((fullscreen . nil))))
 ;;--------
-;; 6.15 R
+;; 6.16 R
 ;;--------
 (setq ess-history-file "~/r/.Rhistory")
 ;;----------
-;; 6.17 TMB
+;; 6.18 TMB
 ;;----------
 (setq tmb-compile-args ",'-fno-gnu-unique -O0 -Wall'")
 (setq tmb-debug-args ",'-fno-gnu-unique -g -O0'")

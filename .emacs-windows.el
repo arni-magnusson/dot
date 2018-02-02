@@ -48,7 +48,7 @@
 ;;-----------
 (setq admb-init "admb-set & ")
 ;;--------
-;; 6.15 R
+;; 6.16 R
 ;;--------
 (defvar R-editor "emacs" "Editor called by R process with 'edit()' command.")
 (setq ess-history-file "c:/home/r/.Rhistory")
