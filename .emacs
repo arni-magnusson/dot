@@ -1,17 +1,18 @@
-;;======================================================================================================================
+;;==============================================================================
 ;;
 ;; 1  OS-SPECIFICS
 ;;
-;;======================================================================================================================
-(if menu-bar-mode (menu-bar-mode 0)) ; menu bar must be disabled in Windows before Emacs is maximized
+;;==============================================================================
+;; Menu bar must be disabled in Windows before Emacs is maximized
+(if menu-bar-mode (menu-bar-mode 0))
 (if (string-match "windows" (prin1-to-string system-type))
     (load "~/.emacs-windows.el" nil t)(load "~/.emacs-linux.el" nil t))
 ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
-;;======================================================================================================================
+;;==============================================================================
 ;;
 ;; 2  INTERFACE
 ;;
-;;======================================================================================================================
+;;==============================================================================
 ;;-------------
 ;; 2.1  Visual
 ;;-------------
@@ -33,99 +34,120 @@
 ;; 2.2  Editing
 ;;--------------
 (defalias 'yes-or-no-p 'y-or-n-p               ) ; ask y or n
-(delete-selection-mode 1                       ) ; replace selected text when typing
+(delete-selection-mode 1                       ) ; typing replaces selected text
 (if (>= emacs-major-version 24)
-    (electric-indent-mode -1                  )) ; RET is just newline by default
+    (electric-indent-mode -1                  )) ; RET is just newline
 (prefer-coding-system 'utf-8                   ) ; utf8 if not sure
 (require 'imenu)(setq imenu-max-items 43       ) ; code navigation
-(setq default-input-method "icelandic-keyboard") ; toggle-input-method to switch between US and IS layout
 (setq initial-major-mode 'text-mode            ) ; text-mode for scratch buffer
 (setq mail-host-address "hafro.is"             ) ; change-log-mode
-(setq save-abbrevs nil                         ) ; don't ask whether to save abbrevs
+(setq save-abbrevs nil                         ) ; don't save abbrevs
 (setq scroll-error-top-bottom t                ) ; pgup and pgdn all the way
 (setq user-full-name "Arni Magnusson"          ) ; change-log-mode
 (setq select-enable-clipboard t                ) ; linux clipboard
-(setq vc-follow-symlinks t                     ) ; open symlinks to git files without warning
+(setq vc-follow-symlinks t                     ) ; open symlinks without warning
 (setq-default buffer-file-coding-system 'utf-8 ) ; utf8 instead of latin1
 (setq-default fill-column 80                   ) ; text width
 (setq-default indent-tabs-mode nil             ) ; no tab characters
 (setq-default major-mode 'text-mode            ) ; text-mode for new buffer
-(setq-default require-final-newline t          ) ; make sure file ends with newline
+(setq-default require-final-newline t          ) ; ensure file ends with newline
 (setq-default sentence-end-double-space nil    ) ; one space after period
 (setq-default sort-fold-case t                 ) ; sort-lines ignoring case
-(setq bs-must-always-show-regexp "Help\\|R\\|SQL\\|compilation\\|gud\\|info\\|input\\|shell") ; include in buffer cycle
+(setq bs-must-always-show-regexp ; include in buffer cycle
+      "Help\\|R\\|SQL\\|compilation\\|gud\\|info\\|input\\|shell")
 ;;------------
 ;; 2.3  Faces
 ;;------------
 ;; Only special faces should inherit
-;; family width height weight slant foreground background underline overline strike-through box inherit
+;; family width height weight slant fg bg underline overline strike box inherit
 (defconst - 'unspecified "Shorthand for unsetting face attributes.")
 (defun arni-colors ()
-  "Apply my preferred colors." (interactive) ; provide enough details to reset faces
+  "Apply my preferred colors."
+  (interactive) ; provide enough details to reset faces
   (if (not window-system)
       (progn  ; black  red  green  yellow  blue  magenta  cyan  white
-        (set-face-attribute 'default                             nil :background -                       )
-        (set-face-attribute 'escape-glyph                        nil :foreground "red"                   )
-        (set-face-attribute 'font-lock-builtin-face              nil :foreground "red" :weight -         )
-        (set-face-attribute 'font-lock-comment-face              nil :foreground "yellow" :weight -      )
-        (set-face-attribute 'font-lock-comment-delimiter-face    nil :foreground -                       )
-        (set-face-attribute 'font-lock-constant-face             nil :foreground - :underline t :weight -)
-        (set-face-attribute 'font-lock-doc-face                  nil :foreground - :weight -             )
-        (set-face-attribute 'font-lock-function-name-face        nil :foreground - :weight -             )
-        (set-face-attribute 'font-lock-keyword-face              nil :foreground "blue" :weight -        )
-        (set-face-attribute 'font-lock-regexp-grouping-backslash nil :inherit -                          )
-        (set-face-attribute 'font-lock-regexp-grouping-construct nil :inherit -                          )
-        (set-face-attribute 'font-lock-string-face               nil :foreground "green"                 )
-        (set-face-attribute 'font-lock-type-face                 nil :foreground "magenta" :weight -     )
-        (set-face-attribute 'font-lock-variable-name-face        nil :foreground - :weight -             )
-        (set-face-attribute 'font-lock-warning-face              nil :foreground "red" :weight 'bold     )
-        (set-face-attribute 'fringe                              nil :background -                       )
-        (set-face-attribute 'isearch                             nil :background "yellow" :foreground -  )
-        (set-face-attribute 'isearch-fail                        nil :background "red"                   )
-        (set-face-attribute 'lazy-highlight                      nil :background "yellow"                )
-        (set-face-attribute 'minibuffer-prompt                   nil :foreground -                       )
-        (set-face-attribute 'show-paren-match                    nil :background "green"                 )
-        (set-face-attribute 'show-paren-mismatch                 nil :background "red"                   )
-        (set-face-attribute 'trailing-whitespace                 nil :background "cyan"                 ))
+        (set-face-attribute 'default nil :background -)
+        (set-face-attribute 'escape-glyph nil :foreground "red")
+        (set-face-attribute 'font-lock-builtin-face nil :foreground "red"
+                            :weight -)
+        (set-face-attribute 'font-lock-comment-face nil :foreground "yellow"
+                            :weight -)
+        (set-face-attribute 'font-lock-comment-delimiter-face nil :foreground -)
+        (set-face-attribute 'font-lock-constant-face nil :foreground -
+                            :underline t :weight -)
+        (set-face-attribute 'font-lock-doc-face nil :foreground - :weight -)
+        (set-face-attribute 'font-lock-function-name-face nil :foreground -
+                            :weight -)
+        (set-face-attribute 'font-lock-keyword-face nil :foreground "blue"
+                            :weight -)
+        (set-face-attribute 'font-lock-regexp-grouping-backslash nil :inherit -)
+        (set-face-attribute 'font-lock-regexp-grouping-construct nil :inherit -)
+        (set-face-attribute 'font-lock-string-face nil :foreground "green")
+        (set-face-attribute 'font-lock-type-face nil :foreground "magenta"
+                            :weight -)
+        (set-face-attribute 'font-lock-variable-name-face nil :foreground -
+                            :weight -)
+        (set-face-attribute 'font-lock-warning-face nil :foreground "red"
+                            :weight 'bold)
+        (set-face-attribute 'fringe nil :background -)
+        (set-face-attribute 'isearch nil :background "yellow" :foreground -)
+        (set-face-attribute 'isearch-fail nil :background "red")
+        (set-face-attribute 'lazy-highlight nil :background "yellow")
+        (set-face-attribute 'minibuffer-prompt nil :foreground -)
+        (set-face-attribute 'show-paren-match nil :background "green")
+        (set-face-attribute 'show-paren-mismatch nil :background "red")
+        (set-face-attribute 'trailing-whitespace nil :background "cyan"))
     (progn
-      (set-face-attribute 'default                             nil :background "gray85"                )
-      (set-face-attribute 'escape-glyph                        nil :foreground "brown4" :weight 'bold  ) ; ^M
-      (set-face-attribute 'font-lock-builtin-face              nil :foreground "red"                   ) ; #include
-      (set-face-attribute 'font-lock-comment-face              nil :foreground "gray60"                ) ; //
-      (set-face-attribute 'font-lock-comment-delimiter-face    nil :foreground -                       ) ; ;;
-      (set-face-attribute 'font-lock-constant-face             nil :foreground - :underline t :weight -) ; LOCAL_CALCS
-      (set-face-attribute 'font-lock-doc-face                  nil :foreground - :weight -             ) ; Emacs "Usage"
-      (set-face-attribute 'font-lock-function-name-face        nil :foreground - :weight 'bold         ) ; declaration
-      (set-face-attribute 'font-lock-keyword-face              nil :foreground "mediumblue"            ) ; if, while
-      (set-face-attribute 'font-lock-regexp-grouping-backslash nil :inherit -                          ) ; \\
-      (set-face-attribute 'font-lock-regexp-grouping-construct nil :inherit -                          ) ; \(
-      (set-face-attribute 'font-lock-string-face               nil :foreground "forestgreen"           ) ; "text"
-      (set-face-attribute 'font-lock-type-face                 nil :foreground "magenta2" :weight -    ) ; int
-      (set-face-attribute 'font-lock-variable-name-face        nil :foreground - :weight -             ) ; x, <html>
-      (set-face-attribute 'font-lock-warning-face              nil :foreground "red" :weight 'bold     ) ; set
-      (set-face-attribute 'fringe                              nil :background -                       )
-      (set-face-attribute 'isearch                             nil :background "gold" :foreground -    )
-      (set-face-attribute 'isearch-fail                        nil :background "tomato"                )
-      (set-face-attribute 'lazy-highlight                      nil :background "palegoldenrod"         )
-      (set-face-attribute 'minibuffer-prompt                   nil :foreground -                       ) ; M-x
-      (set-face-attribute 'show-paren-match                    nil :background "chartreuse"            )
-      (set-face-attribute 'show-paren-mismatch                 nil :background "red"                   )
-      (set-face-attribute 'trailing-whitespace                 nil :background "gray95"             ))))
-(defun bg (face) "Return FACE background color." (face-attribute face :background))
-(defun fg (face) "Return FACE foreground color." (face-attribute face :foreground))
+      (set-face-attribute 'default nil :background "gray85")
+      (set-face-attribute 'escape-glyph nil :foreground "brown4" :weight 'bold)
+      (set-face-attribute 'font-lock-builtin-face nil :foreground "red")
+      (set-face-attribute 'font-lock-comment-face nil :foreground "gray60")
+      (set-face-attribute 'font-lock-comment-delimiter-face nil :foreground -)
+      (set-face-attribute 'font-lock-constant-face nil :foreground -
+                          :underline t :weight -)
+      (set-face-attribute 'font-lock-doc-face nil :foreground - :weight -)
+      (set-face-attribute 'font-lock-function-name-face nil :foreground -
+                          :weight 'bold)
+      (set-face-attribute 'font-lock-keyword-face nil :foreground "mediumblue")
+      (set-face-attribute 'font-lock-regexp-grouping-backslash nil :inherit -)
+      (set-face-attribute 'font-lock-regexp-grouping-construct nil :inherit -)
+      (set-face-attribute 'font-lock-string-face nil :foreground "forestgreen")
+      (set-face-attribute 'font-lock-type-face nil :foreground "magenta2"
+                          :weight -)
+      (set-face-attribute 'font-lock-variable-name-face nil :foreground -
+                          :weight -)
+      (set-face-attribute 'font-lock-warning-face nil :foreground "red"
+                          :weight 'bold)
+      (set-face-attribute 'fringe nil :background -)
+      (set-face-attribute 'isearch nil :background "gold" :foreground -)
+      (set-face-attribute 'isearch-fail nil :background "tomato")
+      (set-face-attribute 'lazy-highlight nil :background "palegoldenrod")
+      (set-face-attribute 'minibuffer-prompt nil :foreground -) ; M-x
+      (set-face-attribute 'show-paren-match nil :background "chartreuse")
+      (set-face-attribute 'show-paren-mismatch nil :background "red")
+      (set-face-attribute 'trailing-whitespace nil :background "gray95"))))
+(defun bg (face)
+  "Return FACE background color."
+  (face-attribute face :background))
+(defun fg (face)
+  "Return FACE foreground color."
+  (face-attribute face :foreground))
 (arni-colors)
-;;======================================================================================================================
+;;==============================================================================
 ;;
 ;; 3  FILES
 ;;
-;;======================================================================================================================
+;;==============================================================================
 ;;--------------
 ;; 3.1  Startup
 ;;--------------
-(setq command-switch-alist '(("-R" . (lambda (arg)(R-mode))))) ; emacs -R means start in R-mode
+;; emacs -R means start in R-mode
+(setq command-switch-alist '(("-R" . (lambda (arg)(R-mode)))))
 (setq inhibit-default-init t) ; linux suppress default.el
-(defvar startup-directory default-directory) ; remember startup dir, then build `load-path' recursively
-(if (file-directory-p "~/emacs/lisp/")(progn (cd "~/emacs/lisp/")(normal-top-level-add-subdirs-to-load-path)))
+;; Remember startup dir, then build `load-path' recursively
+(defvar startup-directory default-directory)
+(if (file-directory-p "~/emacs/lisp/")
+    (progn (cd "~/emacs/lisp/")(normal-top-level-add-subdirs-to-load-path)))
 (cd startup-directory) ; return to startup dir
 ;;------------------
 ;; 3.2  Executables
@@ -133,31 +155,44 @@
 (require 'grep) ; skip binaries, ignore case, linenum, recursive, no warnings
 (grep-apply-setting 'grep-command "grep -Iinrs \'\'")
 (add-to-list 'exec-path "~/emacs/ispell/bin")
-(setenv "ispelldictdir" (concat (getenv "home") "/emacs/ispell/lib"))(setq ispell-dictionary "american") ; ~/ crashes
+(setenv "ispelldictdir" (concat (getenv "home") "/emacs/ispell/lib"))
+(setq ispell-dictionary "american")
 ;;-------------
 ;; 3.3  Backup
 ;;-------------
-(setq auto-save-default nil)(setq auto-save-list-file-prefix nil) ; neither #file.txt# nor .emacs.d
-(defun rm-large-files (dir kb) "Remove files larger than KB from directory DIR."
-       (let* ((w32-get-true-file-attributes nil)(nested-list (directory-files-and-attributes dir t "[^.]" t))
-              (file (mapcar 'car nested-list))(size (mapcar (lambda (x)(nth 8 x)) nested-list)))
-         (dotimes (i (length nested-list))(if (> (nth i size)(* kb 1024))(delete-file (nth i file))))))
-(if (string-equal (format-time-string "%u") "5")(rm-large-files "~/emacs/backup" 1000)) ; Friday clean
-(setq make-backup-files nil) ; admb c++ dos html latex lisp org r sh sql texinfo (not: postscript text)
-(setq version-control t)(setq delete-old-versions t)(setq kept-old-versions 1)(setq kept-new-versions 4)
+(setq auto-save-default nil) ; no #file.txt#
+(setq auto-save-list-file-prefix nil) ; no .emacs.d
+(defun rm-large-files (dir kb)
+  "Remove files larger than KB from directory DIR."
+  (let* ((w32-get-true-file-attributes nil)
+         (nested-list (directory-files-and-attributes dir t "[^.]" t))
+         (file (mapcar 'car nested-list))
+         (size (mapcar (lambda (x)(nth 8 x)) nested-list)))
+    (dotimes (i (length nested-list))
+      (if (> (nth i size)(* kb 1024))(delete-file (nth i file))))))
+(if (string-equal (format-time-string "%u") "5") ; Friday clean
+    (rm-large-files "~/emacs/backup" 1000))
+(setq make-backup-files nil) ; enable in hooks for source code and documents
+(setq version-control t)
+(setq delete-old-versions t)
+(setq kept-old-versions 1)
+(setq kept-new-versions 4)
 ;;-------------
 ;; 3.4  Recent
 ;;-------------
 (defun arni-recentf-load-hook () ; need hook before loading
-  (setq recentf-auto-cleanup 'never)(setq recentf-max-saved-items 200)
-  (if (string-equal (format-time-string "%u") "5")(recentf-cleanup))) ; Friday clean
+  (setq recentf-auto-cleanup 'never)
+  (setq recentf-max-saved-items 200)
+  (if (string-equal (format-time-string "%u") "5") ; Friday clean
+      (recentf-cleanup)))
 (add-hook 'recentf-load-hook 'arni-recentf-load-hook)
-(recentf-mode t)(message nil)
+(recentf-mode t)
+(message nil)
 ;;----------------
 ;; 3.5  Autoloads
 ;;----------------
 ;; Core packages
-(autoload 'log-edit-mode     "log-edit"          "Write VC log entry."      t) ; popup SVN log entry
+(autoload 'log-edit-mode     "log-edit"          "Write VC log entry."      t)
 ;; User packages
 (autoload 'admb-mode         "admb"              "Edit ADMB code."          t)
 (autoload 'cmake-mode        "cmake-mode"        "Edit CMake code."         t)
@@ -165,17 +200,20 @@
 (autoload 'csv-mode          "csv-mode"          "View CSV (align, sort)."  t)
 (autoload 'csv-nav-mode      "csv-nav"           "View CSV (other window)." t)
 (autoload 'doxymacs-mode     "doxymacs"          "Doxygen minor mode."      t)
-(autoload 'ess-bugs-mode     "ess-bugs-d"        "Edit BUGS code."          t)(defalias 'bugs-mode 'ess-bugs-mode)
+(autoload 'ess-bugs-mode     "ess-bugs-d"        "Edit BUGS code."          t)
+(defalias 'bugs-mode 'ess-bugs-mode)
 (autoload 'html-helper-mode  "html-helper-mode"  "Edit HTML documents."     t)
 (autoload 'julia-mode        "ess-site"          "Edit Julia code."         t)
 (autoload 'iss-mode          "iss-mode"          "Edit Inno Setup scripts." t)
 (autoload 'markdown-mode     "markdown-mode"     "Edit Markdown document."  t)
 (autoload 'php-mode          "php-mode"          "Edit PHP code."           t)
 (autoload 'R                 "ess-site"          "Interactive R session."   t)
-(autoload 'R-mode            "ess-site"          "Edit R code."             t)(autoload 'r-mode "ess-site") ;*-R-*
+(autoload 'R-mode            "ess-site"          "Edit R code."             t)
+(autoload 'r-mode "ess-site") ;*-R-*
 (autoload 'Rd-mode           "ess-site"          "Edit R documentation."    t)
 (autoload 'Rnw-mode          "ess-site"          "Edit Sweave document."    t)
-(autoload 'TeX-latex-mode    "tex-site"          "Edit LaTeX document."     t) ; "latex" in Win, "auctex" in Linux
+;; "latex" in Windows, "auctex" in Linux
+(autoload 'TeX-latex-mode    "tex-site"          "Edit LaTeX document."     t)
 (autoload 'tabbar-mode       "tabbar"            "Visible buffer tabs."     t)
 (autoload 'titlecase-dwim    "titlecase"         "Convert to Title Case."   t)
 (autoload 'visual-basic-mode "visual-basic-mode" "Edit Visual Basic code."  t)
@@ -183,8 +221,12 @@
 ;; 3.6  Associations
 ;;-------------------
 (defalias 'aspic-mode 'conf-space-mode)
-(defun coleraine-mode () "View Coleraine results (results.dat or run01.res)." (interactive)
-       (conf-space-mode)(setq show-trailing-whitespace nil)(redraw-display))
+(defun coleraine-mode ()
+  "View Coleraine results (results.dat or run01.res)."
+  (interactive)
+  (conf-space-mode)
+  (setq show-trailing-whitespace nil)
+  (redraw-display))
 (defalias 'gadget-mode 'conf-windows-mode)
 (defalias 'sam-mode 'conf-space-mode)
 (defvar ext-code nil "Filenames related to programming languages.")
@@ -193,171 +235,289 @@
 (defvar ext-io   nil "Filenames related to program input/output.")
 (defvar ext-util nil "Filenames related to programming utilities.")
 (setq ext-code
-      '(("\\.adb$"    . ada-mode         )("\\.ads$" . ada-mode)
-        ("\\.tpl$"    . admb-mode        )
-        ("\\.bat$"    . bat-mode         )("\\.cmd$" . bat-mode)
-        ("\\.c$"      . c-mode           )("\\.lex$" . c-mode)
-        ("\\.cc$"     . c++-mode         )("\\.cpp$" . c++-mode)("\\.cxx$" . c++-mode)("\\.h$" . c++-mode)
-        ("\\.hpp$"    . c++-mode         )("\\.htp$" . c++-mode)
-        ("\\.cs$"     . csharp-mode      )
-        ("\\.el$"     . emacs-lisp-mode  )("\\.el.gz$" . emacs-lisp-mode)
-        ("\\.f90$"    . f90-mode         )("\\.f95$" . f90-mode)
-        ("\\.f$"      . fortran-mode     )("\\.for$" . fortran-mode)
-        ("\\.java$"   . java-mode        )
-        ("\\.js$"     . javascript-mode  )
-        ("\\.jl$"     . julia-mode       )
-        ("\\.pl$"     . perl-mode        )("\\.pm$" . perl-mode)
-        ("\\.php$"    . php-mode         )
-        ("\\.sql$"    . sql-mode         )
-        ("\\.py$"     . python-mode      )
-        ("\\.q$"      . R-mode           )("\\.R$" . R-mode)("\\.Rhistory$" . R-mode)("\\.s$" . R-mode)
-        ("\\.splus$"  . R-mode           )("\\.ssc$" . R-mode)("/NAMESPACE" . R-mode)
-        ("\\.rb$"     . ruby-mode        )
-        ("\\.sh$"     . sh-mode          )
-        ("\\.bas$"    . visual-basic-mode)("\\.vbs$" . visual-basic-mode)))
+      '(("\\.adb$"      . ada-mode)
+        ("\\.ads$"      . ada-mode)
+        ("\\.tpl$"      . admb-mode)
+        ("\\.bat$"      . bat-mode)
+        ("\\.cmd$"      . bat-mode)
+        ("\\.c$"        . c-mode)
+        ("\\.lex$"      . c-mode)
+        ("\\.cc$"       . c++-mode)
+        ("\\.cpp$"      . c++-mode)
+        ("\\.cxx$"      . c++-mode)
+        ("\\.h$"        . c++-mode)
+        ("\\.hpp$"      . c++-mode)
+        ("\\.htp$"      . c++-mode)
+        ("\\.cs$"       . csharp-mode)
+        ("\\.el$"       . emacs-lisp-mode)
+        ("\\.el.gz$"    . emacs-lisp-mode)
+        ("\\.f90$"      . f90-mode)
+        ("\\.f95$"      . f90-mode)
+        ("\\.f$"        . fortran-mode)
+        ("\\.for$"      . fortran-mode)
+        ("\\.java$"     . java-mode)
+        ("\\.js$"       . javascript-mode)
+        ("\\.jl$"       . julia-mode)
+        ("\\.pl$"       . perl-mode)
+        ("\\.pm$"       . perl-mode)
+        ("\\.php$"      . php-mode)
+        ("\\.sql$"      . sql-mode)
+        ("\\.py$"       . python-mode)
+        ("\\.q$"        . R-mode)
+        ("\\.R$"        . R-mode)
+        ("\\.Rhistory$" . R-mode)
+        ("\\.s$"        . R-mode)
+        ("\\.splus$"    . R-mode)
+        ("\\.ssc$"      . R-mode)
+        ("/NAMESPACE"   . R-mode)
+        ("\\.rb$"       . ruby-mode)
+        ("\\.sh$"       . sh-mode)
+        ("\\.bas$"      . visual-basic-mode)
+        ("\\.vbs$"      . visual-basic-mode)))
 (setq ext-conf ; [section]
       ;;         space:par val,#comment
       ;;         unix:par=val,#comment
       ;;         windows:par=val,par val,;comment,#gadgetpar
-      '(("\\.afm$"         . conf-space-mode  )("\\.cfg$" . conf-space-mode)("\\.conf$" . conf-space-mode)
-        ("\\.cpt$"         . conf-space-mode  )("\\.ctl$" . conf-space-mode)("\\.dat$" . conf-space-mode)
-        ("\\.dox$"         . conf-space-mode  )("\\.doxyfile$" . conf-space-mode)("\\.gdbinit$" . conf-space-mode)
-        ("\\.gitignore$"   . conf-space-mode  )("\\.inputrc$" . conf-space-mode)("\\.lst$" . conf-space-mode)
-        ("\\.muttrc$"      . conf-space-mode  )("\\.nanorc$" . conf-space-mode)("\\.par$" . conf-space-mode)
-        ("\\.pin$"         . conf-space-mode  )("\\.pinerc$" . conf-space-mode)("\\.Rproj$" . conf-space-mode  )
-        ("\\.xmodmap"      . conf-space-mode  )("/Doxyfile" . conf-space-mode)("/Rconsole" . conf-space-mode)
-        ("/config$"        . conf-space-mode  )("/fstab" . conf-space-mode  )
-        ("\\.gmtcommands4" . conf-unix-mode   )("\\.gmtdefaults4" . conf-unix-mode)("\\.ini$" . conf-unix-mode)
-        ("\\.desktop$"     . conf-unix-mode   )("\\.sys$" . conf-unix-mode)
-        ("\\.asm$"         . conf-windows-mode)("\\.def$" . conf-windows-mode)
-        ("\\.bmk$"         . emacs-lisp-mode  )("\\.emacs$" . emacs-lisp-mode)("\\.recentf$" . emacs-lisp-mode)
-        ("\\.reg$"         . emacs-lisp-mode  )
-        ("\\.bashrc$"      . sh-mode          )("\\.login$" . sh-mode)("\\.profile$" . sh-mode)
-        ("\\.Rprofile$"    . R-mode           )
-        ("\\.tcshrc$"      . sh-mode          )
-        ("\\.xml$"         . xml-mode       )))
+      '(("\\.afm$"         . conf-space-mode)
+        ("\\.cfg$"         . conf-space-mode)
+        ("\\.conf$"        . conf-space-mode)
+        ("\\.cpt$"         . conf-space-mode)
+        ("\\.ctl$"         . conf-space-mode)
+        ("\\.dat$"         . conf-space-mode)
+        ("\\.dox$"         . conf-space-mode)
+        ("\\.doxyfile$"    . conf-space-mode)
+        ("\\.gdbinit$"     . conf-space-mode)
+        ("\\.gitignore$"   . conf-space-mode)
+        ("\\.inputrc$"     . conf-space-mode)
+        ("\\.lst$"         . conf-space-mode)
+        ("\\.muttrc$"      . conf-space-mode)
+        ("\\.nanorc$"      . conf-space-mode)
+        ("\\.par$"         . conf-space-mode)
+        ("\\.pin$"         . conf-space-mode)
+        ("\\.pinerc$"      . conf-space-mode)
+        ("\\.Rproj$"       . conf-space-mode)
+        ("\\.xmodmap"      . conf-space-mode)
+        ("/Doxyfile"       . conf-space-mode)
+        ("/Rconsole"       . conf-space-mode)
+        ("/config$"        . conf-space-mode)
+        ("/fstab"          . conf-space-mode)
+        ("\\.gmtcommands4" . conf-unix-mode)
+        ("\\.gmtdefaults4" . conf-unix-mode)
+        ("\\.ini$"         . conf-unix-mode)
+        ("\\.desktop$"     . conf-unix-mode)
+        ("\\.sys$"         . conf-unix-mode)
+        ("\\.asm$"         . conf-windows-mode)
+        ("\\.def$"         . conf-windows-mode)
+        ("\\.bmk$"         . emacs-lisp-mode)
+        ("\\.emacs$"       . emacs-lisp-mode)
+        ("\\.recentf$"     . emacs-lisp-mode)
+        ("\\.reg$"         . emacs-lisp-mode)
+        ("\\.bashrc$"      . sh-mode)
+        ("\\.login$"       . sh-mode)
+        ("\\.profile$"     . sh-mode)
+        ("\\.Rprofile$"    . R-mode)
+        ("\\.tcshrc$"      . sh-mode)
+        ("\\.xml$"         . xml-mode)))
 (setq ext-doc
-      '(("\\.bib$"  . bibtex-mode      )
-        ("\\.bst$"  . bibtex-style-mode)
-        ("\\.css$"  . css-mode         )
-        ("\\.htm$"  . html-helper-mode )("\\.html$" . html-helper-mode )
-        ("\\.info$" . info-buffer      )
-        ("\\.md$"   . markdown-mode    )("\\.Rmd$" . markdown-mode)
-        ("\\.org$"  . org-mode         )
-        ("\\.pdf$"  . ps-mode          )("\\.eps$" . ps-mode)("\\.pfb$" . ps-mode)("\\.ps$" . ps-mode)
-        ("\\.Rd$"   . Rd-mode          )
-        ("\\.rst$"  . rst-mode         )
-        ("\\.bbl$"  . TeX-latex-mode   )("\\.cls$" . TeX-latex-mode)("\\.dtx$" . TeX-latex-mode)
-        ("\\.ins$"  . TeX-latex-mode   )("\\.Rnw$" . TeX-latex-mode)("\\.sty$" . TeX-latex-mode)
-        ("\\.tex$"  . TeX-latex-mode   )
-        ("\\.texi$" . texinfo-mode     )("\\.texinfo$" . texinfo-mode)("\\.txi$" . texinfo-mode)))
+      '(("\\.bib$"     . bibtex-mode)
+        ("\\.bst$"     . bibtex-style-mode)
+        ("\\.css$"     . css-mode)
+        ("\\.htm$"     . html-helper-mode)
+        ("\\.html$"    . html-helper-mode)
+        ("\\.info$"    . info-buffer)
+        ("\\.md$"      . markdown-mode)
+        ("\\.Rmd$"     . markdown-mode)
+        ("\\.org$"     . org-mode)
+        ("\\.pdf$"     . ps-mode)
+        ("\\.eps$"     . ps-mode)
+        ("\\.pfb$"     . ps-mode)
+        ("\\.ps$"      . ps-mode)
+        ("\\.Rd$"      . Rd-mode)
+        ("\\.rst$"     . rst-mode)
+        ("\\.bbl$"     . TeX-latex-mode)
+        ("\\.cls$"     . TeX-latex-mode)
+        ("\\.dtx$"     . TeX-latex-mode)
+        ("\\.ins$"     . TeX-latex-mode)
+        ("\\.Rnw$"     . TeX-latex-mode)
+        ("\\.sty$"     . TeX-latex-mode)
+        ("\\.tex$"     . TeX-latex-mode)
+        ("\\.texi$"    . texinfo-mode)
+        ("\\.texinfo$" . texinfo-mode)
+        ("\\.txi$"     . texinfo-mode)))
 (setq ext-io
-      '(("\\.a7inp$"     . aspic-mode     )("\\.inp$" . aspic-mode)
-        ("\\.res$"       . coleraine-mode )("\\.ref$" . coleraine-mode)("\\.rep$" . coleraine-mode)
-        ("\\.grp$"       . conf-space-mode)
-        ("\\.csv$"       . csv-mode       )
-        ("\\.agg$"       . gadget-mode    )("\\.aut$" . gadget-mode)("\\.cap$" . gadget-mode)("\\.catch$" . gadget-mode)
-        ("\\.comm$"      . gadget-mode    )("\\.data$" . gadget-mode)("\\.eat$" . gadget-mode)("\\.eft$" . gadget-mode)
-        ("\\.fleet$"     . gadget-mode    )("\\.igfs$" . gadget-mode)("\\.imm$" . gadget-mode)("\\.in$" . gadget-mode)
-        ("\\.ind$"       . gadget-mode    )("\\.init$" . gadget-mode)("\\.lw$" . gadget-mode)
-        ("\\.maturity$"  . gadget-mode    )("\\.mat$" . gadget-mode)("\\.ml$" . gadget-mode)("\\.out$" . gadget-mode)
-        ("\\.predict$"   . gadget-mode    )("\\.pred$" . gadget-mode)("\\.predprey$" . gadget-mode)
-        ("\\.preyb$"     . gadget-mode    )("\\.print$" . gadget-mode)("\\.ratio$" . gadget-mode)
-        ("\\.rec$"       . gadget-mode    )("\\.refw$" . gadget-mode)("\\.refweights$" . gadget-mode)
-        ("\\.spawn$"     . gadget-mode    )("\\.stom.num$" . gadget-mode)("\\.stom.prey$" . gadget-mode)
-        ("\\.sur$"       . gadget-mode    )("\\.survey$" . gadget-mode)("\\.tag$" . gadget-mode)
-        ("\\.time$"      . gadget-mode    )("/area$" . gadget-mode)("/cod$" . gadget-mode)("/fleet$" . gadget-mode)
-        ("/had$"         . gadget-mode    )("/likelihood$" . gadget-mode)("/main$" . gadget-mode)
-        ("/optinfofile$" . gadget-mode    )("/output$" . gadget-mode)("/penaltyfile$" . gadget-mode)
-        ("/printfile$"   . gadget-mode    )("/refinputfile$" . gadget-mode)("/time$" . gadget-mode)
-        ("/mutt"         . mail-mode      )
-        ("\\.pinchk$"    . sam-mode       )
-        ("\\.mcmc$"      . space-mode   )))
+      '(("\\.a7inp$"      . aspic-mode)
+        ("\\.inp$"        . aspic-mode)
+        ("\\.res$"        . coleraine-mode)
+        ("\\.ref$"        . coleraine-mode)
+        ("\\.rep$"        . coleraine-mode)
+        ("\\.grp$"        . conf-space-mode)
+        ("\\.csv$"        . csv-mode)
+        ("\\.agg$"        . gadget-mode)
+        ("\\.aut$"        . gadget-mode)
+        ("\\.cap$"        . gadget-mode)
+        ("\\.catch$"      . gadget-mode)
+        ("\\.comm$"       . gadget-mode)
+        ("\\.data$"       . gadget-mode)
+        ("\\.eat$"        . gadget-mode)
+        ("\\.eft$"        . gadget-mode)
+        ("\\.fleet$"      . gadget-mode)
+        ("\\.igfs$"       . gadget-mode)
+        ("\\.imm$"        . gadget-mode)
+        ("\\.in$"         . gadget-mode)
+        ("\\.ind$"        . gadget-mode)
+        ("\\.init$"       . gadget-mode)
+        ("\\.lw$"         . gadget-mode)
+        ("\\.maturity$"   . gadget-mode)
+        ("\\.mat$"        . gadget-mode)
+        ("\\.ml$"         . gadget-mode)
+        ("\\.out$"        . gadget-mode)
+        ("\\.predict$"    . gadget-mode)
+        ("\\.pred$"       . gadget-mode)
+        ("\\.predprey$"   . gadget-mode)
+        ("\\.preyb$"      . gadget-mode)
+        ("\\.print$"      . gadget-mode)
+        ("\\.ratio$"      . gadget-mode)
+        ("\\.rec$"        . gadget-mode)
+        ("\\.refw$"       . gadget-mode)
+        ("\\.refweights$" . gadget-mode)
+        ("\\.spawn$"      . gadget-mode)
+        ("\\.stom.num$"   . gadget-mode)
+        ("\\.stom.prey$"  . gadget-mode)
+        ("\\.sur$"        . gadget-mode)
+        ("\\.survey$"     . gadget-mode)
+        ("\\.tag$"        . gadget-mode)
+        ("\\.time$"       . gadget-mode)
+        ("/area$"         . gadget-mode)
+        ("/cod$"          . gadget-mode)
+        ("/fleet$"        . gadget-mode)
+        ("/had$"          . gadget-mode)
+        ("/likelihood$"   . gadget-mode)
+        ("/main$"         . gadget-mode)
+        ("/optinfofile$"  . gadget-mode)
+        ("/output$"       . gadget-mode)
+        ("/penaltyfile$"  . gadget-mode)
+        ("/printfile$"    . gadget-mode)
+        ("/refinputfile$" . gadget-mode)
+        ("/time$"         . gadget-mode)
+        ("/mutt"          . mail-mode)
+        ("\\.pinchk$"     . sam-mode)
+        ("\\.mcmc$"       . space-mode)))
 (setq ext-util
-      '(
-        ("\\.ac$"          . autoconf-mode    )
-	("/ChangeLog"      . change-log-mode  )
-        ("\\.cmake$"       . cmake-mode       )
-        ("\\.diff$"        . diff-mode        )("\\.patch$" . diff-mode)
-        ("\\.ebrowse$"     . ebrowse-tree-mode)("/BROWSE" . ebrowse-tree-mode)
-        ("\\.iss$"         . iss-mode         )
-        ("/COMMIT_EDITMSG" . log-edit-mode    )("/svn-commit\\." . log-edit-mode)
-        ("/Makefile"       . makefile-mode    )("\\.mak$" . makefile-mode)("\\.mk$" . makefile-mode)
-        ("/GNUmakefile"    . makefile-mode    )("/Makevars" . makefile-mode)
-        ("/Redit"          . R-mode           )("/tmp/Rtmp" . R-mode)
-        ("\\.tar$"         . tar-mode         )("\\.tar\\." . tar-mode)))
+      '(("\\.ac$"          . autoconf-mode)
+	("/ChangeLog"      . change-log-mode)
+        ("\\.cmake$"       . cmake-mode)
+        ("\\.diff$"        . diff-mode)
+        ("\\.patch$"       . diff-mode)
+        ("\\.ebrowse$"     . ebrowse-tree-mode)
+        ("/BROWSE"         . ebrowse-tree-mode)
+        ("\\.iss$"         . iss-mode)
+        ("/COMMIT_EDITMSG" . log-edit-mode)
+        ("/svn-commit\\."  . log-edit-mode)
+        ("/Makefile"       . makefile-mode)
+        ("\\.mak$"         . makefile-mode)
+        ("\\.mk$"          . makefile-mode)
+        ("/GNUmakefile"    . makefile-mode)
+        ("/Makevars"       . makefile-mode)
+        ("/Redit"          . R-mode)
+        ("/tmp/Rtmp"       . R-mode)
+        ("\\.tar$"         . tar-mode)
+        ("\\.tar\\."       . tar-mode)))
 (setq auto-mode-alist (append ext-code ext-conf ext-doc ext-io ext-util))
 ;;------------------
 ;; 3.7  Completions
 ;;------------------
 ;; Help find-file to complete the filename of interest
-(setq completion-ignored-extensions '(".bash_history"                                 ; .bashrc
-                                      ".cov"                                          ; .cor (admb)
-                                      ".html"                                         ; .org (org)
-                                      ".aux" ".dvi" ".log" ".out" ".pdf" ".ps" ".toc" ; .tex (latex)
-                                      ".o" ".exe"                                  )) ; source code (generic)
-;;======================================================================================================================
+(setq completion-ignored-extensions
+      '(".bash_history"                                 ; .bashrc
+        ".cov"                                          ; .cor (admb)
+        ".html"                                         ; .org (org)
+        ".aux" ".dvi" ".log" ".out" ".pdf" ".ps" ".toc" ; .tex (latex)
+        ".o" ".exe"                                  )) ; source code (generic)
+;;==============================================================================
 ;;
 ;; 4  KEYBINDINGS
 ;;
-;;======================================================================================================================
-;; f1-f12    1:describe, 2-3:location, 4:repeat, 5:revert, 6:window, 7-8:macro, 9-10:mode, 11:outline, 12:template
-;;----------------------------------------------------------------------------------------------------------------------
+;;==============================================================================
+;; f1-f12    1:describe, 2-3:location, 4:repeat, 5:revert, 6:window,
+;;           7-8:macro, 9-10:mode, 11:outline, 12:template
+;;------------------------------------------------------------------------------
 ;; S
-;; Default                                                                   SPC         HOME END PGUP PGDN
-;; Custom                                                                        TAB RET
-;; Available                                                                                                BKSP DEL ESC
-;;----------------------------------------------------------------------------------------------------------------------
-;; C
-;; Windows                                             ~                                                             ESC
-;; Special      c     i   m          x         [
-;; Default    ab defgh  kl nopqrst v x  0..9 -        /                                  HOME END PGUP PGDN BKSP DEL
-;; Custom              j          u w yz        ];'\,.  ! # %   (     |: <>? SPC TAB RET
-;; Available                                `            @ $ ^&* )_+{}  "
-;;----------------------------------------------------------------------------------------------------------------------
-;; M
-;; Special                                     [                                 TAB                                 ESC
-;; Default                           x                                       SPC         HOME END PGUP PGDN BKSP DEL
-;; Custom     abcdefghijklmnopqrstuvw yz0..9`-= ];'\,./                              RET
+;; Default
+;;            SPC         HOME END PGUP PGDN
+;; Custom
+;;                TAB RET
 ;; Available
-;;----------------------------------------------------------------------------------------------------------------------
+;;                                           BKSP DEL ESC
+;;------------------------------------------------------------------------------
+;; C
+;; Windows                                             ~
+;;                                                    ESC
+;; Special      c     i   m          x         [
+;; Default    ab defgh  kl nopqrst v x  0..9 -        /
+;;                        HOME END PGUP PGDN BKSP DEL
+;; Custom              j          u w yz        ];'\,.  ! # %   (     |: <>?
+;;            SPC TAB RET
+;; Available                                `            @ $ ^&* )_+{}  "
+;;------------------------------------------------------------------------------
+;; M
+;; Special                                     [
+;;                TAB                                 ESC
+;; Default                           x
+;;            SPC         HOME END PGUP PGDN BKSP DEL
+;; Custom     abcdefghijklmnopqrstuvw yz0..9`-= ];'\,./
+;;                    RET
+;; Available
+;;------------------------------------------------------------------------------
 ;; C-M
 ;; Special                m
 ;; Default     b   f
-;; Windows                                                                                                       DEL
+;; Windows
+;;                                                DEL
 ;; KDE           d      k
-;; Emacs      a   e    j   n p rs      z05   -=     ,.                       SPC     RET      END PGUP PGDN
-;; Available    c   ghi  l  o q  tuvwxy 1..9`                                    TAB     HOME               BKSP     ESC
-;;----------------------------------------------------------------------------------------------------------------------
+;; Emacs      a   e    j   n p rs      z05   -=     ,.
+;;            SPC     RET      END PGUP PGDN
+;; Available    c   ghi  l  o q  tuvwxy 1..9`
+;;                TAB     HOME               BKSP     ESC
+;;------------------------------------------------------------------------------
 ;; C-c
-;; Custom     abcdefghijklmnopqrstuvwxyz0    -=  ;' ,./                      SPC TAB
-;; Available                            1..9`  []  \                                 RET HOME END PGUP PGDN BKSP DEL ESC
-;;----------------------------------------------------------------------------------------------------------------------
+;; Custom     abcdefghijklmnopqrstuvwxyz0    -=  ;' ,./
+;;            SPC TAB
+;; Available                            1..9`  []  \
+;;                    RET HOME END PGUP PGDN BKSP DEL ESC
+;;------------------------------------------------------------------------------
 ;; C-h
 ;; Default    ab d f  i k m  p rs  v
 ;; Custom     A c     I            V
-;; Available      e gh j l no q  tu wxyz0..9`-=[]\;',./                      SPC TAB RET HOME END PGUP PGDN BKSP DEL ESC
-;;----------------------------------------------------------------------------------------------------------------------
+;; Available      e gh j l no q  tu wxyz0..9`-=[]\;',./
+;;            SPC TAB RET HOME END PGUP PGDN BKSP DEL ESC
+;;------------------------------------------------------------------------------
 ;; C-x
 ;; Don't use  a                 s    x
-;; Default     b d      k  no  r   vw   0..9       \                                                        BKSP     ESC
-;; Custom       c  fghij lm  p   tu   y      -= ];' ,./          )           SPC TAB RET
-;; Available      e           q        z    `  [                                         HOME END PGUP PGDN      DEL
-;;----------------------------------------------------------------------------------------------------------------------
+;; Default     b d      k  no  r   vw   0..9       \
+;;                                           BKSP     ESC
+;; Custom       c  fghij lm  p   tu   y      -= ];' ,./          )
+;;            SPC TAB RET
+;; Available      e           q        z    `  [
+;;                        HOME END PGUP PGDN      DEL
+;;------------------------------------------------------------------------------
 ;; C-x C
 ;; Don't use  a     gh     n p
-;; Special                                     [       ~                                                             ESC
+;; Special                                     [       ~
+;;                                                    ESC
 ;; Default     bc  f     l    q s u w        -=  ;
-;; Custom        de   ijk m o  r t v xyz0..9      ' ,./                      SPC TAB RET                    BKSP
-;; Available                            1..8`   ]  \                                     HOME END PGUP PGDN      DEL
-;;----------------------------------------------------------------------------------------------------------------------
+;; Custom        de   ijk m o  r t v xyz0..9      ' ,./
+;;            SPC TAB RET                    BKSP
+;; Available                            1..8`   ]  \
+;;                        HOME END PGUP PGDN      DEL
+;;------------------------------------------------------------------------------
 ;; C-x v
 ;; Similar
 ;; Special
 ;; Default          g    l        uv          =        ~
 ;; Custom                                                          +
-;; Available  abcdef hijk mnopqrst  wxyz    `- [];'\,./ !@#$%^&*()_ {}|:"<>? SPC TAB RET HOME END PGUP PGDN BKSP DEL ESC
-;;----------------------------------------------------------------------------------------------------------------------
+;; Available  abcdef hijk mnopqrst  wxyz    `- [];'\,./ !@#$%^&*()_ {}|:"<>?
+;;            SPC TAB RET HOME END PGUP PGDN BKSP DEL ESC
+;;------------------------------------------------------------------------------
 ;;    1       2      3
 ;;    click   -      imenu
 ;; S  extend  -      -
@@ -385,8 +545,8 @@
 (global-set-key      [C-M-mouse-1] 'browse-url-at-mouse)
 (global-set-key   [S-down-mouse-1] 'mouse-extend-region) ; mouse-set-font
 (global-set-key   [S-drag-mouse-1] 'mouse-extend-region)
-(global-set-key          [mouse-2] 'mouse-yank-at-click) ; more predictable than mouse-yank-primary
-(global-set-key          [mouse-3] 'ignore             ) ; mouse-secondary-save-then-kill
+(global-set-key          [mouse-2] 'mouse-yank-at-click) ; mouse-yank-primary
+(global-set-key          [mouse-3] 'ignore    ) ; mouse-secondary-save-then-kill
 (global-set-key     [down-mouse-3] 'imenu              )
 (global-set-key       [C-wheel-up] 'text-scale-increase)
 (global-set-key     [C-wheel-down] 'text-scale-decrease)
@@ -401,77 +561,78 @@
 ;;--------------
 ;; Within each: symbols, upper, lower, S, C, CS, M (left-right, up-down)
 ;; Use [?\t] for TAB for Putty terminal, where [tab]=<tab> is not accessible
-(global-set-key [escape]            'delete-other-windows        ) ; Meta button
-(global-set-key [?\C-x escape]      'repeat-complex-command      ) ; [map]
-(global-set-key [C-insert]          'copy-line-or-region         ) ; kill-ring-save
-(global-set-key [f1]                'describe-char               )
-(global-set-key [S-f1]              'describe-face               )
-(global-set-key [f2]                'register-store-X            )
-(global-set-key [S-f2]              'register-store-Y            )
-(global-set-key [f3]                'register-jump-X             )
-(global-set-key [S-f3]              'register-jump-Y             )
-(global-set-key [f4]                'repeat                      )
-(global-set-key [S-f4]              'tags-loop-continue          ) ; continue dired-do-search
-(global-set-key [C-f4]              'kill-this-buffer            )
-(global-set-key [M-f4]              'save-buffers-kill-emacs     )
-(global-set-key [f5]                'revert-buffer               )
-(global-set-key [S-f5]              'arni-colors                 )
-(global-set-key [M-f5]              'dot-emacs-eval              )
-(global-set-key [27 f5]             'dot-emacs-eval              ) ; M-f5 in terminal
-(global-set-key [f6]                'other-window                )
-(global-set-key [C-f6]              'bs-cycle-next               )
-(global-set-key [C-S-f6]            'bs-cycle-previous           )
-(global-set-key [f7]                'record-macro                )
-(global-set-key [f8]                'kmacro-call-macro           )
-(global-set-key [f11]               'outline-mode                ) ; toggle-frame-fullscreen
-(global-set-key [?\C-x delete]      'blank-region                )
-(global-set-key [C-backspace]       'backward-delete-word        ) ; backward-kill-word
-(global-set-key [M-backspace]       'backward-delete-word        ) ; backward-kill-word
-(global-set-key [?\C-x backspace]   'back-to-indentation         ) ; backward-kill-sentence
-(global-set-key [?\C-x C-backspace] 'back-to-indentation         )
-(global-set-key [C-S-backspace]     'kill-whole-line-stay        ) ; kill-whole-line
-(global-set-key [27 127]            'backward-delete-word        ) ; M-backspace in terminal
-(global-set-key [C-delete]          'delete-word                 ) ; kill-line
-(global-set-key [M-delete]          'kill-buffer-maybe-window    ) ; backward-kill-word
-(global-set-key [select]            'end-of-line                 ) ; [end] in Putty -nw
-(global-set-key [C-M-next]          'scroll-both-down-page       )
-(global-set-key [C-M-prior]         'scroll-both-up-page         )
-(global-set-key [?\t]               'indent-or-complete          ) ; indent-for-tab-command, use \t=TAB, not [tab]
-(global-set-key [?\C-x ?\t]         'indent-relative             ) ; indent-rigidly
-(global-set-key [backtab]           'unindent-line-or-region     ) ; S-tab in Windows and Linux
-(global-set-key [C-tab]             'indent-buffer               )
-(global-set-key [C-S-tab]           'unindent-buffer             )
-(global-set-key [C-S-iso-lefttab]   'unindent-buffer             ) ; linux C-S-tab
-(global-set-key [S-return]          'comment-indent-new-line     )
-(global-set-key [C-return]          'recentf-open-files          )
-(global-set-key [C-M-return]        'browse-url-at-point         )
-(global-set-key [?\C-x C-return]    'describe-current-coding-full)
-(global-set-key [C-enter]           'recentf-open-files          )
-(global-set-key [?\C- ]             'dabbrev-expand              ) ; set-mark-command
-(global-set-key [?\C-@]             'dabbrev-expand              ) ; C-SPC in terminal
-(global-set-key [?\M- ]             'cycle-spacing               ) ; just-one-space
-(global-set-key [?\C-\M- ]          'recentf-open-files          ) ; mark-sexp
-(global-set-key [?\C-\M-@]          'recentf-open-files          ) ; C-M-SPC in terminal
-(global-set-key [?\C-c tab]         'tab-mode                    )
-(global-set-key [?\C-c ? ]          'hl-line-mode                ) ; highlight current line
-(global-set-key [?\C-x ? ]          'blank-to-paren              )
-(global-set-key [?\C-x ?\C- ]       'delete-horizontal-space     ) ; pop-global-mark
-(global-set-key [C-up]              'previous-line               ) ; backward-paragraph
-(global-set-key [C-down]            'next-line                   ) ; forward-paragraph
-(global-set-key [C-S-up]            'pull-line-or-region-up      ) ; backward-paragraph
-(global-set-key [C-S-down]          'pull-line-or-region-down    ) ; forward-paragraph
-(global-set-key [M-left]            'split-window-top-bottom     ) ; backward-word
-(global-set-key [M-right]           'split-window-left-right     ) ; forward-word
-(global-set-key [M-up]              'scroll-other-up             )
-(global-set-key [M-down]            'scroll-other-down           )
-(global-set-key [?\C-c left]        'uncomment-line-or-region    )
-(global-set-key [?\C-c right]       'comment-line-or-region      )
-(global-set-key [?\C-x left]        'split-window-top-bottom     ) ; previous-buffer
-(global-set-key [?\C-x right]       'split-window-left-right     ) ; next-buffer
-(global-set-key [?\C-x S-up]        'uncomment-then-up           )
-(global-set-key [?\C-x S-down]      'uncomment-then-down         )
-(global-set-key [?\C-x C-up]        'comment-then-up             )
-(global-set-key [?\C-x C-down]      'comment-then-down           )
+(global-set-key [escape]       'delete-other-windows   ) ; Meta button
+(global-set-key [?\C-x escape] 'repeat-complex-command ) ; [map]
+(global-set-key [C-insert]     'copy-line-or-region    ) ; kill-ring-save
+(global-set-key [f1]           'describe-char          )
+(global-set-key [S-f1]         'describe-face          )
+(global-set-key [f2]           'register-store-X       )
+(global-set-key [S-f2]         'register-store-Y       )
+(global-set-key [f3]           'register-jump-X        )
+(global-set-key [S-f3]         'register-jump-Y        )
+(global-set-key [f4]           'repeat                 )
+(global-set-key [S-f4]         'tags-loop-continue  ) ; continue dired-do-search
+(global-set-key [C-f4]         'kill-this-buffer       )
+(global-set-key [M-f4]         'save-buffers-kill-emacs)
+(global-set-key [f5]           'revert-buffer          )
+(global-set-key [S-f5]         'arni-colors            )
+(global-set-key [M-f5]         'dot-emacs-eval         )
+(global-set-key [27 f5]        'dot-emacs-eval         ) ; M-f5 in terminal
+(global-set-key [f6]           'other-window           )
+(global-set-key [C-f6]         'bs-cycle-next          )
+(global-set-key [C-S-f6]       'bs-cycle-previous      )
+(global-set-key [f7]           'record-macro           )
+(global-set-key [f8]           'kmacro-call-macro      )
+(global-set-key [f11]          'outline-mode         ) ; toggle-frame-fullscreen
+(global-set-key [?\C-x delete] 'blank-region           )
+(global-set-key [C-backspace]  'backward-delete-word   ) ; backward-kill-word
+(global-set-key [M-backspace]  'backward-delete-word   ) ; backward-kill-word
+(global-set-key [?\C-x backspace] 'back-to-indentation) ; backward-kill-sentence
+(global-set-key [?\C-x C-backspace] 'back-to-indentation)
+(global-set-key [C-S-backspace] 'kill-whole-line-stay  ) ; kill-whole-line
+(global-set-key [27 127]       'backward-delete-word   ) ; M-BKSP in terminal
+(global-set-key [C-delete]     'delete-word            ) ; kill-line
+(global-set-key [M-delete]     'kill-buffer-maybe-window) ; backward-kill-word
+(global-set-key [select]       'end-of-line            ) ; [end] in Putty -nw
+(global-set-key [C-M-next]     'scroll-both-down-page  )
+(global-set-key [C-M-prior]    'scroll-both-up-page    )
+;; Use \t=TAB, not [tab]
+(global-set-key [?\t]          'indent-or-complete    ) ; indent-for-tab-command
+(global-set-key [?\C-x ?\t]    'indent-relative        ) ; indent-rigidly
+(global-set-key [backtab]      'unindent-line-or-region) ; S-tab in Win and Linx
+(global-set-key [C-tab]        'indent-buffer          )
+(global-set-key [C-S-tab]      'unindent-buffer        )
+(global-set-key [C-S-iso-lefttab] 'unindent-buffer     ) ; linux C-S-tab
+(global-set-key [S-return]     'comment-indent-new-line)
+(global-set-key [C-return]     'recentf-open-files     )
+(global-set-key [C-M-return]   'browse-url-at-point    )
+(global-set-key [?\C-x C-return] 'describe-current-coding-full)
+(global-set-key [C-enter]      'recentf-open-files     )
+(global-set-key [?\C- ]        'dabbrev-expand         ) ; set-mark-command
+(global-set-key [?\C-@]        'dabbrev-expand         ) ; C-SPC in terminal
+(global-set-key [?\M- ]        'cycle-spacing          ) ; just-one-space
+(global-set-key [?\C-\M- ]     'recentf-open-files     ) ; mark-sexp
+(global-set-key [?\C-\M-@]     'recentf-open-files     ) ; C-M-SPC in terminal
+(global-set-key [?\C-c tab]    'tab-mode               )
+(global-set-key [?\C-c ? ]     'hl-line-mode          ) ; highlight current line
+(global-set-key [?\C-x ? ]     'blank-to-paren         )
+(global-set-key [?\C-x ?\C- ]  'delete-horizontal-space) ; pop-global-mark
+(global-set-key [C-up]         'previous-line          ) ; backward-paragraph
+(global-set-key [C-down]       'next-line              ) ; forward-paragraph
+(global-set-key [C-S-up]       'pull-line-or-region-up ) ; backward-paragraph
+(global-set-key [C-S-down]     'pull-line-or-region-down) ; forward-paragraph
+(global-set-key [M-left]       'split-window-top-bottom) ; backward-word
+(global-set-key [M-right]      'split-window-left-right) ; forward-word
+(global-set-key [M-up]         'scroll-other-up        )
+(global-set-key [M-down]       'scroll-other-down      )
+(global-set-key [?\C-c left]   'uncomment-line-or-region)
+(global-set-key [?\C-c right]  'comment-line-or-region )
+(global-set-key [?\C-x left]   'split-window-top-bottom) ; previous-buffer
+(global-set-key [?\C-x right]  'split-window-left-right) ; next-buffer
+(global-set-key [?\C-x S-up]   'uncomment-then-up      )
+(global-set-key [?\C-x S-down] 'uncomment-then-down    )
+(global-set-key [?\C-x C-up]   'comment-then-up        )
+(global-set-key [?\C-x C-down] 'comment-then-down      )
 ;;--------------------
 ;; 4.4  Three strokes
 ;;--------------------
@@ -488,219 +649,223 @@
 ;; 4.5  Two strokes
 ;;------------------
 ;; C-c, C-h, C-x
-(global-set-key [?\C-c ?0]     'fundamental-mode                  )
-(global-set-key [?\C-c ?-]     'highlight-changes-mode            )
-(global-set-key [?\C-c ?=]     'diff-this-buffer-with-file        )
-(global-set-key [?\C-c ?\]]    'show-long-lines                   )
-(global-set-key [?\C-c ?\;]    'csv-mode-force                    )
-(global-set-key [?\C-c ?']     'space-mode                        )
-(global-set-key [?\C-c ?,]     'uncomment-line-or-region          )
-(global-set-key [?\C-c ?.]     'comment-line-or-region            )
-(global-set-key [?\C-c ?/]     'which-function-mode               )
-(global-set-key [?\C-c ?*]     'change-log-mode                   )
-(global-set-key [?\C-c ?a]     'admb-mode                         )
-(global-set-key [?\C-c ?b]     'tmb-mode                          )
-(global-set-key [?\C-c ?c]     'c++-mode                          )
-(global-set-key [?\C-c ?d]     'bat-mode                          )
-(global-set-key [?\C-c ?e]     'emacs-lisp-mode                   )
-(global-set-key [?\C-c ?f]     'f90-mode                          )
-(global-set-key [?\C-c ?g]     'gadget-mode                       )
-(global-set-key [?\C-c ?h]     'html-helper-mode                  )
-(global-set-key [?\C-c ?i]     'texinfo-mode                      )
-(global-set-key [?\C-c ?j]     'java-mode                         )
-(global-set-key [?\C-c ?k]     'markdown-mode                     )
-(global-set-key [?\C-c ?l]     'TeX-latex-mode                    )
-(global-set-key [?\C-c ?m]     'makefile-mode                     )
-(global-set-key [?\C-c ?n]     'linum-mode                        )
-(global-set-key [?\C-c ?o]     'org-mode                          )
-(global-set-key [?\C-c ?p]     'ps-mode                           )
-(global-set-key [?\C-c ?q]     'sql-mode                          )
-(global-set-key [?\C-c ?r]     'R-mode                            )
-(global-set-key [?\C-c ?s]     'sh-mode                           )
-(global-set-key [?\C-c ?t]     'text-mode                         )
-(global-set-key [?\C-c ?u]     'conf-mode                         )
-(global-set-key [?\C-c ?v]     'visual-basic-mode                 )
-(global-set-key [?\C-c ?w]     'Rnw-mode                          )
-(global-set-key [?\C-c ?x]     'hexl-mode                         )
-(global-set-key [?\C-c ?y]     'doxymacs-mode-with-hook           )
-(global-set-key [?\C-c ?z]     'mail-mode                         )
-(global-set-key [?\C-c ?\C-x]  'ignore                            )
-(global-set-key [?\C-h ?A]     'apropos                           )
-(global-set-key [?\C-h ?I]     'Info-on-current-buffer            )
-(global-set-key [?\C-h ?V]     'apropos-variable                  )
-(global-set-key [?\C-h ?c]     'list-colors-fullscreen            ) ; describe-key-briefly
-(global-set-key [?\C-h ?l]     'apropos-library                   ) ; view-lossage
-(global-set-key [?\C-x ?4]     'maximize-window-top               ) ; [map]
-(global-set-key [?\C-x ?$]     'insert-euro                       ) ; set-selective-display
-(global-set-key [?\C-x ?-]     'insert-en-dash                    ) ; shrink-window-if-larger-than-buffer
-(global-set-key [?\C-x ?=]     'duplicate                         ) ; what-cursor-position
-(global-set-key [?\C-x ?+]     'split-window-grid                 ) ; balance-windows
-(global-set-key [?\C-x ?\[]    'up-list                           ) ; backward-page
-(global-set-key [?\C-x ?\]]    'down-list                         ) ; forward-page
-(global-set-key [?\C-x ?\\]    'toggle-enable-multibyte-characters)
-(global-set-key [?\C-x ?']     'toggle-red-special                ) ; expand-abbrev
-(global-set-key [?\C-x ?\;]    'set-fill-column                   ) ; comment-set-column
-(global-set-key [?\C-x ?,]     'backward-word                     )
-(global-set-key [?\C-x ?.]     'forward-word                      ) ; set-fill-prefix
-(global-set-key [?\C-x ?/]     'mark-paragraph                    )
-(global-set-key [?\C-x ?J]     'region-backward-paragraph         )
-(global-set-key [?\C-x ?N]     'new-buffer                        )
-(global-set-key [?\C-x ?T]     'titlecase-dwim                    )
-(global-set-key [?\C-x ?c]     'count-words                       )
-(global-set-key [?\C-x ?f]     'find-file-literally               ) ; set-fill-column
-(global-set-key [?\C-x ?g]     'region-to-line                    )
-(global-set-key [?\C-x ?h]     'copy-buffer                       ) ; mark-whole-buffer
-(global-set-key [?\C-x ?i]     'insert-date                       ) ; insert-file
-(global-set-key [?\C-x ?j]     'region-forward-paragraph          )
-(global-set-key [?\C-x ?l]     'find-tag-other-window             ) ; count-lines-page
-(global-set-key [?\C-x ?m]     'mark-function                     ) ; compose-mail
-(global-set-key [?\C-x ?n]     'narrow-to-defun-or-region         ) ; [map]
-(global-set-key [?\C-x ?p]     'list-packages                     )
-(global-set-key [?\C-x ?t]     'transpose-words                   )
-(global-set-key [?\C-x ?u]     'google-decode-url                 ) ; undo
-(global-set-key [?\C-x ?w]     'widen                             )
-(global-set-key [?\C-x ?y]     'yank-pop                          )
-(global-set-key [?\C-x ?\C-9]  'beginning-of-defun                )
-(global-set-key [?\C-x ?\C-0]  'end-of-defun                      )
-(global-set-key [?\C-x ?\C-_]  'tabify-spaces-copy-buffer         ) ; linux C-x C-/
-(global-set-key [?\C-x ?\C-']  'convert-special                   )
-(global-set-key [?\C-x ?\C-,]  'tab-to-csv                        ) ; or region-backward-char
-(global-set-key [?\C-x ?\C-.]  'region-forward-char               )
-(global-set-key [?\C-x ?\C-/]  'tabify-spaces-copy-buffer         )
-(global-set-key [?\C-x ?\C-b]  'ibuffer                           ) ; list-buffers
-(global-set-key [?\C-x ?\C-e]  'region-to-eol                     ) ; eval-last-sexp
-(global-set-key [?\C-x ?\C-j]  'fill-region-or-buffer             )
-(global-set-key [?\C-x ?\C-k]  'kill-this-buffer                  ) ; [map]
-(global-set-key [?\C-x ?\C-l]  'downcase-word-or-region           ) ; downcase-region
-(global-set-key [?\C-x ?\C-m]  'describe-current-coding-brief     ) ; [map]
-(global-set-key [?\C-x ?\C-n]  'forward-list                      ) ; set-goal-column
-(global-set-key [?\C-x ?\C-o]  'find-file-other-window            ) ; delete-blank-lines
-(global-set-key [?\C-x ?\C-p]  'backward-list                     ) ; mark-page
-(global-set-key [?\C-x ?\C-r]  'reverse-region                    ) ; find-file-read-only
-(global-set-key [?\C-x ?\C-t]  'transpose-sexps                   ) ; transpose-lines
-(global-set-key [?\C-x ?\C-u]  'upcase-word-or-region             ) ; upcase-region
-(global-set-key [?\C-x ?\C-v]  'end-of-buffer                     ) ; find-alternate-file
-(global-set-key [?\C-x ?\C-x]  'eval-expression                   ) ; exchange-point-and-mark
-(global-set-key [?\C-x ?\C-y]  'beginning-of-buffer               )
-(global-set-key [?\C-x ?\C-z]  'indent-buffer                     ) ; for terminal
-(global-set-key [?\C-x ?\M-j]  'join-region-or-buffer             )
-(global-set-key [?\C-x ?\M-m]  'toggle-latin-1-coding             )
-(global-set-key [?\C-x ?\M-s]  'highlight-and-count-string        )
+(global-set-key [?\C-c ?0]    'fundamental-mode         )
+(global-set-key [?\C-c ?-]    'highlight-changes-mode   )
+(global-set-key [?\C-c ?=]    'diff-this-buffer-with-file)
+(global-set-key [?\C-c ?\]]   'show-long-lines          )
+(global-set-key [?\C-c ?\;]   'csv-mode-force           )
+(global-set-key [?\C-c ?']    'space-mode               )
+(global-set-key [?\C-c ?,]    'uncomment-line-or-region )
+(global-set-key [?\C-c ?.]    'comment-line-or-region   )
+(global-set-key [?\C-c ?/]    'which-function-mode      )
+(global-set-key [?\C-c ?*]    'change-log-mode          )
+(global-set-key [?\C-c ?a]    'admb-mode                )
+(global-set-key [?\C-c ?b]    'tmb-mode                 )
+(global-set-key [?\C-c ?c]    'c++-mode                 )
+(global-set-key [?\C-c ?d]    'bat-mode                 )
+(global-set-key [?\C-c ?e]    'emacs-lisp-mode          )
+(global-set-key [?\C-c ?f]    'f90-mode                 )
+(global-set-key [?\C-c ?g]    'gadget-mode              )
+(global-set-key [?\C-c ?h]    'html-helper-mode         )
+(global-set-key [?\C-c ?i]    'texinfo-mode             )
+(global-set-key [?\C-c ?j]    'java-mode                )
+(global-set-key [?\C-c ?k]    'markdown-mode            )
+(global-set-key [?\C-c ?l]    'TeX-latex-mode           )
+(global-set-key [?\C-c ?m]    'makefile-mode            )
+(global-set-key [?\C-c ?n]    'linum-mode               )
+(global-set-key [?\C-c ?o]    'org-mode                 )
+(global-set-key [?\C-c ?p]    'ps-mode                  )
+(global-set-key [?\C-c ?q]    'sql-mode                 )
+(global-set-key [?\C-c ?r]    'R-mode                   )
+(global-set-key [?\C-c ?s]    'sh-mode                  )
+(global-set-key [?\C-c ?t]    'text-mode                )
+(global-set-key [?\C-c ?u]    'conf-mode                )
+(global-set-key [?\C-c ?v]    'visual-basic-mode        )
+(global-set-key [?\C-c ?w]    'Rnw-mode                 )
+(global-set-key [?\C-c ?x]    'hexl-mode                )
+(global-set-key [?\C-c ?y]    'doxymacs-mode-with-hook  )
+(global-set-key [?\C-c ?z]    'mail-mode                )
+(global-set-key [?\C-c ?\C-x] 'ignore                   )
+(global-set-key [?\C-h ?A]    'apropos                  )
+(global-set-key [?\C-h ?I]    'Info-on-current-buffer   )
+(global-set-key [?\C-h ?V]    'apropos-variable         )
+(global-set-key [?\C-h ?c]    'list-colors-fullscreen   ) ; describe-key-briefly
+(global-set-key [?\C-h ?l]    'apropos-library          ) ; view-lossage
+(global-set-key [?\C-x ?4]    'maximize-window-top      ) ; [map]
+(global-set-key [?\C-x ?$]    'insert-euro             ) ; set-selective-display
+(global-set-key [?\C-x ?-] 'insert-en-dash) ;shrink-window-if-larger-than-buffer
+(global-set-key [?\C-x ?=]    'duplicate                ) ; what-cursor-position
+(global-set-key [?\C-x ?+]    'split-window-grid        ) ; balance-windows
+(global-set-key [?\C-x ?\[]   'up-list                  ) ; backward-page
+(global-set-key [?\C-x ?\]]   'down-list                ) ; forward-page
+(global-set-key [?\C-x ?\\]   'toggle-enable-multibyte-characters)
+(global-set-key [?\C-x ?']    'toggle-red-special       ) ; expand-abbrev
+(global-set-key [?\C-x ?\;]   'set-fill-column          ) ; comment-set-column
+(global-set-key [?\C-x ?,]    'backward-word            )
+(global-set-key [?\C-x ?.]    'forward-word             ) ; set-fill-prefix
+(global-set-key [?\C-x ?/]    'mark-paragraph           )
+(global-set-key [?\C-x ?J]    'region-backward-paragraph)
+(global-set-key [?\C-x ?N]    'new-buffer               )
+(global-set-key [?\C-x ?T]    'titlecase-dwim           )
+(global-set-key [?\C-x ?c]    'count-words              )
+(global-set-key [?\C-x ?f]    'find-file-literally      ) ; set-fill-column
+(global-set-key [?\C-x ?g]    'region-to-line           )
+(global-set-key [?\C-x ?h]    'copy-buffer              ) ; mark-whole-buffer
+(global-set-key [?\C-x ?i]    'insert-date              ) ; insert-file
+(global-set-key [?\C-x ?j]    'region-forward-paragraph )
+(global-set-key [?\C-x ?l]    'find-tag-other-window    ) ; count-lines-page
+(global-set-key [?\C-x ?m]    'mark-function            ) ; compose-mail
+(global-set-key [?\C-x ?n]    'narrow-to-defun-or-region) ; [map]
+(global-set-key [?\C-x ?p]    'list-packages            )
+(global-set-key [?\C-x ?t]    'transpose-words          )
+(global-set-key [?\C-x ?u]    'google-decode-url        ) ; undo
+(global-set-key [?\C-x ?w]    'widen                    )
+(global-set-key [?\C-x ?y]    'yank-pop                 )
+(global-set-key [?\C-x ?\C-9] 'beginning-of-defun       )
+(global-set-key [?\C-x ?\C-0] 'end-of-defun             )
+(global-set-key [?\C-x ?\C-_] 'tabify-spaces-copy-buffer) ; linux C-x C-/
+(global-set-key [?\C-x ?\C-'] 'convert-special          )
+(global-set-key [?\C-x ?\C-,] 'tab-to-csv            ) ; or region-backward-char
+(global-set-key [?\C-x ?\C-.] 'region-forward-char      )
+(global-set-key [?\C-x ?\C-/] 'tabify-spaces-copy-buffer)
+(global-set-key [?\C-x ?\C-b] 'ibuffer                  ) ; list-buffers
+(global-set-key [?\C-x ?\C-e] 'region-to-eol            ) ; eval-last-sexp
+(global-set-key [?\C-x ?\C-j] 'fill-region-or-buffer    )
+(global-set-key [?\C-x ?\C-k] 'kill-this-buffer         ) ; [map]
+(global-set-key [?\C-x ?\C-l] 'downcase-word-or-region  ) ; downcase-region
+(global-set-key [?\C-x ?\C-m] 'describe-current-coding-brief) ; [map]
+(global-set-key [?\C-x ?\C-n] 'forward-list             ) ; set-goal-column
+(global-set-key [?\C-x ?\C-o] 'find-file-other-window   ) ; delete-blank-lines
+(global-set-key [?\C-x ?\C-p] 'backward-list            ) ; mark-page
+(global-set-key [?\C-x ?\C-r] 'reverse-region           ) ; find-file-read-only
+(global-set-key [?\C-x ?\C-t] 'transpose-sexps          ) ; transpose-lines
+(global-set-key [?\C-x ?\C-u] 'upcase-word-or-region    ) ; upcase-region
+(global-set-key [?\C-x ?\C-v] 'end-of-buffer            ) ; find-alternate-file
+(global-set-key [?\C-x ?\C-x] 'eval-expression       ) ; exchange-point-and-mark
+(global-set-key [?\C-x ?\C-y] 'beginning-of-buffer      )
+(global-set-key [?\C-x ?\C-z] 'indent-buffer            ) ; for terminal
+(global-set-key [?\C-x ?\M-j] 'join-region-or-buffer    )
+(global-set-key [?\C-x ?\M-m] 'toggle-latin-1-coding    )
+(global-set-key [?\C-x ?\M-s] 'highlight-and-count-string)
 ;;-----------------
 ;; 4.6  One stroke
 ;;-----------------
 ;; C, CM, M, plain
-(global-set-key [?\C-!]     'shell-command             )
-(global-set-key [?\C-#]     'toggle-comments           )
-(global-set-key [?\C-%]     'toggle-read-only          )
-(global-set-key [?\C-&]     'async-shell-command       )
-(global-set-key [?\C-\(]    'backward-sexp-start       )
-(global-set-key [?\C-\)]    'forward-sexp-start        )
-(global-set-key [?\C-=]     'duplicate                 )
-(global-set-key [?\C-+]     'switch-to-buffer          )
-(global-set-key [?\C-\]]    'region-backward-line      ) ; abort-recursive-edit
-(global-set-key [?\C-{]     'backward-paragraph        )
-(global-set-key [?\C-}]     'forward-paragraph         )
-(global-set-key [?\C-|]     'align                     )
-(global-set-key [?\C-\;]    'region-backward-word      )
-(global-set-key [?\C-:]     'region-forward-word       )
-(global-set-key [?\C-']     'region-forward-line       )
-(global-set-key [?\C-,]     'backward-word             )
-(global-set-key [?\C-<]     'region-backward-word      )
-(global-set-key [?\C-.]     'forward-word              )
-(global-set-key [?\C->]     'region-forward-word       )
-(global-set-key [67108927]  'count-everything          ) ; C-?
-(global-set-key [?\C-j]     'fill-paragraph-forward    ) ; newline
-(global-set-key [?\C-k]     'kill-line-or-region       ) ; kill-line
-(global-set-key [?\C-u]     'man                       ) ; universal-argument
+(global-set-key [?\C-!]     'shell-command           )
+(global-set-key [?\C-#]     'toggle-comments         )
+(global-set-key [?\C-%]     'toggle-read-only        )
+(global-set-key [?\C-&]     'async-shell-command     )
+(global-set-key [?\C-\(]    'backward-sexp-start     )
+(global-set-key [?\C-\)]    'forward-sexp-start      )
+(global-set-key [?\C-=]     'duplicate               )
+(global-set-key [?\C-+]     'switch-to-buffer        )
+(global-set-key [?\C-\]]    'region-backward-line    ) ; abort-recursive-edit
+(global-set-key [?\C-{]     'backward-paragraph      )
+(global-set-key [?\C-}]     'forward-paragraph       )
+(global-set-key [?\C-|]     'align                   )
+(global-set-key [?\C-\;]    'region-backward-word    )
+(global-set-key [?\C-:]     'region-forward-word     )
+(global-set-key [?\C-']     'region-forward-line     )
+(global-set-key [?\C-,]     'backward-word           )
+(global-set-key [?\C-<]     'region-backward-word    )
+(global-set-key [?\C-.]     'forward-word            )
+(global-set-key [?\C->]     'region-forward-word     )
+(global-set-key [67108927]  'count-everything        ) ; C-?
+(global-set-key [?\C-j]     'fill-paragraph-forward  ) ; newline
+(global-set-key [?\C-k]     'kill-line-or-region     ) ; kill-line
+(global-set-key [?\C-u]     'man                     ) ; universal-argument
 (global-set-key [?\C-w]     'toggle-trailing-whitespace) ; kill-region
-(global-set-key [?\C-y]     'scroll-down-command       ) ; yank
-(global-set-key [?\C-z]     'undo                      ) ; iconify-or-deiconify-frame
-(global-set-key [?\C-Þ]     'count-everything          )
-(global-set-key [67109086]  'count-everything          ) ; C-Þ
-(global-set-key [67111134]  'count-everything          ) ; C-Þ, was [331966]
-(global-set-key [67109118]  'undo                      ) ; C-þ
-(global-set-key [67111166]  'undo                      ) ; C-þ
-(global-set-key [C-M-end]   'goto-longest-line         ) ; end-of-defun
-(global-set-key [?\C-\M-5]  'toggle-read-only          ) ; digit-argument
-(global-set-key [?\C-\M-0]  'text-scale-adjust         ) ; digit-argument
-(global-set-key [?\C-\M-_]  'unindent-buffer           ) ; for terminal
-(global-set-key [?\C-\M--]  'text-scale-decrease       ) ; negative-argument
-(global-set-key [?\C-\M-=]  'text-scale-increase       )
-(global-set-key [?\C-\M-\]] 'scroll-both-up            )
-(global-set-key [?\C-\M-\\] 'align-regexp              ) ; indent-region
-(global-set-key [?\C-\M-']  'scroll-both-down          )
-(global-set-key [?\C-\M-,]  'backward-paragraph        )
-(global-set-key [?\C-\M-.]  'forward-paragraph         ) ; find-tag-regexp
-(global-set-key [?\C-\M-a]  'goto-non-ascii            ) ; beginning-of-defun
-(global-set-key [?\C-\M-e]  'query-replace-regexp      ) ; end-of-defun
-(global-set-key [?\C-\M-j]  'join-line-nospace         ) ; indent-new-comment-line
-(global-set-key [?\C-\M-n]  'pull-line-or-region-down  ) ; forward-list
-(global-set-key [?\C-\M-p]  'pull-line-or-region-up    ) ; backward-list
-(global-set-key [?\C-\M-z]  'zap-back-to-char          )
-(if window-system                                        ; keep digit-argument in terminal
-    (progn (global-set-key [?\M-1] 'font-1             ) ; digit-argument
-           (global-set-key [?\M-2] 'font-2             ) ; digit-argument
-           (global-set-key [?\M-3] 'font-3             ) ; digit-argument
-           (global-set-key [?\M-4] 'font-4             ) ; digit-argument
-           (global-set-key [?\M-5] 'font-5             ) ; digit-argument
-           (global-set-key [?\M-6] 'font-6             ) ; digit-argument
-           (global-set-key [?\M-7] 'font-7             ) ; digit-argument
-           (global-set-key [?\M-8] 'font-8             ) ; digit-argument
-           (global-set-key [?\M-9] 'font-9             ) ; digit-argument
-           (global-set-key [?\M-0] 'font-0           ))) ; digit-argument
-(global-set-key [?\M-%]     'toggle-read-only          ) ; query-replace
-(global-set-key [?\M-=]     'duplicate-comment         ) ; count-line-region
-(global-set-key [?\M-+]     'transpose-windows         )
-(global-set-key [?\M-\]]    'scroll-up-1               )
-(global-set-key [?\M-{]     'backward-paragraph        ) ; backward-paragraph
-(global-set-key [?\M-}]     'forward-paragraph         ) ; forward-paragraph
-(global-set-key [?\M-\\]    'transpose-windows         ) ; delete-horizontal-space
-(global-set-key [?\M-\;]    'set-tab-width             ) ; comment-dwim
-(global-set-key [?\M-']     'scroll-down-1             ) ; abbrev-prefix-mark
-(global-set-key [?\M-,]     'memo                      ) ; tags-loop-continue
-(global-set-key [?\M-.]     'dot-emacs-edit            ) ; find-tag
-(global-set-key [?\M-/]     'delete-comments           ) ; dabbrev-expand
-(global-set-key [?\M-a]     'mark-buffer               ) ; backward-sentence
+(global-set-key [?\C-y]     'scroll-down-command     ) ; yank
+(global-set-key [?\C-z]     'undo                 ) ; iconify-or-deiconify-frame
+(global-set-key [?\C-Þ]     'count-everything        )
+(global-set-key [67109086]  'count-everything        ) ; C-Þ
+(global-set-key [67111134]  'count-everything        ) ; C-Þ, was [331966]
+(global-set-key [67109118]  'undo                    ) ; C-þ
+(global-set-key [67111166]  'undo                    ) ; C-þ
+(global-set-key [C-M-end]   'goto-longest-line       ) ; end-of-defun
+(global-set-key [?\C-\M-5]  'toggle-read-only        ) ; digit-argument
+(global-set-key [?\C-\M-0]  'text-scale-adjust       ) ; digit-argument
+(global-set-key [?\C-\M-_]  'unindent-buffer         ) ; for terminal
+(global-set-key [?\C-\M--]  'text-scale-decrease     ) ; negative-argument
+(global-set-key [?\C-\M-=]  'text-scale-increase     )
+(global-set-key [?\C-\M-\]] 'scroll-both-up          )
+(global-set-key [?\C-\M-\\] 'align-regexp            ) ; indent-region
+(global-set-key [?\C-\M-']  'scroll-both-down        )
+(global-set-key [?\C-\M-,]  'backward-paragraph      )
+(global-set-key [?\C-\M-.]  'forward-paragraph       ) ; find-tag-regexp
+(global-set-key [?\C-\M-a]  'goto-non-ascii          ) ; beginning-of-defun
+(global-set-key [?\C-\M-e]  'query-replace-regexp    ) ; end-of-defun
+(global-set-key [?\C-\M-j]  'join-line-nospace       ) ; indent-new-comment-line
+(global-set-key [?\C-\M-n]  'pull-line-or-region-down) ; forward-list
+(global-set-key [?\C-\M-p]  'pull-line-or-region-up  ) ; backward-list
+(global-set-key [?\C-\M-z]  'zap-back-to-char        )
+(if window-system                              ; keep digit-argument in terminal
+    (progn (global-set-key [?\M-1] 'font-1           ) ; digit-argument
+           (global-set-key [?\M-2] 'font-2           ) ; digit-argument
+           (global-set-key [?\M-3] 'font-3           ) ; digit-argument
+           (global-set-key [?\M-4] 'font-4           ) ; digit-argument
+           (global-set-key [?\M-5] 'font-5           ) ; digit-argument
+           (global-set-key [?\M-6] 'font-6           ) ; digit-argument
+           (global-set-key [?\M-7] 'font-7           ) ; digit-argument
+           (global-set-key [?\M-8] 'font-8           ) ; digit-argument
+           (global-set-key [?\M-9] 'font-9           ) ; digit-argument
+           (global-set-key [?\M-0] 'font-0         ))) ; digit-argument
+(global-set-key [?\M-%]     'toggle-read-only        ) ; query-replace
+(global-set-key [?\M-=]     'duplicate-comment       ) ; count-line-region
+(global-set-key [?\M-+]     'transpose-windows       )
+(global-set-key [?\M-\]]    'scroll-up-1             )
+(global-set-key [?\M-{]     'backward-paragraph      ) ; backward-paragraph
+(global-set-key [?\M-}]     'forward-paragraph       ) ; forward-paragraph
+(global-set-key [?\M-\\]    'transpose-windows       ) ; delete-horizontal-space
+(global-set-key [?\M-\;]    'set-tab-width           ) ; comment-dwim
+(global-set-key [?\M-']     'scroll-down-1           ) ; abbrev-prefix-mark
+(global-set-key [?\M-,]     'memo                    ) ; tags-loop-continue
+(global-set-key [?\M-.]     'dot-emacs-edit          ) ; find-tag
+(global-set-key [?\M-/]     'delete-comments         ) ; dabbrev-expand
+(global-set-key [?\M-a]     'mark-buffer             ) ; backward-sentence
 (if window-system
-    (global-set-key [?\M-b] 're-builder               )) ; backward-word
-(global-set-key [?\M-c]     'copy-line-or-region       ) ; capitalize-word
-(global-set-key [?\M-d]     'delete-word               ) ; kill-word
-(global-set-key [?\M-e]     'query-replace             ) ; forward-sentence
+    (global-set-key [?\M-b] 're-builder             )) ; backward-word
+(global-set-key [?\M-c]     'copy-line-or-region     ) ; capitalize-word
+(global-set-key [?\M-d]     'delete-word             ) ; kill-word
+(global-set-key [?\M-e]     'query-replace           ) ; forward-sentence
 (if window-system
-    (global-set-key [?\M-f] 'occur                    )) ; forward-word
-(global-set-key [?\M-g]     'goto-line                 ) ; [map]
-(global-set-key [?\M-h]     'font-lock-mode            ) ; mark-paragraph
-(global-set-key [?\M-i]     'overwrite-mode            ) ; tab-to-tab-stop
-(global-set-key [?\M-j]     'delete-indentation        ) ; indent-new-comment-line
-(global-set-key [?\M-k]     'kill-this-buffer          ) ; kill-sentence
-(global-set-key [?\M-l]     'delete-trailing-spc-tab-m ) ; downcase-word
-(global-set-key [?\M-m]     'toggle-utf-8-coding       ) ; back-to-indentation
-(global-set-key [?\M-n]     'bs-cycle-next             )
-(global-set-key [?\M-o]     'other-window              ) ; facemenu-set-face
-(global-set-key [?\M-p]     'bs-cycle-previous         )
-(global-set-key [?\M-q]     'sql-oracle-default        ) ; fill-paragraph
-(global-set-key [?\M-r]     'Rni                       ) ; move-to-window-line
+    (global-set-key [?\M-f] 'occur                  )) ; forward-word
+(global-set-key [?\M-g]     'goto-line               ) ; [map]
+(global-set-key [?\M-h]     'font-lock-mode          ) ; mark-paragraph
+(global-set-key [?\M-i]     'overwrite-mode          ) ; tab-to-tab-stop
+(global-set-key [?\M-j]     'delete-indentation      ) ; indent-new-comment-line
+(global-set-key [?\M-k]     'kill-this-buffer        ) ; kill-sentence
+(global-set-key [?\M-l]     'delete-trailing-spc-tab-m) ; downcase-word
+(global-set-key [?\M-m]     'toggle-utf-8-coding     ) ; back-to-indentation
+(global-set-key [?\M-n]     'bs-cycle-next           )
+(global-set-key [?\M-o]     'other-window            ) ; facemenu-set-face
+(global-set-key [?\M-p]     'bs-cycle-previous       )
+(global-set-key [?\M-q]     'sql-oracle-default      ) ; fill-paragraph
+(global-set-key [?\M-r]     'Rni                     ) ; move-to-window-line
 (global-set-key [?\M-s]     'highlight-and-count-regexp)
-(global-set-key [?\M-t]     'sort-lines                ) ; transpose-words
-(global-set-key [?\M-u]     'untabify-buffer           ) ; uppercase-word
-(global-set-key [?\M-v]     'yank-quiet                ) ; scroll-down
-(global-set-key [?\M-w]     'auto-fill-mode            ) ; kill-ring-save
-(global-set-key [?\M-y]     'delete-all-blank-lines    ) ; yank-pop
-(global-set-key [?\M-z]     'zap-up-to-char            ) ; zap-to-char
+(global-set-key [?\M-t]     'sort-lines              ) ; transpose-words
+(global-set-key [?\M-u]     'untabify-buffer         ) ; uppercase-word
+(global-set-key [?\M-v]     'yank-quiet              ) ; scroll-down
+(global-set-key [?\M-w]     'auto-fill-mode          ) ; kill-ring-save
+(global-set-key [?\M-y]     'delete-all-blank-lines  ) ; yank-pop
+(global-set-key [?\M-z]     'zap-up-to-char          ) ; zap-to-char
 ;;-----------------
 ;; 4.7  Minibuffer
 ;;-----------------
-(define-key minibuffer-local-map            [C-up]   'previous-history-element) ; previous-line
-(define-key minibuffer-local-map            [C-down] 'next-history-element    ) ; next-line
-(define-key minibuffer-local-map            [?\C-n]  'next-history-element    ) ; next-line
-(define-key minibuffer-local-map            [?\C-p]  'previous-history-element) ; previous-line
-(define-key minibuffer-local-completion-map [?\M-v]  'yank                    ) ; reactivate yank
-;;======================================================================================================================
+(define-key minibuffer-local-map
+  [C-up]   'previous-history-element) ; previous-line
+(define-key minibuffer-local-map
+  [C-down] 'next-history-element    ) ; next-line
+(define-key minibuffer-local-map
+  [?\C-n]  'next-history-element    ) ; next-line
+(define-key minibuffer-local-map
+  [?\C-p]  'previous-history-element) ; previous-line
+(define-key minibuffer-local-completion-map [?\M-v]  'yank) ; reactivate yank
+;;==============================================================================
 ;;
 ;; 5  FUNCTIONS
 ;;
-;;======================================================================================================================
+;;==============================================================================
 ;; File - Edit - View - Insert - Format - Tools - Window - Help
 ;; new    copy   narrow lorem    indent   comment max      ascii
 ;; close  region        utf8     fill     count   split    colors
@@ -1299,11 +1464,11 @@ which doesn't compile."
        (switch-to-buffer "*Latin-1*")(erase-buffer)(set-buffer-multibyte t)
        (insert "Latin-1 characters up to number 255.\n")
        (dotimes (i 256)(insert (format "%4d | \\%03o | \\x%02x | %c\n" i i i i)))(goto-char (point-min)))
-;;======================================================================================================================
+;;==============================================================================
 ;;
 ;; 6  LANGUAGE MODES
 ;;
-;;======================================================================================================================
+;;==============================================================================
 ;; Settings, faces, keys, functions
 ;;----------
 ;; 6.1  Ada
@@ -2857,11 +3022,11 @@ This is first.\n
   (abbrev-mode 0)(setq save-abbrevs nil)(setq visual-basic-mode-indent 2)(arni-colors))
 (set-face-attribute 'font-lock-function-name-face nil :foreground "brown4")
 (add-hook 'visual-basic-mode-hook 'arni-visual-basic-hook)
-;;======================================================================================================================
+;;==============================================================================
 ;;
 ;; 7  OTHER MODES
 ;;
-;;======================================================================================================================
+;;==============================================================================
 ;; Settings, faces, keys, functions
 ;;------------
 ;; 7.1  Align
@@ -4356,9 +4521,9 @@ break
   (local-unset-key [?\M-p]) ; reactivate bs-cycle-previous
   (local-set-key [?q] 'kill-buffer-maybe-window))
 (add-hook 'log-view-mode-hook 'arni-log-view-hook)
-;;======================================================================================================================
+;;==============================================================================
 ;; 8  ENABLE
-;;======================================================================================================================
+;;==============================================================================
 ;;---------------
 ;; 8.1  Commands
 ;;---------------
