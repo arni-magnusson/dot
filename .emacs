@@ -873,597 +873,1331 @@
 ;;-----------
 ;; 5.1  File
 ;;-----------
-(defun byte-dir-this-really-works (dir) "Compile all `.el' files in DIR and subdirs, except where `.elc' is current."
-       (interactive "DByte compile directory: ")(byte-recompile-directory dir 0))
+(defun byte-dir-this-really-works (dir)
+  "Compile all `.el' files in DIR and subdirs, except where `.elc' is current."
+  (interactive "DByte compile directory: ")
+  (byte-recompile-directory dir 0))
 (defalias 'cp 'copy-file)
 (defalias 'del 'delete-file)
 (defalias 'dir 'list-directory)
 (defalias 'htmlize 'htmlfontify-buffer)
-(defun kill-this-buffer () "Kill current buffer." (interactive)(kill-buffer (current-buffer)))
-(defun kill-buffer-maybe-window () "Kill current buffer and window." (interactive) ; unlike kill-buffer-and-window, this
-       (kill-this-buffer)(if (> (length (window-list)) 1)(delete-window))) ; function doesn't complain about last window
+(defun kill-this-buffer ()
+  "Kill current buffer."
+  (interactive)
+  (kill-buffer (current-buffer)))
+(defun kill-buffer-maybe-window ()
+  "Kill current buffer and window.
+
+Doesn't complain about last window, unlike `kill-buffer-and-window`."
+  (interactive)
+  (kill-this-buffer)
+  (if (> (length (window-list)) 1)(delete-window)))
 (defun kill-process-now ()
-  "Stop last active process." (interactive)
+  "Stop last active process."
+  (interactive)
   (if (> (length (process-list)) 0) ; any active processes?
-      (let ((active-process-buffer (buffer-name (process-buffer (car (last (process-list))))))) ; last process for GDB
+      (let ((active-process-buffer ; last process for GDB
+             (buffer-name (process-buffer (car (last (process-list)))))))
         (kill-process (car (last (process-list)))))))
-(defun kill-unmodified-buffers () "Close all buffers that have not been modified." (interactive)
-       (dolist (B (buffer-list))(kill-buffer-if-not-modified B)))
-(defun latin-1-revert () "Reload file assuming latin-1 encoding." (interactive)
-       (revert-buffer-with-coding-system 'iso-latin-1))
-(defun latin-1-dos () "Reload file assuming latin-1 encoding." (interactive)
-       (revert-buffer-with-coding-system 'iso-latin-1-dos))
-(defun latin-1-unix () "Reload file assuming latin-1 encoding." (interactive)
-       (revert-buffer-with-coding-system 'iso-latin-1-unix))
-(defun ll (dir) "List files in DIR." (interactive "DList directory (verbose): ")(list-directory dir t))
+(defun kill-unmodified-buffers ()
+  "Close all buffers that have not been modified."
+  (interactive)
+  (dolist (B (buffer-list))
+    (kill-buffer-if-not-modified B)))
+(defun latin-1-revert ()
+  "Reload file assuming latin-1 encoding."
+  (interactive)
+  (revert-buffer-with-coding-system 'iso-latin-1))
+(defun latin-1-dos ()
+  "Reload file assuming latin-1 encoding."
+  (interactive)
+  (revert-buffer-with-coding-system 'iso-latin-1-dos))
+(defun latin-1-unix ()
+  "Reload file assuming latin-1 encoding."
+  (interactive)
+  (revert-buffer-with-coding-system 'iso-latin-1-unix))
+(defun ll (dir)
+  "List files in DIR."
+  (interactive "DList directory (verbose): ")
+  (list-directory dir t))
 (defalias 'ls 'list-directory)
-(defun memo () "Open ~/emacs/.memo." (interactive)(find-file "~/emacs/.memo"))
+(defun memo ()
+  "Open ~/emacs/.memo."
+  (interactive)
+  (find-file "~/emacs/.memo"))
 (defalias 'mv 'rename-file)
-(defun new-buffer () "Create new buffer." (interactive)
-       (switch-to-buffer (generate-new-buffer "Untitled"))(eval (list (default-value 'major-mode))))
+(defun new-buffer ()
+  "Create new buffer."
+  (interactive)
+  (switch-to-buffer (generate-new-buffer "Untitled"))
+  (eval (list (default-value 'major-mode))))
 (defalias 'pdf-print 'print-pdf)
-(defun print-pdf () "Print buffer to out.ps and out.pdf. See `ps-outfile'." (interactive)
-       (let ((pdf-outfile (concat (file-name-sans-extension ps-outfile) ".pdf")))
-         (setq ps-landscape-mode nil     ) ; portrait
-         (setq ps-font-family 'Courier   ) ; [Courier] - [Helvetica,Helvetica-Narrow] - [Times,Palatino,NewCenturySchbk]
-         (setq ps-font-size '(9 . 10)    ) ; 9 and 6.5 font size for 120 columns, landscape and portrait
-         (setq ps-paper-type 'a4         ) ; paper size (a4 or letter)
-         (setq ps-print-header nil       ) ; no header (incl. page number)
-         (setq ps-number-of-columns 1    ) ; no columns
-         (setq ps-line-number nil        ) ; no line numbers
-         (setq ps-line-spacing 0         ) ; no line spacing
-         (setq ps-paragraph-spacing 0    ) ; no paragraph spacing
-         (setq ps-use-face-background nil) ; no background color
-         (setq ps-left-margin 60)(setq ps-right-margin 60)(setq ps-top-margin 60)(setq ps-bottom-margin 60)
-         (ps-print-buffer-with-faces ps-outfile)
-         (shell-command (concat "ps2pdf -sPAPERSIZE#" (prin1-to-string ps-paper-type) " " ps-outfile " " pdf-outfile))
-         (message "Distilled %s" pdf-outfile))) ; ps2pdf in Windows uses -arg#val instead of -arg=val, Linux either
-(defun read-file-to-list (file) "Read text from file into list of strings" (interactive "fRead file: ")
-       (with-temp-buffer (insert-file-contents file)(split-string (buffer-string) "\n" t)))
-(defun read-file-to-string (file) "Read text from file into string" (interactive "fRead file: ")
-       (with-temp-buffer (insert-file-contents file)(buffer-string)))
+(defun print-pdf ()
+  "Print buffer to out.ps and out.pdf. See `ps-outfile'."
+  (interactive)
+  (let ((pdf-outfile (concat (file-name-sans-extension ps-outfile) ".pdf")))
+    (setq ps-landscape-mode nil     ) ; portrait
+    ;; [Courier]-[Helvetica,Helvetica-Narrow]-[Times,Palatino,NewCenturySchbk]
+    (setq ps-font-family 'Courier   )
+    ;; 9 and 6.5 font size for 120 columns, landscape and portrait
+    (setq ps-font-size '(9 . 10)    )
+    (setq ps-paper-type 'a4         ) ; paper size (a4 or letter)
+    (setq ps-print-header nil       ) ; no header (incl. page number)
+    (setq ps-number-of-columns 1    ) ; no columns
+    (setq ps-line-number nil        ) ; no line numbers
+    (setq ps-line-spacing 0         ) ; no line spacing
+    (setq ps-paragraph-spacing 0    ) ; no paragraph spacing
+    (setq ps-use-face-background nil) ; no background color
+    (setq ps-left-margin 60)
+    (setq ps-right-margin 60)
+    (setq ps-top-margin 60)
+    (setq ps-bottom-margin 60)
+    (ps-print-buffer-with-faces ps-outfile)
+    ;; ps2pdf in Windows uses -arg#val instead of -arg=val, Linux either
+    (shell-command (concat "ps2pdf -sPAPERSIZE#" (prin1-to-string ps-paper-type)
+                           " " ps-outfile " " pdf-outfile))
+    (message "Distilled %s" pdf-outfile)))
+(defun read-file-to-list (file)
+  "Read text from file into list of strings"
+  (interactive "fRead file: ")
+  (with-temp-buffer (insert-file-contents file)
+                    (split-string (buffer-string) "\n" t)))
+(defun read-file-to-string (file)
+  "Read text from file into string"
+  (interactive "fRead file: ")
+  (with-temp-buffer (insert-file-contents file)(buffer-string)))
 (defalias 'rm 'delete-file)
 (defalias 'rmdir 'delete-directory)
-(defun toggle-backup-files () "Toggle backup settings for current buffer." (interactive)
-       (setq make-backup-files (not make-backup-files))(message "Backup %s" (if make-backup-files "ON" "OFF")))
-(defun toggle-latin-1-coding () "Toggle between latin-1-unix and latin-1-dos encoding." (interactive)
-       (if (string-match "unix" (prin1-to-string buffer-file-coding-system))
-           (set-buffer-file-coding-system 'iso-latin-1-dos t)(set-buffer-file-coding-system 'iso-latin-1-unix t)))
-(defun toggle-utf-8-coding () "Toggle between utf-8-unix and utf-8-dos encoding." (interactive)
-       (if (string-match "unix" (prin1-to-string buffer-file-coding-system))
-           (set-buffer-file-coding-system 'utf-8-dos t)(set-buffer-file-coding-system 'utf-8-unix t)))
-(defun utf-8-revert () "Reload file assuming utf-8 encoding." (interactive)(revert-buffer-with-coding-system 'utf-8))
-(defun utf-8-dos () "Use utf-8-dos encoding." (interactive)(set-buffer-file-coding-system 'utf-8-dos t))
-(defun utf-8-unix () "Use utf-8-unix encoding." (interactive)(set-buffer-file-coding-system 'utf-8-unix t))
+(defun toggle-backup-files ()
+  "Toggle backup settings for current buffer."
+  (interactive)
+  (setq make-backup-files (not make-backup-files))
+  (message "Backup %s" (if make-backup-files "ON" "OFF")))
+(defun toggle-latin-1-coding ()
+  "Toggle between latin-1-unix and latin-1-dos encoding."
+  (interactive)
+  (if (string-match "unix" (prin1-to-string buffer-file-coding-system))
+      (set-buffer-file-coding-system 'iso-latin-1-dos t)
+    (set-buffer-file-coding-system 'iso-latin-1-unix t)))
+(defun toggle-utf-8-coding ()
+  "Toggle between utf-8-unix and utf-8-dos encoding."
+  (interactive)
+  (if (string-match "unix" (prin1-to-string buffer-file-coding-system))
+      (set-buffer-file-coding-system 'utf-8-dos t)
+    (set-buffer-file-coding-system 'utf-8-unix t)))
+(defun utf-8-revert ()
+  "Reload file assuming utf-8 encoding."
+  (interactive)
+  (revert-buffer-with-coding-system 'utf-8))
+(defun utf-8-dos ()
+  "Use utf-8-dos encoding."
+  (interactive)
+  (set-buffer-file-coding-system 'utf-8-dos t))
+(defun utf-8-unix ()
+  "Use utf-8-unix encoding."
+  (interactive)
+  (set-buffer-file-coding-system 'utf-8-unix t))
 ;;-----------
 ;; 5.2  Edit
 ;;-----------
-(defun backward-delete-word (&optional n) "Delete previous N words." (interactive "*p")(delete-word (- n)))
-(defun backward-sexp-start () "Move to previous expression." (interactive)(backward-sexp))
-(defun copy-buffer () "Copy buffer without moving cursor." (interactive)
-       (kill-new (buffer-substring-no-properties (point-min)(point-max)))(message "Copied buffer"))
+(defun backward-delete-word (&optional n)
+  "Delete previous N words."
+  (interactive "*p")(delete-word (- n)))
+(defun backward-sexp-start ()
+  "Move to previous expression."
+  (interactive)
+  (backward-sexp))
+(defun copy-buffer ()
+  "Copy buffer without moving cursor."
+  (interactive)
+  (kill-new (buffer-substring-no-properties (point-min)(point-max)))
+  (message "Copied buffer"))
 (defun copy-line-or-region ()
-  "Copy region if selected, otherwise copy line." (interactive)
-  (if (use-region-p)(progn (kill-new (buffer-substring-no-properties (point)(mark)))(deactivate-mark))
+  "Copy region if selected, otherwise copy line."
+  (interactive)
+  (if (use-region-p)
+      (progn (kill-new (buffer-substring-no-properties (point)(mark)))
+             (deactivate-mark))
     (if (< (line-beginning-position)(line-end-position))
-        (progn (kill-new
-                (buffer-substring-no-properties (line-beginning-position)(min (+ (line-end-position) 1)(point-max))))
-               (message "Copied line")))))
-(defun delete-word (&optional n) "Delete following N words." (interactive "*p")
-       (delete-region (point)(save-excursion (forward-word n)(point))))
-(defun duplicate (&optional arg) "Copy line or region, then yank it. If arg is non-nil, comment out." (interactive "*P")
-       (if (not (use-region-p))
-           (progn (while (and (= (line-beginning-position)(line-end-position))(not (bobp)))(forward-line -1))
-                  (if (= (line-beginning-position)(line-end-position))(message "Nothing to duplicate"))
-                  (forward-line)(push-mark (line-beginning-position 0))))
-       (kill-new (buffer-substring-no-properties (point)(mark)))(if arg (comment-region (point)(mark)))
-       (save-excursion (yank)(current-kill 1))(message nil))
-(defun duplicate-comment () "Copy line or region, comment it, then yank." (interactive "*")(duplicate t))
-(defun forward-sexp-start () "Move to next expression." (interactive)(forward-sexp 2)(backward-sexp))
+        (progn
+          (kill-new
+           (buffer-substring-no-properties
+            (line-beginning-position)
+            (min (+ (line-end-position) 1)(point-max))))
+          (message "Copied line")))))
+(defun delete-word (&optional n)
+  "Delete following N words."
+  (interactive "*p")
+  (delete-region (point)(save-excursion (forward-word n)(point))))
+(defun duplicate (&optional arg)
+  "Copy line or region, then yank it. If arg is non-nil, comment out."
+  (interactive "*P")
+  (if (not (use-region-p))
+      (progn
+        (while
+            (and (= (line-beginning-position)(line-end-position))(not (bobp)))
+          (forward-line -1))
+        (if (= (line-beginning-position)(line-end-position))
+            (message "Nothing to duplicate"))
+        (forward-line)
+        (push-mark (line-beginning-position 0))))
+  (kill-new (buffer-substring-no-properties (point)(mark)))
+  (if arg (comment-region (point)(mark)))
+  (save-excursion (yank)(current-kill 1))
+  (message nil))
+(defun duplicate-comment ()
+  "Copy line or region, comment it, then yank."
+  (interactive "*")
+  (duplicate t))
+(defun forward-sexp-start ()
+  "Move to next expression."
+  (interactive)
+  (forward-sexp 2)
+  (backward-sexp))
 (defalias 'goto-column 'move-to-column)
-(defun goto-line-lisp (line &optional buffer) "Go to line. Use in Lisp programs instead of `goto-line'."
-       (interactive "nGoto line: ")
-       (if (not (null buffer))(with-current-buffer buffer (goto-char (point-min))(beginning-of-line line))
-         (goto-char (point-min))(beginning-of-line line)))
+(defun goto-line-lisp (line &optional buffer)
+  "Go to line. Use in Lisp programs instead of `goto-line'."
+  (interactive "nGoto line: ")
+  (if (not (null buffer))
+      (with-current-buffer buffer
+        (goto-char (point-min))
+        (beginning-of-line line))
+    (goto-char (point-min))
+    (beginning-of-line line)))
 (defun goto-longest-line ()
-  "Go to longest line." (interactive)
-  (let ((line 1)(length 0))
+  "Go to longest line."
+  (interactive)
+  (let ((line 1)
+        (length 0))
     (save-excursion
-      (goto-char (point-min))(end-of-line)(setq length (current-column))
+      (goto-char (point-min))
+      (end-of-line)
+      (setq length (current-column))
       (while (not (eobp))
         (progn (end-of-line 2)
-               (if (> (current-column) length)(progn (setq line (line-number-at-pos))(setq length (current-column)))))))
-    (goto-line-lisp line)(message "Line %d is %d characters" line length)))
+               (if (> (current-column) length)
+                   (progn (setq line (line-number-at-pos))
+                          (setq length (current-column)))))))
+    (goto-line-lisp line)
+    (message "Line %d is %d characters" line length)))
 (defun highlight-and-count-regexp (regexp)
-  "Highlight and count REGEXP occurrences (case-sensitive).\n
+  "Highlight and count REGEXP occurrences (case-sensitive).
+
 See also `highlight-and-count-string'."
   (interactive "sRegexp (case-sensitive) to highlight: ")(require 'hi-lock)
   (let ((case-fold-search nil))
-    (set-face-attribute 'hi-pink     nil :background "brown1"                                                   )
-    (set-face-attribute 'hi-blue     nil :background "dodgerblue"                                               )
-    (set-face-attribute 'hi-black-b  nil :background "black"  :foreground "white" :weight -                     )
-    (set-face-attribute 'hi-blue-b   nil :background "blue2"  :foreground "white" :weight -                     )
-    (set-face-attribute 'hi-red-b    nil :background "red"    :foreground "white" :weight -                     )
-    (set-face-attribute 'hi-green-b  nil :background "green3" :foreground "white" :weight -                     )
-    (set-face-attribute 'hi-black-hb nil :background "gray50" :foreground "white" :weight - :height - :inherit -)
+    (set-face-attribute 'hi-pink     nil :background "brown1"    )
+    (set-face-attribute 'hi-blue     nil :background "dodgerblue")
+    (set-face-attribute 'hi-black-b  nil :background "black"
+                        :foreground "white" :weight -            )
+    (set-face-attribute 'hi-blue-b   nil :background "blue2"
+                        :foreground "white" :weight -            )
+    (set-face-attribute 'hi-red-b    nil :background "red"
+                        :foreground "white" :weight -            )
+    (set-face-attribute 'hi-green-b  nil :background "green3"
+                        :foreground "white" :weight -            )
+    (set-face-attribute 'hi-black-hb nil :background "gray50"
+                        :foreground "white" :weight - :height - :inherit -)
     (if (string-equal regexp "")
-        (progn (hi-lock-mode 0)(setq hi-lock-face-defaults '("hi-yellow" "hi-pink" "hi-green" "hi-blue" "hi-black-b"
-                                                             "hi-blue-b" "hi-red-b" "hi-green-b" "hi-black-hb")))
+        (progn (hi-lock-mode 0)
+               (setq hi-lock-face-defaults
+                     '("hi-yellow" "hi-pink" "hi-green" "hi-blue" "hi-black-b"
+                       "hi-blue-b" "hi-red-b" "hi-green-b" "hi-black-hb")))
       (progn (hi-lock-face-buffer regexp (car hi-lock-face-defaults))
-             (setq hi-lock-face-defaults (append (cdr hi-lock-face-defaults)(list (car hi-lock-face-defaults))))
-             (message "%d occurrences" (how-many regexp (point-min)(point-max)))))))
-(defun highlight-and-count-string (string) "Highlight and count STRING occurrences (case-insensitive).\n
+             (setq hi-lock-face-defaults
+                   (append (cdr hi-lock-face-defaults)
+                           (list (car hi-lock-face-defaults))))
+             (message "%d occurrences"
+                      (how-many regexp (point-min)(point-max)))))))
+(defun highlight-and-count-string (string)
+  "Highlight and count STRING occurrences (case-insensitive).
+
 See also `highlight-and-count-regexp'."
-       (interactive "sString (case-insensitive) to highlight: ")(highlight-and-count-regexp (case-fold-string string)))
-(defun highlight-long-lines (&optional n) "Highlight lines longer than N (default 80)." (interactive "p")
-       (if (= n 1)(setq n 80))
-       (let ((regexp (concat "^.\\{" (number-to-string (+ n 1)) ",\\}.*")))
-         (hi-lock-mode 0)(hi-lock-face-buffer regexp)
-         (message "%d lines wider than %d columns" (how-many regexp (point-min)(point-max)) n)))
-(defun jump-middle () "Go to middle of page." (interactive)
-       (deactivate-mark)(goto-char (point-min))(forward-line (middle-from-here)))
-(defun kill-line-or-region (&optional n) "Kill region if selected, otherwise kill N lines." (interactive "*p")
-       (if (use-region-p)(kill-region (point)(mark))(if (= n 1)(kill-line)(kill-line n))))
-(defun kill-whole-line-stay (&optional n) "Kill n whole lines and stay in column." (interactive "*p")
-       (let ((col (current-column)))
-         (kill-whole-line n)(move-to-column col)))
-(defun mark-buffer () "Mark whole buffer." (interactive)
-       (push-mark (point))(push-mark (point-max) nil t)(goto-char (point-min))(region-set))
-(defun mark-function () "Mark function." (interactive)(mark-defun)(region-set))
-(defun mark-quit () "Inactivate mark, so motion commands do not extend region." (interactive)
-       (setq mark-active nil)(message "Quit"))
-(defun mouse-extend-region (event) "Extend region to mouse position." (interactive "e")
-       (if (use-region-p)(mouse-set-point event)(mouse-save-then-kill event)))
+  (interactive "sString (case-insensitive) to highlight: ")
+  (highlight-and-count-regexp (case-fold-string string)))
+(defun highlight-long-lines (&optional n)
+  "Highlight lines longer than N (default 80)."
+  (interactive "p")
+  (if (= n 1)(setq n 80))
+  (let ((regexp (concat "^.\\{" (number-to-string (+ n 1)) ",\\}.*")))
+    (hi-lock-mode 0)
+    (hi-lock-face-buffer regexp)
+    (message "%d lines wider than %d columns"
+             (how-many regexp (point-min)(point-max)) n)))
+(defun jump-middle ()
+  "Go to middle of page."
+  (interactive)
+  (deactivate-mark)
+  (goto-char (point-min))
+  (forward-line (middle-from-here)))
+(defun kill-line-or-region (&optional n)
+  "Kill region if selected, otherwise kill N lines."
+  (interactive "*p")
+  (if (use-region-p)
+      (kill-region (point)(mark))
+    (if (= n 1)(kill-line)(kill-line n))))
+(defun kill-whole-line-stay (&optional n)
+  "Kill n whole lines and stay in column."
+  (interactive "*p")
+  (let ((col (current-column)))
+    (kill-whole-line n)
+    (move-to-column col)))
+(defun mark-buffer ()
+  "Mark whole buffer."
+  (interactive)
+  (push-mark (point))
+  (push-mark (point-max) nil t)
+  (goto-char (point-min))
+  (region-set))
+(defun mark-function ()
+  "Mark function."
+  (interactive)
+  (mark-defun)
+  (region-set))
+(defun mark-quit ()
+  "Inactivate mark, so motion commands do not extend region."
+  (interactive)
+  (setq mark-active nil)
+  (message "Quit"))
+(defun mouse-extend-region (event)
+  "Extend region to mouse position."
+  (interactive "e")
+  (if (use-region-p)
+      (mouse-set-point event)
+    (mouse-save-then-kill event)))
 (defalias 'occur-multi 'multi-occur)
 (defun pos-at-beginning-of-line (&optional n)
-  "Return the position at beginning of line N.\n
+  "Return the position at beginning of line N.
+
 See also `line-beginning-position'."
-  (save-excursion (goto-char (point-min))(line-beginning-position n)))
-(defun pos-at-end-of-line (&optional n) "Return the position at end of line N.\n
+  (save-excursion (goto-char (point-min))
+                  (line-beginning-position n)))
+(defun pos-at-end-of-line (&optional n)
+  "Return the position at end of line N.
+
 See also `line-end-position'."
-       (save-excursion (goto-char (point-min))(line-end-position n)))
-(defun pull-line-down (&optional n) "Pull line down N lines." (let ((auto-fill-function nil))(drag-stuff-line-down n)))
-(defun pull-line-up (&optional n) "Pull line up N lines." (let ((auto-fill-function nil))(drag-stuff-line-up (- n))))
-(defun pull-line-or-region-down (&optional n) "Pull line or region down N lines." (interactive "*p")
-       (require 'drag-stuff)(if (use-region-p)(pull-region-down n)(pull-line-down n)))
-(defun pull-line-or-region-up (&optional n) "Pull line or region up N lines." (interactive "*p")(require 'drag-stuff)
-       (if (use-region-p)(pull-region-up n)(pull-line-up n)))
-(defun pull-region-down (&optional n) "Pull region down N lines."
-       (let ((auto-fill-function nil)(point-first (< (point)(mark)))
-             (shrink (= (region-end)(pos-at-beginning-of-line (line-number-at-pos (region-end))))))
-         (if shrink (progn (if point-first (exchange-point-and-mark))(backward-char)))(drag-stuff-down n)
-         (if shrink (progn (forward-char)(if point-first (exchange-point-and-mark))))))
-(defun pull-region-up (&optional n) "Pull region up N lines."
-       (let ((auto-fill-function nil)(point-first (< (point)(mark)))
-             (shrink (= (region-end)(pos-at-beginning-of-line (line-number-at-pos (region-end))))))
-         (if shrink (progn (if point-first (exchange-point-and-mark))(backward-char)))(drag-stuff-up n)
-         (if shrink (progn (forward-char)(if point-first (exchange-point-and-mark))))))
-(defun region-backward-char (&optional n) "Extend region backward N characters." (interactive "p")
-       (if (not (use-region-p))(push-mark))(backward-char n)(region-set))
-(defun region-backward-line (&optional n) "Extend region backward N lines." (interactive "p")
-       (if (not (use-region-p))(push-mark))(forward-line (- n))(region-set)) ; forward-line to handle goal-column (warn)
-(defun region-backward-paragraph (&optional n) "Extend region backward N paragraphs." (interactive "p")
-       (if (not (use-region-p))(push-mark))(backward-paragraph n)(region-set))
-(defun region-backward-word (&optional n) "Extend region backward N words." (interactive "p")
-       (if (not (use-region-p))(push-mark))(backward-word n)(region-set))
-(defun region-bol-bottom () "Extend region from beginning of current line to bottom." (interactive)
-       (if (not (use-region-p))(push-mark (line-beginning-position)))(goto-char (point-max))(region-set))
-(defun region-bol-down (&optional n) "Extend region from beginning of current line down N lines." (interactive "p")
-       (if (not (use-region-p))(push-mark (line-beginning-position)))(beginning-of-line (+ 1 n))(region-set))
-(defun region-bol-top (&optional n) "Extend region from beginning of current line to top, or line N." (interactive "p")
-       (if (not (use-region-p))(push-mark (line-beginning-position)))(goto-line-lisp n)(region-set))
-(defun region-bol-up (&optional n) "Extend region from beginning of current line up N lines." (interactive "p")
-       (if (not (use-region-p))(push-mark (line-beginning-position)))(beginning-of-line (- 1 n))(region-set))
-(defun region-forward-char (&optional n) "Extend region forward N characters." (interactive "p")
-       (if (not (use-region-p))(push-mark))(forward-char n)(region-set))
-(defun region-forward-line (&optional n) "Extend region forward N lines." (interactive "p")
-       (if (not (use-region-p))(push-mark))(forward-line n)(region-set)) ; forward-line to handle goal-column (warning)
-(defun region-forward-paragraph (&optional n) "Extend region forward N paragraphs." (interactive "p")
-       (if (not (use-region-p))(push-mark))(forward-paragraph n)(region-set))
-(defun region-forward-word (&optional n) "Extend region forward N words." (interactive "p")
-       (if (not (use-region-p))(push-mark))(forward-word n)(region-set))
-(defun region-set () "Make sure the region is active (yellow) and transient (will exit properly)." (interactive)
-       (activate-mark)(setq transient-mark-mode (cons 'only transient-mark-mode)))
-(defun region-to-bol () "Extend region to beginning of current line." (interactive)
-       (if (not (use-region-p))(push-mark))(goto-char (line-beginning-position))(region-set))
-(defun region-to-eol () "Extend region to end of current line." (interactive)
-       (if (not (use-region-p))(push-mark))(goto-char (line-end-position))(region-set))
-(defun region-to-line (&optional n) "Extend region to beginning of line N." (interactive "nExtend region to line: ")
-       (if (not (use-region-p))(push-mark))(goto-line-lisp n)(region-set))
-(defun register-jump-X () "Return cursor to location stored in register X." (interactive)
-       (jump-to-register ?X)(message "Jumped to stored location X"))
-(defun register-jump-Y () "Return cursor to location stored in register Y." (interactive)
-       (jump-to-register ?Y)(message "Jumped to stored location Y"))
-(defun register-store-X () "Store current location of cursor in register X." (interactive)
-       (point-to-register ?X)(message "Location X stored"))
-(defun register-store-Y () "Store current location of cursor in register Y." (interactive)
-       (point-to-register ?Y)(message "Location Y stored"))
-(defun scroll-both-down (&optional n) "Scroll both windows down N lines." (interactive "p")
-       (scroll-up n)(scroll-other-window n))
-(defun scroll-both-down-page (&optional n) "Scroll both windows down N pages." (interactive "p")
-       (scroll-up (pages n))(scroll-other-window (pages n)))
-(defun scroll-both-up (&optional n) "Scroll both windows up N lines." (interactive "p")
-       (scroll-down n)(scroll-other-window-down n))
-(defun scroll-both-up-page (&optional n) "Scroll both windows up N pages." (interactive "p")
-       (scroll-down (pages n))(scroll-other-window-down (pages n)))
-(defun scroll-down-1 () "Scroll down one line." (interactive)(scroll-up 1))
-(defun scroll-down-3 () "Scroll down 3 lines." (interactive)(scroll-up 3))
-(defun scroll-down-10 () "Scroll down 10 lines." (interactive)(scroll-up 10))
-(defun scroll-down-100 () "Scroll down 100 lines." (interactive)(scroll-up 100))
-(defun scroll-other-down (&optional n) "Scroll other window down N lines." (interactive "p")(scroll-other-window n))
-(defun scroll-other-up (&optional n) "Scroll other window up N lines." (interactive "p")(scroll-other-window-down n))
-(defun scroll-up-1 () "Scroll one line up." (interactive)(scroll-down 1))
-(defun scroll-up-3 () "Scroll 3 lines up." (interactive)(scroll-down 3))
-(defun scroll-up-10 () "Scroll 10 lines up." (interactive)(scroll-down 10))
-(defun scroll-up-100 () "Scroll 100 lines up." (interactive)(scroll-down 100))
+  (save-excursion (goto-char (point-min))
+                  (line-end-position n)))
+(defun pull-line-down (&optional n)
+  "Pull line down N lines."
+  (let ((auto-fill-function nil))
+    (drag-stuff-line-down n)))
+(defun pull-line-up (&optional n)
+  "Pull line up N lines."
+  (let ((auto-fill-function nil))
+    (drag-stuff-line-up (- n))))
+(defun pull-line-or-region-down (&optional n)
+  "Pull line or region down N lines."
+  (interactive "*p")
+  (require 'drag-stuff)
+  (if (use-region-p)
+      (pull-region-down n)
+    (pull-line-down n)))
+(defun pull-line-or-region-up (&optional n)
+  "Pull line or region up N lines."
+  (interactive "*p")
+  (require 'drag-stuff)
+  (if (use-region-p)
+      (pull-region-up n)
+    (pull-line-up n)))
+(defun pull-region-down (&optional n)
+  "Pull region down N lines."
+  (let ((auto-fill-function nil)
+        (point-first (< (point)(mark)))
+        (shrink (= (region-end)
+                   (pos-at-beginning-of-line
+                    (line-number-at-pos (region-end))))))
+    (if shrink
+        (progn (if point-first (exchange-point-and-mark))
+               (backward-char)))
+    (drag-stuff-down n)
+    (if shrink
+        (progn (forward-char)
+               (if point-first (exchange-point-and-mark))))))
+(defun pull-region-up (&optional n)
+  "Pull region up N lines."
+  (let ((auto-fill-function nil)
+        (point-first (< (point)(mark)))
+        (shrink (= (region-end)
+                   (pos-at-beginning-of-line
+                    (line-number-at-pos (region-end))))))
+    (if shrink
+        (progn (if point-first (exchange-point-and-mark))(backward-char)))
+    (drag-stuff-up n)
+    (if shrink
+        (progn (forward-char)(if point-first (exchange-point-and-mark))))))
+(defun region-backward-char (&optional n)
+  "Extend region backward N characters."
+  (interactive "p")
+  (if (not (use-region-p))(push-mark))
+  (backward-char n)
+  (region-set))
+(defun region-backward-line (&optional n)
+  "Extend region backward N lines."
+  (interactive "p")
+  (if (not (use-region-p))(push-mark))
+  (forward-line (- n)) ; to handle goal-column (warn)
+  (region-set))
+(defun region-backward-paragraph (&optional n)
+  "Extend region backward N paragraphs."
+  (interactive "p")
+  (if (not (use-region-p))(push-mark))
+  (backward-paragraph n)
+  (region-set))
+(defun region-backward-word (&optional n)
+  "Extend region backward N words."
+  (interactive "p")
+  (if (not (use-region-p))(push-mark))
+  (backward-word n)
+  (region-set))
+(defun region-bol-bottom ()
+  "Extend region from beginning of current line to bottom."
+  (interactive)
+  (if (not (use-region-p))(push-mark (line-beginning-position)))
+  (goto-char (point-max))
+  (region-set))
+(defun region-bol-down (&optional n)
+  "Extend region from beginning of current line down N lines."
+  (interactive "p")
+  (if (not (use-region-p))(push-mark (line-beginning-position)))
+  (beginning-of-line (+ 1 n))
+  (region-set))
+(defun region-bol-top (&optional n)
+  "Extend region from beginning of current line to top, or line N."
+  (interactive "p")
+  (if (not (use-region-p))(push-mark (line-beginning-position)))
+  (goto-line-lisp n)
+  (region-set))
+(defun region-bol-up (&optional n)
+  "Extend region from beginning of current line up N lines."
+  (interactive "p")
+  (if (not (use-region-p))(push-mark (line-beginning-position)))
+  (beginning-of-line (- 1 n))
+  (region-set))
+(defun region-forward-char (&optional n)
+  "Extend region forward N characters."
+  (interactive "p")
+  (if (not (use-region-p))(push-mark))
+  (forward-char n)
+  (region-set))
+(defun region-forward-line (&optional n)
+  "Extend region forward N lines."
+  (interactive "p")
+  (if (not (use-region-p))(push-mark))
+  (forward-line n) ; to handle goal-column (warning)
+  (region-set))
+(defun region-forward-paragraph (&optional n)
+  "Extend region forward N paragraphs."
+  (interactive "p")
+  (if (not (use-region-p))(push-mark))
+  (forward-paragraph n)
+  (region-set))
+(defun region-forward-word (&optional n)
+  "Extend region forward N words."
+  (interactive "p")
+  (if (not (use-region-p))(push-mark))
+  (forward-word n)
+  (region-set))
+(defun region-set ()
+  "Make sure the region is active (yellow) and transient (will exit properly)."
+  (interactive)
+  (activate-mark)(setq transient-mark-mode (cons 'only transient-mark-mode)))
+(defun region-to-bol ()
+  "Extend region to beginning of current line."
+  (interactive)
+  (if (not (use-region-p))(push-mark))
+  (goto-char (line-beginning-position))
+  (region-set))
+(defun region-to-eol ()
+  "Extend region to end of current line."
+  (interactive)
+  (if (not (use-region-p))(push-mark))
+  (goto-char (line-end-position))
+  (region-set))
+(defun region-to-line (&optional n)
+  "Extend region to beginning of line N."
+  (interactive "nExtend region to line: ")
+  (if (not (use-region-p))(push-mark))
+  (goto-line-lisp n)
+  (region-set))
+(defun register-jump-X ()
+  "Return cursor to location stored in register X."
+  (interactive)
+  (jump-to-register ?X)
+  (message "Jumped to stored location X"))
+(defun register-jump-Y ()
+  "Return cursor to location stored in register Y."
+  (interactive)
+  (jump-to-register ?Y)
+  (message "Jumped to stored location Y"))
+(defun register-store-X ()
+  "Store current location of cursor in register X."
+  (interactive)
+  (point-to-register ?X)
+  (message "Location X stored"))
+(defun register-store-Y ()
+  "Store current location of cursor in register Y."
+  (interactive)
+  (point-to-register ?Y)
+  (message "Location Y stored"))
+(defun scroll-both-down (&optional n)
+  "Scroll both windows down N lines."
+  (interactive "p")
+  (scroll-up n)
+  (scroll-other-window n))
+(defun scroll-both-down-page (&optional n)
+  "Scroll both windows down N pages."
+  (interactive "p")
+  (scroll-up (pages n))
+  (scroll-other-window (pages n)))
+(defun scroll-both-up (&optional n)
+  "Scroll both windows up N lines."
+  (interactive "p")
+  (scroll-down n)
+  (scroll-other-window-down n))
+(defun scroll-both-up-page (&optional n)
+  "Scroll both windows up N pages."
+  (interactive "p")
+  (scroll-down (pages n))
+  (scroll-other-window-down (pages n)))
+(defun scroll-down-1 ()
+  "Scroll down one line."
+  (interactive)
+  (scroll-up 1))
+(defun scroll-down-3 ()
+  "Scroll down 3 lines."
+  (interactive)
+  (scroll-up 3))
+(defun scroll-down-10 ()
+  "Scroll down 10 lines."
+  (interactive)
+  (scroll-up 10))
+(defun scroll-down-100 ()
+  "Scroll down 100 lines."
+  (interactive)
+  (scroll-up 100))
+(defun scroll-other-down (&optional n)
+  "Scroll other window down N lines."
+  (interactive "p")
+  (scroll-other-window n))
+(defun scroll-other-up (&optional n)
+  "Scroll other window up N lines."
+  (interactive "p")
+  (scroll-other-window-down n))
+(defun scroll-up-1 ()
+  "Scroll one line up."
+  (interactive)
+  (scroll-down 1))
+(defun scroll-up-3 ()
+  "Scroll 3 lines up."
+  (interactive)
+  (scroll-down 3))
+(defun scroll-up-10 ()
+  "Scroll 10 lines up."
+  (interactive)
+  (scroll-down 10))
+(defun scroll-up-100 ()
+  "Scroll 100 lines up."
+  (interactive)
+  (scroll-down 100))
 (defalias 'show-long-lines 'highlight-long-lines)
-(defun yank-quiet (&optional arg) "Yank without showing the message \"Mark set\"." (interactive "*P")
-       (if (use-region-p)(delete-region (point)(mark)))(yank arg)(message nil))
-(defun zap-back-to-char (char) "Delete region back to, but not including, CHAR." (interactive "*cZap back to char: ")
-       (let ((case-fold-search nil))
-         (delete-region (point)(progn (search-backward (string char))(forward-char)(point)))))
-(defun zap-up-to-char (char) "Delete region up to, but not including, CHAR." (interactive "*cZap up to char: ")
-       (let ((case-fold-search nil))
-         (delete-region (point)(progn (search-forward (string char))(backward-char)(point)))))
+(defun yank-quiet (&optional arg)
+  "Yank without showing the message \"Mark set\"."
+  (interactive "*P")
+  (if (use-region-p)(delete-region (point)(mark)))
+  (yank arg)
+  (message nil))
+(defun zap-back-to-char (char)
+  "Delete region back to, but not including, CHAR."
+  (interactive "*cZap back to char: ")
+  (let ((case-fold-search nil))
+    (delete-region (point)
+                   (progn (search-backward (string char))
+                          (forward-char)
+                          (point)))))
+(defun zap-up-to-char (char)
+  "Delete region up to, but not including, CHAR."
+  (interactive "*cZap up to char: ")
+  (let ((case-fold-search nil))
+    (delete-region (point)
+                   (progn (search-forward (string char))
+                          (backward-char)
+                          (point)))))
 ;;-----------
 ;; 5.3  View
 ;;-----------
-(defvar default-comment-color (fg 'font-lock-comment-face) "Default comment color. See `toggle-comments'.")
-(defvar green-cite nil "Non-nil if bibliographic citations are currently green. See `toggle-green-cite'.")
-(defvar red-special nil "Non-nil if special characters are currently red. See `toggle-red-special'.")
-(defun arni-after-setting-font-hook ()(frame-restore)(frame-maximize)) ; Windows
+(defvar default-comment-color (fg 'font-lock-comment-face)
+  "Default comment color. See `toggle-comments'.")
+(defvar green-cite nil
+  "Non-nil if bibliographic citations are currently green.
+
+See `toggle-green-cite'.")
+(defvar red-special nil
+  "Non-nil if special characters are currently red.
+
+See `toggle-red-special'.")
+(defun arni-after-setting-font-hook () ; Windows
+  (frame-restore)
+  (frame-maximize))
 (add-hook 'after-setting-font-hook 'arni-after-setting-font-hook)
 (defalias 'citations 'toggle-green-cite)
-(defun dark-theme () "Apply tango-dark color theme." (interactive)(load-theme 'tango-dark))
-(defun goto-non-ascii () "Go to next non-ASCII character." (interactive)
-       (deactivate-mark)(if (re-search-forward "[^\u0009-\u000a\u0020-\u007e]" nil t)
-                            (message (concat "Non-ASCII char: " (string (char-before))))
-                          (message "Only ASCII chars after this point")))
-(defun goto-special-char () "Go to next special character.\n
+(defun dark-theme ()
+  "Apply tango-dark color theme."
+  (interactive)
+  (load-theme 'tango-dark))
+(defun goto-non-ascii ()
+  "Go to next non-ASCII character."
+  (interactive)
+  (deactivate-mark)
+  (if (re-search-forward "[^\u0009-\u000a\u0020-\u007e]" nil t)
+      (message (concat "Non-ASCII char: " (string (char-before))))
+    (message "Only ASCII chars after this point")))
+(defun goto-special-char ()
+  "Go to next special character.
+
 See also `toggle-red-special'."
-       (interactive)(deactivate-mark)(if (re-search-forward "[^\u0009-\u000a\u0020-\u007e\u00a1-\u00ff]" nil t)
-                                         (message (concat "Special char: " (string (char-before))))
-                                       (message "Only normal chars after this point")))
-(defun gray-background () "Set gray background." (interactive)(set-background-color "gray85"))
+  (interactive)
+  (deactivate-mark)
+  (if (re-search-forward "[^\u0009-\u000a\u0020-\u007e\u00a1-\u00ff]" nil t)
+      (message (concat "Special char: " (string (char-before))))
+    (message "Only normal chars after this point")))
+(defun gray-background ()
+  "Set gray background."
+  (interactive)
+  (set-background-color "gray85"))
 (defalias 'highlight-current-line 'hl-line-mode)
-(defun max-colors () "Apply maximum colors, so every face can be distinguished." (interactive)
-       (arni-colors)
-       (set-face-attribute 'font-lock-doc-face           nil :foreground "orange"  :weight 'bold ) ; Emacs "Usage"
-       (set-face-attribute 'font-lock-variable-name-face nil :foreground "brown4"  :weight 'bold)) ; x
-(defun narrow-to-defun-or-region () "Narrow to function or region." (interactive)
-       (if (use-region-p)(progn (narrow-to-region (point)(mark))(goto-char (point-min)))(narrow-to-defun)))
-(defun occur-non-ascii () "Show all non-ASCII character in buffer." (interactive)
-       (occur "[^\u0009-\u000a\u0020-\u007e]"))
+(defun max-colors ()
+  "Apply maximum colors, so every face can be distinguished."
+  (interactive)
+  (arni-colors)
+  (set-face-attribute 'font-lock-doc-face           nil :foreground "orange"
+                      :weight 'bold ) ; Emacs "docstring"
+  (set-face-attribute 'font-lock-variable-name-face nil :foreground "brown4"
+                      :weight 'bold)) ; x
+(defun narrow-to-defun-or-region ()
+  "Narrow to function or region."
+  (interactive)
+  (if (use-region-p)
+      (progn (narrow-to-region (point)(mark))
+             (goto-char (point-min)))
+    (narrow-to-defun)))
+(defun occur-non-ascii ()
+  "Show all non-ASCII character in buffer."
+  (interactive)
+  (occur "[^\u0009-\u000a\u0020-\u007e]"))
 (defalias 'refresh 'arni-colors)
-(defun set-tab-width (&optional n) "Set visual `tab-width'." (interactive "nTab width: ")
-       (setq tab-width n)(message "Tab width is now %d" n))
-(defun toggle-comments () "Toggle invisible comments." (interactive)
-       (if (string-equal (fg 'font-lock-comment-face) default-comment-color)
-           (set-face-attribute 'font-lock-comment-face nil :foreground (bg 'default))
-         (set-face-attribute 'font-lock-comment-face nil :foreground default-comment-color))
-       (message "Comments %s" (if (string-equal (fg 'font-lock-comment-face) default-comment-color) "ON" "OFF")))
-(defun toggle-red-non-ascii () "Toggle red highlighting of non-ASCII characters." (interactive)
-       (defface special-face '((t :inherit isearch-fail)) "Face used to highlight special characters." :group t)
-       (let ((special-chars "[^\u0009-\u000a\u0020-\u007e]"))
-         (if red-special (progn (hi-lock-unface-buffer special-chars)(hi-lock-mode 0))
-           (hi-lock-face-buffer special-chars 'special-face))(setq red-special (not red-special))
-           (force-mode-line-update)(message "Red non-ASCII chars %s" (if red-special "ON" "OFF"))))
+(defun set-tab-width (&optional n)
+  "Set visual `tab-width'."
+  (interactive "nTab width: ")
+  (setq tab-width n)
+  (message "Tab width is now %d" n))
+(defun toggle-comments ()
+  "Toggle invisible comments."
+  (interactive)
+  (if (string-equal (fg 'font-lock-comment-face) default-comment-color)
+      (set-face-attribute 'font-lock-comment-face nil :foreground (bg 'default))
+    (set-face-attribute 'font-lock-comment-face nil
+                        :foreground default-comment-color))
+  (message "Comments %s"
+           (if (string-equal (fg 'font-lock-comment-face) default-comment-color)
+               "ON" "OFF")))
+(defun toggle-red-non-ascii ()
+  "Toggle red highlighting of non-ASCII characters."
+  (interactive)
+  (defface special-face '((t :inherit isearch-fail))
+    "Face used to highlight special characters."
+    :group t)
+  (let ((special-chars "[^\u0009-\u000a\u0020-\u007e]"))
+    (if red-special
+        (progn (hi-lock-unface-buffer special-chars)
+               (hi-lock-mode 0))
+      (hi-lock-face-buffer special-chars 'special-face))
+    (setq red-special (not red-special))
+    (force-mode-line-update)
+    (message "Red non-ASCII chars %s" (if red-special "ON" "OFF"))))
 (defun toggle-red-special ()
-  "Toggle red highlighting of special characters.\n
+  "Toggle red highlighting of special characters.
+
 Special means problematic characters, mainly outside Latin-1, that are hard to
 read or save."
-  (interactive)(defface special-face '((t :inherit isearch-fail)) "Face used to highlight special characters." :group t)
+  (interactive)
+  (defface special-face '((t :inherit isearch-fail))
+    "Face used to highlight special characters."
+    :group t)
   (let ((special-chars "[^\u0009-\u000a\u0020-\u007e\u00a1-\u00ff]"))
-    (if red-special (progn (hi-lock-unface-buffer special-chars)(hi-lock-mode 0))
-      (hi-lock-face-buffer special-chars 'special-face))(setq red-special (not red-special))(force-mode-line-update)
-      (message "Red special chars %s" (if red-special "ON" "OFF"))))
-(defun toggle-escape-glyphs () "Toggle invisible escape glyphs." (interactive)
-       (if invisible-escapes (set-face-attribute 'escape-glyph nil :foreground (bg 'default))
-         (set-face-attribute 'escape-glyph nil :foreground "brown4"))(setq invisible-escapes (not invisible-escapes))
-         (message "Invisible escape glyphs %s" (if invisible-escapes "ON" "OFF")))
+    (if red-special
+        (progn (hi-lock-unface-buffer special-chars)
+               (hi-lock-mode 0))
+      (hi-lock-face-buffer special-chars 'special-face))
+    (setq red-special (not red-special))
+    (force-mode-line-update)
+    (message "Red special chars %s" (if red-special "ON" "OFF"))))
+(defun toggle-escape-glyphs ()
+  "Toggle invisible escape glyphs."
+  (interactive)
+  (if invisible-escapes
+      (set-face-attribute 'escape-glyph nil :foreground (bg 'default))
+    (set-face-attribute 'escape-glyph nil :foreground "brown4"))
+  (setq invisible-escapes (not invisible-escapes))
+  (message "Invisible escape glyphs %s" (if invisible-escapes "ON" "OFF")))
 (defun toggle-green-cite ()
-  "Toggle green highlighting of plain citations (like this 2000) and this (2000)." (interactive)
+  "Toggle green highlighting of citations (like this 2000) and this (2000)."
+  (interactive)
   (if green-cite (hi-lock-mode 0)
-    ;; Open parenthesis, not closing parenthesis, anything, four digits, not closing parenthesis, anything
-    (progn (hi-lock-face-buffer "([^)]*[0-9]\\{4\\}[^)]*)" 'hi-green)(hi-lock-face-buffer "[()\n]" 'default)
-           ;; Commas between anything, parenthesized tail without four digits
-           (hi-lock-face-buffer ", " 'default)(hi-lock-face-buffer ",[^0-9]*[0-9]\\{0,3\\})" 'default)))
-  (setq green-cite (not green-cite))(force-mode-line-update)(message "Green citations %s" (if green-cite "ON" "OFF")))
-(defun toggle-trailing-whitespace () "Toggle highlighting of trailing whitespace." (interactive)
-       (setq show-trailing-whitespace (not show-trailing-whitespace))(redraw-display)
-       (message "Trailing whitespace highlighting %s" (if show-trailing-whitespace "ON" "OFF")))
+    ;; Open parenthesis, not closing parenthesis, anything,
+    ;; four digits, not closing parenthesis, anything
+    (progn
+      (hi-lock-face-buffer "([^)]*[0-9]\\{4\\}[^)]*)" 'hi-green)
+      (hi-lock-face-buffer "[()\n]" 'default)
+      ;; Commas between anything, parenthesized tail without four digits
+      (hi-lock-face-buffer ", " 'default)
+      (hi-lock-face-buffer ",[^0-9]*[0-9]\\{0,3\\})" 'default)))
+  (setq green-cite (not green-cite))
+  (force-mode-line-update)
+  (message "Green citations %s" (if green-cite "ON" "OFF")))
+(defun toggle-trailing-whitespace ()
+  "Toggle highlighting of trailing whitespace."
+  (interactive)
+  (setq show-trailing-whitespace (not show-trailing-whitespace))(redraw-display)
+  (message "Trailing whitespace highlighting %s"
+           (if show-trailing-whitespace "ON" "OFF")))
 (defalias 'which-section-mode 'which-function-mode)
-(defun white-background () "Set white background." (interactive)(set-background-color "white"))
+(defun white-background ()
+  "Set white background."
+  (interactive)
+  (set-background-color "white"))
 ;;-------------
 ;; 5.4  Insert
 ;;-------------
-(defun fizz () "Solution to FizzBuzz test" (interactive "*")
-       (dolist (i (number-sequence 1 100))
-         (insert (cond ((and (zerop (mod i 3))(zerop (mod i 5))) "FizzBuzz")((zerop (mod i 3)) "Fizz")
-                       ((zerop (mod i 5)) "Buzz")(t (number-to-string i))) "\n")))
-(defun insert-date () "Insert current date as string." (interactive "*")(insert (format-time-string "%d %b %Y")))
-(defun insert-en-dash () "Insert en dash." (interactive "*")(insert #x2013))
-(defun insert-euro () "Insert euro symbol." (interactive "*")(insert #x20ac))
-(defun insert-tab-char (&optional n) "Insert TAB character." (interactive "*p")(insert-char ?\t n))
-(defun insert-tab-char-1 () "Insert one TAB character." (interactive "*p")(insert "\t")) ; for `indent-line-function'
-(defun lorem (&optional n) "Insert N lorem-ipsum paragraphs." (interactive "*p")
-       (let ((lorem-ipsum "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt \
-ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip \
-ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \
-laborum."))
-         (insert lorem-ipsum "\n")(dotimes (i (- n 1))(insert "\n" lorem-ipsum "\n"))))
-(defun random-int (&optional n) "Insert N random integers from 0 to 255." (interactive "*p")
-       (dotimes (i n)(insert (number-to-string (random 256)) "\n")))
-(defun random-double (&optional n) "Insert N random numbers from from 0 to 0.999." (interactive "*p")
-       (dotimes (i n)(insert (number-to-string (/ (random 1000) 1000.0)) "\n")))
-(defun seq (&optional n) "Insert 1 to N." (interactive "*p")(dotimes (i n)(insert (number-to-string (+ i 1)) "\n")))
+(defun fizz ()
+  "Solution to FizzBuzz test"
+  (interactive "*")
+  (dolist (i (number-sequence 1 100))
+    (insert (cond ((and (zerop (mod i 3))(zerop (mod i 5))) "FizzBuzz")
+                  ((zerop (mod i 3)) "Fizz")
+                  ((zerop (mod i 5)) "Buzz")(t (number-to-string i))) "\n")))
+(defun insert-date ()
+  "Insert current date as string."
+  (interactive "*")
+  (insert (format-time-string "%d %b %Y")))
+(defun insert-en-dash ()
+  "Insert en dash."
+  (interactive "*")
+  (insert #x2013))
+(defun insert-euro ()
+  "Insert euro symbol."
+  (interactive "*")
+  (insert #x20ac))
+(defun insert-tab-char (&optional n)
+  "Insert TAB character."
+  (interactive "*p")
+  (insert-char ?\t n))
+(defun insert-tab-char-1 ()
+  "Insert one TAB character (for `indent-line-function')."
+  (interactive "*p")
+  (insert "\t"))
+(defun lorem (&optional n)
+  "Insert N lorem-ipsum paragraphs."
+  (interactive "*p")
+  (let ((lorem-ipsum "Lorem ipsum dolor sit amet, consectetur adipisicing \
+elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut \
+enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut \
+aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in \
+voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint \
+occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit \
+anim id est laborum."))
+    (insert lorem-ipsum "\n")
+    (dotimes (i (- n 1))
+      (insert "\n" lorem-ipsum "\n"))))
+(defun random-int (&optional n)
+  "Insert N random integers from 0 to 255."
+  (interactive "*p")
+  (dotimes (i n)
+    (insert (number-to-string (random 256)) "\n")))
+(defun random-double (&optional n)
+  "Insert N random numbers from from 0 to 0.999."
+  (interactive "*p")
+  (dotimes (i n)
+    (insert (number-to-string (/ (random 1000) 1000.0)) "\n")))
+(defun seq (&optional n)
+  "Insert 1 to N."
+  (interactive "*p")
+  (dotimes (i n)
+    (insert (number-to-string (+ i 1)) "\n")))
 ;;-------------
 ;; 5.5  Format
 ;;-------------
 ;; Manipulate spaces only
-(defun delete-all-blank-lines () "Delete all blank lines." (interactive "*")
-       (let ((count 0))
-         (save-excursion (goto-char (point-min))
-                         (while (search-forward "\n\n" nil t)(goto-char (point-min))
-                                (while (search-forward "\n\n" nil t)(replace-match "\n")
-                                       (setq count (+ count 1)))
-                                (goto-char (point-min)))
-                         (if (= (char-after) ?\n)(progn (delete-char 1)(setq count (+ count 1)))))
-         (message "Deleted %d blank lines" count)))
+(defun delete-all-blank-lines ()
+  "Delete all blank lines."
+  (interactive "*")
+  (let ((count 0))
+    (save-excursion (goto-char (point-min))
+                    (while (search-forward "\n\n" nil t)
+                      (goto-char (point-min))
+                      (while (search-forward "\n\n" nil t)
+                        (replace-match "\n")
+                        (setq count (+ count 1)))
+                      (goto-char (point-min)))
+                    (if (= (char-after) ?\n)
+                        (progn (delete-char 1)
+                               (setq count (+ count 1)))))
+    (message "Deleted %d blank lines" count)))
 (defalias 'clean-trails 'delete-trailing-spc-tab-m)
-(defun delete-trailing-spc-tab-m () "Delete spaces, tabs, and ^M glyphs from line ends." (interactive "*")
-       (let ((count 0))
-         (save-excursion (goto-char (point-min)) ; unlike delete-trailing-whitespace, deletes ^M in lisp-mode
-                         (while (re-search-forward "[ \t\r]+$" nil t)(replace-match "")
-                                (setq count (+ count 1)))(message "Cleaned %d lines" count))))
-(defun fill-paragraph-forward (&optional n) "Justify N paragraphs and go to end of paragraph." (interactive "*p")
-       (dotimes (i n)(fill-paragraph)(forward-paragraph)))
-(defun fill-region-or-buffer () "Fill region or buffer." (interactive "*")
-       (if (use-region-p)(fill-region (region-beginning)(region-end))(fill-buffer)))
-(defun fill-buffer () "Fill all paragraphs." (interactive "*")
-       (save-excursion (fill-region (point-min)(point-max)))(message "Filled buffer to %d columns" fill-column))
-(defun toggle-tab-function () "Toggle whether TAB does `insert-tab-char' or `indent-or-complete'." (interactive)
-       (if (equal (where-is-internal 'insert-tab-char nil t) [?\t])(local-set-key [?\t] 'indent-or-complete)
-         (local-set-key [?\t] 'insert-tab-char))
-       (describe-key-briefly [?\t]))
-(defun indent-buffer () "Indent all lines." (interactive "*")
-       (let ((old-bsize (buffer-size)))
-         (indent-region (point-min)(point-max) nil)
-         (if (= (buffer-size) old-bsize)(message "Indented buffer (still %d bytes)" (buffer-size))
-           (message "Indented buffer (%d->%d bytes)" old-bsize (buffer-size)))))
-(defun indent-line-or-region () "Indent (`indent-according-to-mode') line, or region if selected." (interactive "*")
-       (if (use-region-p)(indent-region-whole)(indent-according-to-mode)))
-(defun indent-or-complete () "Indent (`indent-according-to-mode'), or complete if in minibuffer." (interactive "*")
-       (if (minibuffer-window-active-p (minibuffer-window))(minibuffer-complete)
-         (if (eq (car (event-modifiers last-input-event)) 'shift)(unindent-line-or-region)(indent-line-or-region))))
-(defun indent-region-whole () "Indent all lines in region." (interactive "*")
-       (let ((end (region-end))) ; unlike indent-region,  also indent the first half-marked line
-         (save-excursion (goto-char (region-beginning))(indent-region (line-beginning-position) end nil))))
-(defalias 'indent-relative-definitely 'indent-relative) ; better than `indent-relative' with `indent-according-to-mode'
-(defun join-buffer () "Join all paragraphs into long lines." (interactive "*")
-       (let ((count 0)) ; in each iteration: skip empty lines, append lines, go one line up
-         (save-excursion
-           (goto-char (point-max))
-           (while (not (bobp))(while (and (bolp)(eolp)(not (bobp)))(forward-line -1))
-                  (if (< (line-beginning-position 0)(line-end-position 0))(setq count (+ count 1)))
-                  (while (< (line-beginning-position 0)(line-end-position 0))(delete-indentation))(forward-line -1)))
-         (message "Joined %d paragraphs" count)))
-(defun join-line-nospace (&optional n) "Join N lines to previous with no whitespace at join." (interactive "*p")
-       (dotimes (i n)(delete-indentation)(delete-horizontal-space)))
-(defun join-region (beg end) "Join region." (interactive "*r")
-       (let ((count 0)) ; in each iteration: skip empty lines, append lines, go one line up
-         (save-excursion
-           (goto-char end)
-           (while (> (point) beg)(while (and (bolp)(eolp)(> (point) beg))(forward-line -1))
-                  (while (and (> (point) beg)(< (line-beginning-position 0)(line-end-position 0)))
-                    (delete-indentation)(setq count (+ count 1)))(forward-line -1)))(message "Joined %d lines" count)))
-(defun join-region-or-buffer () "Join region or buffer." (interactive "*")
-       (if (use-region-p)(join-region (region-beginning)(region-end))(join-buffer)))
-(defalias 'spaces-to-tabs 'tabify-spaces)
-(defun tabify-spaces () "Replace all spaces with tabs." (interactive "*")
-       (save-excursion (goto-char (point-min))(while (re-search-forward " +" nil t)(replace-match "\t"))))
-(defun tabify-spaces-copy-buffer () "Replace all spaces with tabs and copy buffer." (interactive "*")
-       (tabify-spaces)(copy-buffer)(message "Tabified and copied buffer."))
-(defun unindent-line () "Unindent line, removing all whitespace at beginning of line." (interactive "*")
-       (save-excursion (indent-rigidly (line-beginning-position)(+ (line-beginning-position) 1) -1000)))
-(defun unindent-line-or-region () "Unindent line, or region if selected." (interactive "*")
-       (if (use-region-p)(unindent-region)(unindent-line)))
-(defun unindent-region () "Unindent region, removing all whitespace at beginning of line." (interactive "*")
-       (let ((end (region-end)))
-         (save-excursion (goto-char (region-beginning))(indent-rigidly (line-beginning-position) end -1000))))
-(defun unindent-buffer () "Unindent all lines." (interactive "*")
-       (let ((old-bsize (buffer-size)))
-         (save-excursion (goto-char (point-min))(while (re-search-forward "^[\t ]+" nil t)(replace-match "")))
-         (if (= (buffer-size) old-bsize)(message "Unindented buffer (still %d bytes)" (buffer-size))
-           (message "Unindented buffer (%d->%d bytes)" old-bsize (buffer-size)))))
-(defun untabify-buffer ()
-  "Convert all tabs to several spaces, preserving column alignment." (interactive "*")
+(defun delete-trailing-spc-tab-m ()
+  "Delete spaces, tabs, and ^M glyphs from line ends.
+
+Unlike `delete-trailing-whitespace', deletes ^M in `lisp-mode'."
+  (interactive "*")
   (let ((count 0))
     (save-excursion
       (goto-char (point-min))
-      (while (search-forward "\t" nil t)(untabify (- (point) 1)(point))(setq count (+ count 1))(goto-char (point-min)))
+      (while (re-search-forward "[ \t\r]+$" nil t)
+        (replace-match "")
+        (setq count (+ count 1)))
+      (message "Cleaned %d lines" count))))
+(defun fill-paragraph-forward (&optional n)
+  "Justify N paragraphs and go to end of paragraph."
+  (interactive "*p")
+  (dotimes (i n)
+    (fill-paragraph)
+    (forward-paragraph)))
+(defun fill-region-or-buffer ()
+  "Fill region or buffer."
+  (interactive "*")
+  (if (use-region-p)
+      (fill-region (region-beginning)(region-end))
+    (fill-buffer)))
+(defun fill-buffer ()
+  "Fill all paragraphs."
+  (interactive "*")
+  (save-excursion (fill-region (point-min)(point-max)))
+  (message "Filled buffer to %d columns" fill-column))
+(defun toggle-tab-function ()
+  "Toggle whether TAB does `insert-tab-char' or `indent-or-complete'."
+  (interactive)
+  (if (equal (where-is-internal 'insert-tab-char nil t) [?\t])
+      (local-set-key [?\t] 'indent-or-complete)
+    (local-set-key [?\t] 'insert-tab-char))
+  (describe-key-briefly [?\t]))
+(defun indent-buffer ()
+  "Indent all lines."
+  (interactive "*")
+  (let ((old-bsize (buffer-size)))
+    (indent-region (point-min)(point-max) nil)
+    (if (= (buffer-size) old-bsize)
+        (message "Indented buffer (still %d bytes)" (buffer-size))
+      (message "Indented buffer (%d->%d bytes)" old-bsize (buffer-size)))))
+(defun indent-line-or-region ()
+  "Indent (`indent-according-to-mode') line, or region if selected."
+  (interactive "*")
+  (if (use-region-p)
+      (indent-region-whole)
+    (indent-according-to-mode)))
+(defun indent-or-complete ()
+  "Indent (`indent-according-to-mode'), or complete if in minibuffer."
+  (interactive "*")
+  (if (minibuffer-window-active-p (minibuffer-window))
+      (minibuffer-complete)
+    (if (eq (car (event-modifiers last-input-event)) 'shift)
+        (unindent-line-or-region)
+      (indent-line-or-region))))
+(defun indent-region-whole ()
+  "Indent all lines in region.
+
+Unlike `indent-region',  also indent the first half-marked line."
+  (interactive "*")
+  (let ((end (region-end)))
+    (save-excursion
+      (goto-char (region-beginning))
+      (indent-region (line-beginning-position) end nil))))
+;; The following alias is better than
+;; `indent-relative' with `indent-according-to-mode'
+(defalias 'indent-relative-definitely 'indent-relative)
+(defun join-buffer ()
+  "Join all paragraphs into long lines."
+  (interactive "*")
+  (let ((count 0))
+    (save-excursion
+      (goto-char (point-max))
+      ;; In each iteration: skip empty lines, append lines, go one line up
+      (while (not (bobp))
+        (while (and (bolp)(eolp)(not (bobp)))
+          (forward-line -1))
+        (if (< (line-beginning-position 0)(line-end-position 0))
+            (setq count (+ count 1)))
+        (while (< (line-beginning-position 0)
+                  (line-end-position 0))
+          (delete-indentation))
+        (forward-line -1)))
+    (message "Joined %d paragraphs" count)))
+(defun join-line-nospace (&optional n)
+  "Join N lines to previous with no whitespace at join."
+  (interactive "*p")
+  (dotimes (i n)
+    (delete-indentation)
+    (delete-horizontal-space)))
+(defun join-region (beg end)
+  "Join region."
+  (interactive "*r")
+  (let ((count 0))
+    (save-excursion
+      (goto-char end)
+      ;; In each iteration: skip empty lines, append lines, go one line up
+      (while (> (point) beg)
+        (while (and (bolp)(eolp)(> (point) beg))(forward-line -1))
+        (while (and (> (point) beg)
+                    (< (line-beginning-position 0)(line-end-position 0)))
+          (delete-indentation)
+          (setq count (+ count 1)))
+        (forward-line -1)))
+    (message "Joined %d lines" count)))
+(defun join-region-or-buffer ()
+  "Join region or buffer."
+  (interactive "*")
+  (if (use-region-p)
+      (join-region (region-beginning)(region-end))
+    (join-buffer)))
+(defalias 'spaces-to-tabs 'tabify-spaces)
+(defun tabify-spaces ()
+  "Replace all spaces with tabs."
+  (interactive "*")
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward " +" nil t)
+      (replace-match "\t"))))
+(defun tabify-spaces-copy-buffer ()
+  "Replace all spaces with tabs and copy buffer."
+  (interactive "*")
+  (tabify-spaces)
+  (copy-buffer)
+  (message "Tabified and copied buffer."))
+(defun unindent-line ()
+  "Unindent line, removing all whitespace at beginning of line."
+  (interactive "*")
+  (save-excursion
+    (indent-rigidly (line-beginning-position)
+                    (+ (line-beginning-position) 1)
+                    -1000)))
+(defun unindent-line-or-region ()
+  "Unindent line, or region if selected."
+  (interactive "*")
+  (if (use-region-p)
+      (unindent-region)
+    (unindent-line)))
+(defun unindent-region ()
+  "Unindent region, removing all whitespace at beginning of line."
+  (interactive "*")
+  (let ((end (region-end)))
+    (save-excursion
+      (goto-char (region-beginning))
+      (indent-rigidly (line-beginning-position) end -1000))))
+(defun unindent-buffer ()
+  "Unindent all lines."
+  (interactive "*")
+  (let ((old-bsize (buffer-size)))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "^[\t ]+" nil t)
+        (replace-match "")))
+    (if (= (buffer-size) old-bsize)
+        (message "Unindented buffer (still %d bytes)" (buffer-size))
+      (message "Unindented buffer (%d->%d bytes)" old-bsize (buffer-size)))))
+(defun untabify-buffer ()
+  "Convert all tabs to several spaces, preserving column alignment."
+  (interactive "*")
+  (let ((count 0))
+    (save-excursion
+      (goto-char (point-min))
+      (while (search-forward "\t" nil t)
+        (untabify (- (point) 1)(point))
+        (setq count (+ count 1))
+        (goto-char (point-min)))
       (message "Converted %d tabs to spaces" count))))
 ;;------------
 ;; 5.6  Tools
 ;;------------
-(defun blank-region (beg end) "Replace region with spaces." (interactive "*r")
-       (let ((len (- end beg))(overwrite-mode 'overwrite-mode-textual))(delete-region beg end)(insert-char ?\t len)))
-(defun blank-to-paren () "Replace every character with space until next closing parenthesis." (interactive "*")
-       (if (zerop (how-many ")" (point)(line-end-position)))
-           (message "No closing parenthesis between point and end of line.")
-         (while (not (= (char-after) #x29))(progn (delete-char 1)(insert " ")))))
-(defun case-fold-string (str) "Create case-insensitive regexp from string."
-       (mapconcat (lambda (x) (concat "[" (string (upcase x))(string (downcase x)) "]")) str ""))
-(defun comment-line-or-region () "Comment line or region." (interactive "*")
-       (if (use-region-p)(comment-region (save-excursion (goto-char (region-beginning))(line-beginning-position))
-                                         (save-excursion (goto-char (region-end))(line-end-position)))
-         (comment-region (line-beginning-position)(line-end-position))))
-(defun comment-then-up (&optional n) "Comment line/region and go to previous line, N times." (interactive "*p")
-       (dotimes (i n)(comment-line-or-region)(forward-line -1)))
-(defun comment-then-down (&optional n) "Comment line/region and go to next line, N times." (interactive "*p")
-       (dotimes (i n)(comment-line-or-region)(forward-line 1)))
+(defun blank-region (beg end)
+  "Replace region with spaces."
+  (interactive "*r")
+  (let ((len (- end beg))
+        (overwrite-mode 'overwrite-mode-textual))
+    (delete-region beg end)
+    (insert-char ?\t len)))
+(defun blank-to-paren ()
+  "Replace every character with space until next closing parenthesis."
+  (interactive "*")
+  (if (zerop (how-many ")" (point)(line-end-position)))
+      (message "No closing parenthesis between point and end of line.")
+    (while (not (= (char-after) #x29))
+      (progn
+        (delete-char 1)
+        (insert " ")))))
+(defun case-fold-string (str)
+  "Create case-insensitive regexp from string."
+  (mapconcat
+   (lambda (x) (concat "[" (string (upcase x))(string (downcase x)) "]"))
+   str ""))
+(defun comment-line-or-region ()
+  "Comment line or region."
+  (interactive "*")
+  (if (use-region-p)
+      (comment-region
+       (save-excursion
+         (goto-char (region-beginning))
+         (line-beginning-position))
+       (save-excursion
+         (goto-char (region-end))
+         (line-end-position)))
+    (comment-region (line-beginning-position)(line-end-position))))
+(defun comment-then-up (&optional n)
+  "Comment line/region and go to previous line, N times."
+  (interactive "*p")
+  (dotimes (i n)
+    (comment-line-or-region)
+    (forward-line -1)))
+(defun comment-then-down (&optional n)
+  "Comment line/region and go to next line, N times."
+  (interactive "*p")
+  (dotimes (i n)
+    (comment-line-or-region)
+    (forward-line 1)))
 (defun convert-special ()
-  "Convert special characters to Latin-1." (interactive "*")
-  (save-excursion ; remove hex 00-08,0b-1f and convert 7f-a0 using 'plain' "quotes" and double -- em dash
-    (goto-char (point-min))(while (re-search-forward "[\u0000-\u0008\u000b-\u001f\u007f\u0081\u008d\u008f\u0090\u009d]"
-                                                     nil t)(replace-match ""))
-    (goto-char (point-min))(while (re-search-forward "\u0080\\|\u20ac" nil t)(replace-match "EUR ")) ; euro
-    (goto-char (point-min))(while (re-search-forward "\u0082\\|\u201a" nil t)(replace-match ","   )) ; comma
-    (goto-char (point-min))(while (re-search-forward "\u0083\\|\u0192" nil t)(replace-match "f"   )) ; ornamental f
-    (goto-char (point-min))(while (re-search-forward "\u0084\\|\u201e" nil t)(replace-match "\""  )) ; double lowleft ,,
-    (goto-char (point-min))(while (re-search-forward "\u0085\\|\u2026" nil t)(replace-match "..." )) ; ellipsis
-    (goto-char (point-min))(while (re-search-forward "\u0086\\|\u2020" nil t)(replace-match "*"   )) ; dagger
-    (goto-char (point-min))(while (re-search-forward "\u0087\\|\u2021" nil t)(replace-match "*"   )) ; double dagger
-    (goto-char (point-min))(while (re-search-forward "\u0088\\|\u02c6" nil t)(replace-match "^"   )) ; caret
-    (goto-char (point-min))(while (re-search-forward "\u0089\\|\u2030" nil t)(replace-match "%"   )) ; promill
-    (goto-char (point-min))(while (re-search-forward "\u008a\\|\u0160" nil t)(replace-match "S"   )) ; turkish
-    (goto-char (point-min))(while (re-search-forward "\u008b\\|\u2039" nil t)(replace-match "<"   )) ; less than
-    (goto-char (point-min))(while (re-search-forward "\u008c\\|\u0152" nil t)(replace-match "Æ"   )) ; oe ligature
-    (goto-char (point-min))(while (re-search-forward "\u008e\\|\u017d" nil t)(replace-match "Z"   )) ; polish
-    (goto-char (point-min))(while (re-search-forward "\u0091\\|\u2018" nil t)(replace-match "'"   )) ; single left `
-    (goto-char (point-min))(while (re-search-forward "\u0092\\|\u2019" nil t)(replace-match "'"   )) ; single right '
-    (goto-char (point-min))(while (re-search-forward "\u0093\\|\u201c" nil t)(replace-match "\""  )) ; double left ``
-    (goto-char (point-min))(while (re-search-forward "\u0094\\|\u201d" nil t)(replace-match "\""  )) ; double right ''
-    (goto-char (point-min))(while (re-search-forward "\u0095\\|\u2022" nil t)(replace-match "."   )) ; cdot
-    (goto-char (point-min))(while (re-search-forward "\u0096\\|\u2013" nil t)(replace-match "-"   )) ; en dash
-    (goto-char (point-min))(while (re-search-forward "\u0097\\|\u2014" nil t)(replace-match "--"  )) ; em dash
-    (goto-char (point-min))(while (re-search-forward "\u0098\\|\u02dc" nil t)(replace-match "~"   )) ; upper tilde
-    (goto-char (point-min))(while (re-search-forward "\u0099\\|\u2122" nil t)(replace-match "TM"  )) ; trademark
-    (goto-char (point-min))(while (re-search-forward "\u009a\\|\u0161" nil t)(replace-match "s"   )) ; turkish
-    (goto-char (point-min))(while (re-search-forward "\u009b\\|\u203a" nil t)(replace-match ">"   )) ; greater than
-    (goto-char (point-min))(while (re-search-forward "\u009c\\|\u0153" nil t)(replace-match "æ"   )) ; oe ligature
-    (goto-char (point-min))(while (re-search-forward "\u009e\\|\u017e" nil t)(replace-match "z"   )) ; polish
-    (goto-char (point-min))(while (re-search-forward "\u009f\\|\u0178" nil t)(replace-match "Y"   )) ; y umlaut
-    (goto-char (point-min))(while (search-forward "\u200b" nil t)(replace-match ""   ))              ; zero-width space
-    (goto-char (point-min))(while (search-forward "\u2010" nil t)(replace-match "-"  ))              ; hyphen
-    (goto-char (point-min))(while (search-forward "\u2060" nil t)(replace-match ""   ))              ; zero-width joiner
-    (goto-char (point-min))(while (search-forward "\u00a0" nil t)(replace-match " "  ))              ; no-break space
-    (goto-char (point-min))(while (search-forward "\u00ad" nil t)(replace-match "-"))))              ; soft hyphen
-(defun count-everything () "Show line number and position, then count lines and characters in region or buffer.\n
+  "Convert special characters to Latin-1.
+
+Remove hex 00-08,0b-1f and convert 7f-a0
+using 'plain' \"quotes\" and double -- em dash."
+  (interactive "*")
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward
+            "[\u0000-\u0008\u000b-\u001f\u007f\u0081\u008d\u008f\u0090\u009d]"
+            nil t)
+      (replace-match ""))
+    (goto-char (point-min)) ; euro
+    (while (re-search-forward "\u0080\\|\u20ac" nil t)(replace-match "EUR "))
+    (goto-char (point-min)) ; comma
+    (while (re-search-forward "\u0082\\|\u201a" nil t)(replace-match ","   ))
+    (goto-char (point-min)) ; ornamental f
+    (while (re-search-forward "\u0083\\|\u0192" nil t)(replace-match "f"   ))
+    (goto-char (point-min)) ; double lowleft ,,
+    (while (re-search-forward "\u0084\\|\u201e" nil t)(replace-match "\""  ))
+    (goto-char (point-min)) ; ellipsis
+    (while (re-search-forward "\u0085\\|\u2026" nil t)(replace-match "..." ))
+    (goto-char (point-min)) ; dagger
+    (while (re-search-forward "\u0086\\|\u2020" nil t)(replace-match "*"   ))
+    (goto-char (point-min)) ; double dagger
+    (while (re-search-forward "\u0087\\|\u2021" nil t)(replace-match "*"   ))
+    (goto-char (point-min)) ; caret
+    (while (re-search-forward "\u0088\\|\u02c6" nil t)(replace-match "^"   ))
+    (goto-char (point-min)) ; promill
+    (while (re-search-forward "\u0089\\|\u2030" nil t)(replace-match "%"   ))
+    (goto-char (point-min)) ; turkish
+    (while (re-search-forward "\u008a\\|\u0160" nil t)(replace-match "S"   ))
+    (goto-char (point-min)) ; less than
+    (while (re-search-forward "\u008b\\|\u2039" nil t)(replace-match "<"   ))
+    (goto-char (point-min)) ; oe ligature
+    (while (re-search-forward "\u008c\\|\u0152" nil t)(replace-match "Æ"   ))
+    (goto-char (point-min)) ; polish
+    (while (re-search-forward "\u008e\\|\u017d" nil t)(replace-match "Z"   ))
+    (goto-char (point-min)) ; single left `
+    (while (re-search-forward "\u0091\\|\u2018" nil t)(replace-match "'"   ))
+    (goto-char (point-min)) ; single right '
+    (while (re-search-forward "\u0092\\|\u2019" nil t)(replace-match "'"   ))
+    (goto-char (point-min)) ; double left ``
+    (while (re-search-forward "\u0093\\|\u201c" nil t)(replace-match "\""  ))
+    (goto-char (point-min)) ; double right ''
+    (while (re-search-forward "\u0094\\|\u201d" nil t)(replace-match "\""  ))
+    (goto-char (point-min)) ; cdot
+    (while (re-search-forward "\u0095\\|\u2022" nil t)(replace-match "."   ))
+    (goto-char (point-min)) ; en dash
+    (while (re-search-forward "\u0096\\|\u2013" nil t)(replace-match "-"   ))
+    (goto-char (point-min)) ; em dash
+    (while (re-search-forward "\u0097\\|\u2014" nil t)(replace-match "--"  ))
+    (goto-char (point-min)) ; upper tilde
+    (while (re-search-forward "\u0098\\|\u02dc" nil t)(replace-match "~"   ))
+    (goto-char (point-min)) ; trademark
+    (while (re-search-forward "\u0099\\|\u2122" nil t)(replace-match "TM"  ))
+    (goto-char (point-min)) ; turkish
+    (while (re-search-forward "\u009a\\|\u0161" nil t)(replace-match "s"   ))
+    (goto-char (point-min)) ; greater than
+    (while (re-search-forward "\u009b\\|\u203a" nil t)(replace-match ">"   ))
+    (goto-char (point-min)) ; oe ligature
+    (while (re-search-forward "\u009c\\|\u0153" nil t)(replace-match "æ"   ))
+    (goto-char (point-min)) ; polish
+    (while (re-search-forward "\u009e\\|\u017e" nil t)(replace-match "z"   ))
+    (goto-char (point-min)) ; y umlaut
+    (while (re-search-forward "\u009f\\|\u0178" nil t)(replace-match "Y"   ))
+    (goto-char (point-min)) ; zero-width space
+    (while (search-forward "\u200b" nil t)(replace-match ""   ))
+    (goto-char (point-min)) ; hyphen
+    (while (search-forward "\u2010" nil t)(replace-match "-"  ))
+    (goto-char (point-min)) ; zero-width joiner
+    (while (search-forward "\u2060" nil t)(replace-match ""   ))
+    (goto-char (point-min)) ; no-break space
+    (while (search-forward "\u00a0" nil t)(replace-match " "  ))
+    (goto-char (point-min)) ; soft hyphen
+    (while (search-forward "\u00ad" nil t)(replace-match "-"))))
+(defun count-everything ()
+  "Show line number and position, then count lines and characters
+in region or buffer.
+
 See also `count-words'."
-       (interactive)(if (use-region-p)(count-everything-region (region-beginning)(region-end))
-                      (count-everything-region (point-min)(point-max))))
-(defun count-everything-region (beg end) "Show line number and position, then count lines and characters in region.\n
+  (interactive)
+  (if (use-region-p)
+      (count-everything-region (region-beginning)(region-end))
+    (count-everything-region (point-min)(point-max))))
+(defun count-everything-region (beg end)
+  "Show line number and position, then count lines and characters in region.
+
 See also `count-words'."
-       (interactive "r")
-       (let ((current-line (what-line))(current-pos (point))(lines (count-lines beg end))(chars (- end beg)))
-         (message "%s [pos %d]   (%d lines   %d chars)" current-line current-pos lines chars)))
-(defun delete-comments () "Delete all comments." (interactive "*")
-       (let ((old-bsize (buffer-size)))
-         (save-excursion (goto-char (point-min))(comment-kill (count-lines (point-min)(point-max))))
-         (if (= (buffer-size) old-bsize)(message "Deleted all comments (still %d bytes)" (buffer-size))
-           (message "Deleted all comments (%d->%d bytes)" old-bsize (buffer-size)))))
-(defun delete-duplicate-lines-region-or-buffer () "Delete duplicate lines in region or buffer." (interactive "*")
-       (if (use-region-p)(delete-duplicate-lines (region-beginning)(region-end) nil nil nil t)
-         (delete-duplicate-lines (point-min)(point-max) nil nil nil t)))
-(defun diff-this-buffer-with-file () "Diff current buffer against a saved file." (interactive)
-       (diff-buffer-with-file (buffer-name)))
-(defun doc-to-txt () "Routine for pasting from Word into a text file (to diff two versions:\n
+  (interactive "r")
+  (let ((current-line (what-line))
+        (current-pos (point))
+        (lines (count-lines beg end))
+        (chars (- end beg)))
+    (message "%s [pos %d]   (%d lines   %d chars)"
+             current-line current-pos lines chars)))
+(defun delete-comments ()
+  "Delete all comments."
+  (interactive "*")
+  (let ((old-bsize (buffer-size)))
+    (save-excursion
+      (goto-char (point-min))
+      (comment-kill (count-lines (point-min)(point-max))))
+    (if (= (buffer-size) old-bsize)
+        (message "Deleted all comments (still %d bytes)" (buffer-size))
+      (message "Deleted all comments (%d->%d bytes)" old-bsize (buffer-size)))))
+(defun delete-duplicate-lines-region-or-buffer ()
+  "Delete duplicate lines in region or buffer."
+  (interactive "*")
+  (if (use-region-p)
+      (delete-duplicate-lines (region-beginning)(region-end) nil nil nil t)
+    (delete-duplicate-lines (point-min)(point-max) nil nil nil t)))
+(defun diff-this-buffer-with-file ()
+  "Diff current buffer against a saved file."
+  (interactive)
+  (diff-buffer-with-file (buffer-name)))
+(defun doc-to-txt ()
+  "Routine for pasting from Word into a text file (to diff two versions:
+
 Clear buffer, paste, untabify, unindent, use single spaces, delete blank lines."
-       (interactive)(delete-region (point-min)(point-max))(yank-quiet)(untabify-buffer)(unindent-buffer)
-       (save-excursion (goto-char (point-min))(while (re-search-forward "  +" nil t)(replace-match " ")))
-       (delete-all-blank-lines)(save-buffer))
-(defun dot-emacs-edit () "Open .emacs." (interactive)(find-file "~/.emacs"))
-(defun dot-emacs-eval () "Evaluate .emacs." (interactive)(load-file "~/.emacs"))
-(defun downcase-word-or-region (&optional n) "Downcase N words or region." (interactive "*p")
-       (if (use-region-p)(downcase-region (point)(mark))(downcase-word n)))
+  (interactive)
+  (delete-region (point-min)(point-max))
+  (yank-quiet)
+  (untabify-buffer)
+  (unindent-buffer)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "  +" nil t)
+      (replace-match " ")))
+  (delete-all-blank-lines)
+  (save-buffer))
+(defun dot-emacs-edit ()
+  "Open .emacs."
+  (interactive)
+  (find-file "~/.emacs"))
+(defun dot-emacs-eval ()
+  "Evaluate .emacs."
+  (interactive)
+  (load-file "~/.emacs"))
+(defun downcase-word-or-region (&optional n)
+  "Downcase N words or region."
+  (interactive "*p")
+  (if (use-region-p)
+      (downcase-region (point)(mark))
+    (downcase-word n)))
 (defalias 'find-duplicate-word 'the-the)
-(defun google-decode-url () "Convert Google URL to plain URL and copy line to clipboard." (interactive)
-       (url-unhex-region (line-beginning-position)(line-end-position))
-       (if (string-match "google" (buffer-substring-no-properties (line-beginning-position)(line-end-position)))
-           (progn (re-search-backward "&usg.*$" nil t)(replace-match "")
-                  (re-search-backward "^.*&url=" nil t)(replace-match ""))) ; remove head and tail if "google" in url
-       (kill-new (buffer-substring-no-properties (line-beginning-position)(line-end-position)))
-       (message "Copied line"))
-(defun msg (obj) "Show OBJ in minibuffer." (message (prin1-to-string obj)))
+(defun google-decode-url ()
+  "Convert Google URL to plain URL and copy line to clipboard."
+  (interactive)
+  (url-unhex-region (line-beginning-position)(line-end-position))
+  ;; Remove head and tail if "google" in url
+  (if (string-match "google"
+                    (buffer-substring-no-properties (line-beginning-position)
+                                                    (line-end-position)))
+      (progn (re-search-backward "&usg.*$" nil t)
+             (replace-match "")
+             (re-search-backward "^.*&url=" nil t)
+             (replace-match "")))
+  (kill-new (buffer-substring-no-properties
+             (line-beginning-position)(line-end-position)))
+  (message "Copied line"))
+(defun msg (obj)
+  "Show OBJ in minibuffer."
+  (message (prin1-to-string obj)))
 (defalias 'ps 'proced)
-(defun record-macro () "Start or stop recording keyboard macro." (interactive)
-       (if defining-kbd-macro (kmacro-end-macro nil)(kmacro-start-macro nil)))
-(defun sort-lines-caps-first (beg end) "Sort lines in region, with capital letters first." (interactive "*r")
-       (let ((sort-fold-case nil))
-         (sort-lines nil beg end)))
-(defun tab-to-csv () "Replace all tabs with commas to create a CSV file." (interactive)
-       (let ((count 0))
-         (save-excursion
-           (goto-char (point-min))(while (search-forward "\t" nil t)(replace-match ",")(setq count (+ count 1))))
-         (message "Replaced %d tabs with commas." count)))
-(defun the-the () "Search forward for a duplicate word." (interactive)
-       (deactivate-mark)(if (re-search-forward "\\b\\([^@ \n\t]+\\)[ \n\t]+\\1\\b" nil t)
-                            (message "Looks dubious")(message "No duplicate words found after this point")))
-(defun uncomment-line-or-region () "Uncomment line or region.\n
-Warning: uncomments appended comments, so that\n  int i=0;  // counter\nbecomes\n  int i=0;  counter
+(defun record-macro ()
+  "Start or stop recording keyboard macro."
+  (interactive)
+  (if defining-kbd-macro
+      (kmacro-end-macro nil)
+    (kmacro-start-macro nil)))
+(defun sort-lines-caps-first (beg end)
+  "Sort lines in region, with capital letters first."
+  (interactive "*r")
+  (let ((sort-fold-case nil))
+    (sort-lines nil beg end)))
+(defun tab-to-csv ()
+  "Replace all tabs with commas to create a CSV file."
+  (interactive)
+  (let ((count 0))
+    (save-excursion
+      (goto-char (point-min))
+      (while (search-forward "\t" nil t)
+        (replace-match ",")
+        (setq count (+ count 1))))
+    (message "Replaced %d tabs with commas." count)))
+(defun the-the ()
+  "Search forward for a duplicate word."
+  (interactive)
+  (deactivate-mark)
+  (if (re-search-forward "\\b\\([^@ \n\t]+\\)[ \n\t]+\\1\\b" nil t)
+      (message "Looks dubious")
+    (message "No duplicate words found after this point")))
+(defun uncomment-line-or-region ()
+  "Uncomment line or region.
+
+Warning: uncomments appended comments, so that
+  int i=0;  // counter
+becomes
+  int i=0;  counter
 which doesn't compile."
-       (interactive "*")
-       (if (use-region-p)(uncomment-region (save-excursion (goto-char (region-beginning))(line-beginning-position))
-                                           (save-excursion (goto-char (region-end))(line-end-position)))
-         (uncomment-region (line-beginning-position)(line-end-position))))
-(defun uncomment-then-up (&optional n) "Uncomment line/region and go to previous line, N times." (interactive "*p")
-       (dotimes (i n)(uncomment-line-or-region)(forward-line -1)))
-(defun uncomment-then-down (&optional n) "Uncomment line/region and go to next line, N times." (interactive "*p")
-       (dotimes (i n)(uncomment-line-or-region)(forward-line 1)))
+  (interactive "*")
+  (if (use-region-p)
+      (uncomment-region
+       (save-excursion (goto-char (region-beginning))(line-beginning-position))
+       (save-excursion (goto-char (region-end))(line-end-position)))
+    (uncomment-region (line-beginning-position)(line-end-position))))
+(defun uncomment-then-up (&optional n)
+  "Uncomment line/region and go to previous line, N times."
+  (interactive "*p")
+  (dotimes (i n)
+    (uncomment-line-or-region)
+    (forward-line -1)))
+(defun uncomment-then-down (&optional n)
+  "Uncomment line/region and go to next line, N times."
+  (interactive "*p")
+  (dotimes (i n)
+    (uncomment-line-or-region)
+    (forward-line 1)))
 (defalias 'unique-lines 'delete-duplicate-lines-region-or-buffer)
-(defun upcase-word-or-region (&optional n) "Upcase N words or region." (interactive "*p")
-       (if (use-region-p)(upcase-region (point)(mark))(upcase-word n)))
-(defun url-unhex-region (beg end) "Convert %XX codes to characters." (interactive "*r")
-       (let ((text (url-unhex-string (buffer-substring beg end))))(delete-region beg end)(insert text)))
+(defun upcase-word-or-region (&optional n)
+  "Upcase N words or region."
+  (interactive "*p")
+  (if (use-region-p)
+      (upcase-region (point)(mark))
+    (upcase-word n)))
+(defun url-unhex-region (beg end)
+  "Convert %XX codes to characters."
+  (interactive "*r")
+  (let ((text (url-unhex-string (buffer-substring beg end))))
+    (delete-region beg end)
+    (insert text)))
 ;;-------------
 ;; 5.7  Window
 ;;-------------
-(defun already-top-bottom-p () "Return t if selected frame is split in two windows on top and bottom."
-       (and (= (length (window-list)) 2)(window-full-width-p)))
-(defun already-left-right-p () "Return t if selected frame is split in two windows on left and right."
-       (and (= (length (window-list)) 2)(window-full-height-p)))
-(defun maximize-window-top () "Make top window as large as possible, shrinking bottom window." (interactive)
-       (split-window-top-bottom)(maximize-window))
-(defun middle-from-here () "Return the line halfway between current position and end of buffer."
-       (/ (count-lines (point)(point-max)) 2))
-(defun pages (&optional n) "Return the number of lines to scroll down N pages."
-       (* n (- (window-body-height) next-screen-context-lines)))
-(defun split-window-grid (nr nc) "Arrange windows in NR rows and NC columns." (interactive "nRows: \nnColumns: ")
-       (delete-other-windows)(windmove-default-keybindings 'meta)
-       (global-set-key [27 left]  'windmove-left ) ; M-left in terminal
-       (global-set-key [27 right] 'windmove-right) ; M-right in terminal
-       (global-set-key [27 up]    'windmove-up   ) ; M-up in terminal
-       (global-set-key [27 down]  'windmove-down ) ; M-down in terminal
-       (dotimes (i (- nc 1))(split-window-right)(dotimes (j (- nr 1))(split-window-below))(other-window nr))
-       (dotimes (j (- nr 1))(split-window-below))(balance-windows))
+(defun already-top-bottom-p ()
+  "Return t if selected frame is split in two windows on top and bottom."
+  (and (= (length (window-list)) 2)
+       (window-full-width-p)))
+(defun already-left-right-p ()
+  "Return t if selected frame is split in two windows on left and right."
+  (and (= (length (window-list)) 2)
+       (window-full-height-p)))
+(defun maximize-window-top ()
+  "Make top window as large as possible, shrinking bottom window."
+  (interactive)
+  (split-window-top-bottom)
+  (maximize-window))
+(defun middle-from-here ()
+  "Return the line halfway between current position and end of buffer."
+  (/ (count-lines (point)(point-max)) 2))
+(defun pages (&optional n)
+  "Return the number of lines to scroll down N pages."
+  (* n (- (window-body-height) next-screen-context-lines)))
+(defun split-window-grid (nr nc)
+  "Arrange windows in NR rows and NC columns."
+  (interactive "nRows: \nnColumns: ")
+  (delete-other-windows)
+  (windmove-default-keybindings 'meta)
+  (global-set-key [27 left]  'windmove-left ) ; M-left in terminal
+  (global-set-key [27 right] 'windmove-right) ; M-right in terminal
+  (global-set-key [27 up]    'windmove-up   ) ; M-up in terminal
+  (global-set-key [27 down]  'windmove-down ) ; M-down in terminal
+  (dotimes (i (- nc 1))
+    (split-window-right)
+    (dotimes (j (- nr 1))(split-window-below))
+    (other-window nr))
+  (dotimes (j (- nr 1))(split-window-below))
+  (balance-windows))
 (defun split-window-left-right ()
-  "Arrange two windows on left and right side of frame." (interactive)
+  "Arrange two windows on left and right side of frame."
+  (interactive)
   (let ((other-window-buffer (window-buffer (next-window)))
-        (was-bottom (and (already-top-bottom-p)(not (eq (selected-window)(frame-first-window)))))) ; top-btm, now bottom
-    (if (not (already-left-right-p))(progn (delete-other-windows)(split-window-right)
-                                           (set-window-buffer (next-window) other-window-buffer)
-                                           (if was-bottom (transpose-windows))))))
+        (was-bottom (and (already-top-bottom-p)
+                         (not (eq (selected-window)(frame-first-window))))))
+    (if (not (already-left-right-p))
+        (progn
+          (delete-other-windows)
+          (split-window-right)
+          (set-window-buffer (next-window) other-window-buffer)
+          (if was-bottom (transpose-windows))))))
 (defun split-window-top-bottom ()
-  "Arrange two windows on top and bottom of frame." (interactive)
+  "Arrange two windows on top and bottom of frame."
+  (interactive)
   (let ((other-window-buffer (window-buffer (next-window)))
-        (was-right (and (already-left-right-p)(not (eq (selected-window)(frame-first-window)))))) ; left-rght, now right
-    (if (not (already-top-bottom-p))(progn (delete-other-windows)(split-window-below)
-                                           (set-window-buffer (next-window) other-window-buffer)
-                                           (if was-right (transpose-windows))))))
-(defun transpose-windows () "Swap contents of two windows." (interactive)
-       (if (= (length (window-list)) 2)
-           (let ((other-window-buffer (window-buffer (next-window))))
-             (set-window-buffer (next-window)(current-buffer))(switch-to-buffer other-window-buffer)(other-window 1))))
+        (was-right (and (already-left-right-p)
+                        (not (eq (selected-window)(frame-first-window))))))
+    (if (not (already-top-bottom-p))
+        (progn
+          (delete-other-windows)
+          (split-window-below)
+          (set-window-buffer (next-window) other-window-buffer)
+          (if was-right (transpose-windows))))))
+(defun transpose-windows ()
+  "Swap contents of two windows."
+  (interactive)
+  (if (= (length (window-list)) 2)
+      (let ((other-window-buffer (window-buffer (next-window))))
+        (set-window-buffer (next-window)(current-buffer))
+        (switch-to-buffer other-window-buffer)
+        (other-window 1))))
 ;;-----------
 ;; 5.8  Help
 ;;-----------
-(defun ascii-table () "Show ASCII table as unibytes (0-255)." (interactive)
-       (switch-to-buffer "*ASCII*")(erase-buffer)(set-buffer-multibyte nil)
-       (insert "ASCII characters up to number 255.\n")
-       (dotimes (i 256)(insert (format "%4d | \\%03o | \\x%02x | %c\n" i i i i)))(goto-char (point-min)))
+(defun ascii-table ()
+  "Show ASCII table as unibytes (0-255)."
+  (interactive)
+  (switch-to-buffer "*ASCII*")
+  (erase-buffer)
+  (set-buffer-multibyte nil)
+  (insert "ASCII characters up to number 255.\n")
+  (dotimes (i 256)
+    (insert (format "%4d | \\%03o | \\x%02x | %c\n" i i i i)))
+  (goto-char (point-min)))
 (defalias 'current-encoding 'describe-current-coding-brief)
-(defun describe-current-coding-brief () "Show current coding system in minibuffer." (interactive)
-       (message (prin1-to-string buffer-file-coding-system)))
-(defun describe-current-coding-full () "Describe current coding systems in detail." (interactive)
-       (describe-current-coding-system)(with-current-buffer "*Help*" (setq show-trailing-whitespace nil)))
+(defun describe-current-coding-brief ()
+  "Show current coding system in minibuffer."
+  (interactive)
+  (message (prin1-to-string buffer-file-coding-system)))
+(defun describe-current-coding-full ()
+  "Describe current coding systems in detail."
+  (interactive)
+  (describe-current-coding-system)
+  (with-current-buffer "*Help*" (setq show-trailing-whitespace nil)))
 (defalias 'display-colors 'list-colors-display)
 (defalias 'display-faces 'list-faces-display)
-(defun latin-1-table () "Show Latin-1 table as multibytes (0-127,unicode)." (interactive)
-       (switch-to-buffer "*Latin-1*")(erase-buffer)(set-buffer-multibyte t)
-       (insert "Latin-1 characters up to number 255.\n")
-       (dotimes (i 256)(insert (format "%4d | \\%03o | \\x%02x | %c\n" i i i i)))(goto-char (point-min)))
+(defun latin-1-table ()
+  "Show Latin-1 table as multibytes (0-127,unicode)."
+  (interactive)
+  (switch-to-buffer "*Latin-1*")
+  (erase-buffer)
+  (set-buffer-multibyte t)
+  (insert "Latin-1 characters up to number 255.\n")
+  (dotimes (i 256)
+    (insert (format "%4d | \\%03o | \\x%02x | %c\n" i i i i)))
+  (goto-char (point-min)))
 ;;==============================================================================
 ;;
 ;; 6  LANGUAGE MODES
@@ -1477,18 +2211,25 @@ which doesn't compile."
   (local-unset-key [C-tab])
   (local-set-key [?\C-c ?\C-c] 'ada-build)
   (local-set-key [?\C-c ?\C-v] 'ada-run  )
-  (defun ada-build () "Build simple Ada program." (interactive)(save-buffer)(ada-compile-application))
-  (defun ada-run () "Run simple Ada program." (interactive)
-         (let ((resize-mini-windows nil))
-           (if (one-window-p)(split-window-right))(shell-command (file-name-sans-extension (buffer-name))))))
+  (defun ada-build ()
+    "Build simple Ada program."
+    (interactive)
+    (save-buffer)(ada-compile-application))
+  (defun ada-run ()
+    "Run simple Ada program."
+    (interactive)
+    (let ((resize-mini-windows nil))
+      (if (one-window-p)(split-window-right))(shell-command (file-name-sans-extension (buffer-name))))))
 (add-hook 'ada-mode-hook 'arni-ada-hook)
 ;;-----------
 ;; 6.2  ADMB
 ;;-----------
-(defun std-to-tab () "Convert ADMB *.std output to tab-separated text." (interactive)
-       (setq tab-width 23)(goto-char (point-min))(delete-trailing-spc-tab-m)(unindent-buffer)
-       (save-excursion (if (search-forward "std dev" nil t)(replace-match "std.dev")))
-       (save-excursion (while (re-search-forward " +" nil t)(replace-match "\t"))))
+(defun std-to-tab ()
+  "Convert ADMB *.std output to tab-separated text."
+  (interactive)
+  (setq tab-width 23)(goto-char (point-min))(delete-trailing-spc-tab-m)(unindent-buffer)
+  (save-excursion (if (search-forward "std dev" nil t)(replace-match "std.dev")))
+  (save-excursion (while (re-search-forward " +" nil t)(replace-match "\t"))))
 (defun arni-admb-hook ()
   (setq make-backup-files t)(arni-colors)
   (add-to-list 'safe-local-variable-values '(admb-init . "admb050-vc6 & ")) ; allow files to set `admb-init' to this
@@ -1496,8 +2237,11 @@ which doesn't compile."
   (set-face-attribute 'font-lock-function-name-face nil :foreground "brown4")
   (local-set-key [f11]         'admb-outline-remember)
   (local-set-key [?\C-c ?\C-r] 'admb-rep-browser     )
-  (defun admb-outline-remember () "Navigate within ADMB file using `outline-mode', remembering previous mode."
-         (interactive)(admb-outline)(setq outline-previous-mode '(admb-mode))))
+  (defun admb-outline-remember ()
+    "Navigate within ADMB file using `outline-mode', remembering previous mode."
+
+    (interactive)
+    (admb-outline)(setq outline-previous-mode '(admb-mode))))
 (add-hook 'admb-mode-hook 'arni-admb-hook)
 ;;---------------
 ;; 6.3  Assembly
@@ -1527,20 +2271,33 @@ which doesn't compile."
   (local-set-key [?\C-m]       'sh-indent-newline-indent-or-delete-region) ; return
   (local-set-key [?\C-c ?\C-c] 'sh-eval-buffer                           ) ; sh-case
   (local-set-key [?\C-c ?\C-v] 'sh-eval-buffer                           )
-  (defun sh-eval-buffer () "Evaluate commands in buffer in inferior shell.\n
-See also `sh-send-line-or-region-and-step'." (interactive)(sh-send-text (buffer-string)))
-  (defun sh-indent-newline-indent () "Indent, insert newline, indent." (interactive "*")
-         (insert " ")(indent-according-to-mode)(newline)(clean-trails)(message nil)
-         (indent-according-to-mode)) ; handle 'case'
-  (defun sh-indent-newline-indent-or-delete-region () "Indent, insert newline, and indent, or delete region."
-         (interactive "*")(if (use-region-p)(progn (delete-region (point)(mark))(newline))(sh-indent-newline-indent)))
-  (defun sh-outline () "Navigate within shell script using `outline-mode'." (interactive)
-         (outline-mode)(setq outline-regexp "#")(outline-mode)(outline-hide-body)(setq outline-previous-mode '(sh-mode))
-         (set-face-attribute 'outline-1 nil :inherit font-lock-comment-face))
-  (defun sh-template-mini () "Insert minimal sh template." (interactive "*")
-         (goto-char (point-min))(insert "#!/bin/bash\n\n"))
-  (defun sh-template () "Insert sh template." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun sh-eval-buffer ()
+    "Evaluate commands in buffer in inferior shell.
+
+See also `sh-send-line-or-region-and-step'."
+    (interactive)
+    (sh-send-text (buffer-string)))
+  (defun sh-indent-newline-indent ()
+    "Indent, insert newline, indent."
+    (interactive "*")
+    (insert " ")(indent-according-to-mode)(newline)(clean-trails)(message nil)
+    (indent-according-to-mode)) ; handle 'case'
+  (defun sh-indent-newline-indent-or-delete-region ()
+    "Indent, insert newline, and indent, or delete region."
+    (interactive "*")(if (use-region-p)(progn (delete-region (point)(mark))(newline))(sh-indent-newline-indent)))
+  (defun sh-outline ()
+    "Navigate within shell script using `outline-mode'."
+    (interactive)
+    (outline-mode)(setq outline-regexp "#")(outline-mode)(outline-hide-body)(setq outline-previous-mode '(sh-mode))
+    (set-face-attribute 'outline-1 nil :inherit font-lock-comment-face))
+  (defun sh-template-mini ()
+    "Insert minimal sh template."
+    (interactive "*")
+    (goto-char (point-min))(insert "#!/bin/bash\n\n"))
+  (defun sh-template ()
+    "Insert sh template."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 #!/bin/bash
 shopt -s expand_aliases
 alias help='echo \"Usage: \"'
@@ -1563,8 +2320,14 @@ if [[ \"$1\" == \"--help\" ]]; then help; exit; fi
 ### Returns:                                                                   #
 ###                                                                            #
 ################################################################################
-\nwhile getopts \"p:\" A; do\n  case $A in\n    p) arg1=$OPTARG;;\n  esac\ndone
-shift $((OPTIND-1))\n
+
+while getopts \"p:\" A; do
+  case $A in
+    p) arg1=$OPTARG;;
+  esac
+done
+shift $((OPTIND-1))
+
 ")(goto-char (point-min))(search-forward ":   ")(overwrite-mode t)))
 (add-hook 'sh-mode-hook 'arni-sh-hook)
 ;;---------
@@ -1605,41 +2368,64 @@ shift $((OPTIND-1))\n
   (local-set-key [?\C-c ?\C-t]       'cpp-typeid             )
   (local-set-key [?\C-c ?\C-v]       'cpp-run                )
   (local-set-key [?\C-c ?\C-y]       'doxymacs-mode-with-hook)
-  (defun cpp-clean () "Remove C++ binary files (*.o *.so *.dll)." (interactive)
-         (let* ((prog (file-name-sans-extension (buffer-name)))
-                (pattern (concat prog "\\.o\\|" prog "\\.so\\|" prog "\\.dll"))
-                (files (directory-files "." nil pattern t)))
-           (dolist (x files)(delete-file x)))(message "Removed binary files."))
-  (defun cpp-compile () "Build simple C++ program (one source file)." (interactive)
-         (save-buffer)(if (one-window-p)(split-window-right))
-         (compile (concat "g++ -s -static -Wall -o " (file-name-sans-extension (buffer-name)) " " (buffer-name))))
-  (defun cpp-compile-make () "Build C++ program using Makefile." (interactive)
-         (save-buffer)(if (one-window-p)(split-window-right))(compile "make"))
-  (defun cpp-compile-symbols () "Build simple C++ program (one source file) with debug symbols." (interactive)
-         (save-buffer)(if (one-window-p)(split-window-right))
-         (compile (concat "g++ -g -static -Wall -o " (file-name-sans-extension (buffer-name)) " " (buffer-name))))
-  (defun cpp-endl () "Insert << endl; (or just endl;) and newline." (interactive "*")
-         (delete-horizontal-space)(if (looking-back "<" 10)(insert " endl;")(insert " << endl;")))
-  (defun cpp-for () "Insert for(int i=0; i<; i++)." (interactive "*")
-         (insert "for(int i=0; i<; i++)")(search-backward ";"))
-  (defun cpp-header () "Insert header #include guards (#ifndef, #define, #endif) at buffer top and bottom."
-         (interactive "*")
-         (let ((_CLASS_H (concat "_" (upcase (file-name-sans-extension (buffer-name))) "_H")))
-           (save-excursion (goto-char (point-min))(insert "#ifndef " _CLASS_H "\n#define " _CLASS_H "\n")
-                           (goto-line-lisp (line-number-at-pos (point-max)))(insert "\n#endif // " _CLASS_H "\n"))))
-  (defun cpp-include () "Insert #include <>." (interactive "*")
-         (insert "#include <>")(if (not (= (char-after) ?\n))(insert "\n"))(search-backward ">"))
-  (defun cpp-run () "Run simple C++ program." (interactive)
-         (let ((resize-mini-windows nil))
-           (if (one-window-p)(split-window-right))(shell-command (file-name-sans-extension (buffer-name)))))
-  (defun cpp-run-args (args) "Run simple C++ program with args." (interactive "sArgs: ")
-         (let ((resize-mini-windows nil))
-           (if (one-window-p)(split-window-right))
-           (shell-command (concat (file-name-sans-extension (buffer-name)) " " args))))
-  (defun cpp-run-gdb () "Debug C++ program using gdb." (interactive)
-         (gdb (concat "gdb --annotate=3 " (file-name-sans-extension (buffer-name)))))
-  (defun cpp-template () "Insert C++ template." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun cpp-clean ()
+    "Remove C++ binary files (*.o *.so *.dll)."
+    (interactive)
+    (let* ((prog (file-name-sans-extension (buffer-name)))
+           (pattern (concat prog "\\.o\\|" prog "\\.so\\|" prog "\\.dll"))
+           (files (directory-files "." nil pattern t)))
+      (dolist (x files)(delete-file x)))(message "Removed binary files."))
+  (defun cpp-compile ()
+    "Build simple C++ program (one source file)."
+    (interactive)
+    (save-buffer)(if (one-window-p)(split-window-right))
+    (compile (concat "g++ -s -static -Wall -o " (file-name-sans-extension (buffer-name)) " " (buffer-name))))
+  (defun cpp-compile-make ()
+    "Build C++ program using Makefile."
+    (interactive)
+    (save-buffer)(if (one-window-p)(split-window-right))(compile "make"))
+  (defun cpp-compile-symbols ()
+    "Build simple C++ program (one source file) with debug symbols."
+    (interactive)
+    (save-buffer)(if (one-window-p)(split-window-right))
+    (compile (concat "g++ -g -static -Wall -o " (file-name-sans-extension (buffer-name)) " " (buffer-name))))
+  (defun cpp-endl ()
+    "Insert << endl; (or just endl;) and newline."
+    (interactive "*")
+    (delete-horizontal-space)(if (looking-back "<" 10)(insert " endl;")(insert " << endl;")))
+  (defun cpp-for ()
+    "Insert for(int i=0; i<; i++)."
+    (interactive "*")
+    (insert "for(int i=0; i<; i++)")(search-backward ";"))
+  (defun cpp-header ()
+    "Insert header #include guards (#ifndef, #define, #endif) at buffer top and bottom."
+    (interactive "*")
+    (let ((_CLASS_H (concat "_" (upcase (file-name-sans-extension (buffer-name))) "_H")))
+      (save-excursion (goto-char (point-min))(insert "#ifndef " _CLASS_H "\n#define " _CLASS_H "\n")
+                      (goto-line-lisp (line-number-at-pos (point-max)))(insert "\n#endif // " _CLASS_H "\n"))))
+  (defun cpp-include ()
+    "Insert #include <>."
+    (interactive "*")
+    (insert "#include <>")(if (not (= (char-after) ?\n))(insert "\n"))(search-backward ">"))
+  (defun cpp-run ()
+    "Run simple C++ program."
+    (interactive)
+    (let ((resize-mini-windows nil))
+      (if (one-window-p)(split-window-right))(shell-command (file-name-sans-extension (buffer-name)))))
+  (defun cpp-run-args (args)
+    "Run simple C++ program with args."
+    (interactive "sArgs: ")
+    (let ((resize-mini-windows nil))
+      (if (one-window-p)(split-window-right))
+      (shell-command (concat (file-name-sans-extension (buffer-name)) " " args))))
+  (defun cpp-run-gdb ()
+    "Debug C++ program using gdb."
+    (interactive)
+    (gdb (concat "gdb --annotate=3 " (file-name-sans-extension (buffer-name)))))
+  (defun cpp-template ()
+    "Insert C++ template."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 //==============================================================================
 // Program:
 // Usage:
@@ -1651,7 +2437,8 @@ shift $((OPTIND-1))\n
 //==============================================================================
 #include <iostream>
 using std::cout;
-using std::endl;\n
+using std::endl;
+
 //------------------------------------------------------------------------------
 // Function: main
 // Purpose:
@@ -1661,19 +2448,29 @@ using std::endl;\n
 // Returns:  0
 //------------------------------------------------------------------------------
 int main(int argc, char** argv)
-{\n  cout << \"\" << endl;
+{
+  cout << \"\" << endl;
 }
 ")(goto-char (point-min)))
-  (defun cpp-template-mini () "Insert minimal C++ template." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun cpp-template-mini ()
+    "Insert minimal C++ template."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 #include <iostream>
-using namespace std;\n
+using namespace std;
+
 int main()
-{\n  cout << \"\" << endl;
+{
+  cout << \"\" << endl;
 }
 ")(goto-char (point-min))(search-forward "\""))
-  (defun cpp-typeid () "Insert typeid().name()." (interactive "*")(insert "typeid().name()")(search-backward ")."))
-  (defun lex-compile () "Translate lex to C." (interactive)(compile (concat "flex " (buffer-name)))))
+  (defun cpp-typeid ()
+    "Insert typeid().name()."
+    (interactive "*")(insert "typeid().name()")(search-backward ")."))
+  (defun lex-compile ()
+    "Translate lex to C."
+    (interactive)
+    (compile (concat "flex " (buffer-name)))))
 (add-hook 'c-mode-common-hook 'arni-c-hook)
 (defun arni-ebrowse-hook ()
   (split-window-right)(ebrowse-tree-command:show-member-functions)(skip-chars-forward " \t")
@@ -1772,78 +2569,165 @@ int main()
   (define-key ebrowse-member-mode-map [?s]           'ebrowse-tags-view-definition-other-window)
   (define-key ebrowse-member-mode-map [?t]           'ebrowse-toggle-long-short-display        )
   (define-key ebrowse-member-mode-map [?v]           'ebrowse-member-view-declaration          )
-  (defun ebrowse-member-bottom () "Move to bottom." (interactive)
-         (deactivate-mark)(goto-char (point-max))(ebrowse-member-up 1))
-  (defun ebrowse-member-down (&optional n) "Move down N lines." (interactive "p")
-         (deactivate-mark)(beginning-of-line (+ 1 n))(if (eobp)(forward-line -1))(skip-chars-forward " \t<\\->"))
-  (defun ebrowse-member-down-3 () "Move down 3 lines." (interactive)(ebrowse-member-down 3))
-  (defun ebrowse-member-down-page (&optional n) "Move down N pages." (interactive "p")(ebrowse-member-down (pages n)))
-  (defun ebrowse-member-down-view () "Move down one line and view member declaration in other window." (interactive)
-         (ebrowse-member-down 1)(ebrowse-member-view-declaration))
-  (defun ebrowse-member-functions () "Display member functions." (interactive)
-         (let ((line (line-number-at-pos)))
-           (ebrowse-display-function-member-list)(goto-line-lisp (- line 1))(ebrowse-member-down 1)))
-  (defun ebrowse-member-middle () "Move to middle." (interactive)
-         (ebrowse-member-top)(ebrowse-member-down (middle-from-here)))
-  (defun ebrowse-member-top () "Move to top." (interactive)(deactivate-mark)(goto-line-lisp 4)(ebrowse-member-up 1))
-  (defun ebrowse-member-top-mark () "Extend region to top." (interactive)(region-bol-top 3))
-  (defun ebrowse-member-tree-filenames () "Toggle filename display in tree window." (interactive)
-         (other-window 1)(ebrowse-toggle-file-name-display)(other-window 1))
-  (defun ebrowse-member-up (&optional n) "Move up N lines." (interactive "p")
-         (deactivate-mark)(beginning-of-line (- 1 n))(if (< (line-number-at-pos) 3)(goto-line-lisp 3))
-         (skip-chars-forward " \t<\\->"))
-  (defun ebrowse-member-up-3 () "Move up 3 lines." (interactive)(ebrowse-member-up 3))
-  (defun ebrowse-member-up-mark (&optional n) "Extend region up N lines." (interactive "p")
-         (region-bol-up n)(if (< (line-number-at-pos) 3)(ebrowse-member-top-mark)))
-  (defun ebrowse-member-up-page (&optional n) "Move up N pages." (interactive "p")(ebrowse-member-up (pages n)))
-  (defun ebrowse-member-up-view () "Move up one line and view member declaration in other window." (interactive)
-         (ebrowse-member-up 1)(ebrowse-member-view-declaration))
-  (defun ebrowse-member-variables () "Display member variables." (interactive)
-         (let ((line (line-number-at-pos)))
-           (ebrowse-display-variables-member-list)(goto-line-lisp (+ line 1))(ebrowse-member-up 1)))
-  (defun ebrowse-member-view-declaration () "View member declaration in other window." (interactive)
-         (ebrowse-view-member-declaration 4)(kill-buffer (current-buffer))(other-window 1)
-         (ebrowse-view-member-declaration 4)(other-window 1))
-  (defun ebrowse-member-view-definition () "View member definition in other window." (interactive)
-         (ebrowse-view-member-definition 4)(kill-buffer (current-buffer))(other-window 1)
-         (ebrowse-view-member-definition 4)(other-window 1))
-  (defun ebrowse-mouse-tree-variables (event) "View member variables." (interactive "e")
-         (mouse-set-point event)(ebrowse-tree-command:show-member-variables t))
-  (defun ebrowse-mouse-tree-declaration (event) "View class declaration." (interactive "e")
-         (mouse-set-point event)(ebrowse-tree-view-declaration))
-  (defun ebrowse-quit () "Quit ebrowse-tree-mode." (interactive)
-         (delete-other-windows)(kill-buffer ebrowse-tree-buffer-name)(kill-buffer ebrowse-member-buffer-name))
-  (defun ebrowse-restore-windows () "Restore original window setup: tree|members." (interactive)
-         (delete-other-windows)(split-window-right)(switch-to-buffer ebrowse-tree-buffer-name)
-         (display-buffer ebrowse-member-buffer-name))
-  (defun ebrowse-tree-bottom () "Move to bottom." (interactive)(deactivate-mark)(goto-char (point-max))
-         (ebrowse-tree-up 1))
-  (defun ebrowse-tree-down (&optional n) "Move down N lines." (interactive "p")
-         (deactivate-mark)(beginning-of-line (+ 1 n))(if (eobp)(forward-line -1))(skip-chars-forward " \t"))
-  (defun ebrowse-tree-down-3 () "Move down 3 lines." (interactive)(ebrowse-tree-down 3))
-  (defun ebrowse-tree-down-page (&optional n) "Move down N pages." (interactive "p")(ebrowse-tree-down (pages n)))
-  (defun ebrowse-tree-down-view () "Move down one line and view member functions in other window." (interactive)
-         (ebrowse-tree-down 1)(ebrowse-tree-command:show-member-functions))
-  (defun ebrowse-tree-mark () "Mark class and move to next line." (interactive)
-         (ebrowse-toggle-mark-at-point)(ebrowse-tree-up 1)(ebrowse-tree-down 1))
-  (defun ebrowse-tree-member-attributes () "Toggle attribute display in member window." (interactive)
-         (other-window 1)(ebrowse-toggle-member-attributes-display)(other-window 1))
-  (defun ebrowse-tree-member-type () "Toggle type display in member window." (interactive)
-         (other-window 1)(ebrowse-toggle-long-short-display)(other-window 1))
-  (defun ebrowse-tree-member-public () "Toggle public display in member window." (interactive)
-         (other-window 1)(ebrowse-toggle-public-member-filter)(other-window 1))
-  (defun ebrowse-tree-middle () "Move to middle." (interactive)(ebrowse-tree-top)(ebrowse-tree-down (middle-from-here)))
-  (defun ebrowse-tree-switch () "Move to member window." (interactive)
-         (ebrowse-pop/switch-to-member-buffer-for-same-tree nil)(if (< (line-number-at-pos) 3)(ebrowse-member-top)))
-  (defun ebrowse-tree-top () "Move to top." (interactive)(deactivate-mark)(goto-line-lisp 2)(ebrowse-tree-up 1))
-  (defun ebrowse-tree-up (&optional n) "Move down N lines." (interactive "p")
-         (deactivate-mark)(beginning-of-line (- 1 n))(skip-chars-forward " \t"))
-  (defun ebrowse-tree-up-3 () "Move up 3 lines." (interactive)(ebrowse-tree-up 3))
-  (defun ebrowse-tree-up-page (&optional n) "Move up N pages." (interactive "p")(ebrowse-tree-up (pages n)))
-  (defun ebrowse-tree-up-view () "Move up one line and view member functions in other window." (interactive)
-         (ebrowse-tree-up 1)(ebrowse-tree-command:show-member-functions))
-  (defun ebrowse-tree-view-declaration () "View class declaration in other window." (interactive)
-         (ebrowse-view-class-declaration 4)(other-window 1)))
+  (defun ebrowse-member-bottom ()
+    "Move to bottom."
+    (interactive)
+    (deactivate-mark)(goto-char (point-max))(ebrowse-member-up 1))
+  (defun ebrowse-member-down (&optional n)
+    "Move down N lines."
+    (interactive "p")
+    (deactivate-mark)(beginning-of-line (+ 1 n))(if (eobp)(forward-line -1))(skip-chars-forward " \t<\\->"))
+  (defun ebrowse-member-down-3 ()
+    "Move down 3 lines."
+    (interactive)
+    (ebrowse-member-down 3))
+  (defun ebrowse-member-down-page (&optional n)
+    "Move down N pages."
+    (interactive "p")(ebrowse-member-down (pages n)))
+  (defun ebrowse-member-down-view ()
+    "Move down one line and view member declaration in other window."
+    (interactive)
+    (ebrowse-member-down 1)(ebrowse-member-view-declaration))
+  (defun ebrowse-member-functions ()
+    "Display member functions."
+    (interactive)
+    (let ((line (line-number-at-pos)))
+      (ebrowse-display-function-member-list)(goto-line-lisp (- line 1))(ebrowse-member-down 1)))
+  (defun ebrowse-member-middle ()
+    "Move to middle."
+    (interactive)
+    (ebrowse-member-top)(ebrowse-member-down (middle-from-here)))
+  (defun ebrowse-member-top ()
+    "Move to top."
+    (interactive)
+    (deactivate-mark)(goto-line-lisp 4)(ebrowse-member-up 1))
+  (defun ebrowse-member-top-mark ()
+    "Extend region to top."
+    (interactive)
+    (region-bol-top 3))
+  (defun ebrowse-member-tree-filenames ()
+    "Toggle filename display in tree window."
+    (interactive)
+    (other-window 1)(ebrowse-toggle-file-name-display)(other-window 1))
+  (defun ebrowse-member-up (&optional n)
+    "Move up N lines."
+    (interactive "p")
+    (deactivate-mark)(beginning-of-line (- 1 n))(if (< (line-number-at-pos) 3)(goto-line-lisp 3))
+    (skip-chars-forward " \t<\\->"))
+  (defun ebrowse-member-up-3 ()
+    "Move up 3 lines."
+    (interactive)
+    (ebrowse-member-up 3))
+  (defun ebrowse-member-up-mark (&optional n)
+    "Extend region up N lines."
+    (interactive "p")
+    (region-bol-up n)(if (< (line-number-at-pos) 3)(ebrowse-member-top-mark)))
+  (defun ebrowse-member-up-page (&optional n)
+    "Move up N pages."
+    (interactive "p")(ebrowse-member-up (pages n)))
+  (defun ebrowse-member-up-view ()
+    "Move up one line and view member declaration in other window."
+    (interactive)
+    (ebrowse-member-up 1)(ebrowse-member-view-declaration))
+  (defun ebrowse-member-variables ()
+    "Display member variables."
+    (interactive)
+    (let ((line (line-number-at-pos)))
+      (ebrowse-display-variables-member-list)(goto-line-lisp (+ line 1))(ebrowse-member-up 1)))
+  (defun ebrowse-member-view-declaration ()
+    "View member declaration in other window."
+    (interactive)
+    (ebrowse-view-member-declaration 4)(kill-buffer (current-buffer))(other-window 1)
+    (ebrowse-view-member-declaration 4)(other-window 1))
+  (defun ebrowse-member-view-definition ()
+    "View member definition in other window."
+    (interactive)
+    (ebrowse-view-member-definition 4)(kill-buffer (current-buffer))(other-window 1)
+    (ebrowse-view-member-definition 4)(other-window 1))
+  (defun ebrowse-mouse-tree-variables (event)
+    "View member variables."
+    (interactive "e")
+    (mouse-set-point event)(ebrowse-tree-command:show-member-variables t))
+  (defun ebrowse-mouse-tree-declaration (event)
+    "View class declaration."
+    (interactive "e")
+    (mouse-set-point event)(ebrowse-tree-view-declaration))
+  (defun ebrowse-quit ()
+    "Quit ebrowse-tree-mode."
+    (interactive)
+    (delete-other-windows)(kill-buffer ebrowse-tree-buffer-name)(kill-buffer ebrowse-member-buffer-name))
+  (defun ebrowse-restore-windows ()
+    "Restore original window setup: tree|members."
+    (interactive)
+    (delete-other-windows)(split-window-right)(switch-to-buffer ebrowse-tree-buffer-name)
+    (display-buffer ebrowse-member-buffer-name))
+  (defun ebrowse-tree-bottom ()
+    "Move to bottom."
+    (interactive)
+    (deactivate-mark)(goto-char (point-max))
+    (ebrowse-tree-up 1))
+  (defun ebrowse-tree-down (&optional n)
+    "Move down N lines."
+    (interactive "p")
+    (deactivate-mark)(beginning-of-line (+ 1 n))(if (eobp)(forward-line -1))(skip-chars-forward " \t"))
+  (defun ebrowse-tree-down-3 ()
+    "Move down 3 lines."
+    (interactive)
+    (ebrowse-tree-down 3))
+  (defun ebrowse-tree-down-page (&optional n)
+    "Move down N pages."
+    (interactive "p")(ebrowse-tree-down (pages n)))
+  (defun ebrowse-tree-down-view ()
+    "Move down one line and view member functions in other window."
+    (interactive)
+    (ebrowse-tree-down 1)(ebrowse-tree-command:show-member-functions))
+  (defun ebrowse-tree-mark ()
+    "Mark class and move to next line."
+    (interactive)
+    (ebrowse-toggle-mark-at-point)(ebrowse-tree-up 1)(ebrowse-tree-down 1))
+  (defun ebrowse-tree-member-attributes ()
+    "Toggle attribute display in member window."
+    (interactive)
+    (other-window 1)(ebrowse-toggle-member-attributes-display)(other-window 1))
+  (defun ebrowse-tree-member-type ()
+    "Toggle type display in member window."
+    (interactive)
+    (other-window 1)(ebrowse-toggle-long-short-display)(other-window 1))
+  (defun ebrowse-tree-member-public ()
+    "Toggle public display in member window."
+    (interactive)
+    (other-window 1)(ebrowse-toggle-public-member-filter)(other-window 1))
+  (defun ebrowse-tree-middle ()
+    "Move to middle."
+    (interactive)
+    (ebrowse-tree-top)(ebrowse-tree-down (middle-from-here)))
+  (defun ebrowse-tree-switch ()
+    "Move to member window."
+    (interactive)
+    (ebrowse-pop/switch-to-member-buffer-for-same-tree nil)(if (< (line-number-at-pos) 3)(ebrowse-member-top)))
+  (defun ebrowse-tree-top ()
+    "Move to top."
+    (interactive)
+    (deactivate-mark)(goto-line-lisp 2)(ebrowse-tree-up 1))
+  (defun ebrowse-tree-up (&optional n)
+    "Move down N lines."
+    (interactive "p")
+    (deactivate-mark)(beginning-of-line (- 1 n))(skip-chars-forward " \t"))
+  (defun ebrowse-tree-up-3 ()
+    "Move up 3 lines."
+    (interactive)
+    (ebrowse-tree-up 3))
+  (defun ebrowse-tree-up-page (&optional n)
+    "Move up N pages."
+    (interactive "p")(ebrowse-tree-up (pages n)))
+  (defun ebrowse-tree-up-view ()
+    "Move up one line and view member functions in other window."
+    (interactive)
+    (ebrowse-tree-up 1)(ebrowse-tree-command:show-member-functions))
+  (defun ebrowse-tree-view-declaration ()
+    "View class declaration in other window."
+    (interactive)
+    (ebrowse-view-class-declaration 4)(other-window 1)))
 (add-hook 'ebrowse-tree-mode-hook 'arni-ebrowse-hook)
 (defun arni-gdb-hook () ; leave [?\C-x ?\C-a] unbound, otherwise gdb cannot be started
   (message nil)(setq indent-line-function 'gud-gdb-complete-command)(setq gdb-show-main t)
@@ -1866,39 +2750,55 @@ int main()
   (local-set-key [?\C-c ?\C-p]       'makefile-previous-dependency)
   (local-set-key [?\C-c ?\C-q]       'makefile-kill-compilation   )
   (local-set-key [?\C-c ?\C-v]       'makefile-run                )
-  (defun makefile-build () "Build program using Makefile." (interactive)
-         (save-buffer)(if (one-window-p)(split-window-right))(compile (concat "make -f " (buffer-name))))
-  (defun makefile-clean () "Delete binaries using Makefile." (interactive)
-         (save-buffer)(if (one-window-p)(split-window-right))(compile (concat "make -f " (buffer-name) " clean")))
-  (defun makefile-kill-compilation () "Kill Makefile build process." (interactive)
-         (kill-process (car (process-list))))
+  (defun makefile-build ()
+    "Build program using Makefile."
+    (interactive)
+    (save-buffer)(if (one-window-p)(split-window-right))(compile (concat "make -f " (buffer-name))))
+  (defun makefile-clean ()
+    "Delete binaries using Makefile."
+    (interactive)
+    (save-buffer)(if (one-window-p)(split-window-right))(compile (concat "make -f " (buffer-name) " clean")))
+  (defun makefile-kill-compilation ()
+    "Kill Makefile build process."
+    (interactive)
+    (kill-process (car (process-list))))
   (defun makefile-run ()
-    "Run program built using Makefile." (interactive)
+    "Run program built using Makefile."
+    (interactive)
     (let ((max-mini-window-height 0))
       (if (null makefile-program-name)(setq makefile-program-name (read-string "Program name: ")))
       (if (and (not (file-regular-p makefile-program-name))(not (file-regular-p (concat makefile-program-name ".exe"))))
           (error "File %s not found" makefile-program-name))
       (if (one-window-p)(split-window-right))(shell-command (concat default-directory makefile-program-name))))
-  (defun makefile-template () "Insert Makefile template." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun makefile-template ()
+    "Insert Makefile template."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 # g++ -s -static -Wall -o prog class.cpp prog.cpp
 COMP=g++ -c -Wall $^
-LINK=g++ -s -static -Wall -o $@ $^\n
+LINK=g++ -s -static -Wall -o $@ $^
+
 .PHONY: all
-all: prog\n
+all: prog
+
 prog: class.o prog.o
-\t$(LINK)\n
+\t$(LINK)
+
 prog.o: prog.cpp
-\t$(COMP)\n
+\t$(COMP)
+
 class.o: class.cpp
-\t$(COMP)\n
+\t$(COMP)
+
 .PHONY: clean
 clean:
 \trm prog class.o prog.o
 ")(goto-char (point-min))))
 (add-hook 'makefile-mode-hook 'arni-makefile-hook)
-(defun doxymacs-mode-with-hook () "Start `doxymacs-mode' and run `doxymacs-mode-hook'." (interactive)
-       (doxymacs-mode)(run-mode-hooks 'doxymacs-mode-hook)(redraw-display))
+(defun doxymacs-mode-with-hook ()
+  "Start `doxymacs-mode' and run `doxymacs-mode-hook'."
+  (interactive)
+  (doxymacs-mode)(run-mode-hooks 'doxymacs-mode-hook)(redraw-display))
 (defun arni-doxymacs-hook ()
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-c] 'doxymacs-insert-member-comment          )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-f] 'doxymacs-insert-function-comment        )
@@ -1912,18 +2812,28 @@ clean:
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-u] 'doxymacs-compile-latex                  )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-v] 'doxymacs-view-html                      )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-y] 'doxymacs-compile                        )
-  (defun doxymacs-compile () "Compile Doxygen file in current directory." (interactive)
-         (save-buffer)(if (one-window-p)(split-window-right))(compile (concat "doxygen " (doxymacs-file))))
-  (defun doxymacs-compile-latex () "Compile Doxygen LaTeX document." (interactive)(cd "latex")(compile "make")(cd ".."))
-  (defun doxymacs-file (&optional dir) "Return name of Doxygen configuration file in DIR."
-         (if (null dir)(setq dir "."))
-         (cond ((directory-files dir nil "^Doxyfile$") "Doxyfile")
-               ((directory-files dir nil "\\.dox$")(car (directory-files "." nil "\\.dox$")))
-               ((directory-files dir nil "\\.doxyfile$")(car (directory-files "." nil "\\.doxyfile$")))(t nil)))
-  (defun doxymacs-view-html () "View Doxygen HTML document." (interactive)
-         (browse-url (concat default-directory "html/index.html")))
-  (defun doxymacs-view-pdf () "View Doxygen LaTeX document." (interactive)
-         (shell-command "ghostview latex/refman.pdf&")(delete-other-windows)))
+  (defun doxymacs-compile ()
+    "Compile Doxygen file in current directory."
+    (interactive)
+    (save-buffer)(if (one-window-p)(split-window-right))(compile (concat "doxygen " (doxymacs-file))))
+  (defun doxymacs-compile-latex ()
+    "Compile Doxygen LaTeX document."
+    (interactive)
+    (cd "latex")(compile "make")(cd ".."))
+  (defun doxymacs-file (&optional dir)
+    "Return name of Doxygen configuration file in DIR."
+    (if (null dir)(setq dir "."))
+    (cond ((directory-files dir nil "^Doxyfile$") "Doxyfile")
+          ((directory-files dir nil "\\.dox$")(car (directory-files "." nil "\\.dox$")))
+          ((directory-files dir nil "\\.doxyfile$")(car (directory-files "." nil "\\.doxyfile$")))(t nil)))
+  (defun doxymacs-view-html ()
+    "View Doxygen HTML document."
+    (interactive)
+    (browse-url (concat default-directory "html/index.html")))
+  (defun doxymacs-view-pdf ()
+    "View Doxygen LaTeX document."
+    (interactive)
+    (shell-command "ghostview latex/refman.pdf&")(delete-other-windows)))
 (add-hook 'doxymacs-mode-hook 'arni-doxymacs-hook)
 (defalias 'flex-mode 'c-mode)
 ;;----------
@@ -1942,13 +2852,22 @@ clean:
   (local-set-key [S-f12]       'bat-template        )
   (local-set-key [f12]         'bat-template-full   )
   (local-set-key [?\C-c ?\C- ] 'bat-sep             )
-  (defun bat-outline () "Navigate within Dos script using `outline-mode'." (interactive)
-         (let ((outreg outline-regexp))(outline-mode)(setq outline-regexp "^:[^:]"))(outline-mode)(outline-hide-body))
-  (defun bat-outline-remember () "Navigate within Dos script using `outline-mode', remembering previous mode."
-         (interactive)(bat-outline)(setq outline-top-level 2)(setq outline-previous-mode '(bat-mode)))
-  (defun bat-sep () "Insert & separator." (interactive "*")(insert " & "))
-  (defun bat-template-full () "Insert Dos template." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun bat-outline ()
+    "Navigate within Dos script using `outline-mode'."
+    (interactive)
+    (let ((outreg outline-regexp))(outline-mode)(setq outline-regexp "^:[^:]"))(outline-mode)(outline-hide-body))
+  (defun bat-outline-remember ()
+    "Navigate within Dos script using `outline-mode', remembering previous mode."
+
+    (interactive)
+    (bat-outline)(setq outline-top-level 2)(setq outline-previous-mode '(bat-mode)))
+  (defun bat-sep ()
+    "Insert & separator."
+    (interactive "*")(insert " & "))
+  (defun bat-template-full ()
+    "Insert Dos template."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 @echo off
 setlocal
 if [%1]==[] goto HELP
@@ -1970,16 +2889,21 @@ REM                                                                            #
 REM Returns:                                                                   #
 REM                                                                            #
 REM ############################################################################
-\nrem Pop args until file=%1
+
+rem Pop args until file=%1
 set par=default
 :STARTLOOP
 if [%2]==[] goto ENDLOOP
 if %1==-flag set par=%2 & shift & shift
 goto STARTLOOP
-:ENDLOOP\n\n\n
+:ENDLOOP
+
+
+
 :HELP
 echo Usage:
-echo.\n
+echo.
+
 :EOF
 ")(goto-char (point-min))(search-forward ":   ")(overwrite-mode t)))
 (add-hook 'bat-mode-hook 'arni-bat-hook)
@@ -1994,16 +2918,24 @@ echo.\n
   (local-set-key [?\C-c ?f]    'fortran-or-f90-mode     )
   (local-set-key [?\C-c ?\C-c] 'fortran-compile         )
   (local-set-key [?\C-c ?\C-v] 'fortran-run             )
-  (defun fortran-compile () "Build simple Fortran program (one source file)." (interactive)
-         (save-buffer)(if (one-window-p)(split-window-right))
-         (compile (concat "gfortran -s -static -Wall -o " (file-name-sans-extension (buffer-name)) " " (buffer-name))))
-  (defun fortran-or-f90-mode () "Switch between Fortran and F90 mode." (interactive)
-         (if (string-match "Fortran" mode-name)(f90-mode)(fortran-mode)))
-  (defun fortran-run () "Run simple Fortran program." (interactive)
-         (let ((resize-mini-windows nil))
-           (if (one-window-p)(split-window-right))(shell-command (file-name-sans-extension (buffer-name)))))
-  (defun fortran-split-line-smart () "Break Fortran line." (interactive)
-         (if (string-match "Fortran" mode-name)(fortran-split-line)(f90-break-line))))
+  (defun fortran-compile ()
+    "Build simple Fortran program (one source file)."
+    (interactive)
+    (save-buffer)(if (one-window-p)(split-window-right))
+    (compile (concat "gfortran -s -static -Wall -o " (file-name-sans-extension (buffer-name)) " " (buffer-name))))
+  (defun fortran-or-f90-mode ()
+    "Switch between Fortran and F90 mode."
+    (interactive)
+    (if (string-match "Fortran" mode-name)(f90-mode)(fortran-mode)))
+  (defun fortran-run ()
+    "Run simple Fortran program."
+    (interactive)
+    (let ((resize-mini-windows nil))
+      (if (one-window-p)(split-window-right))(shell-command (file-name-sans-extension (buffer-name)))))
+  (defun fortran-split-line-smart ()
+    "Break Fortran line."
+    (interactive)
+    (if (string-match "Fortran" mode-name)(fortran-split-line)(f90-break-line))))
 (add-hook 'fortran-mode-hook 'arni-fortran-hook)
 (add-hook 'f90-mode-hook 'arni-fortran-hook)
 ;;-----------
@@ -2096,97 +3028,152 @@ echo.\n
   (local-set-key [?\C--]          'html-endash                          )
   (local-set-key [?\M--]          'html-emdash                          )
   (local-set-key [?\M-/]          'html-delete-comments                 )
-  (defun html-8bit-char () "Insert &sgml; based on keyboard input." (interactive "*")
-         (sgml-mode)(sgml-name-char)(html-helper-mode))
-  (defun html-br () "Insert <br> and end line." (interactive "*")(insert "<br>")(reindent-then-newline-and-indent))
-  (defun html-code (&optional arg) "Insert <code> tags around object at point." (interactive "*P")
-         (insert "<code>")(re-search-forward "[\n, ]" nil t)(backward-char)(if (= (char-before) ?.)(backward-char))
-         (insert "</code>"))
-  (defun html-convert-latin1-to-utf8 () "Replace iso-8859-1 with utf-8, save, and quit." (interactive "*")
-         (save-excursion (goto-char (point-min))(while (search-forward "iso-8859-1" nil t)(replace-match "utf-8")))
-         (save-buffer)(save-buffers-kill-terminal))
-  (defun html-css-inline () "Insert inline CSS block." (interactive "*")
-         (insert "<style>\n  body {margin-left:20%; margin-right:20%}\n</style>\n")(search-backward "{"))
-  (defun html-css-link () "Link external CSS stylesheet." (interactive "*")
-         (insert "<link rel=\"stylesheet\" href=\"\">\n")(search-backward "\""))
+  (defun html-8bit-char ()
+    "Insert &sgml; based on keyboard input."
+    (interactive "*")
+    (sgml-mode)(sgml-name-char)(html-helper-mode))
+  (defun html-br ()
+    "Insert <br> and end line."
+    (interactive "*")(insert "<br>")(reindent-then-newline-and-indent))
+  (defun html-code (&optional arg)
+    "Insert <code> tags around object at point."
+    (interactive "*P")
+    (insert "<code>")(re-search-forward "[\n, ]" nil t)(backward-char)(if (= (char-before) ?.)(backward-char))
+    (insert "</code>"))
+  (defun html-convert-latin1-to-utf8 ()
+    "Replace iso-8859-1 with utf-8, save, and quit."
+    (interactive "*")
+    (save-excursion (goto-char (point-min))(while (search-forward "iso-8859-1" nil t)(replace-match "utf-8")))
+    (save-buffer)(save-buffers-kill-terminal))
+  (defun html-css-inline ()
+    "Insert inline CSS block."
+    (interactive "*")
+    (insert "<style>\n  body {margin-left:20%; margin-right:20%}\n</style>\n")(search-backward "{"))
+  (defun html-css-link ()
+    "Link external CSS stylesheet."
+    (interactive "*")
+    (insert "<link rel=\"stylesheet\" href=\"\">\n")(search-backward "\""))
   (defun html-delete-comments ()
-    "Delete all comments." (interactive "*")
+    "Delete all comments."
+    (interactive "*")
     (save-excursion (goto-char (point-min)) ; just [\t ]* and then regexp from html-helper-font-lock-keywords
                     (while (re-search-forward "[\t ]*<!\\(--\\([^-]\\|-[^-]\\)*--\\s-*\\)*>" nil t)(replace-match ""))))
-  (defun html-dl () "Insert <dl> structure." (interactive "*")
-         (insert "<dl>")(reindent-then-newline-and-indent)(insert "<dt>")(reindent-then-newline-and-indent)
-         (insert "<dd>")(reindent-then-newline-and-indent)
-         (insert "</dl>")(html-helper-indent-command)(newline)(re-search-backward "\n *</dl>"))
-  (defun html-emdash () "Insert &mdash;" (interactive "*")(insert "&mdash;"))
-  (defun html-endash () "Insert &ndash;" (interactive "*")(insert "&ndash;"))
-  (defun html-img () "Insert <img> with args." (interactive "*")
-         (insert "<img src=\"\" alt=\"\">")(search-backward "\"" nil t 3))
-  (defun html-nbsp () "Insert &nbsp;" (interactive "*")(insert "&nbsp;"))
-  (defun html-ol () "Insert <ol> structure." (interactive "*")
-         (insert "<ol>")(reindent-then-newline-and-indent)(insert "<li>")(reindent-then-newline-and-indent)
-         (insert "</ol>")(html-helper-indent-command)(newline)(re-search-backward "\n *</ol>"))
-  (defun html-outline () "Navigate within HTML file using `outline-mode'." (interactive "*")
-         (outline-mode)(setq outline-regexp ".*<h[0-9]\\|.*<div\\|.*<dl\\|.*<table")(outline-mode)(outline-hide-body)
-         (setq outline-top-level 3)(setq outline-previous-mode '(html-helper-mode)))
-  (defun html-quote-6 () "Insert &lsquo;" (interactive "*")(insert "&lsquo;"))
-  (defun html-quote-9 () "Insert &rsquo;" (interactive "*")(insert "&rsquo;"))
-  (defun html-quote-66 () "Insert &ldquo;" (interactive "*")(insert "&ldquo;"))
-  (defun html-quote-99 () "Insert &rdquo;" (interactive "*")(insert "&rdquo;"))
-  (defun html-quote-99-bottom () "Insert &bdquo;" (interactive "*")(insert "&bdquo;"))
-  (defun html-save-and-view () "Save file and open in browser." (interactive)(save-buffer)(browse-url-of-file))
-  (defun html-simplify () "Simplify HTML code by removing unnecessary tags." (interactive "*")
-         (save-excursion
-           (goto-char (point-min))(while (search-forward "<html>\n" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "</html>\n" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "<head>\n" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "</head>\n" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "</body>\n" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "</p>" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "</li>" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "</dt>" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "</dd>" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "<thead>\n" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "</thead>\n" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "<tbody>\n" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "</tbody>\n" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "</tr>" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "</th>" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "</td>" nil t)(replace-match ""))
-           (goto-char (point-min))(while (search-forward "\n\n\n" nil t)(replace-match "\n\n"))
-           (goto-char (- (point-max) 1))(if (= (current-column) 0)(delete-char 1))))
-  (defun html-table () "Insert <table> structure." (interactive "*")
-         (insert "<table>")(reindent-then-newline-and-indent)(insert "<tr><td>")(reindent-then-newline-and-indent)
-         (insert "</table>")(html-helper-indent-command)(newline)(re-search-backward "\n *</table>"))
-  (defun html-td () "Insert <td> separator." (interactive "*")(insert "<td>"))
-  (defun html-template () "Insert HTML 5 template." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun html-dl ()
+    "Insert <dl> structure."
+    (interactive "*")
+    (insert "<dl>")(reindent-then-newline-and-indent)(insert "<dt>")(reindent-then-newline-and-indent)
+    (insert "<dd>")(reindent-then-newline-and-indent)
+    (insert "</dl>")(html-helper-indent-command)(newline)(re-search-backward "\n *</dl>"))
+  (defun html-emdash ()
+    "Insert &mdash;"
+    (interactive "*")(insert "&mdash;"))
+  (defun html-endash ()
+    "Insert &ndash;"
+    (interactive "*")(insert "&ndash;"))
+  (defun html-img ()
+    "Insert <img> with args."
+    (interactive "*")
+    (insert "<img src=\"\" alt=\"\">")(search-backward "\"" nil t 3))
+  (defun html-nbsp ()
+    "Insert &nbsp;"
+    (interactive "*")(insert "&nbsp;"))
+  (defun html-ol ()
+    "Insert <ol> structure."
+    (interactive "*")
+    (insert "<ol>")(reindent-then-newline-and-indent)(insert "<li>")(reindent-then-newline-and-indent)
+    (insert "</ol>")(html-helper-indent-command)(newline)(re-search-backward "\n *</ol>"))
+  (defun html-outline ()
+    "Navigate within HTML file using `outline-mode'."
+    (interactive "*")
+    (outline-mode)(setq outline-regexp ".*<h[0-9]\\|.*<div\\|.*<dl\\|.*<table")(outline-mode)(outline-hide-body)
+    (setq outline-top-level 3)(setq outline-previous-mode '(html-helper-mode)))
+  (defun html-quote-6 ()
+    "Insert &lsquo;"
+    (interactive "*")(insert "&lsquo;"))
+  (defun html-quote-9 ()
+    "Insert &rsquo;"
+    (interactive "*")(insert "&rsquo;"))
+  (defun html-quote-66 ()
+    "Insert &ldquo;"
+    (interactive "*")(insert "&ldquo;"))
+  (defun html-quote-99 ()
+    "Insert &rdquo;"
+    (interactive "*")(insert "&rdquo;"))
+  (defun html-quote-99-bottom ()
+    "Insert &bdquo;"
+    (interactive "*")(insert "&bdquo;"))
+  (defun html-save-and-view ()
+    "Save file and open in browser."
+    (interactive)
+    (save-buffer)(browse-url-of-file))
+  (defun html-simplify ()
+    "Simplify HTML code by removing unnecessary tags."
+    (interactive "*")
+    (save-excursion
+      (goto-char (point-min))(while (search-forward "<html>\n" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "</html>\n" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "<head>\n" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "</head>\n" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "</body>\n" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "</p>" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "</li>" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "</dt>" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "</dd>" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "<thead>\n" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "</thead>\n" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "<tbody>\n" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "</tbody>\n" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "</tr>" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "</th>" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "</td>" nil t)(replace-match ""))
+      (goto-char (point-min))(while (search-forward "\n\n\n" nil t)(replace-match "\n\n"))
+      (goto-char (- (point-max) 1))(if (= (current-column) 0)(delete-char 1))))
+  (defun html-table ()
+    "Insert <table> structure."
+    (interactive "*")
+    (insert "<table>")(reindent-then-newline-and-indent)(insert "<tr><td>")(reindent-then-newline-and-indent)
+    (insert "</table>")(html-helper-indent-command)(newline)(re-search-backward "\n *</table>"))
+  (defun html-td ()
+    "Insert <td> separator."
+    (interactive "*")(insert "<td>"))
+  (defun html-template ()
+    "Insert HTML 5 template."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 <!DOCTYPE html>
 <meta charset=\"utf-8\">
 <title></title>
 <style>
   body {margin-left:20%; margin-right:20%}
 </style>
-<body>\n
+<body>
+
 ")(goto-char (point-min))(search-forward "e>"))
-  (defun html-tidy () "Validate current HTML file with tidy." (interactive)
-         (compile (concat "tidy -e -utf8 " (buffer-name))))
-  (defun html-toggle-links () "Toggle highlighting of links (red:href, yellow:most, green:some)." (interactive)
-         (if html-links (hi-lock-mode 0)
-           (progn (hi-lock-face-buffer " href=\"[^\"]*\\.html\""        'highlight     ) ; html
-                  (hi-lock-face-buffer " href=\"[^\"]*\\.htm\""         'highlight     ) ; htm
-                  (hi-lock-face-buffer " href=\"[^\"]*\\.css\""         'highlight     ) ; css
-                  (hi-lock-face-buffer " href=\"[^\"]*\\.pdf\""         'highlight     ) ; pdf
-                  (hi-lock-face-buffer " href=\"[^\"]*\\.zip\""         'highlight     ) ; zip
-                  (hi-lock-face-buffer " href=\"mailto:[^\"]*\""        'highlight     ) ; mailto
-                  (hi-lock-face-buffer " href=\"[^\"]*/\""              'highlight     ) ; /
-                  (hi-lock-face-buffer " href=\"[^\"]*#[^\"]*\""        'highlight     ) ; #
-                  (hi-lock-face-buffer " href=\"http[^\"]*[\?][^\"]*\"" 'lazy-highlight) ; ?
-                  (hi-lock-face-buffer " href=" 'show-paren-mismatch-face)))
-         (setq html-links (not html-links))(force-mode-line-update)
-         (message "Highlighted links %s" (if html-links "ON" "OFF")))
-  (defun html-ul () "Insert <ul> structure." (interactive "*")
-         (insert "<ul>")(reindent-then-newline-and-indent)(insert "<li>")(reindent-then-newline-and-indent)
-         (insert "</ul>")(html-helper-indent-command)(newline)(re-search-backward "\n *</ul>")))
+  (defun html-tidy ()
+    "Validate current HTML file with tidy."
+    (interactive)
+    (compile (concat "tidy -e -utf8 " (buffer-name))))
+  (defun html-toggle-links ()
+    "Toggle highlighting of links (red:href, yellow:most, green:some)."
+    (interactive)
+    (if html-links (hi-lock-mode 0)
+      (progn (hi-lock-face-buffer " href=\"[^\"]*\\.html\""        'highlight     ) ; html
+             (hi-lock-face-buffer " href=\"[^\"]*\\.htm\""         'highlight     ) ; htm
+             (hi-lock-face-buffer " href=\"[^\"]*\\.css\""         'highlight     ) ; css
+             (hi-lock-face-buffer " href=\"[^\"]*\\.pdf\""         'highlight     ) ; pdf
+             (hi-lock-face-buffer " href=\"[^\"]*\\.zip\""         'highlight     ) ; zip
+             (hi-lock-face-buffer " href=\"mailto:[^\"]*\""        'highlight     ) ; mailto
+             (hi-lock-face-buffer " href=\"[^\"]*/\""              'highlight     ) ; /
+             (hi-lock-face-buffer " href=\"[^\"]*#[^\"]*\""        'highlight     ) ; #
+             (hi-lock-face-buffer " href=\"http[^\"]*[\?][^\"]*\"" 'lazy-highlight) ; ?
+             (hi-lock-face-buffer " href=" 'show-paren-mismatch-face)))
+    (setq html-links (not html-links))(force-mode-line-update)
+    (message "Highlighted links %s" (if html-links "ON" "OFF")))
+  (defun html-ul ()
+    "Insert <ul> structure."
+    (interactive "*")
+    (insert "<ul>")(reindent-then-newline-and-indent)(insert "<li>")(reindent-then-newline-and-indent)
+    (insert "</ul>")(html-helper-indent-command)(newline)(re-search-backward "\n *</ul>")))
 (add-hook 'html-helper-mode-hook 'arni-html-hook)
 (defun arni-html-load-hook ()(setq html-helper-build-new-buffer nil)(setq html-helper-do-write-file-hooks nil))
 (add-hook 'html-helper-load-hook 'arni-html-load-hook)
@@ -2214,13 +3201,17 @@ echo.\n
   (setq c-basic-offset 2)
   (local-set-key [?\C-c ?\C-c] 'java-compile)
   (local-set-key [?\C-c ?\C-v] 'java-run    )
-  (defun java-compile () "Build simple Java program (one source file)." (interactive)
-         (save-buffer)(if (one-window-p)(split-window-right))
-         (compile (concat "javac " (buffer-name))))
-  (defun java-run () "Run simple Java program (first class defined in source)." (interactive)
-         (let ((resize-mini-windows nil)(java-class nil)) ; will look for java-class in source code
-           (save-excursion (goto-char (point-min))(search-forward "class " nil t)(setq java-class (current-word)))
-           (if (one-window-p)(split-window-right))(shell-command (concat "java " java-class)))))
+  (defun java-compile ()
+    "Build simple Java program (one source file)."
+    (interactive)
+    (save-buffer)(if (one-window-p)(split-window-right))
+    (compile (concat "javac " (buffer-name))))
+  (defun java-run ()
+    "Run simple Java program (first class defined in source)."
+    (interactive)
+    (let ((resize-mini-windows nil)(java-class nil)) ; will look for java-class in source code
+      (save-excursion (goto-char (point-min))(search-forward "class " nil t)(setq java-class (current-word)))
+      (if (one-window-p)(split-window-right))(shell-command (concat "java " java-class)))))
 (add-hook 'java-mode-hook 'arni-java-hook)
 ;;-----------------
 ;; 6.12 JavaScript
@@ -2304,12 +3295,15 @@ echo.\n
   (local-set-key [3 67109110]        'LaTeX-break-single          ) ; ?\C-c ?\C-ö
   (local-set-key [?\C-j]             'LaTeX-fill-paragraph-forward)
   (local-set-key [?\C-u]             'universal-argument          ) ; enable C-u C-c C-e
-  (defun beamer-template () "Insert Beamer template." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun beamer-template ()
+    "Insert Beamer template."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 % \\documentclass{article}\\usepackage{beamerarticle}
 \\documentclass[ignorenonframetext,hyperref={bookmarks=false}]{beamer}
 \\mode<article>
-{\n  \\usepackage{parskip}
+{
+  \\usepackage{parskip}
 }
 \\usetheme{warsaw}
 \\setbeamertemplate{footline}{}
@@ -2318,85 +3312,160 @@ echo.\n
 \\subtitle{}
 \\author{}
 \\date{}
-\\begin{document}\n
-\\begin{frame}\n  \\mode<article>{\\maketitle}\n  \\mode<beamer>{\\titlepage}
-\\end{frame}\n
+\\begin{document}
+
+\\begin{frame}
+  \\mode<article>{\\maketitle}
+  \\mode<beamer>{\\titlepage}
+\\end{frame}
+
 \\end{document}
 ")(goto-char (point-min))(search-forward "title{"))
-  (defun LaTeX-babel-fontenc () "Insert lines to load babel and fontenc packages." (interactive "*")
-         (insert "\\usepackage[icelandic]{babel}\n" "\\usepackage[utf8]{inputenc}\n" "\\usepackage[T1]{fontenc}\n"))
-  (defun LaTeX-break-double () "Insert visual section break at end of line, like % =====" (interactive "*")
-         (end-of-line)(insert "% ")(while (< (current-column) fill-column)(insert "=")))
-  (defun LaTeX-break-single () "Insert visual section break at end of line, like % _____" (interactive "*")
-         (end-of-line)(insert "% ")(while (< (current-column) fill-column)(insert "_")))
-  (defun LaTeX-eqnarray-equals () "Insert eqnarray &=& separator." (interactive "*")(insert " &=& "))
-  (defun LaTeX-fill-paragraph-forward () "Justify and go to end of paragraph." (interactive)
-         (while (and (bolp)(eolp)(not (eobp)))(forward-line)) ; move to next non-empty line
-         (LaTeX-fill-paragraph nil)(clean-trails)(message nil)(forward-paragraph))
-  (defun LaTeX-ghostview () "Open PDF in viewer." (interactive)
-         (shell-command (concat "ghostview \"" (file-name-sans-extension (buffer-name)) ".pdf\"&"))
-         (delete-other-windows))
-  (defun LaTeX-includegraphics () "Insert \\includegraphics{}." (interactive "*")
-         (insert "\\includegraphics{}")(search-backward "}"))
-  (defun LaTeX-item () "Insert \\item, possibly after a newline." (interactive "*")
-         (if (not (looking-back "^[ \t]*" 10))(newline-and-indent))(insert "\\item "))
-  (defun LaTeX-knitr () "Knit document and compile to PDF." (interactive)
-         (save-buffer)(compile (concat "auctex -k " (buffer-name))))
-  (defun LaTeX-master-clean () "Clean LaTeX temporary files." (interactive)
-         (save-buffer)(TeX-command "Clean" 'TeX-master-file)(message "Removed temporary files"))
-  (defun LaTeX-master-clean-all () "Clean LaTeX temporary and output files." (interactive)
-         (save-buffer)(TeX-command "Clean All" 'TeX-master-file)(message "Removed temporary and output files"))
-  (defun LaTeX-master-latex () "Compile LaTeX document with pdfTeX." (interactive)
-         (save-buffer)(TeX-command "LaTeX PDF" 'TeX-master-file))
-  (defun LaTeX-master-open () "Open LaTeX master document." (interactive)(find-file TeX-master))
-  (defun LaTeX-master-PDF () "Compile LaTeX document with LaTeX, dvips, and ps2pdf (letter page)." (interactive)
-         (save-buffer)(TeX-command "CompilePDF" 'TeX-master-file))
-  (defun LaTeX-master-PDFa4 () "Compile LaTeX document with LaTeX, dvips, and ps2pdf (A4 page)." (interactive)
-         (save-buffer)(TeX-command "CompilePDFa4" 'TeX-master-file))
-  (defun LaTeX-master-view () "View LaTeX document with PDF viewer." (interactive)(TeX-command "View" 'TeX-master-file))
-  (defun LaTeX-noindent () "Insert \\noindent." (interactive "*")(insert "\\noindent\n"))
-  (defun LaTeX-table-sep () "Insert tabular & separator." (interactive "*")(insert " & "))
-  (defun LaTeX-template () "Insert LaTeX template." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun LaTeX-babel-fontenc ()
+    "Insert lines to load babel and fontenc packages."
+    (interactive "*")
+    (insert "\
+\\usepackage[icelandic]{babel}
+\\usepackage[utf8]{inputenc}
+\\usepackage[T1]{fontenc}
+"))
+  (defun LaTeX-break-double ()
+    "Insert visual section break at end of line, like % ====="
+    (interactive "*")
+    (end-of-line)(insert "% ")(while (< (current-column) fill-column)(insert "=")))
+  (defun LaTeX-break-single ()
+    "Insert visual section break at end of line, like % _____"
+    (interactive "*")
+    (end-of-line)(insert "% ")(while (< (current-column) fill-column)(insert "_")))
+  (defun LaTeX-eqnarray-equals ()
+    "Insert eqnarray &=& separator."
+    (interactive "*")(insert " &=& "))
+  (defun LaTeX-fill-paragraph-forward ()
+    "Justify and go to end of paragraph."
+    (interactive)
+    (while (and (bolp)(eolp)(not (eobp)))(forward-line)) ; move to next non-empty line
+    (LaTeX-fill-paragraph nil)(clean-trails)(message nil)(forward-paragraph))
+  (defun LaTeX-ghostview ()
+    "Open PDF in viewer."
+    (interactive)
+    (shell-command (concat "ghostview \"" (file-name-sans-extension (buffer-name)) ".pdf\"&"))
+    (delete-other-windows))
+  (defun LaTeX-includegraphics ()
+    "Insert \\includegraphics{}."
+    (interactive "*")
+    (insert "\\includegraphics{}")(search-backward "}"))
+  (defun LaTeX-item ()
+    "Insert \\item, possibly after a newline."
+    (interactive "*")
+    (if (not (looking-back "^[ \t]*" 10))(newline-and-indent))(insert "\\item "))
+  (defun LaTeX-knitr ()
+    "Knit document and compile to PDF."
+    (interactive)
+    (save-buffer)(compile (concat "auctex -k " (buffer-name))))
+  (defun LaTeX-master-clean ()
+    "Clean LaTeX temporary files."
+    (interactive)
+    (save-buffer)(TeX-command "Clean" 'TeX-master-file)(message "Removed temporary files"))
+  (defun LaTeX-master-clean-all ()
+    "Clean LaTeX temporary and output files."
+    (interactive)
+    (save-buffer)(TeX-command "Clean All" 'TeX-master-file)(message "Removed temporary and output files"))
+  (defun LaTeX-master-latex ()
+    "Compile LaTeX document with pdfTeX."
+    (interactive)
+    (save-buffer)(TeX-command "LaTeX PDF" 'TeX-master-file))
+  (defun LaTeX-master-open ()
+    "Open LaTeX master document."
+    (interactive)
+    (find-file TeX-master))
+  (defun LaTeX-master-PDF ()
+    "Compile LaTeX document with LaTeX, dvips, and ps2pdf (letter page)."
+    (interactive)
+    (save-buffer)(TeX-command "CompilePDF" 'TeX-master-file))
+  (defun LaTeX-master-PDFa4 ()
+    "Compile LaTeX document with LaTeX, dvips, and ps2pdf (A4 page)."
+    (interactive)
+    (save-buffer)(TeX-command "CompilePDFa4" 'TeX-master-file))
+  (defun LaTeX-master-view ()
+    "View LaTeX document with PDF viewer."
+    (interactive)
+    (TeX-command "View" 'TeX-master-file))
+  (defun LaTeX-noindent ()
+    "Insert \\noindent."
+    (interactive "*")(insert "\\noindent\n"))
+  (defun LaTeX-table-sep ()
+    "Insert tabular & separator."
+    (interactive "*")(insert " & "))
+  (defun LaTeX-template ()
+    "Insert LaTeX template."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 \\documentclass[fleqn]{article}
 \\usepackage{datetime}\\newdateformat{mydate}{\\THEDAY~\\monthname~\\THEYEAR}\\mydate
 \\usepackage[a4paper,height=23cm]{geometry}
 \\usepackage{parskip}
-\\begin{document}\n
+\\begin{document}
+
 \\title{}
 \\author{Arni Magnusson}
-\\maketitle\n\n\n
+\\maketitle
+
+
+
 \\end{document}
 ")(goto-char (point-min))(search-forward "title{"))
-  (defun LaTeX-template-mini () "Insert minimal LaTeX template." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun LaTeX-template-mini ()
+    "Insert minimal LaTeX template."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 \\documentclass{article}
-\\begin{document}\n\n\n
+\\begin{document}
+
+
+
 \\end{document}
 ")(goto-char (point-min))(search-forward "\n\n"))
-  (defun LaTeX-toggle-quotes () "Toggle Icelandic quotation marks." (interactive)
-         (if LaTeX-icelandic-quotes (progn (setq TeX-open-quote "``")(setq TeX-close-quote "''"))
-           (progn (setq TeX-open-quote "\\quotedblbase{}")(setq TeX-close-quote "``")))
-         (setq LaTeX-icelandic-quotes (not LaTeX-icelandic-quotes))
-         (message "Icelandic quotes %s" (if LaTeX-icelandic-quotes "ON" "OFF")))
-  (defun LaTeX-usepackage () "Insert an empty \\usepackage{}." (interactive "*")
-         (if (< (line-beginning-position)(line-end-position))(open-line 1))
-         (insert "\\usepackage{}")(search-backward "}"))
-  (defun reftex-toc-left-right () "Show RefTeX table of contents in left window." (interactive)
-         (reftex-toc)(split-window-left-right))
-  (defun reftex-toc-fullscreen () "Show RefTeX table of contents in full screen." (interactive)
-         (reftex-toc)(delete-other-windows))
-  (defun sweave-compile () "Sweave document and compile to PDF." (interactive)
-         (save-buffer)(compile (concat "auctex -s " (buffer-name))))
-  (defun sweave-block () "Insert <<>>= R block in a Sweave document." (interactive "*")
-         (if (not (= (char-before (- (point) 1)) ?\n))(insert "\n"))(insert "<<>>=\n\n@")
-         (if (not (= (char-after) ?\n))(insert "\n"))(if (not (= (char-after (+ (point) 1)) ?\n))(insert "\n"))
-         (search-backward ">>"))
-  (defun sweave-template-mini () "Insert minimal Sweave template." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun LaTeX-toggle-quotes ()
+    "Toggle Icelandic quotation marks."
+    (interactive)
+    (if LaTeX-icelandic-quotes (progn (setq TeX-open-quote "``")(setq TeX-close-quote "''"))
+      (progn (setq TeX-open-quote "\\quotedblbase{}")(setq TeX-close-quote "``")))
+    (setq LaTeX-icelandic-quotes (not LaTeX-icelandic-quotes))
+    (message "Icelandic quotes %s" (if LaTeX-icelandic-quotes "ON" "OFF")))
+  (defun LaTeX-usepackage ()
+    "Insert an empty \\usepackage{}."
+    (interactive "*")
+    (if (< (line-beginning-position)(line-end-position))(open-line 1))
+    (insert "\\usepackage{}")(search-backward "}"))
+  (defun reftex-toc-left-right ()
+    "Show RefTeX table of contents in left window."
+    (interactive)
+    (reftex-toc)(split-window-left-right))
+  (defun reftex-toc-fullscreen ()
+    "Show RefTeX table of contents in full screen."
+    (interactive)
+    (reftex-toc)(delete-other-windows))
+  (defun sweave-compile ()
+    "Sweave document and compile to PDF."
+    (interactive)
+    (save-buffer)(compile (concat "auctex -s " (buffer-name))))
+  (defun sweave-block ()
+    "Insert <<>>= R block in a Sweave document."
+    (interactive "*")
+    (if (not (= (char-before (- (point) 1)) ?\n))(insert "\n"))(insert "<<>>=\n\n@")
+    (if (not (= (char-after) ?\n))(insert "\n"))(if (not (= (char-after (+ (point) 1)) ?\n))(insert "\n"))
+    (search-backward ">>"))
+  (defun sweave-template-mini ()
+    "Insert minimal Sweave template."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 \\documentclass{article}
-\\begin{document}\n
-<<>>=\n2+2\n@\n
+\\begin{document}
+
+<<>>=
+2+2
+@
+
 \\end{document}
 ")(goto-char (point-min))(search-forward "\n\n")))
 (add-hook 'LaTeX-mode-hook 'arni-LaTeX-hook)
@@ -2437,22 +3506,48 @@ echo.\n
   (local-set-key [?m]       'reftex-toc-middle          )
   (local-set-key [?n]       'reftex-toc-down            )
   (local-set-key [?p]       'reftex-toc-up              )
-  (defun reftex-toc-bottom () "Move to bottom." (interactive)(deactivate-mark)(goto-char (point-max))(reftex-toc-up 1))
-  (defun reftex-toc-bottom-mark () "Extend region to bottom." (interactive)(region-bol-bottom))
-  (defun reftex-toc-down (&optional n) "Move down N lines." (interactive "p")
-         (deactivate-mark)(beginning-of-line (+ 1 n))(if (eobp)(forward-line -1)))
-  (defun reftex-toc-down-page (&optional n) "Move down N pages." (interactive "p")(reftex-toc-down (pages n)))
-  (defun reftex-toc-down-view () "Move down one line and view in other window." (interactive)
-         (reftex-toc-down 1)(reftex-toc-view-line))
-  (defun reftex-toc-middle () "Move to middle." (interactive)
-         (jump-middle)(reftex-toc-down)(reftex-toc-view-line))
-  (defun reftex-toc-top () "Move to top." (interactive)(deactivate-mark)(goto-line-lisp 4))
-  (defun reftex-toc-top-mark () "Extend region to top." (interactive)(region-bol-top 4))
-  (defun reftex-toc-up (&optional n) "Move up N lines." (interactive "p")
-         (deactivate-mark)(beginning-of-line (- 1 n))(if (< (line-number-at-pos) 4)(reftex-toc-top)))
-  (defun reftex-toc-up-page (&optional n) "Move up N pages." (interactive "p")(reftex-toc-up (pages n)))
-  (defun reftex-toc-up-view () "Move up one line and view in other window." (interactive)
-         (reftex-toc-up 1)(reftex-toc-view-line)))
+  (defun reftex-toc-bottom ()
+    "Move to bottom."
+    (interactive)
+    (deactivate-mark)(goto-char (point-max))(reftex-toc-up 1))
+  (defun reftex-toc-bottom-mark ()
+    "Extend region to bottom."
+    (interactive)
+    (region-bol-bottom))
+  (defun reftex-toc-down (&optional n)
+    "Move down N lines."
+    (interactive "p")
+    (deactivate-mark)(beginning-of-line (+ 1 n))(if (eobp)(forward-line -1)))
+  (defun reftex-toc-down-page (&optional n)
+    "Move down N pages."
+    (interactive "p")(reftex-toc-down (pages n)))
+  (defun reftex-toc-down-view ()
+    "Move down one line and view in other window."
+    (interactive)
+    (reftex-toc-down 1)(reftex-toc-view-line))
+  (defun reftex-toc-middle ()
+    "Move to middle."
+    (interactive)
+    (jump-middle)(reftex-toc-down)(reftex-toc-view-line))
+  (defun reftex-toc-top ()
+    "Move to top."
+    (interactive)
+    (deactivate-mark)(goto-line-lisp 4))
+  (defun reftex-toc-top-mark ()
+    "Extend region to top."
+    (interactive)
+    (region-bol-top 4))
+  (defun reftex-toc-up (&optional n)
+    "Move up N lines."
+    (interactive "p")
+    (deactivate-mark)(beginning-of-line (- 1 n))(if (< (line-number-at-pos) 4)(reftex-toc-top)))
+  (defun reftex-toc-up-page (&optional n)
+    "Move up N pages."
+    (interactive "p")(reftex-toc-up (pages n)))
+  (defun reftex-toc-up-view ()
+    "Move up one line and view in other window."
+    (interactive)
+    (reftex-toc-up 1)(reftex-toc-view-line)))
 (add-hook 'reftex-toc-mode-hook 'arni-reftex-toc-hook)
 (defun arni-texinfo-hook ()
   (setq make-backup-files t)(font-lock-mode 1)
@@ -2480,43 +3575,77 @@ echo.\n
   (local-set-key [?\C-c ?\C-v] 'texinfo-ghostview             )
   (local-set-key [?\C-c ?\C-x] 'makeinfo-buffer-html          )
   (local-set-key [?\C-c ?\C-z] 'makeinfo-buffer-info          )
-  (defun makeinfo-buffer-html () "Compile Texinfo document to HTML." (interactive)
-         (save-buffer)(compile (concat "makeinfo --html --no-split " (buffer-name))))
-  (defun makeinfo-buffer-info () "Compile Texinfo document to Info." (interactive)(save-buffer)(makeinfo-buffer))
-  (defun texinfo-all-menus-update-clean () "Update all menus and clean whitespace trails." (interactive)
-         (save-excursion
-           (texinfo-all-menus-update)(clean-trails)(message "Done...updated all the menus.  You may save the buffer.")))
-  (defun texinfo-ghostview () "Open PDF in viewer." (interactive)
-         (shell-command (concat "ghostview " (file-name-sans-extension (buffer-name)) ".pdf&"))(delete-other-windows))
-  (defun texinfo-header-icelandic () "Insert lines to support Icelandic." (interactive "*")
-         (insert "@documentlanguage is\n" "@documentencoding UTF-8\n"))
-  (defun texinfo-insert-@arrow () "Insert @arrow." (interactive "*")(insert "@arrow{} "))
-  (defun texinfo-insert-@image () "Insert @image{}." (interactive "*")(insert "@image{}")(backward-char))
-  (defun texinfo-insert-@item-properly () "Insert @item, possibly after a newline." (interactive "*")
-         (if (not (looking-back "^[ \t]*" 10))(newline))(insert "@item "))
-  (defun texinfo-insert-@node-plain () "Insert @node." (interactive "*")(insert "@node "))
-  (defun texinfo-insert-@tab () "Insert @tab." (interactive "*")
-         (if (not (= (char-before) #x20))(insert " "))(insert "@tab "))
-  (defun texinfo-insert-node-lines-all () "Insert missing @node lines with section titles." (interactive "*")
-         (save-excursion
-           (texinfo-insert-node-lines (point-min)(point-max) t)
-           (if (zerop (how-many "@node Top" (point-min)(point-max)))
-               (progn (goto-char (point-min))(search-forward "@top")(forward-line 0)(insert "@node Top\n")))))
-  (defun texinfo-insert-@section () "Insert @section." (interactive "*")(insert "@section "))
-  (defun texinfo-insert-@subsection () "Insert @subsection." (interactive "*")(insert "@subsection "))
-  (defun texinfo-kill-compilation () "Kill Texinfo compilation process." (interactive)
-         (kill-process (car (process-list))))
-  (defun texinfo-template () "Insert Texinfo template." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun makeinfo-buffer-html ()
+    "Compile Texinfo document to HTML."
+    (interactive)
+    (save-buffer)(compile (concat "makeinfo --html --no-split " (buffer-name))))
+  (defun makeinfo-buffer-info ()
+    "Compile Texinfo document to Info."
+    (interactive)
+    (save-buffer)(makeinfo-buffer))
+  (defun texinfo-all-menus-update-clean ()
+    "Update all menus and clean whitespace trails."
+    (interactive)
+    (save-excursion
+      (texinfo-all-menus-update)(clean-trails)(message "Done...updated all the menus.  You may save the buffer.")))
+  (defun texinfo-ghostview ()
+    "Open PDF in viewer."
+    (interactive)
+    (shell-command (concat "ghostview " (file-name-sans-extension (buffer-name))
+                           ".pdf&"))(delete-other-windows))
+  (defun texinfo-header-icelandic ()
+    "Insert lines to support Icelandic."
+    (interactive "*")
+    (insert "@documentlanguage is\n" "@documentencoding UTF-8\n"))
+  (defun texinfo-insert-@arrow ()
+    "Insert @arrow."
+    (interactive "*")(insert "@arrow{} "))
+  (defun texinfo-insert-@image ()
+    "Insert @image{}."
+    (interactive "*")(insert "@image{}")(backward-char))
+  (defun texinfo-insert-@item-properly ()
+    "Insert @item, possibly after a newline."
+    (interactive "*")
+    (if (not (looking-back "^[ \t]*" 10))(newline))(insert "@item "))
+  (defun texinfo-insert-@node-plain ()
+    "Insert @node."
+    (interactive "*")(insert "@node "))
+  (defun texinfo-insert-@tab ()
+    "Insert @tab."
+    (interactive "*")
+    (if (not (= (char-before) #x20))(insert " "))(insert "@tab "))
+  (defun texinfo-insert-node-lines-all ()
+    "Insert missing @node lines with section titles."
+    (interactive "*")
+    (save-excursion
+      (texinfo-insert-node-lines (point-min)(point-max) t)
+      (if (zerop (how-many "@node Top" (point-min)(point-max)))
+          (progn (goto-char (point-min))(search-forward "@top")(forward-line 0)(insert "@node Top\n")))))
+  (defun texinfo-insert-@section ()
+    "Insert @section."
+    (interactive "*")(insert "@section "))
+  (defun texinfo-insert-@subsection ()
+    "Insert @subsection."
+    (interactive "*")(insert "@subsection "))
+  (defun texinfo-kill-compilation ()
+    "Kill Texinfo compilation process."
+    (interactive)
+    (kill-process (car (process-list))))
+  (defun texinfo-template ()
+    "Insert Texinfo template."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 \\input texinfo
 @c %**start of header
 @setfilename template.info
 @settitle Title (HTML)
 @set VERSION 1.0
-@c %**end of header\n
+@c %**end of header
+
 @copying
 License.
-@end copying\n
+@end copying
+
 @titlepage
 @title Title (PDF)
 @subtitle Subtitle
@@ -2525,37 +3654,49 @@ License.
 @page
 @vskip 0pt plus 1filll
 @insertcopying
-@end titlepage\n
-@contents\n
+@end titlepage
+
+@contents
+
 @ifnottex
 @node Top
 @top Title (Info)
 Version @value{VERSION}
-@end ifnottex\n
+@end ifnottex
+
 @menu
 * First::
 * Index::
-@end menu\n
+@end menu
+
 @node    First
-@chapter First\n
+@chapter First
+
 @cindex concept
-This is first.\n
+This is first.
+
 @node       Index
-@unnumbered Index\n
-@printindex cp\n
+@unnumbered Index
+
+@printindex cp
+
 @bye
 ")(goto-char (point-min)))
-  (defun texinfo-template-mini () "Insert Texinfo template for PDF output only." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun texinfo-template-mini ()
+    "Insert Texinfo template for PDF output only."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 \\input texinfo
 @c %**start of header
 @setfilename template.info
 @settitle Title
 @set VERSION 1.0
-@c %**end of header\n
+@c %**end of header
+
 @copying
 License.
-@end copying\n
+@end copying
+
 @titlepage
 @title Title
 @subtitle Subtitle
@@ -2564,20 +3705,30 @@ License.
 @page
 @vskip 0pt plus 1filll
 @insertcopying
-@end titlepage\n
-@contents\n
-@chapter First\n
+@end titlepage
+
+@contents
+
+@chapter First
+
 @cindex concept
-This is first.\n
-@unnumbered Index\n
-@printindex cp\n
+This is first.
+
+@unnumbered Index
+
+@printindex cp
+
 @bye
 ")(goto-char (point-min)))
-  (defun texinfo-show-structure-nodes () "Show structure of Texinfo document, including nodes." (interactive)
-         (texinfo-show-structure t))
-  (defun texinfo-texi2dvi-pdf () "Compile Texinfo document to PDF." (interactive)
-         (save-buffer)(if (one-window-p)(split-window-right))
-         (compile (concat "texi2dvi -c -p -t @finalout " (buffer-name)))(maximize-window-top)))
+  (defun texinfo-show-structure-nodes ()
+    "Show structure of Texinfo document, including nodes."
+    (interactive)
+    (texinfo-show-structure t))
+  (defun texinfo-texi2dvi-pdf ()
+    "Compile Texinfo document to PDF."
+    (interactive)
+    (save-buffer)(if (one-window-p)(split-window-right))
+    (compile (concat "texi2dvi -c -p -t @finalout " (buffer-name)))(maximize-window-top)))
 (add-hook 'texinfo-mode-hook 'arni-texinfo-hook)
 ;;-----------
 ;; 6.14 Lisp
@@ -2600,22 +3751,38 @@ This is first.\n
   (local-set-key [?\C-c ?\C-l] 'eval-line               ) ; intuitive
   (local-set-key [?\C-c ?\C-n] 'eval-line-and-step      )
   (local-set-key [?\C-c ?\C-r] 'eval-region             )
-  (defun byte-compile-dot-emacs () "Compile .emacs, to check warnings other than free variables." (interactive)
-         (require 'bytecomp)(setq byte-compile-warnings '(not free-vars))
-         (setq byte-compile-dest-file-function (lambda (arg)(concat temporary-file-directory ".emacs.elc")))
-         (byte-compile-file "~/.emacs"))
-  (defun dot-emacs-outline () "Navigate within .emacs using `outline-mode'." (interactive)
-         (outline-mode)(setq outline-regexp ";; [0-9][\\.]?")(outline-mode)(outline-hide-body)
-         (setq outline-top-level 4)(setq outline-previous-mode '(emacs-lisp-mode)))
-  (defun eval-buffer-update () "Evaluate buffer and update Emacs-Lisp mode." (interactive)
-         (eval-buffer)(emacs-lisp-mode))
-  (defun eval-line () "Execute current line as Lisp code." (interactive)
-         (eval-region (line-beginning-position)(line-end-position)))
-  (defun eval-line-and-step () "Execute current line as Lisp code and move to next line." (interactive)
-         (eval-line)(forward-line))
-  (defun lisp-comment-inline () "Insert ;" (interactive "*")(insert " ; "))
-  (defun lisp-template () "Insert Lisp template." (interactive "*")
-         (insert "(defun  () \"\" (interactive)\n  ())\n")(search-backward " () ")))
+  (defun byte-compile-dot-emacs ()
+    "Compile .emacs, to check warnings other than free variables."
+    (interactive)
+    (require 'bytecomp)(setq byte-compile-warnings '(not free-vars))
+    (setq byte-compile-dest-file-function (lambda (arg)(concat temporary-file-directory ".emacs.elc")))
+    (byte-compile-file "~/.emacs"))
+  (defun dot-emacs-outline ()
+    "Navigate within .emacs using `outline-mode'."
+    (interactive)
+    (outline-mode)(setq outline-regexp ";; [0-9][\\.]?")(outline-mode)(outline-hide-body)
+    (setq outline-top-level 4)(setq outline-previous-mode '(emacs-lisp-mode)))
+  (defun eval-buffer-update ()
+    "Evaluate buffer and update Emacs-Lisp mode."
+    (interactive)
+    (eval-buffer)(emacs-lisp-mode))
+  (defun eval-line ()
+    "Execute current line as Lisp code."
+    (interactive)
+    (eval-region (line-beginning-position)(line-end-position)))
+  (defun eval-line-and-step ()
+    "Execute current line as Lisp code and move to next line."
+    (interactive)
+    (eval-line)(forward-line))
+  (defun lisp-comment-inline ()
+    "Insert ;"
+    (interactive "*")(insert " ; "))
+  (defun lisp-template ()
+    "Insert Lisp template."
+    (interactive "*")
+    (insert "(defun  () \"\"
+  (interactive)\n  ())\n")(search-backward " ()
+  ")))
 (add-hook 'emacs-lisp-mode-hook       'arni-lisp-hook)
 (add-hook 'lisp-mode-hook             'arni-lisp-hook)
 (add-hook 'lisp-interaction-mode-hook 'arni-lisp-hook)
@@ -2627,50 +3794,59 @@ This is first.\n
   (local-unset-key [127]) ; reactivate backward-delete-char
   (local-set-key [?\C-c ?\C- ] 'pdf-clean   )
   (local-set-key [?\C-c ?\C-v] 'ps-ghostview)
-  (defun pdf-clean () "Call pdf-clean-* functions to replace stamps from PDF document."
-         (interactive "*")(fundamental-mode) ; called by 'pdfclean' shell script
-         (if (re-search-forward "^(Downloaded [Bb]y[:]? \\[.*)Tj$" nil t)(progn (goto-char (point-min))(pdf-clean-1)))
-         (if (re-search-forward "^(Can. J. Fish. Aquat. Sci. Downloaded.*)Tj$" nil t)
-             (progn (goto-char (point-min))(pdf-clean-2)))
-         (if (re-search-forward "^(Downloaded from .*)Tj$" nil t)(progn (goto-char (point-min))(pdf-clean-3)))
-         (if (re-search-forward "^(This content downloaded from .*)Tj$" nil t)
-             (progn (goto-char (point-min))(pdf-clean-4))))
-  (defun pdf-clean-1 () "Replace PDF stamps like (Downloaded by [Arni Magnusson] ...) with spaces." (interactive "*")
-         (let ((count 0))
-           (fundamental-mode)
-           (while (re-search-forward "^(Downloaded [Bb]y[:]? \\[.*)Tj$" nil t)(move-to-column 1)(blank-to-paren)
-                  (setq count (+ count 1)))(move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
+  (defun pdf-clean ()
+    "Call pdf-clean-* functions to replace stamps from PDF document."
+    (interactive "*")(fundamental-mode) ; called by 'pdfclean' shell script
+    (if (re-search-forward "^(Downloaded [Bb]y[:]? \\[.*)Tj$" nil t)(progn (goto-char (point-min))(pdf-clean-1)))
+    (if (re-search-forward "^(Can. J. Fish. Aquat. Sci. Downloaded.*)Tj$" nil t)
+        (progn (goto-char (point-min))(pdf-clean-2)))
+    (if (re-search-forward "^(Downloaded from .*)Tj$" nil t)(progn (goto-char (point-min))(pdf-clean-3)))
+    (if (re-search-forward "^(This content downloaded from .*)Tj$" nil t)
+        (progn (goto-char (point-min))(pdf-clean-4))))
+  (defun pdf-clean-1 ()
+    "Replace PDF stamps like (Downloaded by [Arni Magnusson] ...) with spaces."
+    (interactive "*")
+    (let ((count 0))
+      (fundamental-mode)
+      (while (re-search-forward "^(Downloaded [Bb]y[:]? \\[.*)Tj$" nil t)(move-to-column 1)(blank-to-paren)
+             (setq count (+ count 1)))(move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
   (defun pdf-clean-2 ()
-    "Replace 2-part PDF stamps like (Can. J. Fish...) and (For personal use only. ) with spaces." (interactive "*")
+    "Replace 2-part PDF stamps like (Can. J. Fish...) and (For personal use only. ) with spaces."
+    (interactive "*")
     (let ((count 0))
       (fundamental-mode)
       (while (re-search-forward "^(Can. J. Fish. Aquat. Sci. Downloaded.*)Tj$" nil t)(move-to-column 1)(blank-to-paren))
       (goto-char (point-min))
       (while (re-search-forward "^(For personal use only. )Tj$" nil t)(move-to-column 1)(blank-to-paren)
              (setq count (+ count 1)))(move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
-  (defun pdf-clean-3 () "Replace 3-part PDF stamps like with (Downloaded from ) with spaces." (interactive "*")
-         (let ((count 0))
-           (fundamental-mode)
-           (while (re-search-forward "^(Downloaded from .*)Tj$" nil t)
-             (if (string-match "^(Downloaded from )Tj$" (match-string 0))(re-search-backward "^(" nil t 3))
-             (if (string-match "^(Downloaded from https://academic.oup.com.*)Tj$" (match-string 0))
-                 (re-search-backward "^(" nil t 1))
-             (dotimes (i 3)(re-search-forward "^(")(if (= (char-before) #x28)(blank-to-paren)))
-             (setq count (+ count 1)))(move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
-  (defun pdf-clean-4 () "Replace 4-part PDF stamps like (This content downloaded from ...) with spaces."
-         (interactive "*")
-         (let ((count 0)(case-fold-search nil))
-           (fundamental-mode)
-           (while (re-search-forward "^(This content downloaded from .*)Tj$" nil t)(move-to-column 1)(blank-to-paren))
-           (goto-char (point-min))
-           (while (re-search-forward "^(All use subject to )Tj$" nil t)(move-to-column 1)(blank-to-paren))
-           (goto-char (point-min))
-           (while (re-search-forward "^(JSTOR Terms and Conditions)Tj$" nil t)(move-to-column 1)(blank-to-paren))
-           (goto-char (point-min))
-           (while (re-search-forward "^0 0 1 RG$" nil t)(replace-match "1 1 1 RG")(setq count (+ count 1)))
-           (move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
-  (defun ps-ghostview () "Open postscript file in viewer." (interactive)
-         (shell-command (concat "ghostview \"" (buffer-name) "\"&"))(delete-other-windows)))
+  (defun pdf-clean-3 ()
+    "Replace 3-part PDF stamps like with (Downloaded from ) with spaces."
+    (interactive "*")
+    (let ((count 0))
+      (fundamental-mode)
+      (while (re-search-forward "^(Downloaded from .*)Tj$" nil t)
+        (if (string-match "^(Downloaded from )Tj$" (match-string 0))(re-search-backward "^(" nil t 3))
+        (if (string-match "^(Downloaded from https://academic.oup.com.*)Tj$" (match-string 0))
+            (re-search-backward "^(" nil t 1))
+        (dotimes (i 3)(re-search-forward "^(")(if (= (char-before) #x28)(blank-to-paren)))
+        (setq count (+ count 1)))(move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
+  (defun pdf-clean-4 ()
+    "Replace 4-part PDF stamps like (This content downloaded from ...) with spaces."
+    (interactive "*")
+    (let ((count 0)(case-fold-search nil))
+      (fundamental-mode)
+      (while (re-search-forward "^(This content downloaded from .*)Tj$" nil t)(move-to-column 1)(blank-to-paren))
+      (goto-char (point-min))
+      (while (re-search-forward "^(All use subject to )Tj$" nil t)(move-to-column 1)(blank-to-paren))
+      (goto-char (point-min))
+      (while (re-search-forward "^(JSTOR Terms and Conditions)Tj$" nil t)(move-to-column 1)(blank-to-paren))
+      (goto-char (point-min))
+      (while (re-search-forward "^0 0 1 RG$" nil t)(replace-match "1 1 1 RG")(setq count (+ count 1)))
+      (move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
+  (defun ps-ghostview ()
+    "Open postscript file in viewer."
+    (interactive)
+    (shell-command (concat "ghostview \"" (buffer-name) "\"&"))(delete-other-windows)))
 (add-hook 'ps-mode-hook 'arni-ps-hook) ; see also doc-view-mode-hook
 ;;--------
 ;; 6.16 R
@@ -2688,7 +3864,10 @@ This is first.\n
 (defun arni-ess-load-hook ()
   (setq inferior-R-args "--quiet --save")
   ;; Provide (ess-graphics-off) both in *R* and R-mode
-  (defun ess-graphics-off () "Close all graphics devices." (interactive)(ess-eval-linewise "graphics.off()")))
+  (defun ess-graphics-off ()
+    "Close all graphics devices."
+    (interactive)
+    (ess-eval-linewise "graphics.off()")))
 (add-hook 'ess-mode-load-hook 'arni-ess-load-hook)
 (defun arni-ess-pre-run-hook ()(setq ess-ask-for-ess-directory nil))
 (add-hook 'ess-pre-run-hook 'arni-ess-pre-run-hook)
@@ -2703,77 +3882,120 @@ This is first.\n
   (local-set-key [?\C-c ?\C- ]       'ess-switch-to-edit-buffer       )
   (local-set-key [?\C-c ?\C-d]       'ess-dump-object-into-edit-buffer)
   (local-set-key [?\C-c ?\C-h]       'ess-history                     )
-  (defun ess-display-help-on-object (object) "Open help page in browser." ; override original function with same name
-         (process-send-string ess-current-process-name (concat "help(" object ",help_type='HTML')")))
-  (defun ess-history () "Open R history file in other window." (interactive)
-         (find-file-other-window ess-history-file)(font-lock-mode 0)(goto-char (point-max))(forward-line -1))
+  (defun ess-display-help-on-object (object)
+    "Open help page in browser." ; override original function with same name
+    (process-send-string ess-current-process-name (concat "help(" object ",help_type='HTML')")))
+  (defun ess-history ()
+    "Open R history file in other window."
+    (interactive)
+    (find-file-other-window ess-history-file)(font-lock-mode 0)(goto-char (point-max))(forward-line -1))
   (defalias 'R-history 'ess-history)
-  (defun ess-rdired-arni () "Run ess-rdired in large window." (interactive) ; ess-rdired runs no hook, so set keys here
-         (ess-rdired)(delete-other-windows)(ess-rdired-next-line 1)
-         (define-key ess-rdired-mode-map [down-mouse-1] 'ess-rdired-mouse-view)
-         (define-key ess-rdired-mode-map [C-home]       'ess-rdired-top       )
-         (define-key ess-rdired-mode-map [C-end]        'ess-rdired-bottom    )
-         (define-key ess-rdired-mode-map [C-S-home]     'ess-rdired-top-mark  )
-         (define-key ess-rdired-mode-map [C-S-end]      'region-bol-bottom    )
-         (define-key ess-rdired-mode-map [prior]        'ess-rdired-up-page   )
-         (define-key ess-rdired-mode-map [next]         'ess-rdired-down-page )
-         (define-key ess-rdired-mode-map [?\t]          'ess-rdired-other     )
-         (define-key ess-rdired-mode-map [backtab]      'delete-other-windows )
-         (define-key ess-rdired-mode-map [?\C-m]        'ess-rdired-other     ) ; return
-         (define-key ess-rdired-mode-map [left]         'delete-other-windows )
-         (define-key ess-rdired-mode-map [right]        'ess-rdired-other     )
-         (define-key ess-rdired-mode-map [up]           'ess-rdired-up        )
-         (define-key ess-rdired-mode-map [down]         'ess-rdired-down      )
-         (define-key ess-rdired-mode-map [S-up]         'ess-rdired-up-mark   )
-         (define-key ess-rdired-mode-map [S-down]       'region-bol-down      )
-         (define-key ess-rdired-mode-map [C-up]         'ess-rdired-up-3      )
-         (define-key ess-rdired-mode-map [C-down]       'ess-rdired-down-3    )
-         (define-key ess-rdired-mode-map [M-up]         'ess-rdired-up-view   )
-         (define-key ess-rdired-mode-map [M-down]       'ess-rdired-down-view )
-         (define-key ess-rdired-mode-map [?\C-n]        'ess-rdired-down      )
-         (define-key ess-rdired-mode-map [?\C-p]        'ess-rdired-up        )
-         (define-key ess-rdired-mode-map [?\C-v]        'ess-rdired-down-page )
-         (define-key ess-rdired-mode-map [?\C-y]        'ess-rdired-up-page   )
-         (define-key ess-rdired-mode-map [?/]           'isearch-forward      )
-         (define-key ess-rdired-mode-map [?M]           'ess-rdired-middle    )
-         (define-key ess-rdired-mode-map [?N]           'ess-rdired-down-view )
-         (define-key ess-rdired-mode-map [?P]           'ess-rdired-up-view   )
-         (define-key ess-rdired-mode-map [?m]           'ess-rdired-middle    )
-         (define-key ess-rdired-mode-map [?n]           'ess-rdired-down      )
-         (define-key ess-rdired-mode-map [?o]           'ess-rdired-other     )
-         (define-key ess-rdired-mode-map [?p]           'ess-rdired-up        )
-         (define-key ess-rdired-mode-map [?q]           'ess-rdired-quit-clean) ; ess-rdired-quit
-         (define-key ess-rdired-mode-map [?v]           'ess-rdired-other    )) ; ess-rdired-view
-  (defun ess-rdired-bottom () "Move to bottom." (interactive)
-         (deactivate-mark)(goto-char (point-max))(ess-rdired-previous-line 1))
-  (defun ess-rdired-down (&optional n) "Move down N lines." (interactive "p")
-         (deactivate-mark)(forward-line n)(if (eobp)(ess-rdired-previous-line 1)(ess-rdired-move-to-object)))
-  (defun ess-rdired-down-3 () "Move down 3 lines." (interactive)(ess-rdired-down 3))
-  (defun ess-rdired-down-page (&optional n) "Move down N pages." (interactive "p")(ess-rdired-down (pages n)))
-  (defun ess-rdired-down-view () "Move down one line and view in other window." (interactive)
-         (ess-rdired-next-line 1)(ess-rdired-other))
-  (defun ess-rdired-middle () "Move to middle." (interactive)
-         (ess-rdired-top)(forward-line (middle-from-here))(ess-rdired-move-to-object))
-  (defun ess-rdired-other () "Show R object in other window." (interactive)
-         (if (one-window-p)(split-window-right))(ess-rdired-view))
-  (defun ess-rdired-quit-clean () "Quit ess-rdired." (interactive)
-         (if (get-buffer "*R view*")(kill-buffer "*R view*"))(delete-other-windows)(ess-rdired-quit))
-  (defun ess-rdired-top () "Move to top." (interactive)(deactivate-mark)(goto-char (point-min))(ess-rdired-next-line 1))
-  (defun ess-rdired-top-mark () "Extend region to top." (interactive)(region-bol-top 2))
-  (defun ess-rdired-up (&optional n) "Move up N lines." (interactive "p")
-         (deactivate-mark)(forward-line (- n))
-         (if (< (line-number-at-pos) 2)(ess-rdired-top)(ess-rdired-move-to-object)))
-  (defun ess-rdired-up-3 () "Move up 3 lines." (interactive)(ess-rdired-previous-line 3))
-  (defun ess-rdired-up-mark (&optional n) "Extend region up N lines." (interactive "p")
-         (region-bol-up n)(if (< (line-number-at-pos) 2)(dired-top-mark)))
-  (defun ess-rdired-up-page (&optional n) "Move up N pages." (interactive "p")(ess-rdired-up (pages n)))
-  (defun ess-rdired-up-view () "Move up one line and view in other window." (interactive)
-         (ess-rdired-previous-line 1)(ess-rdired-other))
-  (defun ess-smart-S-assign () "Insert underscore." (interactive "*")(insert "_"))
-  (defun ess-switch-to-edit-buffer () "Switch to R edit buffer." (interactive)
-         (let* ((buffers (buffer-list))(modes (mapcar (lambda (b)(with-current-buffer b major-mode)) buffers))
-                (pointer (- (length buffers)(length (member 'ess-mode modes)))))
-           (switch-to-buffer-other-window (nth pointer buffers)))))
+  (defun ess-rdired-arni ()
+    "Run ess-rdired in large window."
+    (interactive) ; ess-rdired runs no hook, so set keys here
+    (ess-rdired)(delete-other-windows)(ess-rdired-next-line 1)
+    (define-key ess-rdired-mode-map [down-mouse-1] 'ess-rdired-mouse-view)
+    (define-key ess-rdired-mode-map [C-home]       'ess-rdired-top       )
+    (define-key ess-rdired-mode-map [C-end]        'ess-rdired-bottom    )
+    (define-key ess-rdired-mode-map [C-S-home]     'ess-rdired-top-mark  )
+    (define-key ess-rdired-mode-map [C-S-end]      'region-bol-bottom    )
+    (define-key ess-rdired-mode-map [prior]        'ess-rdired-up-page   )
+    (define-key ess-rdired-mode-map [next]         'ess-rdired-down-page )
+    (define-key ess-rdired-mode-map [?\t]          'ess-rdired-other     )
+    (define-key ess-rdired-mode-map [backtab]      'delete-other-windows )
+    (define-key ess-rdired-mode-map [?\C-m]        'ess-rdired-other     ) ; return
+    (define-key ess-rdired-mode-map [left]         'delete-other-windows )
+    (define-key ess-rdired-mode-map [right]        'ess-rdired-other     )
+    (define-key ess-rdired-mode-map [up]           'ess-rdired-up        )
+    (define-key ess-rdired-mode-map [down]         'ess-rdired-down      )
+    (define-key ess-rdired-mode-map [S-up]         'ess-rdired-up-mark   )
+    (define-key ess-rdired-mode-map [S-down]       'region-bol-down      )
+    (define-key ess-rdired-mode-map [C-up]         'ess-rdired-up-3      )
+    (define-key ess-rdired-mode-map [C-down]       'ess-rdired-down-3    )
+    (define-key ess-rdired-mode-map [M-up]         'ess-rdired-up-view   )
+    (define-key ess-rdired-mode-map [M-down]       'ess-rdired-down-view )
+    (define-key ess-rdired-mode-map [?\C-n]        'ess-rdired-down      )
+    (define-key ess-rdired-mode-map [?\C-p]        'ess-rdired-up        )
+    (define-key ess-rdired-mode-map [?\C-v]        'ess-rdired-down-page )
+    (define-key ess-rdired-mode-map [?\C-y]        'ess-rdired-up-page   )
+    (define-key ess-rdired-mode-map [?/]           'isearch-forward      )
+    (define-key ess-rdired-mode-map [?M]           'ess-rdired-middle    )
+    (define-key ess-rdired-mode-map [?N]           'ess-rdired-down-view )
+    (define-key ess-rdired-mode-map [?P]           'ess-rdired-up-view   )
+    (define-key ess-rdired-mode-map [?m]           'ess-rdired-middle    )
+    (define-key ess-rdired-mode-map [?n]           'ess-rdired-down      )
+    (define-key ess-rdired-mode-map [?o]           'ess-rdired-other     )
+    (define-key ess-rdired-mode-map [?p]           'ess-rdired-up        )
+    (define-key ess-rdired-mode-map [?q]           'ess-rdired-quit-clean) ; ess-rdired-quit
+    (define-key ess-rdired-mode-map [?v]           'ess-rdired-other    )) ; ess-rdired-view
+  (defun ess-rdired-bottom ()
+    "Move to bottom."
+    (interactive)
+    (deactivate-mark)(goto-char (point-max))(ess-rdired-previous-line 1))
+  (defun ess-rdired-down (&optional n)
+    "Move down N lines."
+    (interactive "p")
+    (deactivate-mark)(forward-line n)(if (eobp)(ess-rdired-previous-line 1)(ess-rdired-move-to-object)))
+  (defun ess-rdired-down-3 ()
+    "Move down 3 lines."
+    (interactive)
+    (ess-rdired-down 3))
+  (defun ess-rdired-down-page (&optional n)
+    "Move down N pages."
+    (interactive "p")(ess-rdired-down (pages n)))
+  (defun ess-rdired-down-view ()
+    "Move down one line and view in other window."
+    (interactive)
+    (ess-rdired-next-line 1)(ess-rdired-other))
+  (defun ess-rdired-middle ()
+    "Move to middle."
+    (interactive)
+    (ess-rdired-top)(forward-line (middle-from-here))(ess-rdired-move-to-object))
+  (defun ess-rdired-other ()
+    "Show R object in other window."
+    (interactive)
+    (if (one-window-p)(split-window-right))(ess-rdired-view))
+  (defun ess-rdired-quit-clean ()
+    "Quit ess-rdired."
+    (interactive)
+    (if (get-buffer "*R view*")(kill-buffer "*R view*"))(delete-other-windows)(ess-rdired-quit))
+  (defun ess-rdired-top ()
+    "Move to top."
+    (interactive)
+    (deactivate-mark)(goto-char (point-min))(ess-rdired-next-line 1))
+  (defun ess-rdired-top-mark ()
+    "Extend region to top."
+    (interactive)
+    (region-bol-top 2))
+  (defun ess-rdired-up (&optional n)
+    "Move up N lines."
+    (interactive "p")
+    (deactivate-mark)(forward-line (- n))
+    (if (< (line-number-at-pos) 2)(ess-rdired-top)(ess-rdired-move-to-object)))
+  (defun ess-rdired-up-3 ()
+    "Move up 3 lines."
+    (interactive)
+    (ess-rdired-previous-line 3))
+  (defun ess-rdired-up-mark (&optional n)
+    "Extend region up N lines."
+    (interactive "p")
+    (region-bol-up n)(if (< (line-number-at-pos) 2)(dired-top-mark)))
+  (defun ess-rdired-up-page (&optional n)
+    "Move up N pages."
+    (interactive "p")(ess-rdired-up (pages n)))
+  (defun ess-rdired-up-view ()
+    "Move up one line and view in other window."
+    (interactive)
+    (ess-rdired-previous-line 1)(ess-rdired-other))
+  (defun ess-smart-S-assign ()
+    "Insert underscore."
+    (interactive "*")(insert "_"))
+  (defun ess-switch-to-edit-buffer ()
+    "Switch to R edit buffer."
+    (interactive)
+    (let* ((buffers (buffer-list))(modes (mapcar (lambda (b)(with-current-buffer b major-mode)) buffers))
+           (pointer (- (length buffers)(length (member 'ess-mode modes)))))
+      (switch-to-buffer-other-window (nth pointer buffers)))))
 (add-hook 'inferior-ess-mode-hook 'arni-inferior-ess-hook)
 (defun arni-ess-post-run-hook ()(message nil)(ess-eval-linewise "options(continue='  ',width=100)" t))
 (add-hook 'ess-post-run-hook 'arni-ess-post-run-hook)
@@ -2819,26 +4041,42 @@ This is first.\n
   (local-set-key [?\C-c ?\C-x] 'ess-eval-command                                 )
   (local-set-key [?\C-c ?\C- ] 'ess-switch-to-end-of-ESS                         )
   (local-set-key [?{]          'ess-electric-brace-open                          )
-  (defun ess-clear-R-window () "Run `comint-flush-window' in *R* window to clear screen." (interactive)
-         (let ((old-window (selected-window)))
-           (select-window (get-buffer-window "*R*"))(comint-clear-window)(select-window old-window)))
-  (defun ess-electric-brace-open () "Insert { and indent line." (interactive "*")
-         (insert "{")(unindent-line)(indent-according-to-mode))
-  (defun ess-eval-command (cmd) "Evaluate R command." (interactive "sCommand: ")(ess-eval-linewise cmd))
+  (defun ess-clear-R-window ()
+    "Run `comint-flush-window' in *R* window to clear screen."
+    (interactive)
+    (let ((old-window (selected-window)))
+      (select-window (get-buffer-window "*R*"))(comint-clear-window)(select-window old-window)))
+  (defun ess-electric-brace-open ()
+    "Insert { and indent line."
+    (interactive "*")
+    (insert "{")(unindent-line)(indent-according-to-mode))
+  (defun ess-eval-command (cmd)
+    "Evaluate R command."
+    (interactive "sCommand: ")(ess-eval-linewise cmd))
   (defun ess-roxy-insert-code (&optional arg)
-    "Insert \\code{} around object at point, or \\code{\\link{}} if ARG is non-nil." (interactive "*P")
+    "Insert \\code{} around object at point, or \\code{\\link{}} if ARG is non-nil."
+    (interactive "*P")
     (let ((open (if arg "\\code{\\link{" "\\code{"))(close (if arg "}}" "}")))
       (insert open)(if (eolp)(progn (insert close)(search-backward "{")(forward-char))(re-search-forward "[\n, ]" nil t)
                        (backward-char)(if (= (char-before) ?.)(backward-char))(insert close))))
-  (defun ess-roxy-insert-import () "Insert @importFrom." (interactive "*")
-         (cycle-spacing)(insert "@importFrom pkg fun"))
-  (defun ess-roxy-insert-newline () "Insert empty #' line." (interactive "*")
-         (let ((col (current-column)))(beginning-of-line)(insert "#'\n")(move-to-column col)))
-  (defun ess-roxy-insert-param () "Insert @param." (interactive "*")(cycle-spacing)(insert "@param "))
-  (defun ess-save-buffer-and-eval () "Save buffer and evaluate." (interactive)
-         (save-excursion (if (buffer-file-name)(save-buffer))(ess-eval-buffer nil)))
+  (defun ess-roxy-insert-import ()
+    "Insert @importFrom."
+    (interactive "*")
+    (cycle-spacing)(insert "@importFrom pkg fun"))
+  (defun ess-roxy-insert-newline ()
+    "Insert empty #' line."
+    (interactive "*")
+    (let ((col (current-column)))(beginning-of-line)(insert "#'\n")(move-to-column col)))
+  (defun ess-roxy-insert-param ()
+    "Insert @param."
+    (interactive "*")(cycle-spacing)(insert "@param "))
+  (defun ess-save-buffer-and-eval ()
+    "Save buffer and evaluate."
+    (interactive)
+    (save-excursion (if (buffer-file-name)(save-buffer))(ess-eval-buffer nil)))
   (defun R-format-code ()
-    "Format R in Arni style." (interactive "*")
+    "Format R in Arni style."
+    (interactive "*")
     (let ((old-bsize (buffer-size)))
       (clean-trails)(untabify-buffer)
       (save-excursion
@@ -2859,41 +4097,46 @@ This is first.\n
         (clean-trails)(indent-buffer))
       (if (= (buffer-size) old-bsize)(message "Formatted R code (still %d bytes)" (buffer-size))
         (message "Formatted R code (%d->%d bytes)" old-bsize (buffer-size)))))
-  (defun R-format-code-longline-nocomment () "Format R code in Arni style, with long lines and no comments."
-         (interactive "*")
-         (let ((old-bsize (buffer-size)))
-           (R-format-code)(delete-comments)
-           (save-excursion
-             (goto-char (point-min))(while (re-search-forward ",\n[\t ]*"   nil t)(replace-match ", ")) ; ,
-             (goto-char (point-min))(while (re-search-forward "~\n[\t ]*"   nil t)(replace-match "~ ")) ; ~
-             (goto-char (point-min))(while (re-search-forward "=\n[\t ]*"   nil t)(replace-match "= ")) ; =
-             (goto-char (point-min))(while (re-search-forward "+\n[\t ]*"   nil t)(replace-match "+ ")) ; +
-             (goto-char (point-min))(while (re-search-forward "-\n[\t ]*"   nil t)(replace-match "- ")) ; -
-             (goto-char (point-min))(while (re-search-forward "*\n[\t ]*"   nil t)(replace-match "* ")) ; *
-             (goto-char (point-min))(while (re-search-forward "/\n[\t ]*"   nil t)(replace-match "/ ")) ; /
-             (goto-char (point-min))(while (re-search-forward "&\n[\t ]*"   nil t)(replace-match "& ")) ; &
-             (goto-char (point-min))(while (re-search-forward "|\n[\t ]*"   nil t)(replace-match "| ")) ; |
-             (goto-char (point-min))(while (re-search-forward "(\n[\t ]*"   nil t)(replace-match "( ")) ; (
-             (goto-char (point-min))(while (re-search-forward "\n[\t ]*)"   nil t)(replace-match ")" )) ; )
-             (goto-char (point-min))(while (re-search-forward "\\[\n[\t ]*" nil t)(replace-match "[ ")) ; [
-             (goto-char (point-min))(while (re-search-forward "\n[\t ]*\\]" nil t)(replace-match "]"))) ; ]
-           (R-format-code)(if (= (buffer-size) old-bsize)(message "Formatted R code (still %d bytes)" (buffer-size))
-                            (message "Formatted R code (%d->%d bytes)" old-bsize (buffer-size)))))
-  (defun R-header-to-roxy () "Convert R function from Arni-style comment header to Roxygen format." (interactive "*")
-         (require 'drag-stuff)(goto-char (point-min))
-         (while (= (char-after (line-beginning-position 2)) ?#)(pull-line-down 1))
-         (kill-line -1)(insert "#' @export\n\n")(goto-char (point-min))(kill-line 4)
-         (goto-char (point-min))(while (re-search-forward "###" nil t)(replace-match "#'"))
-         (goto-char (point-min))(while (re-search-forward " +#$" nil t)(replace-match ""))
-         (goto-char (point-min))(while (re-search-forward "Purpose:  " nil t)(replace-match ""))
-         (goto-char (point-min))(while (re-search-forward "Args:    " nil t)(replace-match "@param"))
-         (goto-char (point-min))(while (re-search-forward "Notes:   " nil t)(replace-match "@note\n#'"))
-         (goto-char (point-min))(while (re-search-forward "Returns: " nil t)(replace-match "@return\n#'"))
-         (goto-char (point-min))(kill-new (buffer-substring-no-properties (point-min)(line-beginning-position 3)))
-         (yank)(goto-char (+ (point-min) 3))(titlecase-dwim))
-  (defun R-template-general () "Insert general R template." (interactive "*")
-         (goto-char (point-min))(if (search-forward "{" nil t)(progn (beginning-of-line)(backward-char))
-                                  (progn (insert "temp <- function()\n{\n\n}\n")(backward-char 6)))(insert "
+  (defun R-format-code-longline-nocomment ()
+    "Format R code in Arni style, with long lines and no comments."
+    (interactive "*")
+    (let ((old-bsize (buffer-size)))
+      (R-format-code)(delete-comments)
+      (save-excursion
+        (goto-char (point-min))(while (re-search-forward ",\n[\t ]*"   nil t)(replace-match ", ")) ; ,
+        (goto-char (point-min))(while (re-search-forward "~\n[\t ]*"   nil t)(replace-match "~ ")) ; ~
+        (goto-char (point-min))(while (re-search-forward "=\n[\t ]*"   nil t)(replace-match "= ")) ; =
+        (goto-char (point-min))(while (re-search-forward "+\n[\t ]*"   nil t)(replace-match "+ ")) ; +
+        (goto-char (point-min))(while (re-search-forward "-\n[\t ]*"   nil t)(replace-match "- ")) ; -
+        (goto-char (point-min))(while (re-search-forward "*\n[\t ]*"   nil t)(replace-match "* ")) ; *
+        (goto-char (point-min))(while (re-search-forward "/\n[\t ]*"   nil t)(replace-match "/ ")) ; /
+        (goto-char (point-min))(while (re-search-forward "&\n[\t ]*"   nil t)(replace-match "& ")) ; &
+        (goto-char (point-min))(while (re-search-forward "|\n[\t ]*"   nil t)(replace-match "| ")) ; |
+        (goto-char (point-min))(while (re-search-forward "(\n[\t ]*"   nil t)(replace-match "( ")) ; (
+        (goto-char (point-min))(while (re-search-forward "\n[\t ]*)"   nil t)(replace-match ")" )) ; )
+        (goto-char (point-min))(while (re-search-forward "\\[\n[\t ]*" nil t)(replace-match "[ ")) ; [
+        (goto-char (point-min))(while (re-search-forward "\n[\t ]*\\]" nil t)(replace-match "]"))) ; ]
+      (R-format-code)(if (= (buffer-size) old-bsize)(message "Formatted R code (still %d bytes)" (buffer-size))
+                       (message "Formatted R code (%d->%d bytes)" old-bsize (buffer-size)))))
+  (defun R-header-to-roxy ()
+    "Convert R function from Arni-style comment header to Roxygen format."
+    (interactive "*")
+    (require 'drag-stuff)(goto-char (point-min))
+    (while (= (char-after (line-beginning-position 2)) ?#)(pull-line-down 1))
+    (kill-line -1)(insert "#' @export\n\n")(goto-char (point-min))(kill-line 4)
+    (goto-char (point-min))(while (re-search-forward "###" nil t)(replace-match "#'"))
+    (goto-char (point-min))(while (re-search-forward " +#$" nil t)(replace-match ""))
+    (goto-char (point-min))(while (re-search-forward "Purpose:  " nil t)(replace-match ""))
+    (goto-char (point-min))(while (re-search-forward "Args:    " nil t)(replace-match "@param"))
+    (goto-char (point-min))(while (re-search-forward "Notes:   " nil t)(replace-match "@note\n#'"))
+    (goto-char (point-min))(while (re-search-forward "Returns: " nil t)(replace-match "@return\n#'"))
+    (goto-char (point-min))(kill-new (buffer-substring-no-properties (point-min)(line-beginning-position 3)))
+    (yank)(goto-char (+ (point-min) 3))(titlecase-dwim))
+  (defun R-template-general ()
+    "Insert general R template."
+    (interactive "*")
+    (goto-char (point-min))(if (search-forward "{" nil t)(progn (beginning-of-line)(backward-char))
+                             (progn (insert "temp <- function()\n{\n\n}\n")(backward-char 6)))(insert "
 ################################################################################
 ###                                                                            #
 ### Function:                                                                  #
@@ -2912,8 +4155,10 @@ This is first.\n
 ###                                                                            #
 ################################################################################\
 ")(goto-char (point-min))(search-forward ": ")(overwrite-mode t))
-  (defun R-template-roxygen () "Insert Roxygen template." (interactive "*")
-         (goto-char (point-min))(insert "
+  (defun R-template-roxygen ()
+    "Insert Roxygen template."
+    (interactive "*")
+    (goto-char (point-min))(insert "
 #' Title Case
 #'
 #' What the function does.
@@ -2923,16 +4168,22 @@ This is first.\n
 #' @return
 #' Type of output.
 #'
-#' @export\n
+#' @export
+
 ")(goto-char (point-min))(delete-char 1)(forward-char 3))
-  (defun R-template-minimal () "Insert minimal R template." (interactive "*")
-         (insert " <- function()
-{\n
+  (defun R-template-minimal ()
+    "Insert minimal R template."
+    (interactive "*")
+    (insert " <- function()
+{
+
 }
 ")(forward-line -4))
-  (defun R-outline () "Navigate within R code using `outline-mode'." (interactive)
-         (outline-mode)(setq outline-regexp " *## [0-9]")(outline-mode)(outline-hide-body)
-         (setq outline-previous-mode '(R-mode))))
+  (defun R-outline ()
+    "Navigate within R code using `outline-mode'."
+    (interactive)
+    (outline-mode)(setq outline-regexp " *## [0-9]")(outline-mode)(outline-hide-body)
+    (setq outline-previous-mode '(R-mode))))
 (add-hook 'ess-mode-hook 'arni-ess-hook)
 (defun arni-Rd-hook ()
   (message nil)(setq make-backup-files t)(setq save-abbrevs nil)
@@ -2946,27 +4197,43 @@ This is first.\n
   (local-set-key [?\C-c ?\C-v] 'Rd-view-html             )
   (local-set-key [?\C-j]       'Rd-fill-paragraph-forward)
   (defun Rd-compile-html ()
-    "Compile Rd file to HTML." (interactive)
+    "Compile Rd file to HTML."
+    (interactive)
     (save-buffer)
     (compile (concat "R CMD Rdconv -t html -o " (file-name-sans-extension (buffer-name)) ".html " (buffer-name))))
-  (defun Rd-compile-latex () "Compile Rd file to LaTeX." (interactive)
-         (save-buffer)
-         (compile (concat "R CMD Rdconv -t latex -o " (file-name-sans-extension (buffer-name)) ".tex " (buffer-name))))
-  (defun Rd-fill-paragraph-forward () "Justify and go to end of paragraph." (interactive "*")
-         (fill-paragraph nil)(clean-trails)(message nil)(forward-paragraph))
-  (defun Rd-link () "Insert \\code{\\link{}}." (interactive "*")(insert "\\code{\\link{}}")(search-backward "}}"))
-  (defun Rd-outline () "Navigate within .Rd file using `outline-mode'." (interactive)
-         (outline-mode)(setq outline-regexp "\\\\nam\\|\\\\....")(outline-mode)(outline-hide-sublevels 4)
-         (setq outline-previous-mode '(Rd-mode)))
-  (defun Rd-table-sep () "Insert \\tab" (interactive "*")(insert " \\tab "))
-  (defun Rd-view-html () "View HTML file with same prefix as current Rd file." (interactive)
-         (browse-url (concat (file-name-sans-extension (buffer-file-name)) ".html"))))
+  (defun Rd-compile-latex ()
+    "Compile Rd file to LaTeX."
+    (interactive)
+    (save-buffer)
+    (compile (concat "R CMD Rdconv -t latex -o " (file-name-sans-extension (buffer-name)) ".tex " (buffer-name))))
+  (defun Rd-fill-paragraph-forward ()
+    "Justify and go to end of paragraph."
+    (interactive "*")
+    (fill-paragraph nil)(clean-trails)(message nil)(forward-paragraph))
+  (defun Rd-link ()
+    "Insert \\code{\\link{}}."
+    (interactive "*")(insert "\\code{\\link{}}")(search-backward "}}"))
+  (defun Rd-outline ()
+    "Navigate within .Rd file using `outline-mode'."
+    (interactive)
+    (outline-mode)(setq outline-regexp "\\\\nam\\|\\\\....")(outline-mode)(outline-hide-sublevels 4)
+    (setq outline-previous-mode '(Rd-mode)))
+  (defun Rd-table-sep ()
+    "Insert \\tab"
+    (interactive "*")(insert " \\tab "))
+  (defun Rd-view-html ()
+    "View HTML file with same prefix as current Rd file."
+    (interactive)
+    (browse-url (concat (file-name-sans-extension (buffer-file-name)) ".html"))))
 (add-hook 'Rd-mode-hook 'arni-Rd-hook)
 (defun arni-Rnw-hook ()(message nil)(local-set-key [?\C-c ?\C-w] 'ess-swv-weave))
 (add-hook 'Rnw-mode-hook 'arni-Rnw-hook)
 (defun arni-roxy-hook ()(define-key ess-roxy-mode-map [?\C-c ?\C-o] 'ess-roxy-insert-newline)) ; [map]
 (add-hook 'ess-roxy-mode-hook 'arni-roxy-hook)
-(defun Rni () "Start interactive R session." (interactive)(R)(sleep-for 0.01)(comint-clear-window))
+(defun Rni ()
+  "Start interactive R session."
+  (interactive)
+  (R)(sleep-for 0.01)(comint-clear-window))
 ;;----------
 ;; 6.17 SQL
 ;;----------
@@ -2982,7 +4249,9 @@ This is first.\n
 (defun arni-sql-interactive-hook ()(add-to-list 'same-window-buffer-names "*SQL*")(setq indent-line-function 'ignore))
 (add-hook 'sql-interactive-mode-hook 'arni-sql-interactive-hook)
 (defun sql-oracle-default()
-  "Start Oracle session as default user." (interactive)(require 'sql)(setq sql-user "/")
+  "Start Oracle session as default user."
+  (interactive)
+  (require 'sql)(setq sql-user "/")
   (defalias 'sql-get-login 'ignore)(sql-oracle)(message nil)(sleep-for 0.4)
   (comint-send-string sql-buffer
                       "SET EMBED ON FEEDBACK OFF PAGESIZE 50000 PAUSE OFF SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
@@ -3068,22 +4337,45 @@ This is first.\n
   (local-set-key [?n]       'apropos-down        )
   (local-set-key [?p]       'apropos-up          )
   (local-set-key [?v]       'apropos-follow      )
-  (defun apropos-bottom () "Move to bottom." (interactive)(goto-char (point-max))(apropos-up 1))
-  (defun apropos-down (&optional n) "Move down N lines." (interactive "p")
-         (deactivate-mark)(end-of-line)(ignore-errors (forward-button n nil))(beginning-of-line))
-  (defun apropos-down-page (&optional n) "Move down N pages." (interactive "p")(scroll-up)(apropos-up 1))
-  (defun apropos-down-view () "Move down one line and view in other window." (interactive)
-         (apropos-down 1)(apropos-follow))
-  (defun apropos-middle () "Move to middle." (interactive)
-         (apropos-top)(forward-line (middle-from-here))(apropos-up 1)(apropos-down 1))
-  (defun apropos-top () "Move to top." (interactive)
-         (deactivate-mark)(goto-char (point-min))(forward-button 1)(beginning-of-line))
-  (defun apropos-top-mark () "Extend region to top." (interactive)(region-bol-top 6))
-  (defun apropos-up (&optional n) "Move up N lines." (interactive "p")
-         (deactivate-mark)
-         (if (< (line-number-at-pos) 7)(apropos-top)(progn (backward-button n nil)(beginning-of-line))))
-  (defun apropos-up-page (&optional n) "Move up N pages." (interactive "p")(scroll-down)(apropos-down 1))
-  (defun apropos-up-view () "Move up one line and view in other window." (interactive)(apropos-up 1)(apropos-follow)))
+  (defun apropos-bottom ()
+    "Move to bottom."
+    (interactive)
+    (goto-char (point-max))(apropos-up 1))
+  (defun apropos-down (&optional n)
+    "Move down N lines."
+    (interactive "p")
+    (deactivate-mark)(end-of-line)(ignore-errors (forward-button n nil))(beginning-of-line))
+  (defun apropos-down-page (&optional n)
+    "Move down N pages."
+    (interactive "p")(scroll-up)(apropos-up 1))
+  (defun apropos-down-view ()
+    "Move down one line and view in other window."
+    (interactive)
+    (apropos-down 1)(apropos-follow))
+  (defun apropos-middle ()
+    "Move to middle."
+    (interactive)
+    (apropos-top)(forward-line (middle-from-here))(apropos-up 1)(apropos-down 1))
+  (defun apropos-top ()
+    "Move to top."
+    (interactive)
+    (deactivate-mark)(goto-char (point-min))(forward-button 1)(beginning-of-line))
+  (defun apropos-top-mark ()
+    "Extend region to top."
+    (interactive)
+    (region-bol-top 6))
+  (defun apropos-up (&optional n)
+    "Move up N lines."
+    (interactive "p")
+    (deactivate-mark)
+    (if (< (line-number-at-pos) 7)(apropos-top)(progn (backward-button n nil)(beginning-of-line))))
+  (defun apropos-up-page (&optional n)
+    "Move up N pages."
+    (interactive "p")(scroll-down)(apropos-down 1))
+  (defun apropos-up-view ()
+    "Move up one line and view in other window."
+    (interactive)
+    (apropos-up 1)(apropos-follow)))
 (add-hook 'apropos-mode-hook 'arni-apropos-hook)
 ;;-------------
 ;; 7.3  Buffer
@@ -3135,34 +4427,85 @@ This is first.\n
   (local-set-key [?t]        'Buffer-menu-toggle-files-only        ) ; Buffer-menu-visit-tags-table
   (local-set-key [?u]        'Buffer-menu-unmark-down              )
   (local-set-key [?v]        'Electric-buffer-menu-mode-view-buffer) ; for list-buffers, already in electric-buffer-list
-  (defun Buffer-menu-bottom () "Move to bottom." (interactive)(deactivate-mark)(goto-char (point-max))(forward-line -1))
-  (defun Buffer-menu-bottom-mark () "Extend region to bottom." (interactive)(region-bol-bottom))
-  (defun Buffer-menu-down (&optional n) "Move down N lines." (interactive "p")
-         (deactivate-mark)(forward-line n)(if (eobp)(forward-line -1)))
-  (defun Buffer-menu-down-3 () "Move down 3 lines." (interactive)(Buffer-menu-down 3))
-  (defun Buffer-menu-down-mark (&optional n) "Extend region down N lines." (interactive "p")(region-bol-down n))
-  (defun Buffer-menu-down-page (&optional n) "Move down N pages." (interactive "p")(Buffer-menu-down (pages n)))
-  (defun Buffer-menu-down-view () "Move down one line and view in other window." (interactive)
-         (Buffer-menu-down 1)(Buffer-menu-view-other))
-  (defun Buffer-menu-mark-down () "Mark and move down." (interactive)(Buffer-menu-mark)(if (eobp)(Buffer-menu-bottom)))
-  (defun Buffer-menu-mark-down-delete () "Mark for deletion and move down." (interactive)
-         (Buffer-menu-delete)(if (eobp)(Buffer-menu-bottom)))
-  (defun Buffer-menu-middle () "Move to middle." (interactive)(Buffer-menu-top)(forward-line (middle-from-here)))
-  (defun Buffer-menu-top () "Move to top." (interactive)(deactivate-mark)(goto-char (point-min)))
-  (defun Buffer-menu-top-mark () "Extend region to top." (interactive)(region-bol-top 1))
-  (defun Buffer-menu-unmark-all () "Unmark all buffers." (interactive)
-         (save-excursion (Buffer-menu-top)(while (not (eobp))(Buffer-menu-unmark))))
-  (defun Buffer-menu-unmark-down () "Unmark and move down." (interactive)
-         (Buffer-menu-unmark)(if (eobp)(Buffer-menu-bottom)))
-  (defun Buffer-menu-unmark-up () "Unmark and move up." (interactive)(Buffer-menu-unmark t))
-  (defun Buffer-menu-up (&optional n) "Move up N lines." (interactive "p")(deactivate-mark)(forward-line (- n)))
-  (defun Buffer-menu-up-3 () "Move up 3 lines." (interactive)(forward-line -3))
-  (defun Buffer-menu-up-page (&optional n) "Move up N pages." (interactive "p")(Buffer-menu-up (pages n)))
-  (defun Buffer-menu-up-mark (&optional n) "Extend region up N lines." (interactive "p")(region-bol-up n))
-  (defun Buffer-menu-up-view () "Move up one line and view in other window." (interactive)
-         (Buffer-menu-up 1)(Buffer-menu-view-other))
-  (defun Buffer-menu-view-other () "View buffer in other window." (interactive)
-         (if (one-window-p)(split-window-right))(Buffer-menu-switch-other-window)))
+  (defun Buffer-menu-bottom ()
+    "Move to bottom."
+    (interactive)
+    (deactivate-mark)(goto-char (point-max))(forward-line -1))
+  (defun Buffer-menu-bottom-mark ()
+    "Extend region to bottom."
+    (interactive)
+    (region-bol-bottom))
+  (defun Buffer-menu-down (&optional n)
+    "Move down N lines."
+    (interactive "p")
+    (deactivate-mark)(forward-line n)(if (eobp)(forward-line -1)))
+  (defun Buffer-menu-down-3 ()
+    "Move down 3 lines."
+    (interactive)
+    (Buffer-menu-down 3))
+  (defun Buffer-menu-down-mark (&optional n)
+    "Extend region down N lines."
+    (interactive "p")(region-bol-down n))
+  (defun Buffer-menu-down-page (&optional n)
+    "Move down N pages."
+    (interactive "p")(Buffer-menu-down (pages n)))
+  (defun Buffer-menu-down-view ()
+    "Move down one line and view in other window."
+    (interactive)
+    (Buffer-menu-down 1)(Buffer-menu-view-other))
+  (defun Buffer-menu-mark-down ()
+    "Mark and move down."
+    (interactive)
+    (Buffer-menu-mark)(if (eobp)(Buffer-menu-bottom)))
+  (defun Buffer-menu-mark-down-delete ()
+    "Mark for deletion and move down."
+    (interactive)
+    (Buffer-menu-delete)(if (eobp)(Buffer-menu-bottom)))
+  (defun Buffer-menu-middle ()
+    "Move to middle."
+    (interactive)
+    (Buffer-menu-top)(forward-line (middle-from-here)))
+  (defun Buffer-menu-top ()
+    "Move to top."
+    (interactive)
+    (deactivate-mark)(goto-char (point-min)))
+  (defun Buffer-menu-top-mark ()
+    "Extend region to top."
+    (interactive)
+    (region-bol-top 1))
+  (defun Buffer-menu-unmark-all ()
+    "Unmark all buffers."
+    (interactive)
+    (save-excursion (Buffer-menu-top)(while (not (eobp))(Buffer-menu-unmark))))
+  (defun Buffer-menu-unmark-down ()
+    "Unmark and move down."
+    (interactive)
+    (Buffer-menu-unmark)(if (eobp)(Buffer-menu-bottom)))
+  (defun Buffer-menu-unmark-up ()
+    "Unmark and move up."
+    (interactive)
+    (Buffer-menu-unmark t))
+  (defun Buffer-menu-up (&optional n)
+    "Move up N lines."
+    (interactive "p")(deactivate-mark)(forward-line (- n)))
+  (defun Buffer-menu-up-3 ()
+    "Move up 3 lines."
+    (interactive)
+    (forward-line -3))
+  (defun Buffer-menu-up-page (&optional n)
+    "Move up N pages."
+    (interactive "p")(Buffer-menu-up (pages n)))
+  (defun Buffer-menu-up-mark (&optional n)
+    "Extend region up N lines."
+    (interactive "p")(region-bol-up n))
+  (defun Buffer-menu-up-view ()
+    "Move up one line and view in other window."
+    (interactive)
+    (Buffer-menu-up 1)(Buffer-menu-view-other))
+  (defun Buffer-menu-view-other ()
+    "View buffer in other window."
+    (interactive)
+    (if (one-window-p)(split-window-right))(Buffer-menu-switch-other-window)))
 (add-hook 'buffer-menu-mode-hook 'arni-buffer-menu-hook)
 (add-hook 'electric-buffer-menu-mode-hook 'arni-buffer-menu-hook)
 (defun arni-ibuffer-hook ()(ibuffer-do-sort-by-alphabetic))
@@ -3228,41 +4571,91 @@ This is first.\n
   (local-set-key [?r]       'ibuffer-do-eval                )
   (local-set-key [?u]       'ibuffer-unmark-down            ) ; ibuffer-unmark-forward
   (local-set-key [?v]       'ibuffer-view                   ) ; ibuffer-do-view
-  (defun ibuffer-bottom () "Move to bottom." (interactive)
-         (deactivate-mark)(goto-char (point-max))(ibuffer-backward-line))
-  (defun ibuffer-down (&optional n) "Move down N lines." (interactive "p")
-         (deactivate-mark)(ibuffer-forward-line n)(if (< (line-number-at-pos) 4)(ibuffer-top))
-         (if (eobp)(ibuffer-bottom)))
-  (defun ibuffer-down-3 () "Move down 3 lines." (interactive)(ibuffer-down 3))
-  (defun ibuffer-down-page (&optional n) "Move down N pages." (interactive "p")(ibuffer-down (pages n)))
-  (defun ibuffer-down-view () "Move down one line and view in other window." (interactive)
-         (ibuffer-down 1)(ibuffer-view-other))
-  (defun ibuffer-hide-lines () "Hide marked lines, or current line if none are marked." (interactive)
-         (if (zerop (ibuffer-count-marked-lines))(ibuffer-mark-forward 1)) ; improved ibuffer-do-kill-lines
-         (let ((count (ibuffer-map-marked-lines #'(lambda (buf mark) 'kill))))
-           (message "Hid %d lines" count)))
-  (defun ibuffer-mark-down () "Mark and move down." (interactive)(ibuffer-mark-forward 1)(if (eobp)(ibuffer-bottom)))
-  (defun ibuffer-mark-down-delete () "Mark for deletion and move down." (interactive)
-         (ibuffer-mark-for-delete 1)(if (eobp)(ibuffer-bottom)))
-  (defun ibuffer-middle () "Move to middle." (interactive)(ibuffer-top)(ibuffer-forward-line (middle-from-here)))
-  (defun ibuffer-top () "Move to top." (interactive)(deactivate-mark)(goto-line-lisp 3)(ibuffer-forward-line))
-  (defun ibuffer-top-mark () "Extend region to top." (interactive)(region-bol-top 4))
-  (defun ibuffer-unmark-all-marks () "Unmark all buffers." (interactive)(ibuffer-unmark-all (string-to-char "*")))
-  (defun ibuffer-unmark-down () "Unmark and move down." (interactive)
-         (ibuffer-unmark-forward 1)(if (eobp)(ibuffer-bottom)))
-  (defun ibuffer-unmark-up () "Unmark and move up." (interactive)
-         (ibuffer-unmark-backward 1)(if (< (line-number-at-pos) 4)(ibuffer-top)))
-  (defun ibuffer-up (&optional n) "Move up N lines." (interactive "p")
-         (deactivate-mark)(ibuffer-backward-line n)(if (< (line-number-at-pos) 4)(ibuffer-top)))
-  (defun ibuffer-up-3 () "Move up 3 lines." (interactive)(ibuffer-up 3))
-  (defun ibuffer-up-page (&optional n) "Move up N pages." (interactive "p")(ibuffer-up (pages n)))
-  (defun ibuffer-up-mark (&optional n) "Extend region up N lines." (interactive "p")
-         (region-bol-up n)(if (< (line-number-at-pos) 4)(ibuffer-top-mark)))
-  (defun ibuffer-up-view () "Move up one line and view in other window." (interactive)
-         (ibuffer-up 1)(ibuffer-view-other))
-  (defun ibuffer-view () "View buffer." (interactive)(view-buffer (ibuffer-current-buffer t)))
-  (defun ibuffer-view-other () "View buffer in other window." (interactive)
-         (if (one-window-p)(split-window-right))(ibuffer-visit-buffer-other-window-noselect)))
+  (defun ibuffer-bottom ()
+    "Move to bottom."
+    (interactive)
+    (deactivate-mark)(goto-char (point-max))(ibuffer-backward-line))
+  (defun ibuffer-down (&optional n)
+    "Move down N lines."
+    (interactive "p")
+    (deactivate-mark)(ibuffer-forward-line n)(if (< (line-number-at-pos) 4)(ibuffer-top))
+    (if (eobp)(ibuffer-bottom)))
+  (defun ibuffer-down-3 ()
+    "Move down 3 lines."
+    (interactive)
+    (ibuffer-down 3))
+  (defun ibuffer-down-page (&optional n)
+    "Move down N pages."
+    (interactive "p")(ibuffer-down (pages n)))
+  (defun ibuffer-down-view ()
+    "Move down one line and view in other window."
+    (interactive)
+    (ibuffer-down 1)(ibuffer-view-other))
+  (defun ibuffer-hide-lines ()
+    "Hide marked lines, or current line if none are marked."
+    (interactive)
+    (if (zerop (ibuffer-count-marked-lines))(ibuffer-mark-forward 1)) ; improved ibuffer-do-kill-lines
+    (let ((count (ibuffer-map-marked-lines #'(lambda (buf mark) 'kill))))
+      (message "Hid %d lines" count)))
+  (defun ibuffer-mark-down ()
+    "Mark and move down."
+    (interactive)
+    (ibuffer-mark-forward 1)(if (eobp)(ibuffer-bottom)))
+  (defun ibuffer-mark-down-delete ()
+    "Mark for deletion and move down."
+    (interactive)
+    (ibuffer-mark-for-delete 1)(if (eobp)(ibuffer-bottom)))
+  (defun ibuffer-middle ()
+    "Move to middle."
+    (interactive)
+    (ibuffer-top)(ibuffer-forward-line (middle-from-here)))
+  (defun ibuffer-top ()
+    "Move to top."
+    (interactive)
+    (deactivate-mark)(goto-line-lisp 3)(ibuffer-forward-line))
+  (defun ibuffer-top-mark ()
+    "Extend region to top."
+    (interactive)
+    (region-bol-top 4))
+  (defun ibuffer-unmark-all-marks ()
+    "Unmark all buffers."
+    (interactive)
+    (ibuffer-unmark-all (string-to-char "*")))
+  (defun ibuffer-unmark-down ()
+    "Unmark and move down."
+    (interactive)
+    (ibuffer-unmark-forward 1)(if (eobp)(ibuffer-bottom)))
+  (defun ibuffer-unmark-up ()
+    "Unmark and move up."
+    (interactive)
+    (ibuffer-unmark-backward 1)(if (< (line-number-at-pos) 4)(ibuffer-top)))
+  (defun ibuffer-up (&optional n)
+    "Move up N lines."
+    (interactive "p")
+    (deactivate-mark)(ibuffer-backward-line n)(if (< (line-number-at-pos) 4)(ibuffer-top)))
+  (defun ibuffer-up-3 ()
+    "Move up 3 lines."
+    (interactive)
+    (ibuffer-up 3))
+  (defun ibuffer-up-page (&optional n)
+    "Move up N pages."
+    (interactive "p")(ibuffer-up (pages n)))
+  (defun ibuffer-up-mark (&optional n)
+    "Extend region up N lines."
+    (interactive "p")
+    (region-bol-up n)(if (< (line-number-at-pos) 4)(ibuffer-top-mark)))
+  (defun ibuffer-up-view ()
+    "Move up one line and view in other window."
+    (interactive)
+    (ibuffer-up 1)(ibuffer-view-other))
+  (defun ibuffer-view ()
+    "View buffer."
+    (interactive)
+    (view-buffer (ibuffer-current-buffer t)))
+  (defun ibuffer-view-other ()
+    "View buffer in other window."
+    (interactive)
+    (if (one-window-p)(split-window-right))(ibuffer-visit-buffer-other-window-noselect)))
 (add-hook 'ibuffer-mode-hook 'arni-ibuffer-mode-hook)
 ;;----------------
 ;; 7.4  ChangeLog
@@ -3271,7 +4664,10 @@ This is first.\n
   (font-lock-mode 1)
   (set-face-attribute 'change-log-name nil :underline t :inherit -)
   (local-set-key [M-return] 'change-log-newline)
-  (defun change-log-newline () "Insert newline and add new entry." (interactive)(insert "\n\n\t* ")))
+  (defun change-log-newline ()
+    "Insert newline and add new entry."
+    (interactive)
+    (insert "\n\n\t* ")))
 (add-hook 'change-log-mode-hook 'arni-change-log-hook)
 ;;-------------
 ;; 7.5  Comint
@@ -3310,38 +4706,64 @@ This is first.\n
   (local-set-key   [?\C-l]       'comint-clear-window-keep-current-line    )
   (local-set-key   [?\C-n]       'comint-next-or-down                      )
   (local-set-key   [?\C-p]       'comint-previous-or-up                    )
-  (defun comint-backward-delete-char () "Delete one character backward, unless at prompt." (interactive "*")
-         (if (not (= (point)(comint-line-beginning-position)))(delete-char -1)))
-  (defun comint-backward-delete-word () "Delete previous word, unless at prompt." (interactive "*")
-         (if (not (= (point)(comint-line-beginning-position)))(backward-delete-word 1)))
-  (defun comint-bol-mark () "Select region from here to beginning of line, excluding the prompt." (interactive)
-         (if (not mark-active)(push-mark))(comint-bol)(region-set))
-  (defun comint-bol-nomark () "Go to beginning of line, excluding the prompt." (interactive)
-         (deactivate-mark)(comint-bol))
-  (defun comint-clear-window () "Clear from session window." (interactive)
-         (delete-region (point-min)(point-max))(comint-send-input)(goto-char (point-min))(delete-char 1)(end-of-line))
-  (defun comint-clear-window-keep-current-line () "Clear session window, but keep current line." (interactive)
-         (let ((col (current-column)))
-           (kill-new (buffer-substring-no-properties (comint-line-beginning-position)(line-end-position)))
-           (delete-region (point-min)(point-max))(comint-send-input)(goto-char (point-min))(delete-char 1)(end-of-line)
-           (yank)(current-kill 1)(sleep-for 0.01)(move-to-column (max (- (comint-line-beginning-position) 1) col))))
-  (defun comint-flush-window () "Flush session window, showing only the current line." (interactive)(recenter 0))
-  (defun comint-left (&optional n) "Move left N columns, unless at prompt." (interactive "p")
-         (deactivate-mark)(if (not (= (point)(comint-line-beginning-position)))(backward-char n)))
-  (defun comint-left-mark (&optional n) "Extend region left N columns, unless at prompt." (interactive "p")
-         (if (not (= (point)(comint-line-beginning-position)))(region-backward-char n)))
-  (defun comint-left-word (&optional n) "Move left N words." (interactive "p")
-         (if (not (= (point)(comint-line-beginning-position)))(backward-word n)))
-  (defun comint-left-word-mark (&optional n) "Extend region left N words." (interactive "p")
-         (if (not (= (point)(comint-line-beginning-position)))(region-backward-word n)))
-  (defun comint-next-or-down (&optional n) "Cycle history N forward if in last line, otherwise move N lines down."
-         (interactive "p")
-         (if (= (line-number-at-pos)(line-number-at-pos (point-max)))(comint-next-input n)(forward-line n)))
-  (defun comint-previous-or-up (&optional n) "Cycle history N backward if in last line, otherwise move N lines up."
-         (interactive "p")
-         (if (= (line-number-at-pos)(line-number-at-pos (point-max)))(comint-previous-input n)(forward-line (- n))))
+  (defun comint-backward-delete-char ()
+    "Delete one character backward, unless at prompt."
+    (interactive "*")
+    (if (not (= (point)(comint-line-beginning-position)))(delete-char -1)))
+  (defun comint-backward-delete-word ()
+    "Delete previous word, unless at prompt."
+    (interactive "*")
+    (if (not (= (point)(comint-line-beginning-position)))(backward-delete-word 1)))
+  (defun comint-bol-mark ()
+    "Select region from here to beginning of line, excluding the prompt."
+    (interactive)
+    (if (not mark-active)(push-mark))(comint-bol)(region-set))
+  (defun comint-bol-nomark ()
+    "Go to beginning of line, excluding the prompt."
+    (interactive)
+    (deactivate-mark)(comint-bol))
+  (defun comint-clear-window ()
+    "Clear from session window."
+    (interactive)
+    (delete-region (point-min)(point-max))(comint-send-input)(goto-char (point-min))(delete-char 1)(end-of-line))
+  (defun comint-clear-window-keep-current-line ()
+    "Clear session window, but keep current line."
+    (interactive)
+    (let ((col (current-column)))
+      (kill-new (buffer-substring-no-properties (comint-line-beginning-position)(line-end-position)))
+      (delete-region (point-min)(point-max))(comint-send-input)(goto-char (point-min))(delete-char 1)(end-of-line)
+      (yank)(current-kill 1)(sleep-for 0.01)(move-to-column (max (- (comint-line-beginning-position) 1) col))))
+  (defun comint-flush-window ()
+    "Flush session window, showing only the current line."
+    (interactive)
+    (recenter 0))
+  (defun comint-left (&optional n)
+    "Move left N columns, unless at prompt."
+    (interactive "p")
+    (deactivate-mark)(if (not (= (point)(comint-line-beginning-position)))(backward-char n)))
+  (defun comint-left-mark (&optional n)
+    "Extend region left N columns, unless at prompt."
+    (interactive "p")
+    (if (not (= (point)(comint-line-beginning-position)))(region-backward-char n)))
+  (defun comint-left-word (&optional n)
+    "Move left N words."
+    (interactive "p")
+    (if (not (= (point)(comint-line-beginning-position)))(backward-word n)))
+  (defun comint-left-word-mark (&optional n)
+    "Extend region left N words."
+    (interactive "p")
+    (if (not (= (point)(comint-line-beginning-position)))(region-backward-word n)))
+  (defun comint-next-or-down (&optional n)
+    "Cycle history N forward if in last line, otherwise move N lines down."
+    (interactive "p")
+    (if (= (line-number-at-pos)(line-number-at-pos (point-max)))(comint-next-input n)(forward-line n)))
+  (defun comint-previous-or-up (&optional n)
+    "Cycle history N backward if in last line, otherwise move N lines up."
+    (interactive "p")
+    (if (= (line-number-at-pos)(line-number-at-pos (point-max)))(comint-previous-input n)(forward-line (- n))))
   (defun kill-process-or-emacs ()
-    "Stop process if any is active, otherwise quit Emacs." (interactive)
+    "Stop process if any is active, otherwise quit Emacs."
+    (interactive)
     (if (> (length (process-list)) 0) ; any active processes?
         (let ((active-process-buffer (buffer-name (process-buffer (car (last (process-list))))))) ; last process for GDB
           (cond ((string-match "^\\*gud-" active-process-buffer)(switch-to-buffer active-process-buffer)
@@ -3351,13 +4773,15 @@ This is first.\n
                  (comint-send-string sql-buffer "quit\n"))
                 (t (switch-to-buffer active-process-buffer)(kill-process (car (last (process-list)))))))
       (save-buffers-kill-emacs)))
-  (defun kill-process-or-buffer () "Stop process if current buffer has one, otherwise close current buffer."
-         (interactive)
-         (if (get-buffer-process (current-buffer)) ; active process in this buffer?
-             (cond ((string-match "^\\*R" (buffer-name (current-buffer)))(ess-quit))
-                   ((string-match "^\\*SQL" (buffer-name (current-buffer)))(comint-send-string sql-buffer "quit\n"))
-                   (t (kill-process (car (process-list)))))
-           (kill-buffer (current-buffer)))))
+  (defun kill-process-or-buffer ()
+    "Stop process if current buffer has one, otherwise close current buffer."
+
+    (interactive)
+    (if (get-buffer-process (current-buffer)) ; active process in this buffer?
+        (cond ((string-match "^\\*R" (buffer-name (current-buffer)))(ess-quit))
+              ((string-match "^\\*SQL" (buffer-name (current-buffer)))(comint-send-string sql-buffer "quit\n"))
+              (t (kill-process (car (process-list)))))
+      (kill-buffer (current-buffer)))))
 (add-hook 'comint-mode-hook 'arni-comint-hook)
 ;;------------------
 ;; 7.6  Compilation
@@ -3395,21 +4819,46 @@ This is first.\n
   (local-set-key [?p]          'compilation-up          )
   (local-set-key [?q]          'kill-buffer-maybe-window)
   (local-set-key [?v]          'compilation-view        )
-  (defun compilation-bottom () "Move to bottom." (interactive)
-         (deactivate-mark)(goto-char (point-max))(compilation-up 1))
-  (defun compilation-bottom-mark () "Extend region to bottom." (interactive)(region-bol-bottom)(forward-line -2))
-  (defun compilation-down (&optional n) "Move down N errors." (interactive "p")
-         (deactivate-mark)(next-error-follow-minor-mode 0)(dotimes (i n)(compilation-next-error 1)))
-  (defun compilation-down-view () "Move down one line and view in other window." (interactive)
-         (deactivate-mark)(next-error-follow-minor-mode t)(compilation-next-error 1))
-  (defun compilation-middle () "Move to middle." (interactive)(jump-middle)(compilation-down 1))
-  (defun compilation-top () "Move to top." (interactive)(deactivate-mark)(goto-char (point-min))(compilation-down 1))
-  (defun compilation-top-mark () "Extend region to top." (interactive)(region-bol-top 5))
-  (defun compilation-up (&optional n) "Move up N errors." (interactive "p")
-         (deactivate-mark)(next-error-follow-minor-mode 0)(dotimes (i n)(compilation-previous-error 1)))
-  (defun compilation-up-view () "Move down one line and view in other window." (interactive)
-         (deactivate-mark)(next-error-follow-minor-mode t)(compilation-previous-error 1))
-  (defun compilation-view () "View in other window." (interactive)(forward-line -1)(compilation-down-view)))
+  (defun compilation-bottom ()
+    "Move to bottom."
+    (interactive)
+    (deactivate-mark)(goto-char (point-max))(compilation-up 1))
+  (defun compilation-bottom-mark ()
+    "Extend region to bottom."
+    (interactive)
+    (region-bol-bottom)(forward-line -2))
+  (defun compilation-down (&optional n)
+    "Move down N errors."
+    (interactive "p")
+    (deactivate-mark)(next-error-follow-minor-mode 0)(dotimes (i n)(compilation-next-error 1)))
+  (defun compilation-down-view ()
+    "Move down one line and view in other window."
+    (interactive)
+    (deactivate-mark)(next-error-follow-minor-mode t)(compilation-next-error 1))
+  (defun compilation-middle ()
+    "Move to middle."
+    (interactive)
+    (jump-middle)(compilation-down 1))
+  (defun compilation-top ()
+    "Move to top."
+    (interactive)
+    (deactivate-mark)(goto-char (point-min))(compilation-down 1))
+  (defun compilation-top-mark ()
+    "Extend region to top."
+    (interactive)
+    (region-bol-top 5))
+  (defun compilation-up (&optional n)
+    "Move up N errors."
+    (interactive "p")
+    (deactivate-mark)(next-error-follow-minor-mode 0)(dotimes (i n)(compilation-previous-error 1)))
+  (defun compilation-up-view ()
+    "Move down one line and view in other window."
+    (interactive)
+    (deactivate-mark)(next-error-follow-minor-mode t)(compilation-previous-error 1))
+  (defun compilation-view ()
+    "View in other window."
+    (interactive)
+    (forward-line -1)(compilation-down-view)))
 (add-hook 'compilation-mode-hook 'arni-compilation-hook)
 ;;-----------------
 ;; 7.7  Completion
@@ -3450,13 +4899,20 @@ This is first.\n
   (local-set-key [M-up]        'csv-up-view        )
   (local-set-key [M-down]      'csv-down-view      )
   (local-set-key [?\C-c ?\C-/] 'csv-help           )
-  (defun csv-down (&optional n) "Move down N lines." (interactive "p")
-         (deactivate-mark)(forward-line n)(if (eobp)(forward-line -1)))
-  (defun csv-down-view () "Move down one line and view in other window." (interactive)(csv-down 1)(csv-view))
-  (defun csv-help () "Show `csv-mode' keybindings." (interactive)
-         (let ((hints '("C-c C-/: This help" "C-c C-a: Align (visually)" "C-1 C-c C-a: Align (insert spaces)"
-                        "C-c C-u:  Unalign" "M-up & M-down: View"))(sep "       "))
-           (message (concat sep (mapconcat 'eval hints sep))))(setq csv-splash nil))
+  (defun csv-down (&optional n)
+    "Move down N lines."
+    (interactive "p")
+    (deactivate-mark)(forward-line n)(if (eobp)(forward-line -1)))
+  (defun csv-down-view ()
+    "Move down one line and view in other window."
+    (interactive)
+    (csv-down 1)(csv-view))
+  (defun csv-help ()
+    "Show `csv-mode' keybindings."
+    (interactive)
+    (let ((hints '("C-c C-/: This help" "C-c C-a: Align (visually)" "C-1 C-c C-a: Align (insert spaces)"
+                   "C-c C-u:  Unalign" "M-up & M-down: View"))(sep "       "))
+      (message (concat sep (mapconcat 'eval hints sep))))(setq csv-splash nil))
   (defun csv-nav-parse-line ()
     "Override `csv-nav-parse-line' to support `csv-separators'."
     (let ((start (point)) result)
@@ -3468,18 +4924,31 @@ This is first.\n
                 ((= (char-after) ?\n)(setq result (cons (csv-nav-parse-field start) result) start nil)(forward-char 1))
                 ((= (char-after) ?\")(forward-sexp 1))(t (forward-char 1))))
         (nreverse result))))
-  (defun csv-up (&optional n) "Move up N lines." (interactive "p")(deactivate-mark)(forward-line (- n)))
-  (defun csv-up-view () "Move up one line and view in other window." (interactive)(csv-up 1)(csv-view))
-  (defun csv-view () "View current line in other window." (interactive)
-         (csv-nav-mode)(csv-nav-edit)(other-window 1)(csv-mode)(message nil))
+  (defun csv-up (&optional n)
+    "Move up N lines."
+    (interactive "p")(deactivate-mark)(forward-line (- n)))
+  (defun csv-up-view ()
+    "Move up one line and view in other window."
+    (interactive)
+    (csv-up 1)(csv-view))
+  (defun csv-view ()
+    "View current line in other window."
+    (interactive)
+    (csv-nav-mode)(csv-nav-edit)(other-window 1)(csv-mode)(message nil))
   (if csv-splash (csv-help)))
 (add-hook 'csv-mode-hook 'arni-csv-hook)
-(defun csv-mode-force () "Edit comma-separated text file." (interactive)
-       (if (featurep 'csv-mode) (unload-feature 'csv-mode))(csv-mode)) ; in case space-mode has already been called
-(defun space-mode () "Edit space-separated text file." (interactive)
-       (setq csv-separators '(" "))(csv-mode)) ; csv-separators must be set before loading csv-mode
-(defun tab-mode () "Edit tab-separated text file." (interactive)
-       (setq csv-separators '("\t"))(csv-mode)) ; csv-separators must be set before loading csv-mode
+(defun csv-mode-force ()
+  "Edit comma-separated text file."
+  (interactive)
+  (if (featurep 'csv-mode) (unload-feature 'csv-mode))(csv-mode)) ; in case space-mode has already been called
+(defun space-mode ()
+  "Edit space-separated text file."
+  (interactive)
+  (setq csv-separators '(" "))(csv-mode)) ; csv-separators must be set before loading csv-mode
+(defun tab-mode ()
+  "Edit tab-separated text file."
+  (interactive)
+  (setq csv-separators '("\t"))(csv-mode)) ; csv-separators must be set before loading csv-mode
 ;;----------------
 ;; 7.10 Customize
 ;;----------------
@@ -3505,9 +4974,11 @@ This is first.\n
   (local-set-key [?p]    'diff-hunk-prev       )
   (local-set-key [?u]    'yank                 )
   (local-set-key [?v]    'diff-goto-source-stay)
-  (defun diff-goto-source-stay () "View diff in source file and stay." (interactive)
-         (let ((diff-window (selected-window)))
-           (diff-goto-source)(select-window diff-window))))
+  (defun diff-goto-source-stay ()
+    "View diff in source file and stay."
+    (interactive)
+    (let ((diff-window (selected-window)))
+      (diff-goto-source)(select-window diff-window))))
 (add-hook 'diff-mode-hook 'arni-diff-hook)
 (defun arni-ediff-hook ()
   (setq auto-hscroll-mode nil)
@@ -3525,55 +4996,99 @@ This is first.\n
   (set-face-attribute 'ediff-odd-diff-A     nil :background "gold"       :foreground -) ; noncurrent line A
   (set-face-attribute 'ediff-odd-diff-B     nil :background "gold"       :foreground -) ; noncurrent line B
   (set-face-attribute 'ediff-odd-diff-C     nil :background "gold"       :foreground -) ; noncurrent line C
-  (defun ediff-copy-right () "Copy region from buffer A to buffer B." (interactive)
-         (let ((line-A (with-current-buffer ediff-buffer-A (line-number-at-pos)))
-               (line-B (with-current-buffer ediff-buffer-B (line-number-at-pos))))
-           (ediff-copy-A-to-B nil)(ediff-update-diffs)(goto-line-lisp line-A ediff-buffer-A)(recenter)
-           (goto-line-lisp line-B ediff-buffer-B)(recenter)(select-window (get-buffer-window "*Ediff Control Panel*"))))
-  (defun ediff-copy-left () "Copy region from buffer B to buffer A." (interactive)
-         (let ((line-A (with-current-buffer ediff-buffer-A (line-number-at-pos)))
-               (line-B (with-current-buffer ediff-buffer-B (line-number-at-pos))))
-           (ediff-copy-B-to-A nil)(ediff-update-diffs)(goto-line-lisp line-A ediff-buffer-A)(recenter)
-           (goto-line-lisp line-B ediff-buffer-B)(recenter)(select-window (get-buffer-window "*Ediff Control Panel*"))))
-  (defun ediff-jump-last () "Select last difference." (interactive)
-         (ediff-jump-to-difference ediff-number-of-differences))
-  (defun ediff-jump-middle () "Select middle of all differences." (interactive)
-         (ediff-jump-to-difference (/ ediff-number-of-differences 2)))
-  (defun ediff-scroll-bottom () "Scroll both windows to end of buffer." (interactive)
-         (with-current-buffer ediff-buffer-A (goto-char (point-min))(recenter)(goto-char (point-max)))
-         (with-current-buffer ediff-buffer-B (goto-char (point-min))(recenter)(goto-char (point-max)))
-         (select-window (get-buffer-window "*Ediff Control Panel*")))
-  (defun ediff-scroll-down (&optional n) "Scroll both windows N lines down." (interactive "p")
-         (ediff-scroll-vertically (- n)))
-  (defun ediff-scroll-down-3 () "Scroll both windows 3 lines down." (interactive)(ediff-scroll-down 3))
-  (defun ediff-scroll-down-full (&optional n) "Scroll both windows N pages down." (interactive "p")
-         (ediff-scroll-down (* n (- (window-body-height ediff-window-A) next-screen-context-lines))))
-  (defun ediff-scroll-left (&optional n) "Scroll both windows N columns left." (interactive "p")
-         (let ((cur-scroll (window-hscroll ediff-window-A))(remember-A ediff-window-A)(remember-B ediff-window-B))
-           (select-window remember-A)(set-window-hscroll remember-A (- cur-scroll n))
-           (select-window remember-B)(set-window-hscroll remember-B (- cur-scroll n))
-           (select-window (get-buffer-window "*Ediff Control Panel*"))))
-  (defun ediff-scroll-left-3 () "Scroll both windows 3 columns left." (interactive)(ediff-scroll-left 3))
-  (defun ediff-scroll-left-full (&optional n) "Scroll both windows N pages left." (interactive "p")
-         (ediff-scroll-left (* n (- (window-width ediff-window-A) next-screen-context-lines))))
-  (defun ediff-scroll-right (&optional n) "Scroll both windows N columns left." (interactive "p")
-         (let ((cur-scroll (window-hscroll ediff-window-A))(remember-A ediff-window-A)(remember-B ediff-window-B))
-           (select-window remember-A)(set-window-hscroll remember-A (+ cur-scroll n))
-           (select-window remember-B)(set-window-hscroll remember-B (+ cur-scroll n))
-           (select-window (get-buffer-window "*Ediff Control Panel*"))))
-  (defun ediff-scroll-right-3 () "Scroll both windows 3 column left." (interactive)(ediff-scroll-right 3))
-  (defun ediff-scroll-right-full (&optional n) "Scroll both windows N pages right." (interactive "p")
-         (ediff-scroll-right (* n (- (window-width ediff-window-A) next-screen-context-lines))))
-  (defun ediff-scroll-top () "Scroll both windows to beginning of buffer." (interactive)
-         (ediff-operate-on-windows 'goto-char (point-min)))
-  (defun ediff-scroll-up (&optional n) "Scroll both windows N lines up." (interactive "p")(ediff-scroll-vertically n))
-  (defun ediff-scroll-up-3 () "Scroll both windows 3 lines up." (interactive)(ediff-scroll-up 3))
-  (defun ediff-scroll-up-full (&optional n) "Scroll both windows N pages up." (interactive "p")
-         (ediff-scroll-up (* n (- (window-body-height ediff-window-A) next-screen-context-lines))))
-  (defun ediff-split-left-right () "Arrange Ediff windows on left and right side of screen." (interactive)
-         (setq ediff-split-window-function 'split-window-right)(ediff-recenter 'no-rehighlight))
-  (defun ediff-split-top-bottom () "Arrange Ediff windows on top and bottom of screen." (interactive)
-         (setq ediff-split-window-function 'split-window-below)(ediff-recenter 'no-rehighlight)))
+  (defun ediff-copy-right ()
+    "Copy region from buffer A to buffer B."
+    (interactive)
+    (let ((line-A (with-current-buffer ediff-buffer-A (line-number-at-pos)))
+          (line-B (with-current-buffer ediff-buffer-B (line-number-at-pos))))
+      (ediff-copy-A-to-B nil)(ediff-update-diffs)(goto-line-lisp line-A ediff-buffer-A)(recenter)
+      (goto-line-lisp line-B ediff-buffer-B)(recenter)(select-window (get-buffer-window "*Ediff Control Panel*"))))
+  (defun ediff-copy-left ()
+    "Copy region from buffer B to buffer A."
+    (interactive)
+    (let ((line-A (with-current-buffer ediff-buffer-A (line-number-at-pos)))
+          (line-B (with-current-buffer ediff-buffer-B (line-number-at-pos))))
+      (ediff-copy-B-to-A nil)(ediff-update-diffs)(goto-line-lisp line-A ediff-buffer-A)(recenter)
+      (goto-line-lisp line-B ediff-buffer-B)(recenter)(select-window (get-buffer-window "*Ediff Control Panel*"))))
+  (defun ediff-jump-last ()
+    "Select last difference."
+    (interactive)
+    (ediff-jump-to-difference ediff-number-of-differences))
+  (defun ediff-jump-middle ()
+    "Select middle of all differences."
+    (interactive)
+    (ediff-jump-to-difference (/ ediff-number-of-differences 2)))
+  (defun ediff-scroll-bottom ()
+    "Scroll both windows to end of buffer."
+    (interactive)
+    (with-current-buffer ediff-buffer-A (goto-char (point-min))(recenter)(goto-char (point-max)))
+    (with-current-buffer ediff-buffer-B (goto-char (point-min))(recenter)(goto-char (point-max)))
+    (select-window (get-buffer-window "*Ediff Control Panel*")))
+  (defun ediff-scroll-down (&optional n)
+    "Scroll both windows N lines down."
+    (interactive "p")
+    (ediff-scroll-vertically (- n)))
+  (defun ediff-scroll-down-3 ()
+    "Scroll both windows 3 lines down."
+    (interactive)
+    (ediff-scroll-down 3))
+  (defun ediff-scroll-down-full (&optional n)
+    "Scroll both windows N pages down."
+    (interactive "p")
+    (ediff-scroll-down (* n (- (window-body-height ediff-window-A) next-screen-context-lines))))
+  (defun ediff-scroll-left (&optional n)
+    "Scroll both windows N columns left."
+    (interactive "p")
+    (let ((cur-scroll (window-hscroll ediff-window-A))(remember-A ediff-window-A)(remember-B ediff-window-B))
+      (select-window remember-A)(set-window-hscroll remember-A (- cur-scroll n))
+      (select-window remember-B)(set-window-hscroll remember-B (- cur-scroll n))
+      (select-window (get-buffer-window "*Ediff Control Panel*"))))
+  (defun ediff-scroll-left-3 ()
+    "Scroll both windows 3 columns left."
+    (interactive)
+    (ediff-scroll-left 3))
+  (defun ediff-scroll-left-full (&optional n)
+    "Scroll both windows N pages left."
+    (interactive "p")
+    (ediff-scroll-left (* n (- (window-width ediff-window-A) next-screen-context-lines))))
+  (defun ediff-scroll-right (&optional n)
+    "Scroll both windows N columns left."
+    (interactive "p")
+    (let ((cur-scroll (window-hscroll ediff-window-A))(remember-A ediff-window-A)(remember-B ediff-window-B))
+      (select-window remember-A)(set-window-hscroll remember-A (+ cur-scroll n))
+      (select-window remember-B)(set-window-hscroll remember-B (+ cur-scroll n))
+      (select-window (get-buffer-window "*Ediff Control Panel*"))))
+  (defun ediff-scroll-right-3 ()
+    "Scroll both windows 3 column left."
+    (interactive)
+    (ediff-scroll-right 3))
+  (defun ediff-scroll-right-full (&optional n)
+    "Scroll both windows N pages right."
+    (interactive "p")
+    (ediff-scroll-right (* n (- (window-width ediff-window-A) next-screen-context-lines))))
+  (defun ediff-scroll-top ()
+    "Scroll both windows to beginning of buffer."
+    (interactive)
+    (ediff-operate-on-windows 'goto-char (point-min)))
+  (defun ediff-scroll-up (&optional n)
+    "Scroll both windows N lines up."
+    (interactive "p")(ediff-scroll-vertically n))
+  (defun ediff-scroll-up-3 ()
+    "Scroll both windows 3 lines up."
+    (interactive)
+    (ediff-scroll-up 3))
+  (defun ediff-scroll-up-full (&optional n)
+    "Scroll both windows N pages up."
+    (interactive "p")
+    (ediff-scroll-up (* n (- (window-body-height ediff-window-A) next-screen-context-lines))))
+  (defun ediff-split-left-right ()
+    "Arrange Ediff windows on left and right side of screen."
+    (interactive)
+    (setq ediff-split-window-function 'split-window-right)(ediff-recenter 'no-rehighlight))
+  (defun ediff-split-top-bottom ()
+    "Arrange Ediff windows on top and bottom of screen."
+    (interactive)
+    (setq ediff-split-window-function 'split-window-below)(ediff-recenter 'no-rehighlight)))
 (add-hook 'ediff-mode-hook 'arni-ediff-hook)
 (defun arni-ediff-cleanup-hook ()(setq auto-hscroll-mode t))
 (add-hook 'ediff-cleanup-hook 'arni-ediff-cleanup-hook)
@@ -3725,50 +5240,106 @@ This is first.\n
   (local-set-key [?u]        'dired-unmark-down                 ) ; dired-unmark
   (local-set-key [?v]        'dired-view-other                  ) ; dired-view-file
   (local-set-key [?z]        'dired-do-compress                 )
-  (defun dired-bottom () "Move to bottom." (interactive)(deactivate-mark)(goto-char (point-max))(dired-previous-line 1))
-  (defun dired-by-X () "Sort files by filename extension." (interactive)
-         (setq dired-by "X")(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))(revert-buffer)
-         (message "Sorted by EXTENSION"))
-  (defun dired-by-N () "Sort files by name." (interactive)
-         (setq dired-by nil)(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))(revert-buffer)
-         (message "Sorted by NAME"))
-  (defun dired-by-S () "Sort files by size." (interactive)
-         (setq dired-by "S")(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))(revert-buffer)
-         (message "Sorted by SIZE"))
-  (defun dired-by-T () "Sort files by modification time." (interactive)
-         (setq dired-by "t")(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))(revert-buffer)
-         (message "Sorted by TIME"))
-  (defun dired-down (&optional n) "Move down N lines." (interactive "p")
-         (deactivate-mark)(forward-line n)(if (< (line-number-at-pos) 3)(dired-top)(dired-move-to-filename))
-         (if (eobp)(dired-bottom)))
-  (defun dired-down-3 () "Move down 3 lines." (interactive)(dired-down 3))
-  (defun dired-down-page (&optional n) "Move down N pages." (interactive "p")(dired-down (pages n)))
-  (defun dired-down-view () "Move down one line and view in other window." (interactive)
-         (dired-down 1)(dired-view-other))
-  (defun dired-enter-or-view () "Enter directory, or view file in other window." (interactive)
-         (if (file-directory-p (dired-get-file-for-visit))(dired-find-file)(dired-view-other)))
-  (defun dired-mark-down (&optional n) "Mark N items and move to next line." (interactive "p")
-         (dired-mark n)(if (eobp)(dired-bottom)))
-  (defun dired-middle () "Move to middle." (interactive)(dired-top)(dired-next-line (middle-from-here)))
-  (defun dired-quit () "Quit dired." (interactive)(dolist (B dired-buffers)(kill-buffer (cdr B)))(delete-other-windows))
-  (defun dired-toggle-dot () "Toggle whether dot files are shown in dired." (interactive)
-         (setq dired-dot (not dired-dot))(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))
-         (revert-buffer)(message "Dot files %s" (if dired-dot "ON" "OFF")))
-  (defun dired-top () "Move to top." (interactive)(deactivate-mark)(goto-line-lisp 2)(dired-next-line 1))
-  (defun dired-top-mark () "Extend region to top." (interactive)(region-bol-top 3))
-  (defun dired-unmark-down (&optional n) "Unmark N items and move to next line." (interactive "p")
-         (dired-unmark n)(dired-up 1)(dired-down 1))
-  (defun dired-unmark-up (&optional n) "Unmark N items and move to previous line." (interactive "p")
-         (dotimes (i n)(dired-unmark 1)(dired-up 2)))
-  (defun dired-up (&optional n) "Move up N lines." (interactive "p")
-         (deactivate-mark)(forward-line (- n))(if (< (line-number-at-pos) 3)(dired-top)(dired-move-to-filename)))
-  (defun dired-up-3 () "Move up 3 lines." (interactive)(dired-up 3))
-  (defun dired-up-mark (&optional n) "Extend region up N lines." (interactive "p")
-         (region-bol-up n)(if (< (line-number-at-pos) 3)(dired-top-mark)))
-  (defun dired-up-page (&optional n) "Move up N pages." (interactive "p")(dired-up (pages n)))
-  (defun dired-up-view () "Move up one line and view in other window." (interactive)(dired-up 1)(dired-view-other))
-  (defun dired-view-other () "View file or directory in other window." (interactive)
-         (if (one-window-p)(split-window-right))(dired-display-file)))
+  (defun dired-bottom ()
+    "Move to bottom."
+    (interactive)
+    (deactivate-mark)(goto-char (point-max))(dired-previous-line 1))
+  (defun dired-by-X ()
+    "Sort files by filename extension."
+    (interactive)
+    (setq dired-by "X")(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))(revert-buffer)
+    (message "Sorted by EXTENSION"))
+  (defun dired-by-N ()
+    "Sort files by name."
+    (interactive)
+    (setq dired-by nil)(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))(revert-buffer)
+    (message "Sorted by NAME"))
+  (defun dired-by-S ()
+    "Sort files by size."
+    (interactive)
+    (setq dired-by "S")(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))(revert-buffer)
+    (message "Sorted by SIZE"))
+  (defun dired-by-T ()
+    "Sort files by modification time."
+    (interactive)
+    (setq dired-by "t")(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))(revert-buffer)
+    (message "Sorted by TIME"))
+  (defun dired-down (&optional n)
+    "Move down N lines."
+    (interactive "p")
+    (deactivate-mark)(forward-line n)(if (< (line-number-at-pos) 3)(dired-top)(dired-move-to-filename))
+    (if (eobp)(dired-bottom)))
+  (defun dired-down-3 ()
+    "Move down 3 lines."
+    (interactive)
+    (dired-down 3))
+  (defun dired-down-page (&optional n)
+    "Move down N pages."
+    (interactive "p")(dired-down (pages n)))
+  (defun dired-down-view ()
+    "Move down one line and view in other window."
+    (interactive)
+    (dired-down 1)(dired-view-other))
+  (defun dired-enter-or-view ()
+    "Enter directory, or view file in other window."
+    (interactive)
+    (if (file-directory-p (dired-get-file-for-visit))(dired-find-file)(dired-view-other)))
+  (defun dired-mark-down (&optional n)
+    "Mark N items and move to next line."
+    (interactive "p")
+    (dired-mark n)(if (eobp)(dired-bottom)))
+  (defun dired-middle ()
+    "Move to middle."
+    (interactive)
+    (dired-top)(dired-next-line (middle-from-here)))
+  (defun dired-quit ()
+    "Quit dired."
+    (interactive)
+    (dolist (B dired-buffers)(kill-buffer (cdr B)))(delete-other-windows))
+  (defun dired-toggle-dot ()
+    "Toggle whether dot files are shown in dired."
+    (interactive)
+    (setq dired-dot (not dired-dot))(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))
+    (revert-buffer)(message "Dot files %s" (if dired-dot "ON" "OFF")))
+  (defun dired-top ()
+    "Move to top."
+    (interactive)
+    (deactivate-mark)(goto-line-lisp 2)(dired-next-line 1))
+  (defun dired-top-mark ()
+    "Extend region to top."
+    (interactive)
+    (region-bol-top 3))
+  (defun dired-unmark-down (&optional n)
+    "Unmark N items and move to next line."
+    (interactive "p")
+    (dired-unmark n)(dired-up 1)(dired-down 1))
+  (defun dired-unmark-up (&optional n)
+    "Unmark N items and move to previous line."
+    (interactive "p")
+    (dotimes (i n)(dired-unmark 1)(dired-up 2)))
+  (defun dired-up (&optional n)
+    "Move up N lines."
+    (interactive "p")
+    (deactivate-mark)(forward-line (- n))(if (< (line-number-at-pos) 3)(dired-top)(dired-move-to-filename)))
+  (defun dired-up-3 ()
+    "Move up 3 lines."
+    (interactive)
+    (dired-up 3))
+  (defun dired-up-mark (&optional n)
+    "Extend region up N lines."
+    (interactive "p")
+    (region-bol-up n)(if (< (line-number-at-pos) 3)(dired-top-mark)))
+  (defun dired-up-page (&optional n)
+    "Move up N pages."
+    (interactive "p")(dired-up (pages n)))
+  (defun dired-up-view ()
+    "Move up one line and view in other window."
+    (interactive)
+    (dired-up 1)(dired-view-other))
+  (defun dired-view-other ()
+    "View file or directory in other window."
+    (interactive)
+    (if (one-window-p)(split-window-right))(dired-display-file)))
 (add-hook 'dired-mode-hook 'arni-dired-hook)
 ;;--------------
 ;; 7.13 DocView
@@ -3797,20 +5368,28 @@ This is first.\n
   (local-set-key [?2]      'doc-view-400-dpi                     )
   (local-set-key [?=]      'doc-view-enlarge                     )
   (local-set-key [?g]      'doc-view-goto-page                   )
-  (defun doc-view-100-dpi () "View document at 100 dpi." (interactive)
-         (setq doc-view-resolution 100)(doc-view-enlarge 1))
-  (defun doc-view-200-dpi () "View document at 200 dpi." (interactive)
-         (setq doc-view-resolution 200)(doc-view-enlarge 1))
-  (defun doc-view-400-dpi () "View document at 400 dpi." (interactive)
-         (setq doc-view-resolution 400)(doc-view-enlarge 1)))
+  (defun doc-view-100-dpi ()
+    "View document at 100 dpi."
+    (interactive)
+    (setq doc-view-resolution 100)(doc-view-enlarge 1))
+  (defun doc-view-200-dpi ()
+    "View document at 200 dpi."
+    (interactive)
+    (setq doc-view-resolution 200)(doc-view-enlarge 1))
+  (defun doc-view-400-dpi ()
+    "View document at 400 dpi."
+    (interactive)
+    (setq doc-view-resolution 400)(doc-view-enlarge 1)))
 (add-hook 'doc-view-mode-hook 'arni-doc-view-hook)
 ;;-------------
 ;; 7.14 Finder
 ;;-------------
 (defun arni-finder-hook ()
   (local-set-key [?v] 'finder-view)
-  (defun finder-view () "View keywords within a finder category." (interactive)
-         (finder-select)(finder-list-keywords)(balance-windows)))
+  (defun finder-view ()
+    "View keywords within a finder category."
+    (interactive)
+    (finder-select)(finder-list-keywords)(balance-windows)))
 (add-hook 'finder-mode-hook 'arni-finder-hook)
 ;;-----------
 ;; 7.15 Grep
@@ -3836,8 +5415,12 @@ This is first.\n
   (local-set-key [?n]        'next-line               )
   (local-set-key [?p]        'previous-line           )
   (local-set-key [?q]        'kill-buffer-maybe-window)
-  (defun help-jump-down (&optional n) "Move N nodes forward." (interactive "p")(deactivate-mark)(forward-button n))
-  (defun help-jump-up (&optional n) "Move N nodes backward." (interactive "p")(deactivate-mark)(backward-button n)))
+  (defun help-jump-down (&optional n)
+    "Move N nodes forward."
+    (interactive "p")(deactivate-mark)(forward-button n))
+  (defun help-jump-up (&optional n)
+    "Move N nodes backward."
+    (interactive "p")(deactivate-mark)(backward-button n)))
 (add-hook 'help-mode-hook 'arni-help-hook)
 ;;-----------
 ;; 7.17 Hexl
@@ -3859,8 +5442,10 @@ This is first.\n
   (define-key hs-minor-mode-map [mouse-1] 'hs-mouse-select)
   (define-key hs-minor-mode-map [?\C-m]   'hs-minor-mode  ) ; return
   (define-key hs-minor-mode-map [escape]  'hs-minor-mode  )
-  (defun hs-mouse-select () "Select position and turn off hs-minor-mode." (interactive)
-         (hs-minor-mode 0)(beginning-of-line)))
+  (defun hs-mouse-select ()
+    "Select position and turn off hs-minor-mode."
+    (interactive)
+    (hs-minor-mode 0)(beginning-of-line)))
 (add-hook 'hs-minor-mode-hook 'arni-hs-hook)
 ;;----------------
 ;; 7.19 Highlight
@@ -3947,19 +5532,45 @@ This is first.\n
   (local-set-key [?p]          'Info-jump-up        )
   (local-set-key [?q]          'kill-this-buffer    )
   (local-set-key [?þ]          'Info-menu           )
-  (defun Info-enter () "Enter node." (interactive)(Info-follow-nearest-node)(forward-line 2))
-  (defun Info-down-page (&optional n) "Move down N pages." (interactive "p")(deactivate-mark)(forward-line (pages n)))
-  (defun Info-jump-down () "Jump one node down on page." (interactive)(deactivate-mark)(Info-next-reference))
-  (defun Info-jump-up () "Jump one node up on page." (interactive)(deactivate-mark)(Info-prev-reference))
-  (defun Info-middle () "Move to middle." (interactive)(Info-top)(forward-line (middle-from-here)))
-  (defun Info-top () "Move to top." (interactive)(deactivate-mark)(goto-line-lisp 3))
-  (defun Info-top-mark () "Extend region to top." (interactive)(region-bol-top 1)(forward-line 2))
-  (defun Info-up-bounded (&optional n) "Move N lines up." (interactive "p")(forward-line -1)
-         (if (< (line-number-at-pos) 3)(Info-top)))
-  (defun Info-up-mark (&optional n) "Extend region up N lines." (interactive "p")
-         (region-bol-up n)(if (< (line-number-at-pos) 3)(Info-top-mark)))
-  (defun Info-up-page (&optional n) "Move up N pages." (interactive "p")
-         (deactivate-mark)(forward-line (- (pages n)))(if (< (line-number-at-pos) 3)(Info-top))))
+  (defun Info-enter ()
+    "Enter node."
+    (interactive)
+    (Info-follow-nearest-node)(forward-line 2))
+  (defun Info-down-page (&optional n)
+    "Move down N pages."
+    (interactive "p")(deactivate-mark)(forward-line (pages n)))
+  (defun Info-jump-down ()
+    "Jump one node down on page."
+    (interactive)
+    (deactivate-mark)(Info-next-reference))
+  (defun Info-jump-up ()
+    "Jump one node up on page."
+    (interactive)
+    (deactivate-mark)(Info-prev-reference))
+  (defun Info-middle ()
+    "Move to middle."
+    (interactive)
+    (Info-top)(forward-line (middle-from-here)))
+  (defun Info-top ()
+    "Move to top."
+    (interactive)
+    (deactivate-mark)(goto-line-lisp 3))
+  (defun Info-top-mark ()
+    "Extend region to top."
+    (interactive)
+    (region-bol-top 1)(forward-line 2))
+  (defun Info-up-bounded (&optional n)
+    "Move N lines up."
+    (interactive "p")(forward-line -1)
+    (if (< (line-number-at-pos) 3)(Info-top)))
+  (defun Info-up-mark (&optional n)
+    "Extend region up N lines."
+    (interactive "p")
+    (region-bol-up n)(if (< (line-number-at-pos) 3)(Info-top-mark)))
+  (defun Info-up-page (&optional n)
+    "Move up N pages."
+    (interactive "p")
+    (deactivate-mark)(forward-line (- (pages n)))(if (< (line-number-at-pos) 3)(Info-top))))
 (add-hook 'Info-mode-hook 'arni-Info-hook)
 ;;----------
 ;; 7.22 Man
@@ -4006,47 +5617,70 @@ This is first.\n
   (local-set-key [?\C-c ?\C-c]       'markdown-compile    )
   (local-set-key [?\C-c ?\C-v]       'markdown-view       )
   (local-set-key [?\C-c ?\C-z]       'markdown-peek       )
-  (defun markdown-compile () "Convert Markdown or R Markdown document to HTML." (interactive)
-         (if (string-equal (downcase (file-name-extension (buffer-name))) "rmd")
-             (markdown-compile-rmd)(markdown-compile-md))
-         (maximize-window-top))
-  (defun markdown-compile-md () "Convert Markdown document to HTML." (interactive)
-         (save-buffer)(if (one-window-p)(split-window-right))
-         (compile (concat "pandoc " (buffer-name) " > " (file-name-sans-extension (buffer-name)) ".html")))
-  (defun markdown-compile-rmd () "Convert R Markdown document to HTML." (interactive)
-         (save-buffer)(if (one-window-p)(split-window-right))(compile (concat "render " (buffer-name))))
-  (defun markdown-delete-html () "Delete HTML file corresponding to Markdown file." (interactive)
-         (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
-           (delete-file html-file)(message "Deleted %s" html-file)))
-  (defun markdown-peek () "Open HTML file in secondary window." (interactive)
-         (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html"))(md-window (selected-window)))
-           (if (not (file-regular-p html-file))(error "%s not found" html-file)
-             (if (one-window-p)(split-window-right))(find-file-noselect html-file)
-             (set-window-buffer (next-window) html-file)(select-window md-window))))
-  (defun markdown-template () "Insert Markdown template." (interactive "*")
-         (goto-char (point-min))(insert "\
+  (defun markdown-compile ()
+    "Convert Markdown or R Markdown document to HTML."
+    (interactive)
+    (if (string-equal (downcase (file-name-extension (buffer-name))) "rmd")
+        (markdown-compile-rmd)(markdown-compile-md))
+    (maximize-window-top))
+  (defun markdown-compile-md ()
+    "Convert Markdown document to HTML."
+    (interactive)
+    (save-buffer)(if (one-window-p)(split-window-right))
+    (compile (concat "pandoc " (buffer-name) " > " (file-name-sans-extension (buffer-name)) ".html")))
+  (defun markdown-compile-rmd ()
+    "Convert R Markdown document to HTML."
+    (interactive)
+    (save-buffer)(if (one-window-p)(split-window-right))(compile (concat "render " (buffer-name))))
+  (defun markdown-delete-html ()
+    "Delete HTML file corresponding to Markdown file."
+    (interactive)
+    (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
+      (delete-file html-file)(message "Deleted %s" html-file)))
+  (defun markdown-peek ()
+    "Open HTML file in secondary window."
+    (interactive)
+    (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html"))(md-window (selected-window)))
+      (if (not (file-regular-p html-file))(error "%s not found" html-file)
+        (if (one-window-p)(split-window-right))(find-file-noselect html-file)
+        (set-window-buffer (next-window) html-file)(select-window md-window))))
+  (defun markdown-template ()
+    "Insert Markdown template."
+    (interactive "*")
+    (goto-char (point-min))(insert "\
 Section
-=======\n
+=======
+
 Subsection
-----------\n
-### Subsubsection\n
-*italic*, **bold**, `monospace`\n
-A [link](http://example.com)\n
+----------
+
+### Subsubsection
+
+*italic*, **bold**, `monospace`
+
+A [link](http://example.com)
+
 - bullet
-* also bullet\n
-1. item\n
+* also bullet
+
+1. item
+
 line\\
 break
 "))
-  (defun markdown-tidy () "Validate HTML document with Tidy." (interactive)
-         (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
-           (if (one-window-p)(split-window))(get-buffer-create "*Shell Command Output*")
-           (with-current-buffer "*Shell Command Output*" (delete-region (point-min)(point-max))
-                                (shell-command (concat "tidy -e -utf8 " html-file))
-                                (delete-trailing-spc-tab-m)(message nil))
-           (set-window-buffer (next-window) "*Shell Command Output*")))
-  (defun markdown-view () "View HTML file with same prefix as current Markdown document." (interactive)
-         (browse-url (concat (file-name-sans-extension (buffer-file-name)) ".html"))))
+  (defun markdown-tidy ()
+    "Validate HTML document with Tidy."
+    (interactive)
+    (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
+      (if (one-window-p)(split-window))(get-buffer-create "*Shell Command Output*")
+      (with-current-buffer "*Shell Command Output*" (delete-region (point-min)(point-max))
+                           (shell-command (concat "tidy -e -utf8 " html-file))
+                           (delete-trailing-spc-tab-m)(message nil))
+      (set-window-buffer (next-window) "*Shell Command Output*")))
+  (defun markdown-view ()
+    "View HTML file with same prefix as current Markdown document."
+    (interactive)
+    (browse-url (concat (file-name-sans-extension (buffer-file-name)) ".html"))))
 (add-hook 'markdown-mode-hook 'arni-markdown-hook)
 ;;------------
 ;; 7.24 Occur
@@ -4084,22 +5718,54 @@ break
   (local-set-key [?p]       'occur-up                     )
   (local-set-key [?q]       'kill-buffer-maybe-window     )
   (local-set-key [?v]       'occur-mode-display-occurrence)
-  (defun occur-bottom () "Move to bottom." (interactive)(deactivate-mark)(goto-char (point-max))(occur-prev))
-  (defun occur-down (&optional n) "Move down N occurrences." (interactive "p")(deactivate-mark)(occur-next n))
-  (defun occur-down-3 () "Move down 3 occurrences." (interactive)(occur-down 3))
-  (defun occur-down-page (&optional n) "Move down N pages." (interactive "p")(occur-down (pages n)))
-  (defun occur-down-view () "Move down one occurrence and view in other window." (interactive)
-         (occur-down 1)(occur-mode-display-occurrence))
-  (defun occur-middle () "Move to middle." (interactive)(jump-middle)(occur-down 1))
-  (defun occur-top () "Move to top." (interactive)(deactivate-mark)(goto-char (point-min))(occur-next))
-  (defun occur-top-mark () "Extend region to top." (interactive)(region-bol-top 2))
-  (defun occur-up (&optional n) "Move up N occurrences." (interactive "p")(deactivate-mark)(occur-prev n))
-  (defun occur-up-3 () "Move up 3 occurrences." (interactive)(occur-prev 3))
-  (defun occur-up-mark (&optional n) "Extend region up N lines." (interactive "p")
-         (region-bol-up n)(if (< (line-number-at-pos) 2)(occur-top-mark)))
-  (defun occur-up-page (&optional n) "Move up N pages." (interactive "p")(occur-up (pages n)))
-  (defun occur-up-view () "Move up one occurrence and view in other window." (interactive)
-         (occur-up 1)(occur-mode-display-occurrence)))
+  (defun occur-bottom ()
+    "Move to bottom."
+    (interactive)
+    (deactivate-mark)(goto-char (point-max))(occur-prev))
+  (defun occur-down (&optional n)
+    "Move down N occurrences."
+    (interactive "p")(deactivate-mark)(occur-next n))
+  (defun occur-down-3 ()
+    "Move down 3 occurrences."
+    (interactive)
+    (occur-down 3))
+  (defun occur-down-page (&optional n)
+    "Move down N pages."
+    (interactive "p")(occur-down (pages n)))
+  (defun occur-down-view ()
+    "Move down one occurrence and view in other window."
+    (interactive)
+    (occur-down 1)(occur-mode-display-occurrence))
+  (defun occur-middle ()
+    "Move to middle."
+    (interactive)
+    (jump-middle)(occur-down 1))
+  (defun occur-top ()
+    "Move to top."
+    (interactive)
+    (deactivate-mark)(goto-char (point-min))(occur-next))
+  (defun occur-top-mark ()
+    "Extend region to top."
+    (interactive)
+    (region-bol-top 2))
+  (defun occur-up (&optional n)
+    "Move up N occurrences."
+    (interactive "p")(deactivate-mark)(occur-prev n))
+  (defun occur-up-3 ()
+    "Move up 3 occurrences."
+    (interactive)
+    (occur-prev 3))
+  (defun occur-up-mark (&optional n)
+    "Extend region up N lines."
+    (interactive "p")
+    (region-bol-up n)(if (< (line-number-at-pos) 2)(occur-top-mark)))
+  (defun occur-up-page (&optional n)
+    "Move up N pages."
+    (interactive "p")(occur-up (pages n)))
+  (defun occur-up-view ()
+    "Move up one occurrence and view in other window."
+    (interactive)
+    (occur-up 1)(occur-mode-display-occurrence)))
 (defun arni-occur-switch-hook ()(other-window 1)(occur-down 1))
 (add-hook 'occur-mode-hook 'arni-occur-hook)
 (add-hook 'occur-hook 'arni-occur-switch-hook)
@@ -4125,7 +5791,8 @@ break
   (set-face-attribute 'org-level-3            nil :foreground "turquoise4"  )
   (set-face-attribute 'org-level-4            nil :foreground "forestgreen" )
   (defun org-arni-keybindings () ; need function to set keybindings after calling `org-html-export-to-html'
-    "Set keybindings for `org-mode'." (interactive)
+    "Set keybindings for `org-mode'."
+    (interactive)
     (local-unset-key [mouse-1]  ) ; forget outline-mode
     (local-unset-key [escape]   ) ; forget outline-mode
     (local-unset-key [tab]      ) ; forget outline-mode
@@ -4214,42 +5881,86 @@ break
     (local-set-key [?\C-c ?\C-w]       'org-word-convert      ) ; org-refile
     (local-set-key [?\C-c ?\C-z]       'org-narrow-to-subtree)) ; org-add-note
   (org-arni-keybindings)
-  (defun org-ascii-write () "Export buffer to text file." (interactive)
-         (org-ascii-export-to-ascii)(arni-org-hook))
-  (defun org-collapse-tree () "Collapse tree and return to beginning of file." (interactive)
-         (outline-hide-sublevels 1)(goto-char (point-min)))
-  (defun org-colon-paragraph () "Put colon in front of paragraph and move down." (interactive)
-         (region-forward-paragraph 1)(comment-line-or-region)(forward-line))
-  (defun org-html-delete () "Delete HTML file corresponding to Org file." (interactive)
-         (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
-           (delete-file html-file)(message "Deleted %s" html-file)))
-  (defun org-html-view () "View HTML file with same prefix as current Org file." (interactive)
-         (browse-url (concat (file-name-sans-extension (buffer-file-name)) ".html")))
-  (defun org-html-write () "Export buffer to HTML and run personal hook." (interactive)
-         (save-buffer)(org-html-export-to-html)(org-arni-keybindings))
-  (defun org-insert-h1 () "Insert heading of level 1." (interactive "*")(beginning-of-line)(insert "* "))
-  (defun org-insert-h2 () "Insert heading of level 2." (interactive "*")(beginning-of-line)(insert "** "))
-  (defun org-insert-h3 () "Insert heading of level 3." (interactive "*")(beginning-of-line)(insert "*** "))
-  (defun org-insert-h3-down () "Insert heading of level 3 and move down." (interactive "*")
-         (org-insert-h3)(forward-line 2))
-  (defun org-insert-R-block () "Insert R block." (interactive "*")
-         (insert "#+begin_src R\n\n#+end_src R\n")(forward-line -2))
-  (defun org-insert-title () "Insert title." (interactive "*")(insert "#+TITLE: "))
-  (defun org-justify-down () "Justify paragraph and move down." (interactive "*")
-         (fill-paragraph-forward 1)(forward-line))
-  (defun org-mouse-cycle (event) "Position cursor and cycle visibility." (interactive "e")
-         (mouse-set-point event)(org-cycle))
-  (defun org-mouse-show (event) "Position cursor and show all." (interactive "e")
-         (mouse-set-point event)(outline-show-all))
-  (defun org-return-down () "Insert empty line and move down." (interactive "*")
-         (beginning-of-line)(insert "\n")(forward-line))
-  (defun org-template () "Insert minimal Org template." (interactive "*")
-         (goto-char (point-min))(insert "#+TITLE: \n\n* ")(backward-char 4))
-  (defun org-toc-2 () "Show outline level 2." (interactive)(org-global-cycle 2))
-  (defun org-toc-3 () "Show outline level 3." (interactive)(org-global-cycle 3))
-  (defun org-toc-4 () "Show outline level 4." (interactive)(org-global-cycle 4))
+  (defun org-ascii-write ()
+    "Export buffer to text file."
+    (interactive)
+    (org-ascii-export-to-ascii)(arni-org-hook))
+  (defun org-collapse-tree ()
+    "Collapse tree and return to beginning of file."
+    (interactive)
+    (outline-hide-sublevels 1)(goto-char (point-min)))
+  (defun org-colon-paragraph ()
+    "Put colon in front of paragraph and move down."
+    (interactive)
+    (region-forward-paragraph 1)(comment-line-or-region)(forward-line))
+  (defun org-html-delete ()
+    "Delete HTML file corresponding to Org file."
+    (interactive)
+    (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
+      (delete-file html-file)(message "Deleted %s" html-file)))
+  (defun org-html-view ()
+    "View HTML file with same prefix as current Org file."
+    (interactive)
+    (browse-url (concat (file-name-sans-extension (buffer-file-name)) ".html")))
+  (defun org-html-write ()
+    "Export buffer to HTML and run personal hook."
+    (interactive)
+    (save-buffer)(org-html-export-to-html)(org-arni-keybindings))
+  (defun org-insert-h1 ()
+    "Insert heading of level 1."
+    (interactive "*")(beginning-of-line)(insert "* "))
+  (defun org-insert-h2 ()
+    "Insert heading of level 2."
+    (interactive "*")(beginning-of-line)(insert "** "))
+  (defun org-insert-h3 ()
+    "Insert heading of level 3."
+    (interactive "*")(beginning-of-line)(insert "*** "))
+  (defun org-insert-h3-down ()
+    "Insert heading of level 3 and move down."
+    (interactive "*")
+    (org-insert-h3)(forward-line 2))
+  (defun org-insert-R-block ()
+    "Insert R block."
+    (interactive "*")
+    (insert "#+begin_src R\n\n#+end_src R\n")(forward-line -2))
+  (defun org-insert-title ()
+    "Insert title."
+    (interactive "*")(insert "#+TITLE: "))
+  (defun org-justify-down ()
+    "Justify paragraph and move down."
+    (interactive "*")
+    (fill-paragraph-forward 1)(forward-line))
+  (defun org-mouse-cycle (event)
+    "Position cursor and cycle visibility."
+    (interactive "e")
+    (mouse-set-point event)(org-cycle))
+  (defun org-mouse-show (event)
+    "Position cursor and show all."
+    (interactive "e")
+    (mouse-set-point event)(outline-show-all))
+  (defun org-return-down ()
+    "Insert empty line and move down."
+    (interactive "*")
+    (beginning-of-line)(insert "\n")(forward-line))
+  (defun org-template ()
+    "Insert minimal Org template."
+    (interactive "*")
+    (goto-char (point-min))(insert "#+TITLE: \n\n* ")(backward-char 4))
+  (defun org-toc-2 ()
+    "Show outline level 2."
+    (interactive)
+    (org-global-cycle 2))
+  (defun org-toc-3 ()
+    "Show outline level 3."
+    (interactive)
+    (org-global-cycle 3))
+  (defun org-toc-4 ()
+    "Show outline level 4."
+    (interactive)
+    (org-global-cycle 4))
   (defun org-word-convert ()
-    "Convert Word headings to Org format." (interactive "*")
+    "Convert Word headings to Org format."
+    (interactive "*")
     (set-buffer-file-coding-system 'utf-8-unix t)
     (goto-char (point-min))(insert "#+TITLE: ")(forward-line)(delete-region (point)(line-end-position))
     (delete-region (point)(re-search-forward "^1\t" nil t))(insert "1\t") ; delete TOC
@@ -4258,13 +5969,16 @@ break
     (goto-char (point-min))(while (search-forward "\n\n\n" nil t)(replace-match "\n\n"))
     (goto-char (point-max))(delete-blank-lines)(goto-char (point-min))
     (message "Converted Word headings to Org format.\n1. [down] and [M-down].\n2. [M-home], [M-end], [M-up]."))
-  (defun org-word-help () "Show keybindings to convert Word document to Org format." (interactive)
-         (message "1. [down] and [M-down].\n2. [M-home], [M-end], [M-up].")))
+  (defun org-word-help ()
+    "Show keybindings to convert Word document to Org format."
+    (interactive)
+    (message "1. [down] and [M-down].\n2. [M-home], [M-end], [M-up].")))
 (add-hook 'org-mode-hook 'arni-org-hook)
 ;;--------------
 ;; 7.26 Outline
 ;;--------------
-(if (<= emacs-major-version 24)(defun outline-show-all ()(interactive)(outline-flag-region (point-min)(point-max) nil)))
+(if (<= emacs-major-version 24)(defun outline-show-all ()(interactive)
+                                      (outline-flag-region (point-min)(point-max) nil)))
 (defvar outline-previous-mode '(text-mode) "Mode to return to. See `outline-return'.")
 (defvar outline-top-level 1 "Top outline level, to anchor the `outline-hide' cursor to the shortest `outline-regexp'.")
 (defun arni-outline-hook ()
@@ -4308,15 +6022,27 @@ break
   (local-set-key [?n]              'outline-next-heading       )
   (local-set-key [?p]              'outline-previous-heading   )
   (local-set-key [?q]              'outline-return             )
-  (defun outline-hide () "Hide subheadings and return to upper heading." (interactive)
-         (deactivate-mark)(outline-back-to-heading)(if (> (outline-level) outline-top-level)(outline-up-heading 1))
-         (outline-hide-subtree))
-  (defun outline-mouse-select () "Select position and return to `outline-previous-mode'." (interactive)
-         (outline-return)(beginning-of-line))
-  (defun outline-return () "Return to `outline-previous-mode'." (interactive)(eval outline-previous-mode))
-  (defun outline-show () "Show subheadings." (interactive)(deactivate-mark)(outline-show-branches))
-  (defun outline-window-or-return () "Delete other windows or return to `outline-previous-mode'." (interactive)
-         (if (> (length (window-list)) 1)(delete-other-windows)(outline-return))))
+  (defun outline-hide ()
+    "Hide subheadings and return to upper heading."
+    (interactive)
+    (deactivate-mark)(outline-back-to-heading)(if (> (outline-level) outline-top-level)(outline-up-heading 1))
+    (outline-hide-subtree))
+  (defun outline-mouse-select ()
+    "Select position and return to `outline-previous-mode'."
+    (interactive)
+    (outline-return)(beginning-of-line))
+  (defun outline-return ()
+    "Return to `outline-previous-mode'."
+    (interactive)
+    (eval outline-previous-mode))
+  (defun outline-show ()
+    "Show subheadings."
+    (interactive)
+    (deactivate-mark)(outline-show-branches))
+  (defun outline-window-or-return ()
+    "Delete other windows or return to `outline-previous-mode'."
+    (interactive)
+    (if (> (length (window-list)) 1)(delete-other-windows)(outline-return))))
 (add-hook 'outline-mode-hook 'arni-outline-hook)
 ;;---------------
 ;; 7.27 Packages
@@ -4341,10 +6067,14 @@ break
   (local-set-key [?n]     'forward-button               )
   (local-set-key [?p]     'backward-button              )
   (local-set-key [?v]     'package-menu-describe-package)
-  (defun package-menu-down-view () "Move down one package and view description in other window." (interactive)
-         (forward-button 1)(package-menu-describe-package))
-  (defun package-menu-up-view () "Move up one package and view description in other window." (interactive)
-         (backward-button 1)(package-menu-describe-package)))
+  (defun package-menu-down-view ()
+    "Move down one package and view description in other window."
+    (interactive)
+    (forward-button 1)(package-menu-describe-package))
+  (defun package-menu-up-view ()
+    "Move up one package and view description in other window."
+    (interactive)
+    (backward-button 1)(package-menu-describe-package)))
 (add-hook 'package-menu-mode-hook 'arni-package-menu-hook)
 ;;-------------
 ;; 7.28 Proced
@@ -4391,23 +6121,51 @@ break
   (local-set-key [?m]        'recentf-middle         )
   (local-set-key [?n]        'recentf-down           )
   (local-set-key [?p]        'recentf-up             )
-  (defun recentf-bottom () "Move to bottom." (interactive)(deactivate-mark)(goto-char (point-max))(recentf-up 1))
-  (defun recentf-down (&optional n) "Move down N lines." (interactive "p")
-         (deactivate-mark)(beginning-of-line (+ n 1))
-         (let ((last (- (count-lines (point-min)(point-max)) 2)))
-           (if (> (line-number-at-pos) last)(goto-line-lisp last)))(widget-forward 1))
-  (defun recentf-down-3 () "Move down 3 lines." (interactive)(recentf-down 3))
-  (defun recentf-down-page (&optional n) "Move down N pages." (interactive "p")(recentf-down (pages n)))
-  (defun recentf-edit-expunge () "Expunge marked files from history." (interactive)(recentf-edit-list-validate))
-  (defun recentf-middle () "Move to middle." (interactive)(jump-middle)(widget-forward 1))
-  (defun recentf-top () "Move to bottom." (interactive)(deactivate-mark)(goto-line-lisp 3)(recentf-down 1))
-  (defun recentf-up (&optional n) "Move up N lines." (interactive "p")
-         (deactivate-mark)(end-of-line (- 2 n))
-         (if (< (line-number-at-pos) 5)(progn (goto-line-lisp 5)(end-of-line)))(widget-backward 1))
-  (defun recentf-up-3 () "Move up 3 lines." (interactive)(recentf-up 3))
-  (defun recentf-up-page (&optional n) "Move up N pages." (interactive "p")(recentf-up (pages n)))
-  (defun widget-button-press-eol () "Open file in current line." (interactive)
-         (widget-button-press (line-end-position))))
+  (defun recentf-bottom ()
+    "Move to bottom."
+    (interactive)
+    (deactivate-mark)(goto-char (point-max))(recentf-up 1))
+  (defun recentf-down (&optional n)
+    "Move down N lines."
+    (interactive "p")
+    (deactivate-mark)(beginning-of-line (+ n 1))
+    (let ((last (- (count-lines (point-min)(point-max)) 2)))
+      (if (> (line-number-at-pos) last)(goto-line-lisp last)))(widget-forward 1))
+  (defun recentf-down-3 ()
+    "Move down 3 lines."
+    (interactive)
+    (recentf-down 3))
+  (defun recentf-down-page (&optional n)
+    "Move down N pages."
+    (interactive "p")(recentf-down (pages n)))
+  (defun recentf-edit-expunge ()
+    "Expunge marked files from history."
+    (interactive)
+    (recentf-edit-list-validate))
+  (defun recentf-middle ()
+    "Move to middle."
+    (interactive)
+    (jump-middle)(widget-forward 1))
+  (defun recentf-top ()
+    "Move to bottom."
+    (interactive)
+    (deactivate-mark)(goto-line-lisp 3)(recentf-down 1))
+  (defun recentf-up (&optional n)
+    "Move up N lines."
+    (interactive "p")
+    (deactivate-mark)(end-of-line (- 2 n))
+    (if (< (line-number-at-pos) 5)(progn (goto-line-lisp 5)(end-of-line)))(widget-backward 1))
+  (defun recentf-up-3 ()
+    "Move up 3 lines."
+    (interactive)
+    (recentf-up 3))
+  (defun recentf-up-page (&optional n)
+    "Move up N pages."
+    (interactive "p")(recentf-up (pages n)))
+  (defun widget-button-press-eol ()
+    "Open file in current line."
+    (interactive)
+    (widget-button-press (line-end-position))))
 (add-hook 'recentf-dialog-mode-hook 'arni-recentf-dialog-hook)
 ;;-------------
 ;; 7.30 Regexp
@@ -4420,8 +6178,10 @@ break
   (local-set-key [?\C-r]       'reb-prev-match     )
   (local-set-key [?\C-s]       'reb-next-match     )
   (set-face-attribute 'reb-match-0 nil :background "gold")
-  (defun reb-quit-gracefully () "Quit re-builder and restore case-fold-search." (interactive)
-         (reb-quit)(reb-toggle-case)(kill-buffer "*RE-Builder*")))
+  (defun reb-quit-gracefully ()
+    "Quit re-builder and restore case-fold-search."
+    (interactive)
+    (reb-quit)(reb-toggle-case)(kill-buffer "*RE-Builder*")))
 (add-hook 'reb-mode-hook 'arni-reb-hook)
 ;;-----------
 ;; 7.31 reST
@@ -4444,9 +6204,14 @@ break
   (define-key isearch-mode-map [?\M-s] 'isearch-edit-string          )
   (define-key isearch-mode-map [?\M-t] 'isearch-toggle-case-fold     )
   (define-key isearch-mode-map [?\M-w] 'isearch-toggle-word          )
-  (defun isearch-copy-line () "Copy line and exit isearch." (interactive)(isearch-exit)(copy-line-or-region))
-  (defun isearch-page-up () "Page up from isearch." (interactive)
-         (scroll-down)(isearch-dehighlight)(lazy-highlight-cleanup)))
+  (defun isearch-copy-line ()
+    "Copy line and exit isearch."
+    (interactive)
+    (isearch-exit)(copy-line-or-region))
+  (defun isearch-page-up ()
+    "Page up from isearch."
+    (interactive)
+    (scroll-down)(isearch-dehighlight)(lazy-highlight-cleanup)))
 (add-hook 'isearch-mode-hook 'arni-isearch-hook)
 ;;---------------
 ;; 7.33 Speedbar
@@ -4500,8 +6265,10 @@ break
   (local-unset-key [?\M-s]) ; reactivate highlight-and-count-regexp
   (local-set-key [?\t] 'indent-relative)
   (local-set-key [f11] 'text-outline   )
-  (defun text-outline () "Navigate within NEWS file using `outline-mode'." (interactive)
-         (outline-mode)(setq outline-regexp " *[-*o]+ ")(outline-mode)(setq outline-previous-mode '(text-mode))))
+  (defun text-outline ()
+    "Navigate within NEWS file using `outline-mode'."
+    (interactive)
+    (outline-mode)(setq outline-regexp " *[-*o]+ ")(outline-mode)(setq outline-previous-mode '(text-mode))))
 (add-hook 'text-mode-hook 'arni-text-hook)
 (defun arni-mail-hook ()(setq fill-column 70))
 (add-hook 'mail-mode-hook 'arni-mail-hook)
@@ -4512,7 +6279,10 @@ break
 ;;---------
 ;; 7.36 VC
 ;;---------
-(defun vc-diff-select () "Diff two selected file versions." (interactive)(vc-diff t))
+(defun vc-diff-select ()
+  "Diff two selected file versions."
+  (interactive)
+  (vc-diff t))
 (defun arni-log-edit-hook ()(setq require-final-newline nil)(setq fill-column 72)(mark-buffer))
 (add-hook 'log-edit-mode-hook 'arni-log-edit-hook)
 (defun arni-log-view-hook ()
