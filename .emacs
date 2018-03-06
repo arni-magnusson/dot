@@ -210,8 +210,8 @@
         ("\\.php$"    . php-mode         )
         ("\\.sql$"    . sql-mode         )
         ("\\.py$"     . python-mode      )
-        ("\\.q$"      . R-mode           )("\\.R$" . R-mode)("\\.s$" . R-mode)("\\.splus$" . R-mode)("\\.ssc$" . R-mode)
-        ("/NAMESPACE" . R-mode           )
+        ("\\.q$"      . R-mode           )("\\.R$" . R-mode)("\\.Rhistory$" . R-mode)("\\.s$" . R-mode)
+        ("\\.splus$"  . R-mode           )("\\.ssc$" . R-mode)("/NAMESPACE" . R-mode)
         ("\\.rb$"     . ruby-mode        )
         ("\\.sh$"     . sh-mode          )
         ("\\.bas$"    . visual-basic-mode)("\\.vbs$" . visual-basic-mode)))
@@ -278,7 +278,7 @@
         ("\\.ac$"          . autoconf-mode    )
 	("/ChangeLog"      . change-log-mode  )
         ("\\.cmake$"       . cmake-mode       )
-        ("\\.patch$"       . diff-mode        )
+        ("\\.diff$"        . diff-mode        )("\\.patch$" . diff-mode)
         ("\\.ebrowse$"     . ebrowse-tree-mode)("/BROWSE" . ebrowse-tree-mode)
         ("\\.iss$"         . iss-mode         )
         ("/COMMIT_EDITMSG" . log-edit-mode    )("/svn-commit\\." . log-edit-mode)
@@ -530,7 +530,7 @@
 (global-set-key [?\C-h ?V]     'apropos-variable                  )
 (global-set-key [?\C-h ?c]     'list-colors-fullscreen            ) ; describe-key-briefly
 (global-set-key [?\C-h ?l]     'apropos-library                   ) ; view-lossage
-(global-set-key [?\C-x ?4]     'enlarge-window-max                )
+(global-set-key [?\C-x ?4]     'maximize-window-top               ) ; [map]
 (global-set-key [?\C-x ?$]     'insert-euro                       ) ; set-selective-display
 (global-set-key [?\C-x ?-]     'insert-en-dash                    ) ; shrink-window-if-larger-than-buffer
 (global-set-key [?\C-x ?=]     'duplicate                         ) ; what-cursor-position
@@ -570,7 +570,7 @@
 (global-set-key [?\C-x ?\C-b]  'ibuffer                           ) ; list-buffers
 (global-set-key [?\C-x ?\C-e]  'region-to-eol                     ) ; eval-last-sexp
 (global-set-key [?\C-x ?\C-j]  'fill-region-or-buffer             )
-(global-set-key [?\C-x ?\C-k]  'kill-this-buffer                  ) ; prefix
+(global-set-key [?\C-x ?\C-k]  'kill-this-buffer                  ) ; [map]
 (global-set-key [?\C-x ?\C-l]  'downcase-word-or-region           ) ; downcase-region
 (global-set-key [?\C-x ?\C-m]  'describe-current-coding-brief     ) ; [map]
 (global-set-key [?\C-x ?\C-n]  'forward-list                      ) ; set-goal-column
@@ -702,7 +702,7 @@
 ;;
 ;;======================================================================================================================
 ;; File - Edit - View - Insert - Format - Tools - Window - Help
-;; new    copy   narrow lorem    indent   comment enlarge  ascii
+;; new    copy   narrow lorem    indent   comment max      ascii
 ;; close  region        utf8     fill     count   split    colors
 ;; print  goto          seq      tabs     sort
 ;;-----------
@@ -1249,8 +1249,8 @@ which doesn't compile."
        (and (= (length (window-list)) 2)(window-full-width-p)))
 (defun already-left-right-p () "Return t if selected frame is split in two windows on left and right."
        (and (= (length (window-list)) 2)(window-full-height-p)))
-(defun enlarge-window-max () "Enlarge window vertically as much as possible." (interactive)
-       (split-window-top-bottom)(enlarge-window 1000))
+(defun maximize-window-top () "Make top window as large as possible, shrinking bottom window." (interactive)
+       (split-window-top-bottom)(maximize-window))
 (defun middle-from-here () "Return the line halfway between current position and end of buffer."
        (/ (count-lines (point)(point-max)) 2))
 (defun pages (&optional n) "Return the number of lines to scroll down N pages."
@@ -2412,7 +2412,7 @@ This is first.\n
          (texinfo-show-structure t))
   (defun texinfo-texi2dvi-pdf () "Compile Texinfo document to PDF." (interactive)
          (save-buffer)(if (one-window-p)(split-window-right))
-         (compile (concat "texi2dvi -c -p -t @finalout " (buffer-name)))(enlarge-window-max)))
+         (compile (concat "texi2dvi -c -p -t @finalout " (buffer-name)))(maximize-window-top)))
 (add-hook 'texinfo-mode-hook 'arni-texinfo-hook)
 ;;-----------
 ;; 6.14 Lisp
@@ -2421,6 +2421,7 @@ This is first.\n
   (setq make-backup-files t)(setq comment-column 0)(arni-colors)
   (set-face-attribute 'font-lock-variable-name-face nil :foreground "magenta2")
   (setq paragraph-start ";\\|[ \t]*$")
+  (local-set-key [f9]          'eval-line-and-step      )
   (local-set-key [f11]         'dot-emacs-outline       )
   (local-set-key [S-f11]       'hs-minor-mode           )
   (local-set-key [f12]         'lisp-template           )
@@ -2466,7 +2467,7 @@ This is first.\n
          (if (re-search-forward "^(Downloaded [Bb]y[:]? \\[.*)Tj$" nil t)(progn (goto-char (point-min))(pdf-clean-1)))
          (if (re-search-forward "^(Can. J. Fish. Aquat. Sci. Downloaded.*)Tj$" nil t)
              (progn (goto-char (point-min))(pdf-clean-2)))
-         (if (re-search-forward "^(Downloaded from )Tj$" nil t)(progn (goto-char (point-min))(pdf-clean-3)))
+         (if (re-search-forward "^(Downloaded from .*)Tj$" nil t)(progn (goto-char (point-min))(pdf-clean-3)))
          (if (re-search-forward "^(This content downloaded from .*)Tj$" nil t)
              (progn (goto-char (point-min))(pdf-clean-4))))
   (defun pdf-clean-1 () "Replace PDF stamps like (Downloaded by [Arni Magnusson] ...) with spaces." (interactive "*")
@@ -2482,12 +2483,15 @@ This is first.\n
       (goto-char (point-min))
       (while (re-search-forward "^(For personal use only. )Tj$" nil t)(move-to-column 1)(blank-to-paren)
              (setq count (+ count 1)))(move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
-  (defun pdf-clean-3 () "Replace 3-part PDF stamps ending with (Downloaded from ) with spaces." (interactive "*")
+  (defun pdf-clean-3 () "Replace 3-part PDF stamps like with (Downloaded from ) with spaces." (interactive "*")
          (let ((count 0))
            (fundamental-mode)
-           (while (re-search-forward "^(Downloaded from )Tj$" nil t)(re-search-backward "^(" nil t 3)
-                  (dotimes (i 3)(re-search-forward "^(")(if (= (char-before) #x28)(blank-to-paren)))
-                  (setq count (+ count 1)))(move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
+           (while (re-search-forward "^(Downloaded from .*)Tj$" nil t)
+             (if (string-match "^(Downloaded from )Tj$" (match-string 0))(re-search-backward "^(" nil t 3))
+             (if (string-match "^(Downloaded from https://academic.oup.com.*)Tj$" (match-string 0))
+                 (re-search-backward "^(" nil t 1))
+             (dotimes (i 3)(re-search-forward "^(")(if (= (char-before) #x28)(blank-to-paren)))
+             (setq count (+ count 1)))(move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
   (defun pdf-clean-4 () "Replace 4-part PDF stamps like (This content downloaded from ...) with spaces."
          (interactive "*")
          (let ((count 0)(case-fold-search nil))
@@ -2533,8 +2537,12 @@ This is first.\n
   (local-set-key [?\C-c C-backspace] 'ess-graphics-off                )
   (local-set-key [?\C-c ?\C- ]       'ess-switch-to-edit-buffer       )
   (local-set-key [?\C-c ?\C-d]       'ess-dump-object-into-edit-buffer)
+  (local-set-key [?\C-c ?\C-h]       'ess-history                     )
   (defun ess-display-help-on-object (object) "Open help page in browser." ; override original function with same name
          (process-send-string ess-current-process-name (concat "help(" object ",help_type='HTML')")))
+  (defun ess-history () "Open R history file in other window." (interactive)
+         (find-file-other-window ess-history-file)(font-lock-mode 0)(goto-char (point-max))(forward-line -1))
+  (defalias 'R-history 'ess-history)
   (defun ess-rdired-arni () "Run ess-rdired in large window." (interactive) ; ess-rdired runs no hook, so set keys here
          (ess-rdired)(delete-other-windows)(ess-rdired-next-line 1)
          (define-key ess-rdired-mode-map [down-mouse-1] 'ess-rdired-mouse-view)
@@ -2638,7 +2646,7 @@ This is first.\n
   (local-set-key [?\C-c down]  'ess-eval-buffer-from-here-to-end                 )
   (local-set-key [C-M-down]    'ess-eval-line-and-step                           )
   (local-set-key [?\C-c ?\C-a] 'ess-roxy-insert-code                             )
-  (local-set-key [?\C-c ?\C-d] 'ess-eval-buffer-and-go                           ) ; prefix
+  (local-set-key [?\C-c ?\C-d] 'ess-eval-buffer-and-go                           ) ; [map]
   (local-set-key [?\C-c ?\C-i] 'ess-roxy-insert-import                           ) ; ess-complete-object-name-deprecated
   (local-set-key [?\C-c ?\C-l] 'ess-clear-R-window                               ) ; ess-load-file
   (local-set-key [?\C-c ?\C-p] 'ess-roxy-insert-param                            ) ; ess-eval-paragraph-and-step
@@ -3001,8 +3009,8 @@ This is first.\n
   (setq ibuffer-deletion-face 'font-lock-comment-face)
   (setq ibuffer-marked-face   'font-lock-builtin-face)
   (set-face-attribute 'font-lock-type-face nil :foreground (fg 'font-lock-comment-face))
-  (local-unset-key [?\M-n])                                   ; reactivate bs-cycle-next
-  (local-unset-key [?\M-p])                                   ; reactivate bs-cycle-previous
+  (local-unset-key [?\M-n]) ; reactivate bs-cycle-next
+  (local-unset-key [?\M-p]) ; reactivate bs-cycle-previous
   (local-set-key [f5]       'ibuffer-update                 ) ; revert-buffer
   (local-set-key [f10]      'ibuffer-do-sort-by-alphabetic  )
   (local-set-key [f11]      'ibuffer-do-sort-by-size        )
@@ -3796,8 +3804,8 @@ This is first.\n
 (defvar Man-width 65)
 (defun arni-Man-hook ()
   (message nil)(setq Man-notify-method 'bully) ; maximize window
-  (local-unset-key [?\M-n])                    ; reactivate bs-cycle-next
-  (local-unset-key [?\M-p])                    ; reactivate bs-cycle-previous
+  (local-unset-key [?\M-n]) ; reactivate bs-cycle-next
+  (local-unset-key [?\M-p]) ; reactivate bs-cycle-previous
   (local-set-key [?\t]     'Man-next-section     )
   (local-set-key [backtab] 'Man-previous-section )
   (local-set-key [M-up]    'Man-previous-section )
@@ -3816,15 +3824,17 @@ This is first.\n
   (setq make-backup-files t)(font-lock-mode 1) ; refresh
   (set-face-attribute 'markdown-pre-face nil :inherit - :foreground "brown4")
   (set-face-attribute 'markdown-inline-code-face nil :inherit markdown-pre-face)
-  (local-unset-key [backtab])
+  (local-unset-key [backtab]      )
   (local-unset-key [S-iso-lefttab])
-  (local-unset-key [M-left])
-  (local-unset-key [M-right])
-  (local-unset-key [M-up])
-  (local-unset-key [M-down])
-  (local-unset-key [?\C-c ?-])
-  (local-unset-key [?\M-n])
-  (local-unset-key [?\M-p])
+  (local-unset-key [M-left]       )
+  (local-unset-key [M-right]      )
+  (local-unset-key [M-up]         )
+  (local-unset-key [M-down]       )
+  (local-unset-key [?\C-c left]   )
+  (local-unset-key [?\C-c right]  )
+  (local-unset-key [?\C-c ?-]     )
+  (local-unset-key [?\M-n]        )
+  (local-unset-key [?\M-p]        )
   (local-set-key [f10]               'markdown-tidy       )
   (local-set-key [f12]               'markdown-template   )
   (local-set-key [?\C-c C-backspace] 'markdown-delete-html)
@@ -3832,7 +3842,9 @@ This is first.\n
   (local-set-key [?\C-c ?\C-v]       'markdown-view       )
   (local-set-key [?\C-c ?\C-z]       'markdown-peek       )
   (defun markdown-compile () "Convert Markdown or R Markdown document to HTML." (interactive)
-         (if (string-equal (file-name-extension (buffer-name)) "Rmd")(markdown-compile-rmd)(markdown-compile-md)))
+         (if (string-equal (downcase (file-name-extension (buffer-name))) "rmd")
+             (markdown-compile-rmd)(markdown-compile-md))
+         (maximize-window-top))
   (defun markdown-compile-md () "Convert Markdown document to HTML." (interactive)
          (save-buffer)(if (one-window-p)(split-window-right))
          (compile (concat "pandoc " (buffer-name) " > " (file-name-sans-extension (buffer-name)) ".html")))
