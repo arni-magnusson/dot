@@ -99,8 +99,8 @@
   autoload("DLS3.2",    "icesAdvice") # DLS method 3.2
   autoload("Fpa",       "icesAdvice") # Fpa from Flim
   autoload("icesRound", "icesAdvice") # rounding method
-  autoload("icod",      "icesAdvice") # retro example
   autoload("mohn",      "icesAdvice") # retro bias
+  autoload("shake",     "icesAdvice") # retro example
   autoload("sigmaCI",   "icesAdvice") # sigma from confint
   autoload("sigmaPA",   "icesAdvice") # sigma from refpts
 
