@@ -3241,41 +3241,41 @@ echo.
   (local-unset-key [?\C-c ?-]) ; reactivate highlight-changes-mode
   (local-unset-key [?\C-c ?=]) ; reactivate diff-this-buffer-with-file
   (local-unset-key [?\C-c ? ]) ; reactivate hl-line-mode
-  (local-set-key [f9]             'iso-iso2sgml                         )
-  (local-set-key [S-f9]           'iso-sgml2iso                         )
-  (local-set-key [f10]            'html-tidy                            )
-  (local-set-key [S-f10]          'html-simplify                        )
-  (local-set-key [f11]            'html-outline                         )
-  (local-set-key [f12]            'html-template                        )
-  (local-set-key [?\C-m]          'reindent-then-newline-and-indent     ) ; RET
-  (local-set-key [M-return]       'html-br                              )
+  (local-set-key [f9]             'iso-iso2sgml                    )
+  (local-set-key [S-f9]           'iso-sgml2iso                    )
+  (local-set-key [f10]            'html-tidy                       )
+  (local-set-key [S-f10]          'html-simplify                   )
+  (local-set-key [f11]            'html-outline                    )
+  (local-set-key [f12]            'html-template                   )
+  (local-set-key [?\C-m]          'reindent-then-newline-and-indent) ; return
+  (local-set-key [M-return]       'html-br                         )
   (local-set-key [?\C-c ?~]       'tempo-template-html-nonbreaking-space)
-  (local-set-key [?\C-\" C-left]  'html-quote-6                         )
-  (local-set-key [?\C-\" C-right] 'html-quote-9                         )
-  (local-set-key [?\C-\" left]    'html-quote-66                        )
-  (local-set-key [?\C-\" right]   'html-quote-99                        )
-  (local-set-key [?\C-\" down]    'html-quote-99-bottom                 )
-  (local-set-key [?\C-c ?8]       'html-8bit-char                       )
-  (local-set-key [?\C-c ?\C-.]    'html-nbsp                            )
-  (local-set-key [?\C-c ?\C- ]    'html-td                              )
-  (local-set-key [?\C-c ?\C-8]    'html-8bit-char                       )
-  (local-set-key [?\C-c ?\C-a]    'tempo-template-html-hyperlink        )
-  (local-set-key [?\C-c ?\C-c]    'html-save-and-view                   )
-  (local-set-key [?\C-c ?\C-d]    'html-dl                              )
-  (local-set-key [?\C-c ?\C-e]    'html-code                            )
-  (local-set-key [?\C-c ?\C-h]    'html-toggle-links                    )
-  (local-set-key [?\C-c ?\C-i]    'html-img                             )
-  (local-set-key [?\C-c ?\C-k]    'html-convert-latin1-to-utf8          )
-  (local-set-key [?\C-c ?\C-l]    'html-css-link                        )
-  (local-set-key [?\C-c ?\C-n]    'tempo-template-html-link-target      )
-  (local-set-key [?\C-c ?\C-o]    'html-ol                              )
-  (local-set-key [?\C-c ?\C-s]    'html-css-inline                      )
-  (local-set-key [?\C-c ?\C-t]    'html-table                           )
-  (local-set-key [?\C-c ?\C-u]    'html-ul                              )
-  (local-set-key [?\C-c ?\C-v]    'browse-url-of-file                   )
-  (local-set-key [?\C--]          'html-endash                          )
-  (local-set-key [?\M--]          'html-emdash                          )
-  (local-set-key [?\M-/]          'html-delete-comments                 )
+  (local-set-key [?\C-\" C-left]  'html-quote-6                    )
+  (local-set-key [?\C-\" C-right] 'html-quote-9                    )
+  (local-set-key [?\C-\" left]    'html-quote-66                   )
+  (local-set-key [?\C-\" right]   'html-quote-99                   )
+  (local-set-key [?\C-\" down]    'html-quote-99-bottom            )
+  (local-set-key [?\C-c ?8]       'html-8bit-char                  )
+  (local-set-key [?\C-c ?\C-.]    'html-nbsp                       )
+  (local-set-key [?\C-c ?\C- ]    'html-td                         )
+  (local-set-key [?\C-c ?\C-8]    'html-8bit-char                  )
+  (local-set-key [?\C-c ?\C-a]    'tempo-template-html-hyperlink   )
+  (local-set-key [?\C-c ?\C-c]    'html-save-and-view              )
+  (local-set-key [?\C-c ?\C-d]    'html-dl                         )
+  (local-set-key [?\C-c ?\C-e]    'html-code                       )
+  (local-set-key [?\C-c ?\C-h]    'html-toggle-links               )
+  (local-set-key [?\C-c ?\C-i]    'html-img                        )
+  (local-set-key [?\C-c ?\C-k]    'html-convert-latin1-to-utf8     )
+  (local-set-key [?\C-c ?\C-l]    'html-css-link                   )
+  (local-set-key [?\C-c ?\C-n]    'tempo-template-html-link-target )
+  (local-set-key [?\C-c ?\C-o]    'html-ol                         )
+  (local-set-key [?\C-c ?\C-s]    'html-css-inline                 )
+  (local-set-key [?\C-c ?\C-t]    'html-table                      )
+  (local-set-key [?\C-c ?\C-u]    'html-ul                         )
+  (local-set-key [?\C-c ?\C-v]    'browse-url-of-file              )
+  (local-set-key [?\C--]          'html-endash                     )
+  (local-set-key [?\M--]          'html-emdash                     )
+  (local-set-key [?\M-/]          'html-delete-comments            )
   (defun html-8bit-char ()
     "Insert &sgml; based on keyboard input."
     (interactive "*")
@@ -4415,41 +4415,41 @@ with spaces."
     (delete-other-windows)
     (ess-rdired-next-line 1)
     (define-key ess-rdired-mode-map [down-mouse-1] 'ess-rdired-mouse-view)
-    (define-key ess-rdired-mode-map [C-home]       'ess-rdired-top       )
-    (define-key ess-rdired-mode-map [C-end]        'ess-rdired-bottom    )
-    (define-key ess-rdired-mode-map [C-S-home]     'ess-rdired-top-mark  )
-    (define-key ess-rdired-mode-map [C-S-end]      'region-bol-bottom    )
-    (define-key ess-rdired-mode-map [prior]        'ess-rdired-up-page   )
-    (define-key ess-rdired-mode-map [next]         'ess-rdired-down-page )
-    (define-key ess-rdired-mode-map [?\t]          'ess-rdired-other     )
-    (define-key ess-rdired-mode-map [backtab]      'delete-other-windows )
-    (define-key ess-rdired-mode-map [?\C-m]        'ess-rdired-other     ) ; RET
-    (define-key ess-rdired-mode-map [left]         'delete-other-windows )
-    (define-key ess-rdired-mode-map [right]        'ess-rdired-other     )
-    (define-key ess-rdired-mode-map [up]           'ess-rdired-up        )
-    (define-key ess-rdired-mode-map [down]         'ess-rdired-down      )
-    (define-key ess-rdired-mode-map [S-up]         'ess-rdired-up-mark   )
-    (define-key ess-rdired-mode-map [S-down]       'region-bol-down      )
-    (define-key ess-rdired-mode-map [C-up]         'ess-rdired-up-3      )
-    (define-key ess-rdired-mode-map [C-down]       'ess-rdired-down-3    )
-    (define-key ess-rdired-mode-map [M-up]         'ess-rdired-up-view   )
-    (define-key ess-rdired-mode-map [M-down]       'ess-rdired-down-view )
-    (define-key ess-rdired-mode-map [?\C-n]        'ess-rdired-down      )
-    (define-key ess-rdired-mode-map [?\C-p]        'ess-rdired-up        )
-    (define-key ess-rdired-mode-map [?\C-v]        'ess-rdired-down-page )
-    (define-key ess-rdired-mode-map [?\C-y]        'ess-rdired-up-page   )
-    (define-key ess-rdired-mode-map [?/]           'isearch-forward      )
-    (define-key ess-rdired-mode-map [?M]           'ess-rdired-middle    )
-    (define-key ess-rdired-mode-map [?N]           'ess-rdired-down-view )
-    (define-key ess-rdired-mode-map [?P]           'ess-rdired-up-view   )
-    (define-key ess-rdired-mode-map [?m]           'ess-rdired-middle    )
-    (define-key ess-rdired-mode-map [?n]           'ess-rdired-down      )
-    (define-key ess-rdired-mode-map [?o]           'ess-rdired-other     )
-    (define-key ess-rdired-mode-map [?p]           'ess-rdired-up        )
+    (define-key ess-rdired-mode-map [C-home]   'ess-rdired-top      )
+    (define-key ess-rdired-mode-map [C-end]    'ess-rdired-bottom   )
+    (define-key ess-rdired-mode-map [C-S-home] 'ess-rdired-top-mark )
+    (define-key ess-rdired-mode-map [C-S-end]  'region-bol-bottom   )
+    (define-key ess-rdired-mode-map [prior]    'ess-rdired-up-page  )
+    (define-key ess-rdired-mode-map [next]     'ess-rdired-down-page)
+    (define-key ess-rdired-mode-map [?\t]      'ess-rdired-other    )
+    (define-key ess-rdired-mode-map [backtab]  'delete-other-windows)
+    (define-key ess-rdired-mode-map [?\C-m]    'ess-rdired-other    ) ; return
+    (define-key ess-rdired-mode-map [left]     'delete-other-windows)
+    (define-key ess-rdired-mode-map [right]    'ess-rdired-other    )
+    (define-key ess-rdired-mode-map [up]       'ess-rdired-up       )
+    (define-key ess-rdired-mode-map [down]     'ess-rdired-down     )
+    (define-key ess-rdired-mode-map [S-up]     'ess-rdired-up-mark  )
+    (define-key ess-rdired-mode-map [S-down]   'region-bol-down     )
+    (define-key ess-rdired-mode-map [C-up]     'ess-rdired-up-3     )
+    (define-key ess-rdired-mode-map [C-down]   'ess-rdired-down-3   )
+    (define-key ess-rdired-mode-map [M-up]     'ess-rdired-up-view  )
+    (define-key ess-rdired-mode-map [M-down]   'ess-rdired-down-view)
+    (define-key ess-rdired-mode-map [?\C-n]    'ess-rdired-down     )
+    (define-key ess-rdired-mode-map [?\C-p]    'ess-rdired-up       )
+    (define-key ess-rdired-mode-map [?\C-v]    'ess-rdired-down-page)
+    (define-key ess-rdired-mode-map [?\C-y]    'ess-rdired-up-page  )
+    (define-key ess-rdired-mode-map [?/]       'isearch-forward     )
+    (define-key ess-rdired-mode-map [?M]       'ess-rdired-middle   )
+    (define-key ess-rdired-mode-map [?N]       'ess-rdired-down-view)
+    (define-key ess-rdired-mode-map [?P]       'ess-rdired-up-view  )
+    (define-key ess-rdired-mode-map [?m]       'ess-rdired-middle   )
+    (define-key ess-rdired-mode-map [?n]       'ess-rdired-down     )
+    (define-key ess-rdired-mode-map [?o]       'ess-rdired-other    )
+    (define-key ess-rdired-mode-map [?p]       'ess-rdired-up       )
     (define-key ess-rdired-mode-map [?q]
       'ess-rdired-quit-clean) ; ess-rdired-quit
     (define-key ess-rdired-mode-map [?v]
-      'ess-rdired-other    )) ; ess-rdired-view
+      'ess-rdired-other)) ; ess-rdired-view
   (defun ess-rdired-bottom ()
     "Move to bottom."
     (interactive)
@@ -4986,8 +4986,10 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
 (defun arni-align-hook ()
   (add-to-list 'align-text-modes 'admb-mode)
   (add-to-list 'align-rules-list
-               '(text-column-whitespace ; to shrink initial whitespace too, use (regexp . "\\(^\\|\\S-\\)\\([ \t]+\\)")
-                 (regexp . "\\(\\S-\\)\\([ \t]+\\)")(group . 2)(modes . align-text-modes)(repeat . t))))
+               '(text-column-whitespace
+                 (regexp . "\\(\\S-\\)\\([ \t]+\\)")
+                 (group . 2)(modes . align-text-modes)(repeat . t))))
+;; To shrink initial whitespace too, use (regexp . "\\(^\\|\\S-\\)\\([ \t]+\\)")
 (add-hook 'align-load-hook 'arni-align-hook)
 ;;--------------
 ;; 7.2  Apropos
@@ -5023,26 +5025,39 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun apropos-bottom ()
     "Move to bottom."
     (interactive)
-    (goto-char (point-max))(apropos-up 1))
+    (goto-char (point-max))
+    (apropos-up 1))
   (defun apropos-down (&optional n)
     "Move down N lines."
     (interactive "p")
-    (deactivate-mark)(end-of-line)(ignore-errors (forward-button n nil))(beginning-of-line))
+    (deactivate-mark)
+    (end-of-line)
+    (ignore-errors (forward-button n nil))
+    (beginning-of-line))
   (defun apropos-down-page (&optional n)
     "Move down N pages."
-    (interactive "p")(scroll-up)(apropos-up 1))
+    (interactive "p")
+    (scroll-up)
+    (apropos-up 1))
   (defun apropos-down-view ()
     "Move down one line and view in other window."
     (interactive)
-    (apropos-down 1)(apropos-follow))
+    (apropos-down 1)
+    (apropos-follow))
   (defun apropos-middle ()
     "Move to middle."
     (interactive)
-    (apropos-top)(forward-line (middle-from-here))(apropos-up 1)(apropos-down 1))
+    (apropos-top)
+    (forward-line (middle-from-here))
+    (apropos-up 1)
+    (apropos-down 1))
   (defun apropos-top ()
     "Move to top."
     (interactive)
-    (deactivate-mark)(goto-char (point-min))(forward-button 1)(beginning-of-line))
+    (deactivate-mark)
+    (goto-char (point-min))
+    (forward-button 1)
+    (beginning-of-line))
   (defun apropos-top-mark ()
     "Extend region to top."
     (interactive)
@@ -5051,69 +5066,81 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
     "Move up N lines."
     (interactive "p")
     (deactivate-mark)
-    (if (< (line-number-at-pos) 7)(apropos-top)(progn (backward-button n nil)(beginning-of-line))))
+    (if (< (line-number-at-pos) 7)
+        (apropos-top)
+      (progn (backward-button n nil)
+             (beginning-of-line))))
   (defun apropos-up-page (&optional n)
     "Move up N pages."
-    (interactive "p")(scroll-down)(apropos-down 1))
+    (interactive "p")
+    (scroll-down)
+    (apropos-down 1))
   (defun apropos-up-view ()
     "Move up one line and view in other window."
     (interactive)
-    (apropos-up 1)(apropos-follow)))
+    (apropos-up 1)
+    (apropos-follow)))
 (add-hook 'apropos-mode-hook 'arni-apropos-hook)
 ;;-------------
 ;; 7.3  Buffer
 ;;-------------
 (defun arni-buffer-menu-hook ()
   (require 'ebuff-menu)
-  (local-set-key [backspace] 'Buffer-menu-unmark-up                )
-  (local-set-key [C-home]    'Buffer-menu-top                      )
-  (local-set-key [C-S-home]  'Buffer-menu-top-mark                 )
-  (local-set-key [C-end]     'Buffer-menu-bottom                   )
-  (local-set-key [C-S-end]   'Buffer-menu-bottom-mark              )
-  (local-set-key [prior]     'Buffer-menu-up-page                  )
-  (local-set-key [next]      'Buffer-menu-down-page                )
-  (local-set-key [?\t]       'Buffer-menu-down                     )
-  (local-set-key [backtab]   'Buffer-menu-up                       )
-  (local-set-key [left]      'delete-other-windows                 )
-  (local-set-key [right]     'Buffer-menu-view-other               )
-  (local-set-key [S-left]    'delete-other-windows                 )
-  (local-set-key [S-right]   'Buffer-menu-view-other               )
-  (local-set-key [C-left]    'delete-other-windows                 )
-  (local-set-key [C-right]   'Buffer-menu-view-other               )
-  (local-set-key [up]        'Buffer-menu-up                       )
-  (local-set-key [down]      'Buffer-menu-down                     )
-  (local-set-key [S-up]      'Buffer-menu-up-mark                  )
-  (local-set-key [S-down]    'Buffer-menu-down-mark                )
-  (local-set-key [C-up]      'Buffer-menu-up-3                     )
-  (local-set-key [C-down]    'Buffer-menu-down-3                   )
-  (local-set-key [M-up]      'Buffer-menu-up-view                  )
-  (local-set-key [M-down]    'Buffer-menu-down-view                )
-  (local-set-key [?\C-n]     'Buffer-menu-down                     )
-  (local-set-key [?\C-p]     'Buffer-menu-up                       )
-  (local-set-key [?\C-v]     'Buffer-menu-down-page                )
-  (local-set-key [?\C-y]     'Buffer-menu-up-page                  )
-  (local-set-key [?/]        'isearch-forward                      )
-  (local-set-key [?M]        'Buffer-menu-middle                   )
-  (local-set-key [?N]        'Buffer-menu-down-view                )
-  (local-set-key [?P]        'Buffer-menu-up-view                  )
-  (local-set-key [?U]        'Buffer-menu-unmark-all               )
-  (local-set-key [?b]        'Buffer-menu-bury                     ) ; for electric-buffer-list, already in list-buffers
-  (local-set-key [?d]        'Buffer-menu-mark-down-delete         )
-  (local-set-key [?f]        'Buffer-menu-toggle-files-only        )
-  (local-set-key [?h]        'Buffer-menu-toggle-files-only        )
-  (local-set-key [?i]        'Buffer-menu-unmark-up                )
-  (local-set-key [?m]        'Buffer-menu-mark-down                )
-  (local-set-key [?n]        'Buffer-menu-down                     )
-  (local-set-key [?o]        'Buffer-menu-view-other               ) ; Buffer-menu-other-window
-  (local-set-key [?p]        'Buffer-menu-up                       )
-  (local-set-key [?q]        'kill-this-buffer                     )
-  (local-set-key [?t]        'Buffer-menu-toggle-files-only        ) ; Buffer-menu-visit-tags-table
-  (local-set-key [?u]        'Buffer-menu-unmark-down              )
-  (local-set-key [?v]        'Electric-buffer-menu-mode-view-buffer) ; for list-buffers, already in electric-buffer-list
+  (local-set-key [backspace] 'Buffer-menu-unmark-up        )
+  (local-set-key [C-home]    'Buffer-menu-top              )
+  (local-set-key [C-S-home]  'Buffer-menu-top-mark         )
+  (local-set-key [C-end]     'Buffer-menu-bottom           )
+  (local-set-key [C-S-end]   'Buffer-menu-bottom-mark      )
+  (local-set-key [prior]     'Buffer-menu-up-page          )
+  (local-set-key [next]      'Buffer-menu-down-page        )
+  (local-set-key [?\t]       'Buffer-menu-down             )
+  (local-set-key [backtab]   'Buffer-menu-up               )
+  (local-set-key [left]      'delete-other-windows         )
+  (local-set-key [right]     'Buffer-menu-view-other       )
+  (local-set-key [S-left]    'delete-other-windows         )
+  (local-set-key [S-right]   'Buffer-menu-view-other       )
+  (local-set-key [C-left]    'delete-other-windows         )
+  (local-set-key [C-right]   'Buffer-menu-view-other       )
+  (local-set-key [up]        'Buffer-menu-up               )
+  (local-set-key [down]      'Buffer-menu-down             )
+  (local-set-key [S-up]      'Buffer-menu-up-mark          )
+  (local-set-key [S-down]    'Buffer-menu-down-mark        )
+  (local-set-key [C-up]      'Buffer-menu-up-3             )
+  (local-set-key [C-down]    'Buffer-menu-down-3           )
+  (local-set-key [M-up]      'Buffer-menu-up-view          )
+  (local-set-key [M-down]    'Buffer-menu-down-view        )
+  (local-set-key [?\C-n]     'Buffer-menu-down             )
+  (local-set-key [?\C-p]     'Buffer-menu-up               )
+  (local-set-key [?\C-v]     'Buffer-menu-down-page        )
+  (local-set-key [?\C-y]     'Buffer-menu-up-page          )
+  (local-set-key [?/]        'isearch-forward              )
+  (local-set-key [?M]        'Buffer-menu-middle           )
+  (local-set-key [?N]        'Buffer-menu-down-view        )
+  (local-set-key [?P]        'Buffer-menu-up-view          )
+  (local-set-key [?U]        'Buffer-menu-unmark-all       )
+  ;; [?b] for electric-buffer-list, already in list-buffers
+  (local-set-key [?b]        'Buffer-menu-bury             )
+  (local-set-key [?d]        'Buffer-menu-mark-down-delete )
+  (local-set-key [?f]        'Buffer-menu-toggle-files-only)
+  (local-set-key [?h]        'Buffer-menu-toggle-files-only)
+  (local-set-key [?i]        'Buffer-menu-unmark-up        )
+  (local-set-key [?m]        'Buffer-menu-mark-down        )
+  (local-set-key [?n]        'Buffer-menu-down             )
+  (local-set-key [?o]
+                 'Buffer-menu-view-other) ; Buffer-menu-other-window
+  (local-set-key [?p]        'Buffer-menu-up               )
+  (local-set-key [?q]        'kill-this-buffer             )
+  (local-set-key [?t]
+                 'Buffer-menu-toggle-files-only) ; Buffer-menu-visit-tags-table
+  (local-set-key [?u]        'Buffer-menu-unmark-down      )
+  ;; [?v] for list-buffers, already in electric-buffer-list
+  (local-set-key [?v]        'Electric-buffer-menu-mode-view-buffer)
   (defun Buffer-menu-bottom ()
     "Move to bottom."
     (interactive)
-    (deactivate-mark)(goto-char (point-max))(forward-line -1))
+    (deactivate-mark)
+    (goto-char (point-max))
+    (forward-line -1))
   (defun Buffer-menu-bottom-mark ()
     "Extend region to bottom."
     (interactive)
@@ -5121,37 +5148,46 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun Buffer-menu-down (&optional n)
     "Move down N lines."
     (interactive "p")
-    (deactivate-mark)(forward-line n)(if (eobp)(forward-line -1)))
+    (deactivate-mark)
+    (forward-line n)
+    (if (eobp)(forward-line -1)))
   (defun Buffer-menu-down-3 ()
     "Move down 3 lines."
     (interactive)
     (Buffer-menu-down 3))
   (defun Buffer-menu-down-mark (&optional n)
     "Extend region down N lines."
-    (interactive "p")(region-bol-down n))
+    (interactive "p")
+    (region-bol-down n))
   (defun Buffer-menu-down-page (&optional n)
     "Move down N pages."
-    (interactive "p")(Buffer-menu-down (pages n)))
+    (interactive "p")
+    (Buffer-menu-down (pages n)))
   (defun Buffer-menu-down-view ()
     "Move down one line and view in other window."
     (interactive)
-    (Buffer-menu-down 1)(Buffer-menu-view-other))
+    (Buffer-menu-down 1)
+    (Buffer-menu-view-other))
   (defun Buffer-menu-mark-down ()
     "Mark and move down."
     (interactive)
-    (Buffer-menu-mark)(if (eobp)(Buffer-menu-bottom)))
+    (Buffer-menu-mark)
+    (if (eobp)(Buffer-menu-bottom)))
   (defun Buffer-menu-mark-down-delete ()
     "Mark for deletion and move down."
     (interactive)
-    (Buffer-menu-delete)(if (eobp)(Buffer-menu-bottom)))
+    (Buffer-menu-delete)
+    (if (eobp)(Buffer-menu-bottom)))
   (defun Buffer-menu-middle ()
     "Move to middle."
     (interactive)
-    (Buffer-menu-top)(forward-line (middle-from-here)))
+    (Buffer-menu-top)
+    (forward-line (middle-from-here)))
   (defun Buffer-menu-top ()
     "Move to top."
     (interactive)
-    (deactivate-mark)(goto-char (point-min)))
+    (deactivate-mark)
+    (goto-char (point-min)))
   (defun Buffer-menu-top-mark ()
     "Extend region to top."
     (interactive)
@@ -5159,36 +5195,44 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun Buffer-menu-unmark-all ()
     "Unmark all buffers."
     (interactive)
-    (save-excursion (Buffer-menu-top)(while (not (eobp))(Buffer-menu-unmark))))
+    (save-excursion (Buffer-menu-top)
+                    (while (not (eobp))(Buffer-menu-unmark))))
   (defun Buffer-menu-unmark-down ()
     "Unmark and move down."
     (interactive)
-    (Buffer-menu-unmark)(if (eobp)(Buffer-menu-bottom)))
+    (Buffer-menu-unmark)
+    (if (eobp)(Buffer-menu-bottom)))
   (defun Buffer-menu-unmark-up ()
     "Unmark and move up."
     (interactive)
     (Buffer-menu-unmark t))
   (defun Buffer-menu-up (&optional n)
     "Move up N lines."
-    (interactive "p")(deactivate-mark)(forward-line (- n)))
+    (interactive "p")
+    (deactivate-mark)
+    (forward-line (- n)))
   (defun Buffer-menu-up-3 ()
     "Move up 3 lines."
     (interactive)
     (forward-line -3))
   (defun Buffer-menu-up-page (&optional n)
     "Move up N pages."
-    (interactive "p")(Buffer-menu-up (pages n)))
+    (interactive "p")
+    (Buffer-menu-up (pages n)))
   (defun Buffer-menu-up-mark (&optional n)
     "Extend region up N lines."
-    (interactive "p")(region-bol-up n))
+    (interactive "p")
+    (region-bol-up n))
   (defun Buffer-menu-up-view ()
     "Move up one line and view in other window."
     (interactive)
-    (Buffer-menu-up 1)(Buffer-menu-view-other))
+    (Buffer-menu-up 1)
+    (Buffer-menu-view-other))
   (defun Buffer-menu-view-other ()
     "View buffer in other window."
     (interactive)
-    (if (one-window-p)(split-window-right))(Buffer-menu-switch-other-window)))
+    (if (one-window-p)(split-window-right))
+    (Buffer-menu-switch-other-window)))
 (add-hook 'buffer-menu-mode-hook 'arni-buffer-menu-hook)
 (add-hook 'electric-buffer-menu-mode-hook 'arni-buffer-menu-hook)
 (defun arni-ibuffer-hook ()(ibuffer-do-sort-by-alphabetic))
@@ -5199,69 +5243,76 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (setq ibuffer-movement-cycle nil ) ; don't jump between top and bottom
   (setq ibuffer-deletion-face 'font-lock-comment-face)
   (setq ibuffer-marked-face   'font-lock-builtin-face)
-  (set-face-attribute 'font-lock-type-face nil :foreground (fg 'font-lock-comment-face))
+  (set-face-attribute 'font-lock-type-face nil
+                      :foreground (fg 'font-lock-comment-face))
   (local-unset-key [?\M-n]) ; reactivate bs-cycle-next
   (local-unset-key [?\M-p]) ; reactivate bs-cycle-previous
-  (local-set-key [f5]       'ibuffer-update                 ) ; revert-buffer
-  (local-set-key [f10]      'ibuffer-do-sort-by-alphabetic  )
-  (local-set-key [f11]      'ibuffer-do-sort-by-size        )
-  (local-set-key [f12]      'ibuffer-do-sort-by-major-mode  )
-  (local-set-key [C-home]   'ibuffer-top                    )
-  (local-set-key [C-S-home] 'ibuffer-top-mark               )
-  (local-set-key [C-end]    'ibuffer-bottom                 )
-  (local-set-key [prior]    'ibuffer-up-page                )
-  (local-set-key [next]     'ibuffer-down-page              )
-  (local-set-key [?\t]      'ibuffer-down                   )
-  (local-set-key [backtab]  'ibuffer-up                     )
-  (local-set-key [left]     'delete-other-windows           ) ; ibuffer-backward-filter-group
-  (local-set-key [right]    'ibuffer-view-other             ) ; ibuffer-forward-filter-group
-  (local-set-key [S-left]   'delete-other-windows           )
-  (local-set-key [S-right]  'ibuffer-view-other             )
-  (local-set-key [C-left]   'delete-other-windows           )
-  (local-set-key [C-right]  'ibuffer-view-other             )
-  (local-set-key [up]       'ibuffer-up                     ) ; ibuffer-backward-line
-  (local-set-key [down]     'ibuffer-down                   ) ; ibuffer-forward-line
-  (local-set-key [S-up]     'ibuffer-up-mark                )
-  (local-set-key [S-down]   'region-bol-down                )
-  (local-set-key [C-up]     'ibuffer-up-3                   )
-  (local-set-key [C-down]   'ibuffer-down-3                 )
-  (local-set-key [M-up]     'ibuffer-up-view                )
-  (local-set-key [M-down]   'ibuffer-down-view              )
-  (local-set-key [?\C-n]    'ibuffer-down                   )
-  (local-set-key [?\C-p]    'ibuffer-up                     )
-  (local-set-key [?\C-v]    'ibuffer-down-page              )
-  (local-set-key [?\C-y]    'ibuffer-up-page                )
-  (local-set-key [?*]       'ibuffer-mark-special-buffers   ) ; [map]
-  (local-set-key [?/]       'isearch-forward                ) ; [map]
-  (local-set-key [?E]       'ibuffer-do-replace-regexp      ) ; ibuffer-do-eval
-  (local-set-key [?F]       'ibuffer-do-occur               ) ; ibuffer-do-shell-command-file
-  (local-set-key [?K]       'ibuffer-do-delete              )
-  (local-set-key [?M]       'ibuffer-middle                 ) ; ibuffer-do-toggle-modified
-  (local-set-key [?N]       'ibuffer-down-view              ) ; ibuffer-do-shell-command-pipe-replace
-  (local-set-key [?P]       'ibuffer-up-view                ) ; ibuffer-do-print
-  (local-set-key [?U]       'ibuffer-unmark-all-marks       ) ; ibuffer-do-replace-regexp
-  (local-set-key [?d]       'ibuffer-mark-down-delete       ) ; ibuffer-mark-for-delete
-  (local-set-key [?e]       'ibuffer-do-query-replace-regexp) ; ibuffer-visit-buffer
-  (local-set-key [?f]       'ibuffer-mark-by-name-regexp    ) ; ibuffer-visit-buffer
-  (local-set-key [?i]       'ibuffer-unmark-up              )
-  (local-set-key [?h]       'ibuffer-hide-lines             ) ; describe-mode
-  (local-set-key [?k]       'ibuffer-mark-down-delete       ) ; ibuffer-do-kill-lines
-  (local-set-key [?m]       'ibuffer-mark-down              ) ; ibuffer-mark-forward
-  (local-set-key [?n]       'ibuffer-down                   ) ; ibuffer-forward-line
-  (local-set-key [?o]       'ibuffer-view-other             ) ; ibuffer-visit-buffer-other-window
-  (local-set-key [?p]       'ibuffer-up                     ) ; ibuffer-backward-line
-  (local-set-key [?q]       'kill-this-buffer               ) ; ibuffer-quit
-  (local-set-key [?r]       'ibuffer-do-eval                )
-  (local-set-key [?u]       'ibuffer-unmark-down            ) ; ibuffer-unmark-forward
-  (local-set-key [?v]       'ibuffer-view                   ) ; ibuffer-do-view
+  (local-set-key [f5]       'ibuffer-update         ) ; revert-buffer
+  (local-set-key [f10]      'ibuffer-do-sort-by-alphabetic)
+  (local-set-key [f11]      'ibuffer-do-sort-by-size)
+  (local-set-key [f12]      'ibuffer-do-sort-by-major-mode)
+  (local-set-key [C-home]   'ibuffer-top            )
+  (local-set-key [C-S-home] 'ibuffer-top-mark       )
+  (local-set-key [C-end]    'ibuffer-bottom         )
+  (local-set-key [prior]    'ibuffer-up-page        )
+  (local-set-key [next]     'ibuffer-down-page      )
+  (local-set-key [?\t]      'ibuffer-down           )
+  (local-set-key [backtab]  'ibuffer-up             )
+  (local-set-key [left]   'delete-other-windows) ; ibuffer-backward-filter-group
+  (local-set-key [right]    'ibuffer-view-other) ; ibuffer-forward-filter-group
+  (local-set-key [S-left]   'delete-other-windows   )
+  (local-set-key [S-right]  'ibuffer-view-other     )
+  (local-set-key [C-left]   'delete-other-windows   )
+  (local-set-key [C-right]  'ibuffer-view-other     )
+  (local-set-key [up]       'ibuffer-up             ) ; ibuffer-backward-line
+  (local-set-key [down]     'ibuffer-down           ) ; ibuffer-forward-line
+  (local-set-key [S-up]     'ibuffer-up-mark        )
+  (local-set-key [S-down]   'region-bol-down        )
+  (local-set-key [C-up]     'ibuffer-up-3           )
+  (local-set-key [C-down]   'ibuffer-down-3         )
+  (local-set-key [M-up]     'ibuffer-up-view        )
+  (local-set-key [M-down]   'ibuffer-down-view      )
+  (local-set-key [?\C-n]    'ibuffer-down           )
+  (local-set-key [?\C-p]    'ibuffer-up             )
+  (local-set-key [?\C-v]    'ibuffer-down-page      )
+  (local-set-key [?\C-y]    'ibuffer-up-page        )
+  (local-set-key [?*] 'ibuffer-mark-special-buffers ) ; [map]
+  (local-set-key [?/] 'isearch-forward              ) ; [map]
+  (local-set-key [?E] 'ibuffer-do-replace-regexp    ) ; ibuffer-do-eval
+  (local-set-key [?F] 'ibuffer-do-occur) ; ibuffer-do-shell-command-file
+  (local-set-key [?K] 'ibuffer-do-delete            )
+  (local-set-key [?M] 'ibuffer-middle) ; ibuffer-do-toggle-modified
+  (local-set-key [?N]
+                 'ibuffer-down-view) ; ibuffer-do-shell-command-pipe-replace
+  (local-set-key [?P] 'ibuffer-up-view              ) ; ibuffer-do-print
+  (local-set-key [?U] 'ibuffer-unmark-all-marks) ; ibuffer-do-replace-regexp
+  (local-set-key [?d] 'ibuffer-mark-down-delete     ) ; ibuffer-mark-for-delete
+  (local-set-key [?e] 'ibuffer-do-query-replace-regexp) ; ibuffer-visit-buffer
+  (local-set-key [?f] 'ibuffer-mark-by-name-regexp  ) ; ibuffer-visit-buffer
+  (local-set-key [?i] 'ibuffer-unmark-up            )
+  (local-set-key [?h] 'ibuffer-hide-lines           ) ; describe-mode
+  (local-set-key [?k] 'ibuffer-mark-down-delete     ) ; ibuffer-do-kill-lines
+  (local-set-key [?m] 'ibuffer-mark-down            ) ; ibuffer-mark-forward
+  (local-set-key [?n] 'ibuffer-down                 ) ; ibuffer-forward-line
+  (local-set-key [?o] 'ibuffer-view-other) ; ibuffer-visit-buffer-other-window
+  (local-set-key [?p] 'ibuffer-up                   ) ; ibuffer-backward-line
+  (local-set-key [?q] 'kill-this-buffer             ) ; ibuffer-quit
+  (local-set-key [?r] 'ibuffer-do-eval              )
+  (local-set-key [?u] 'ibuffer-unmark-down          ) ; ibuffer-unmark-forward
+  (local-set-key [?v] 'ibuffer-view                 ) ; ibuffer-do-view
   (defun ibuffer-bottom ()
     "Move to bottom."
     (interactive)
-    (deactivate-mark)(goto-char (point-max))(ibuffer-backward-line))
+    (deactivate-mark)
+    (goto-char (point-max))
+    (ibuffer-backward-line))
   (defun ibuffer-down (&optional n)
     "Move down N lines."
     (interactive "p")
-    (deactivate-mark)(ibuffer-forward-line n)(if (< (line-number-at-pos) 4)(ibuffer-top))
+    (deactivate-mark)
+    (ibuffer-forward-line n)
+    (if (< (line-number-at-pos) 4)
+        (ibuffer-top))
     (if (eobp)(ibuffer-bottom)))
   (defun ibuffer-down-3 ()
     "Move down 3 lines."
@@ -5269,33 +5320,41 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
     (ibuffer-down 3))
   (defun ibuffer-down-page (&optional n)
     "Move down N pages."
-    (interactive "p")(ibuffer-down (pages n)))
+    (interactive "p")
+    (ibuffer-down (pages n)))
   (defun ibuffer-down-view ()
     "Move down one line and view in other window."
     (interactive)
-    (ibuffer-down 1)(ibuffer-view-other))
+    (ibuffer-down 1)
+    (ibuffer-view-other))
   (defun ibuffer-hide-lines ()
     "Hide marked lines, or current line if none are marked."
     (interactive)
-    (if (zerop (ibuffer-count-marked-lines))(ibuffer-mark-forward 1)) ; improved ibuffer-do-kill-lines
+    (if (zerop (ibuffer-count-marked-lines))
+        (ibuffer-mark-forward 1)) ; improved ibuffer-do-kill-lines
     (let ((count (ibuffer-map-marked-lines #'(lambda (buf mark) 'kill))))
       (message "Hid %d lines" count)))
   (defun ibuffer-mark-down ()
     "Mark and move down."
     (interactive)
-    (ibuffer-mark-forward 1)(if (eobp)(ibuffer-bottom)))
+    (ibuffer-mark-forward 1)
+    (if (eobp)(ibuffer-bottom)))
   (defun ibuffer-mark-down-delete ()
     "Mark for deletion and move down."
     (interactive)
-    (ibuffer-mark-for-delete 1)(if (eobp)(ibuffer-bottom)))
+    (ibuffer-mark-for-delete 1)
+    (if (eobp)(ibuffer-bottom)))
   (defun ibuffer-middle ()
     "Move to middle."
     (interactive)
-    (ibuffer-top)(ibuffer-forward-line (middle-from-here)))
+    (ibuffer-top)
+    (ibuffer-forward-line (middle-from-here)))
   (defun ibuffer-top ()
     "Move to top."
     (interactive)
-    (deactivate-mark)(goto-line-lisp 3)(ibuffer-forward-line))
+    (deactivate-mark)
+    (goto-line-lisp 3)
+    (ibuffer-forward-line))
   (defun ibuffer-top-mark ()
     "Extend region to top."
     (interactive)
@@ -5307,30 +5366,40 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun ibuffer-unmark-down ()
     "Unmark and move down."
     (interactive)
-    (ibuffer-unmark-forward 1)(if (eobp)(ibuffer-bottom)))
+    (ibuffer-unmark-forward 1)
+    (if (eobp)(ibuffer-bottom)))
   (defun ibuffer-unmark-up ()
     "Unmark and move up."
     (interactive)
-    (ibuffer-unmark-backward 1)(if (< (line-number-at-pos) 4)(ibuffer-top)))
+    (ibuffer-unmark-backward 1)
+    (if (< (line-number-at-pos) 4)
+        (ibuffer-top)))
   (defun ibuffer-up (&optional n)
     "Move up N lines."
     (interactive "p")
-    (deactivate-mark)(ibuffer-backward-line n)(if (< (line-number-at-pos) 4)(ibuffer-top)))
+    (deactivate-mark)
+    (ibuffer-backward-line n)
+    (if (< (line-number-at-pos) 4)
+        (ibuffer-top)))
   (defun ibuffer-up-3 ()
     "Move up 3 lines."
     (interactive)
     (ibuffer-up 3))
   (defun ibuffer-up-page (&optional n)
     "Move up N pages."
-    (interactive "p")(ibuffer-up (pages n)))
+    (interactive "p")
+    (ibuffer-up (pages n)))
   (defun ibuffer-up-mark (&optional n)
     "Extend region up N lines."
     (interactive "p")
-    (region-bol-up n)(if (< (line-number-at-pos) 4)(ibuffer-top-mark)))
+    (region-bol-up n)
+    (if (< (line-number-at-pos) 4)
+        (ibuffer-top-mark)))
   (defun ibuffer-up-view ()
     "Move up one line and view in other window."
     (interactive)
-    (ibuffer-up 1)(ibuffer-view-other))
+    (ibuffer-up 1)
+    (ibuffer-view-other))
   (defun ibuffer-view ()
     "View buffer."
     (interactive)
@@ -5338,7 +5407,8 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun ibuffer-view-other ()
     "View buffer in other window."
     (interactive)
-    (if (one-window-p)(split-window-right))(ibuffer-visit-buffer-other-window-noselect)))
+    (if (one-window-p)(split-window-right))
+    (ibuffer-visit-buffer-other-window-noselect)))
 (add-hook 'ibuffer-mode-hook 'arni-ibuffer-mode-hook)
 ;;----------------
 ;; 7.4  ChangeLog
@@ -5355,7 +5425,8 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
 ;;-------------
 ;; 7.5  Comint
 ;;-------------
-(defun arni-comint-hook () ; interactive sessions (*gud-program*, *R*, *shell*, *SQL*)
+;; Interactive sessions (*gud-program*, *R*, *shell*, *SQL*)
+(defun arni-comint-hook ()
   (setq show-trailing-whitespace nil)(setq comint-input-ring-size 5000)
   (local-unset-key [?\C-c ? ]) ; reactivate hl-line-mode
   (local-unset-key [C-up]    ) ; reactivate previous-line
@@ -5392,30 +5463,47 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun comint-backward-delete-char ()
     "Delete one character backward, unless at prompt."
     (interactive "*")
-    (if (not (= (point)(comint-line-beginning-position)))(delete-char -1)))
+    (if (not (= (point)(comint-line-beginning-position)))
+        (delete-char -1)))
   (defun comint-backward-delete-word ()
     "Delete previous word, unless at prompt."
     (interactive "*")
-    (if (not (= (point)(comint-line-beginning-position)))(backward-delete-word 1)))
+    (if (not (= (point)(comint-line-beginning-position)))
+        (backward-delete-word 1)))
   (defun comint-bol-mark ()
     "Select region from here to beginning of line, excluding the prompt."
     (interactive)
-    (if (not mark-active)(push-mark))(comint-bol)(region-set))
+    (if (not mark-active)(push-mark))
+    (comint-bol)
+    (region-set))
   (defun comint-bol-nomark ()
     "Go to beginning of line, excluding the prompt."
     (interactive)
-    (deactivate-mark)(comint-bol))
+    (deactivate-mark)
+    (comint-bol))
   (defun comint-clear-window ()
     "Clear from session window."
     (interactive)
-    (delete-region (point-min)(point-max))(comint-send-input)(goto-char (point-min))(delete-char 1)(end-of-line))
+    (delete-region (point-min)(point-max))
+    (comint-send-input)
+    (goto-char (point-min))
+    (delete-char 1)
+    (end-of-line))
   (defun comint-clear-window-keep-current-line ()
     "Clear session window, but keep current line."
     (interactive)
     (let ((col (current-column)))
-      (kill-new (buffer-substring-no-properties (comint-line-beginning-position)(line-end-position)))
-      (delete-region (point-min)(point-max))(comint-send-input)(goto-char (point-min))(delete-char 1)(end-of-line)
-      (yank)(current-kill 1)(sleep-for 0.01)(move-to-column (max (- (comint-line-beginning-position) 1) col))))
+      (kill-new (buffer-substring-no-properties (comint-line-beginning-position)
+                                                (line-end-position)))
+      (delete-region (point-min)(point-max))
+      (comint-send-input)
+      (goto-char (point-min))
+      (delete-char 1)
+      (end-of-line)
+      (yank)
+      (current-kill 1)
+      (sleep-for 0.01)
+      (move-to-column (max (- (comint-line-beginning-position) 1) col))))
   (defun comint-flush-window ()
     "Flush session window, showing only the current line."
     (interactive)
@@ -5423,45 +5511,64 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun comint-left (&optional n)
     "Move left N columns, unless at prompt."
     (interactive "p")
-    (deactivate-mark)(if (not (= (point)(comint-line-beginning-position)))(backward-char n)))
+    (deactivate-mark)
+    (if (not (= (point)(comint-line-beginning-position)))
+        (backward-char n)))
   (defun comint-left-mark (&optional n)
     "Extend region left N columns, unless at prompt."
     (interactive "p")
-    (if (not (= (point)(comint-line-beginning-position)))(region-backward-char n)))
+    (if (not (= (point)(comint-line-beginning-position)))
+        (region-backward-char n)))
   (defun comint-left-word (&optional n)
     "Move left N words."
     (interactive "p")
-    (if (not (= (point)(comint-line-beginning-position)))(backward-word n)))
+    (if (not (= (point)(comint-line-beginning-position)))
+        (backward-word n)))
   (defun comint-left-word-mark (&optional n)
     "Extend region left N words."
     (interactive "p")
-    (if (not (= (point)(comint-line-beginning-position)))(region-backward-word n)))
+    (if (not (= (point)(comint-line-beginning-position)))
+        (region-backward-word n)))
   (defun comint-next-or-down (&optional n)
     "Cycle history N forward if in last line, otherwise move N lines down."
     (interactive "p")
-    (if (= (line-number-at-pos)(line-number-at-pos (point-max)))(comint-next-input n)(forward-line n)))
+    (if (= (line-number-at-pos)(line-number-at-pos (point-max)))
+        (comint-next-input n)
+      (forward-line n)))
   (defun comint-previous-or-up (&optional n)
     "Cycle history N backward if in last line, otherwise move N lines up."
     (interactive "p")
-    (if (= (line-number-at-pos)(line-number-at-pos (point-max)))(comint-previous-input n)(forward-line (- n))))
+    (if (= (line-number-at-pos)(line-number-at-pos (point-max)))
+        (comint-previous-input n)
+      (forward-line (- n))))
   (defun kill-process-or-emacs ()
     "Stop process if any is active, otherwise quit Emacs."
     (interactive)
     (if (> (length (process-list)) 0) ; any active processes?
-        (let ((active-process-buffer (buffer-name (process-buffer (car (last (process-list))))))) ; last process for GDB
-          (cond ((string-match "^\\*gud-" active-process-buffer)(switch-to-buffer active-process-buffer)
+        (let ((active-process-buffer
+               (buffer-name
+                (process-buffer
+                 (car (last (process-list))))))) ; last process for GDB
+          (cond ((string-match "^\\*gud-" active-process-buffer)
+                 (switch-to-buffer active-process-buffer)
                  (comint-quit-subjob))
-                ((string-match "^\\*R"   active-process-buffer)(switch-to-buffer active-process-buffer)(ess-quit))
-                ((string-match "^\\*SQL" active-process-buffer)(switch-to-buffer active-process-buffer)
+                ((string-match "^\\*R"   active-process-buffer)
+                 (switch-to-buffer active-process-buffer)
+                 (ess-quit))
+                ((string-match "^\\*SQL" active-process-buffer)
+                 (switch-to-buffer active-process-buffer)
                  (comint-send-string sql-buffer "quit\n"))
-                (t (switch-to-buffer active-process-buffer)(kill-process (car (last (process-list)))))))
+                (t (switch-to-buffer active-process-buffer)
+                   (kill-process (car (last (process-list)))))))
       (save-buffers-kill-emacs)))
   (defun kill-process-or-buffer ()
     "Stop process if current buffer has one, otherwise close current buffer."
     (interactive)
     (if (get-buffer-process (current-buffer)) ; active process in this buffer?
-        (cond ((string-match "^\\*R" (buffer-name (current-buffer)))(ess-quit))
-              ((string-match "^\\*SQL" (buffer-name (current-buffer)))(comint-send-string sql-buffer "quit\n"))
+        (cond ((string-match "^\\*R" (buffer-name (current-buffer)))
+               (ess-quit))
+              ((string-match "^\\*SQL" (buffer-name (current-buffer)))
+               (comint-send-string sql-buffer "quit\n"))
               (t (kill-process (car (process-list)))))
       (kill-buffer (current-buffer)))))
 (add-hook 'comint-mode-hook 'arni-comint-hook)
@@ -5470,12 +5577,15 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
 ;;------------------
 (defun arni-compilation-hook () ; c++ and grep
   (setq compilation-scroll-output 'first-error)
-  (setq compilation-skip-to-next-location nil )
-  (set-face-attribute 'compilation-column-number nil :inherit -                                             )
-  (set-face-attribute 'compilation-info          nil :foreground - :weight - :inherit font-lock-keyword-face)
-  (set-face-attribute 'compilation-line-number   nil :inherit -                                             )
-  (set-face-attribute 'compilation-warning       nil :foreground - :weight - :inherit font-lock-builtin-face)
-  (set-face-attribute 'escape-glyph              nil :foreground (fg 'font-lock-comment-face) :weight -     ) ; ^L
+  (setq compilation-skip-to-next-location nil)
+  (set-face-attribute 'compilation-column-number nil :inherit -)
+  (set-face-attribute 'compilation-info nil
+                      :foreground - :weight - :inherit font-lock-keyword-face)
+  (set-face-attribute 'compilation-line-number nil :inherit -)
+  (set-face-attribute 'compilation-warning nil
+                      :foreground - :weight - :inherit font-lock-builtin-face)
+  (set-face-attribute 'escape-glyph nil
+                      :foreground (fg 'font-lock-comment-face) :weight -) ; ^L
   (local-unset-key [?\M-n]) ; reactivate bs-cycle-next
   (local-unset-key [?\M-p]) ; reactivate bs-cycle-previous
   (local-set-key [C-home]      'compilation-top         )
@@ -5504,27 +5614,38 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun compilation-bottom ()
     "Move to bottom."
     (interactive)
-    (deactivate-mark)(goto-char (point-max))(compilation-up 1))
+    (deactivate-mark)
+    (goto-char (point-max))
+    (compilation-up 1))
   (defun compilation-bottom-mark ()
     "Extend region to bottom."
     (interactive)
-    (region-bol-bottom)(forward-line -2))
+    (region-bol-bottom)
+    (forward-line -2))
   (defun compilation-down (&optional n)
     "Move down N errors."
     (interactive "p")
-    (deactivate-mark)(next-error-follow-minor-mode 0)(dotimes (i n)(compilation-next-error 1)))
+    (deactivate-mark)
+    (next-error-follow-minor-mode 0)
+    (dotimes (i n)
+      (compilation-next-error 1)))
   (defun compilation-down-view ()
     "Move down one line and view in other window."
     (interactive)
-    (deactivate-mark)(next-error-follow-minor-mode t)(compilation-next-error 1))
+    (deactivate-mark)
+    (next-error-follow-minor-mode t)
+    (compilation-next-error 1))
   (defun compilation-middle ()
     "Move to middle."
     (interactive)
-    (jump-middle)(compilation-down 1))
+    (jump-middle)
+    (compilation-down 1))
   (defun compilation-top ()
     "Move to top."
     (interactive)
-    (deactivate-mark)(goto-char (point-min))(compilation-down 1))
+    (deactivate-mark)
+    (goto-char (point-min))
+    (compilation-down 1))
   (defun compilation-top-mark ()
     "Extend region to top."
     (interactive)
@@ -5532,41 +5653,58 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun compilation-up (&optional n)
     "Move up N errors."
     (interactive "p")
-    (deactivate-mark)(next-error-follow-minor-mode 0)(dotimes (i n)(compilation-previous-error 1)))
+    (deactivate-mark)
+    (next-error-follow-minor-mode 0)
+    (dotimes (i n)
+      (compilation-previous-error 1)))
   (defun compilation-up-view ()
     "Move down one line and view in other window."
     (interactive)
-    (deactivate-mark)(next-error-follow-minor-mode t)(compilation-previous-error 1))
+    (deactivate-mark)
+    (next-error-follow-minor-mode t)
+    (compilation-previous-error 1))
   (defun compilation-view ()
     "View in other window."
     (interactive)
-    (forward-line -1)(compilation-down-view)))
+    (forward-line -1)
+    (compilation-down-view)))
 (add-hook 'compilation-mode-hook 'arni-compilation-hook)
 ;;-----------------
 ;; 7.7  Completion
 ;;-----------------
 (defun arni-completion-hook ()
-  (local-set-key [?\t]     'next-completion    )
-  (local-set-key [backtab] 'previous-completion)
-  (local-set-key [?n]     'next-completion     )
-  (local-set-key [?p] 'previous-completion    ))
+  (local-set-key [?\t]     'next-completion     )
+  (local-set-key [backtab] 'previous-completion )
+  (local-set-key [?n]      'next-completion     )
+  (local-set-key [?p]      'previous-completion))
 (add-hook 'completion-list-mode-hook 'arni-completion-hook)
 ;;-----------
 ;; 7.8  Conf
 ;;-----------
 (defun arni-conf-hook ()
-  ;; [section] space:par val,#comment, unix:par=val,#comment, windows:par=val,par val,;comment,#gadgetpar
-  (setq indent-line-function 'indent-relative-definitely)(arni-colors)
-  (set-face-attribute 'font-lock-builtin-face       nil :foreground "brown4"                                  )
-  (set-face-attribute 'font-lock-type-face          nil :foreground (fg 'font-lock-keyword-face) :weight 'bold)
-  (set-face-attribute 'font-lock-variable-name-face nil :foreground - :weight 'bold                           )
+  ;; [section]
+  ;; space:   par val #comment
+  ;; unix:    par=val #comment
+  ;; windows: par=val par val ;comment #gadgetpar
+  (setq indent-line-function 'indent-relative-definitely)
+  (arni-colors)
+  (set-face-attribute 'font-lock-builtin-face nil :foreground "brown4")
+  (set-face-attribute 'font-lock-type-face nil
+                      :foreground (fg 'font-lock-keyword-face) :weight 'bold)
+  (set-face-attribute 'font-lock-variable-name-face nil
+                      :foreground - :weight 'bold)
   (local-unset-key [?\C-c ? ])
   (local-set-key [?\C-c ?\C- ] 'conf-space-keywords))
 (add-hook 'conf-mode-hook 'arni-conf-hook)
 (defun arni-conf-windows-hook ()
-  (font-lock-add-keywords nil '(("\\(#\\w*\\)" (1 font-lock-builtin-face))))           ; #gadgetpar
-  (font-lock-add-keywords nil '(("^[ \t]*\\w*" . font-lock-variable-name-face)))       ; par=val, par val, par:val, text
-  (font-lock-add-keywords nil '(("^[ \t]*\\[\\(\\w*\\)\\]" (1 font-lock-type-face))))) ; reactivate [section] explicitly
+  (font-lock-add-keywords
+   nil '(("\\(#\\w*\\)" (1 font-lock-builtin-face)))) ; #gadgetpar
+  (font-lock-add-keywords
+   nil '(("^[ \t]*\\w*" .
+          font-lock-variable-name-face))) ; par=val, par val, par:val, text
+  (font-lock-add-keywords
+   nil '(("^[ \t]*\\[\\(\\w*\\)\\]"
+          (1 font-lock-type-face))))) ; reactivate [section] explicitly
 (add-hook 'conf-windows-mode-hook 'arni-conf-windows-hook)
 ;;----------
 ;; 7.9  CSV
@@ -5575,7 +5713,8 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
 (defvar csv-splash t "Whether to show initial help in minibuffer.")
 (defun arni-csv-hook ()
   (load-library "csv-nav")
-  (set-face-attribute 'csv-separator-face nil :foreground -)(setq buffer-invisibility-spec t)
+  (set-face-attribute 'csv-separator-face nil :foreground -)
+  (setq buffer-invisibility-spec t)
   (local-set-key [?\t]         'forward-sexp-start )
   (local-set-key [backtab]     'backward-sexp-start)
   (local-set-key [M-up]        'csv-up-view        )
@@ -5584,53 +5723,77 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun csv-down (&optional n)
     "Move down N lines."
     (interactive "p")
-    (deactivate-mark)(forward-line n)(if (eobp)(forward-line -1)))
+    (deactivate-mark)
+    (forward-line n)
+    (if (eobp)(forward-line -1)))
   (defun csv-down-view ()
     "Move down one line and view in other window."
     (interactive)
-    (csv-down 1)(csv-view))
+    (csv-down 1)
+    (csv-view))
   (defun csv-help ()
     "Show `csv-mode' keybindings."
     (interactive)
-    (let ((hints '("C-c C-/: This help" "C-c C-a: Align (visually)" "C-1 C-c C-a: Align (insert spaces)"
-                   "C-c C-u:  Unalign" "M-up & M-down: View"))(sep "       "))
-      (message (concat sep (mapconcat 'eval hints sep))))(setq csv-splash nil))
+    (let ((hints '("C-c C-/: This help" "C-c C-a: Align (visually)"
+                   "C-1 C-c C-a: Align (insert spaces)"
+                   "C-c C-u:  Unalign" "M-up & M-down: View"))
+          (sep "       "))
+      (message (concat sep (mapconcat 'eval hints sep))))
+    (setq csv-splash nil))
   (defun csv-nav-parse-line ()
     "Override `csv-nav-parse-line' to support `csv-separators'."
-    (let ((start (point)) result)
+    (let ((start (point))
+          result)
       (with-syntax-table csv-nav-syntax-table
         (while start
           (skip-syntax-forward "^.\" ")
           (cond ((= (char-after)(string-to-char (car csv-separators)))
-                 (setq result (cons (csv-nav-parse-field start) result) start (1+ (point)))(forward-char 1))
-                ((= (char-after) ?\n)(setq result (cons (csv-nav-parse-field start) result) start nil)(forward-char 1))
-                ((= (char-after) ?\")(forward-sexp 1))(t (forward-char 1))))
+                 (setq result (cons (csv-nav-parse-field start) result))
+                 (setq start (1+ (point)))
+                 (forward-char 1))
+                ((= (char-after) ?\n)
+                 (setq result (cons (csv-nav-parse-field start) result))
+                 (setq start nil)
+                 (forward-char 1))
+                ((= (char-after) ?\")
+                 (forward-sexp 1))
+                (t (forward-char 1))))
         (nreverse result))))
   (defun csv-up (&optional n)
     "Move up N lines."
-    (interactive "p")(deactivate-mark)(forward-line (- n)))
+    (interactive "p")
+    (deactivate-mark)
+    (forward-line (- n)))
   (defun csv-up-view ()
     "Move up one line and view in other window."
     (interactive)
-    (csv-up 1)(csv-view))
+    (csv-up 1)
+    (csv-view))
   (defun csv-view ()
     "View current line in other window."
     (interactive)
-    (csv-nav-mode)(csv-nav-edit)(other-window 1)(csv-mode)(message nil))
+    (csv-nav-mode)
+    (csv-nav-edit)
+    (other-window 1)
+    (csv-mode)
+    (message nil))
   (if csv-splash (csv-help)))
 (add-hook 'csv-mode-hook 'arni-csv-hook)
 (defun csv-mode-force ()
   "Edit comma-separated text file."
   (interactive)
-  (if (featurep 'csv-mode) (unload-feature 'csv-mode))(csv-mode)) ; in case space-mode has already been called
+  (if (featurep 'csv-mode)(unload-feature 'csv-mode))
+  (csv-mode)) ; in case space-mode has already been called
 (defun space-mode ()
   "Edit space-separated text file."
   (interactive)
-  (setq csv-separators '(" "))(csv-mode)) ; csv-separators must be set before loading csv-mode
+  (setq csv-separators '(" "))
+  (csv-mode)) ; csv-separators must be set before loading csv-mode
 (defun tab-mode ()
   "Edit tab-separated text file."
   (interactive)
-  (setq csv-separators '("\t"))(csv-mode)) ; csv-separators must be set before loading csv-mode
+  (setq csv-separators '("\t"))
+  (csv-mode)) ; csv-separators must be set before loading csv-mode
 ;;----------------
 ;; 7.10 Customize
 ;;----------------
@@ -5644,8 +5807,9 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
 ;;-----------
 (defun arni-diff-hook ()
   (setq show-trailing-whitespace nil)
-  (set-face-attribute 'diff-added   nil :foreground (fg 'font-lock-keyword-face))
-  (set-face-attribute 'diff-removed nil :foreground (fg 'font-lock-builtin-face))
+  (set-face-attribute 'diff-added nil :foreground (fg 'font-lock-keyword-face))
+  (set-face-attribute 'diff-removed
+                      nil :foreground (fg 'font-lock-builtin-face))
   (local-unset-key [?\M-k]) ; reactivate kill-this-buffer
   (local-unset-key [?\M-n]) ; reactivate bs-cycle-next
   (local-unset-key [?\M-o]) ; reactivate other-window
@@ -5660,38 +5824,62 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
     "View diff in source file and stay."
     (interactive)
     (let ((diff-window (selected-window)))
-      (diff-goto-source)(select-window diff-window))))
+      (diff-goto-source)
+      (select-window diff-window))))
 (add-hook 'diff-mode-hook 'arni-diff-hook)
 (defun arni-ediff-hook ()
   (setq auto-hscroll-mode nil)
-  (setq ediff-split-window-function 'split-window-right)                                ; windows side by side
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)                         ; minibuffer control
-  (set-face-attribute 'ediff-current-diff-A nil :background "salmon"     :foreground -) ; current line A
-  (set-face-attribute 'ediff-current-diff-B nil :background "salmon"     :foreground -) ; current line B
-  (set-face-attribute 'ediff-current-diff-C nil :background "salmon"     :foreground -) ; current line C
-  (set-face-attribute 'ediff-even-diff-A    nil :background "gold"       :foreground -) ; noncurrent line A
-  (set-face-attribute 'ediff-even-diff-B    nil :background "gold"       :foreground -) ; noncurrent line B
-  (set-face-attribute 'ediff-even-diff-C    nil :background "gold"       :foreground -) ; noncurrent line C
-  (set-face-attribute 'ediff-fine-diff-A    nil :background "rosybrown2" :foreground -) ; current diff A
-  (set-face-attribute 'ediff-fine-diff-B    nil :background "rosybrown2" :foreground -) ; current diff B
-  (set-face-attribute 'ediff-fine-diff-C    nil :background "rosybrown2" :foreground -) ; current diff C
-  (set-face-attribute 'ediff-odd-diff-A     nil :background "gold"       :foreground -) ; noncurrent line A
-  (set-face-attribute 'ediff-odd-diff-B     nil :background "gold"       :foreground -) ; noncurrent line B
-  (set-face-attribute 'ediff-odd-diff-C     nil :background "gold"       :foreground -) ; noncurrent line C
+  (setq ediff-split-window-function 'split-window-right) ; windows side by side
+  (setq ediff-window-setup-function
+        'ediff-setup-windows-plain) ; minibuffer control
+  (set-face-attribute 'ediff-current-diff-A nil :background "salmon"
+                      :foreground -) ; current line A
+  (set-face-attribute 'ediff-current-diff-B nil :background "salmon"
+                      :foreground -) ; current line B
+  (set-face-attribute 'ediff-current-diff-C nil :background "salmon"
+                      :foreground -) ; current line C
+  (set-face-attribute 'ediff-even-diff-A    nil :background "gold"
+                      :foreground -) ; noncurrent line A
+  (set-face-attribute 'ediff-even-diff-B    nil :background "gold"
+                      :foreground -) ; noncurrent line B
+  (set-face-attribute 'ediff-even-diff-C    nil :background "gold"
+                      :foreground -) ; noncurrent line C
+  (set-face-attribute 'ediff-fine-diff-A    nil :background "rosybrown2"
+                      :foreground -) ; current diff A
+  (set-face-attribute 'ediff-fine-diff-B    nil :background "rosybrown2"
+                      :foreground -) ; current diff B
+  (set-face-attribute 'ediff-fine-diff-C    nil :background "rosybrown2"
+                      :foreground -) ; current diff C
+  (set-face-attribute 'ediff-odd-diff-A     nil :background "gold"
+                      :foreground -) ; noncurrent line A
+  (set-face-attribute 'ediff-odd-diff-B     nil :background "gold"
+                      :foreground -) ; noncurrent line B
+  (set-face-attribute 'ediff-odd-diff-C     nil :background "gold"
+                      :foreground -) ; noncurrent line C
   (defun ediff-copy-right ()
     "Copy region from buffer A to buffer B."
     (interactive)
     (let ((line-A (with-current-buffer ediff-buffer-A (line-number-at-pos)))
           (line-B (with-current-buffer ediff-buffer-B (line-number-at-pos))))
-      (ediff-copy-A-to-B nil)(ediff-update-diffs)(goto-line-lisp line-A ediff-buffer-A)(recenter)
-      (goto-line-lisp line-B ediff-buffer-B)(recenter)(select-window (get-buffer-window "*Ediff Control Panel*"))))
+      (ediff-copy-A-to-B nil)
+      (ediff-update-diffs)
+      (goto-line-lisp line-A ediff-buffer-A)
+      (recenter)
+      (goto-line-lisp line-B ediff-buffer-B)
+      (recenter)
+      (select-window (get-buffer-window "*Ediff Control Panel*"))))
   (defun ediff-copy-left ()
     "Copy region from buffer B to buffer A."
     (interactive)
     (let ((line-A (with-current-buffer ediff-buffer-A (line-number-at-pos)))
           (line-B (with-current-buffer ediff-buffer-B (line-number-at-pos))))
-      (ediff-copy-B-to-A nil)(ediff-update-diffs)(goto-line-lisp line-A ediff-buffer-A)(recenter)
-      (goto-line-lisp line-B ediff-buffer-B)(recenter)(select-window (get-buffer-window "*Ediff Control Panel*"))))
+      (ediff-copy-B-to-A nil)
+      (ediff-update-diffs)
+      (goto-line-lisp line-A ediff-buffer-A)
+      (recenter)
+      (goto-line-lisp line-B ediff-buffer-B)
+      (recenter)
+      (select-window (get-buffer-window "*Ediff Control Panel*"))))
   (defun ediff-jump-last ()
     "Select last difference."
     (interactive)
@@ -5703,8 +5891,14 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun ediff-scroll-bottom ()
     "Scroll both windows to end of buffer."
     (interactive)
-    (with-current-buffer ediff-buffer-A (goto-char (point-min))(recenter)(goto-char (point-max)))
-    (with-current-buffer ediff-buffer-B (goto-char (point-min))(recenter)(goto-char (point-max)))
+    (with-current-buffer ediff-buffer-A
+      (goto-char (point-min))
+      (recenter)
+      (goto-char (point-max)))
+    (with-current-buffer ediff-buffer-B
+      (goto-char (point-min))
+      (recenter)
+      (goto-char (point-max)))
     (select-window (get-buffer-window "*Ediff Control Panel*")))
   (defun ediff-scroll-down (&optional n)
     "Scroll both windows N lines down."
@@ -5717,13 +5911,18 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun ediff-scroll-down-full (&optional n)
     "Scroll both windows N pages down."
     (interactive "p")
-    (ediff-scroll-down (* n (- (window-body-height ediff-window-A) next-screen-context-lines))))
+    (ediff-scroll-down (* n (- (window-body-height ediff-window-A)
+                               next-screen-context-lines))))
   (defun ediff-scroll-left (&optional n)
     "Scroll both windows N columns left."
     (interactive "p")
-    (let ((cur-scroll (window-hscroll ediff-window-A))(remember-A ediff-window-A)(remember-B ediff-window-B))
-      (select-window remember-A)(set-window-hscroll remember-A (- cur-scroll n))
-      (select-window remember-B)(set-window-hscroll remember-B (- cur-scroll n))
+    (let ((cur-scroll (window-hscroll ediff-window-A))
+          (remember-A ediff-window-A)
+          (remember-B ediff-window-B))
+      (select-window remember-A)
+      (set-window-hscroll remember-A (- cur-scroll n))
+      (select-window remember-B)
+      (set-window-hscroll remember-B (- cur-scroll n))
       (select-window (get-buffer-window "*Ediff Control Panel*"))))
   (defun ediff-scroll-left-3 ()
     "Scroll both windows 3 columns left."
@@ -5732,13 +5931,18 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun ediff-scroll-left-full (&optional n)
     "Scroll both windows N pages left."
     (interactive "p")
-    (ediff-scroll-left (* n (- (window-width ediff-window-A) next-screen-context-lines))))
+    (ediff-scroll-left (* n (- (window-width ediff-window-A)
+                               next-screen-context-lines))))
   (defun ediff-scroll-right (&optional n)
     "Scroll both windows N columns left."
     (interactive "p")
-    (let ((cur-scroll (window-hscroll ediff-window-A))(remember-A ediff-window-A)(remember-B ediff-window-B))
-      (select-window remember-A)(set-window-hscroll remember-A (+ cur-scroll n))
-      (select-window remember-B)(set-window-hscroll remember-B (+ cur-scroll n))
+    (let ((cur-scroll (window-hscroll ediff-window-A))
+          (remember-A ediff-window-A)
+          (remember-B ediff-window-B))
+      (select-window remember-A)
+      (set-window-hscroll remember-A (+ cur-scroll n))
+      (select-window remember-B)
+      (set-window-hscroll remember-B (+ cur-scroll n))
       (select-window (get-buffer-window "*Ediff Control Panel*"))))
   (defun ediff-scroll-right-3 ()
     "Scroll both windows 3 column left."
@@ -5747,14 +5951,16 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun ediff-scroll-right-full (&optional n)
     "Scroll both windows N pages right."
     (interactive "p")
-    (ediff-scroll-right (* n (- (window-width ediff-window-A) next-screen-context-lines))))
+    (ediff-scroll-right (* n (- (window-width ediff-window-A)
+                                next-screen-context-lines))))
   (defun ediff-scroll-top ()
     "Scroll both windows to beginning of buffer."
     (interactive)
     (ediff-operate-on-windows 'goto-char (point-min)))
   (defun ediff-scroll-up (&optional n)
     "Scroll both windows N lines up."
-    (interactive "p")(ediff-scroll-vertically n))
+    (interactive "p")
+    (ediff-scroll-vertically n))
   (defun ediff-scroll-up-3 ()
     "Scroll both windows 3 lines up."
     (interactive)
@@ -5762,166 +5968,178 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun ediff-scroll-up-full (&optional n)
     "Scroll both windows N pages up."
     (interactive "p")
-    (ediff-scroll-up (* n (- (window-body-height ediff-window-A) next-screen-context-lines))))
+    (ediff-scroll-up (* n (- (window-body-height ediff-window-A)
+                             next-screen-context-lines))))
   (defun ediff-split-left-right ()
     "Arrange Ediff windows on left and right side of screen."
     (interactive)
-    (setq ediff-split-window-function 'split-window-right)(ediff-recenter 'no-rehighlight))
+    (setq ediff-split-window-function 'split-window-right)
+    (ediff-recenter 'no-rehighlight))
   (defun ediff-split-top-bottom ()
     "Arrange Ediff windows on top and bottom of screen."
     (interactive)
-    (setq ediff-split-window-function 'split-window-below)(ediff-recenter 'no-rehighlight)))
+    (setq ediff-split-window-function 'split-window-below)
+    (ediff-recenter 'no-rehighlight)))
 (add-hook 'ediff-mode-hook 'arni-ediff-hook)
 (defun arni-ediff-cleanup-hook ()(setq auto-hscroll-mode t))
 (add-hook 'ediff-cleanup-hook 'arni-ediff-cleanup-hook)
 (defun arni-ediff-keymap-setup-hook ()
-  (define-key ediff-mode-map [f5]       'ediff-revert-buffers-then-recompute-diffs )
-  (define-key ediff-mode-map [home]     'ediff-jump-to-difference                  )
-  (define-key ediff-mode-map [end]      'ediff-jump-last                           )
-  (define-key ediff-mode-map [S-home]   'ediff-jump-to-difference                  )
-  (define-key ediff-mode-map [S-end]    'ediff-jump-last                           )
-  (define-key ediff-mode-map [C-home]   'ediff-scroll-top                          )
-  (define-key ediff-mode-map [C-end]    'ediff-scroll-bottom                       )
-  (define-key ediff-mode-map [C-S-home] 'ediff-scroll-top                          )
-  (define-key ediff-mode-map [C-S-end]  'ediff-scroll-bottom                       )
-  (define-key ediff-mode-map [prior]    'ediff-scroll-up-full                      )
-  (define-key ediff-mode-map [next]     'ediff-scroll-down-full                    )
-  (define-key ediff-mode-map [C-prior]  'ediff-scroll-left-full                    )
-  (define-key ediff-mode-map [C-next]   'ediff-scroll-right-full                   )
-  (define-key ediff-mode-map [?\t]      'ediff-next-difference                     )
-  (define-key ediff-mode-map [backtab]  'ediff-previous-difference                 )
-  (define-key ediff-mode-map [? ]       'ediff-toggle-skip-similar                 ) ; ediff-next-difference
-  (define-key ediff-mode-map [left]     'ediff-copy-left                           )
-  (define-key ediff-mode-map [right]    'ediff-copy-right                          )
-  (define-key ediff-mode-map [S-left]   'ediff-scroll-left                         )
-  (define-key ediff-mode-map [S-right]  'ediff-scroll-right                        )
-  (define-key ediff-mode-map [C-left]   'ediff-scroll-left-3                       )
-  (define-key ediff-mode-map [C-right]  'ediff-scroll-right-3                      )
-  (define-key ediff-mode-map [M-left]   'ediff-split-top-bottom                    )
-  (define-key ediff-mode-map [M-right]  'ediff-split-left-right                    )
-  (define-key ediff-mode-map [up]       'ediff-previous-difference                 )
-  (define-key ediff-mode-map [down]     'ediff-next-difference                     )
-  (define-key ediff-mode-map [S-up]     'ediff-scroll-up                           )
-  (define-key ediff-mode-map [S-down]   'ediff-scroll-down                         )
-  (define-key ediff-mode-map [C-up]     'ediff-scroll-up-3                         )
-  (define-key ediff-mode-map [C-down]   'ediff-scroll-down-3                       )
-  (define-key ediff-mode-map [M-up]     'ediff-previous-difference                 )
-  (define-key ediff-mode-map [M-down]   'ediff-next-difference                     )
-  (define-key ediff-mode-map [?\C-n]    'ediff-next-difference                     )
-  (define-key ediff-mode-map [?\C-p]    'ediff-previous-difference                 )
-  (define-key ediff-mode-map [?\C-v]    'ediff-scroll-down-full                    )
-  (define-key ediff-mode-map [?\C-y]    'ediff-scroll-up-full                      )
-  (define-key ediff-mode-map [?\C-z]    'ediff-revert-buffers-then-recompute-diffs )
-  (define-key ediff-mode-map [?\M-n]    'ediff-next-difference                     )
-  (define-key ediff-mode-map [?\M-p]    'ediff-previous-difference                 )
-  (define-key ediff-mode-map [?\\]      'ediff-swap-buffers                        )
-  (define-key ediff-mode-map [?<]       'ediff-scroll-left-full                    )
-  (define-key ediff-mode-map [?>]       'ediff-scroll-right-full                   )
-  (define-key ediff-mode-map [?M]       'ediff-jump-middle                         ) ; ediff-show-current-session-met...
-  (define-key ediff-mode-map [?N]       'ediff-next-difference                     )
-  (define-key ediff-mode-map [?P]       'ediff-previous-difference                 )
-  (define-key ediff-mode-map [?U]       'ediff-revert-buffers-then-recompute-diffs )
-  (define-key ediff-mode-map [?c]       'ediff-recenter                            )
-  (define-key ediff-mode-map [?i]       'ediff-toggle-ignore-case                  ) ; ediff-status-info
-  (define-key ediff-mode-map [?m]       'ediff-jump-middle                         ) ; ediff-toggle-wide-display
-  (define-key ediff-mode-map [?u]       'ediff-revert-buffers-then-recompute-diffs))
+  (define-key ediff-mode-map [f5]    'ediff-revert-buffers-then-recompute-diffs)
+  (define-key ediff-mode-map [home]     'ediff-jump-to-difference )
+  (define-key ediff-mode-map [end]      'ediff-jump-last          )
+  (define-key ediff-mode-map [S-home]   'ediff-jump-to-difference )
+  (define-key ediff-mode-map [S-end]    'ediff-jump-last          )
+  (define-key ediff-mode-map [C-home]   'ediff-scroll-top         )
+  (define-key ediff-mode-map [C-end]    'ediff-scroll-bottom      )
+  (define-key ediff-mode-map [C-S-home] 'ediff-scroll-top         )
+  (define-key ediff-mode-map [C-S-end]  'ediff-scroll-bottom      )
+  (define-key ediff-mode-map [prior]    'ediff-scroll-up-full     )
+  (define-key ediff-mode-map [next]     'ediff-scroll-down-full   )
+  (define-key ediff-mode-map [C-prior]  'ediff-scroll-left-full   )
+  (define-key ediff-mode-map [C-next]   'ediff-scroll-right-full  )
+  (define-key ediff-mode-map [?\t]      'ediff-next-difference    )
+  (define-key ediff-mode-map [backtab]  'ediff-previous-difference)
+  (define-key ediff-mode-map [? ]
+    'ediff-toggle-skip-similar) ; ediff-next-difference
+  (define-key ediff-mode-map [left]     'ediff-copy-left          )
+  (define-key ediff-mode-map [right]    'ediff-copy-right         )
+  (define-key ediff-mode-map [S-left]   'ediff-scroll-left        )
+  (define-key ediff-mode-map [S-right]  'ediff-scroll-right       )
+  (define-key ediff-mode-map [C-left]   'ediff-scroll-left-3      )
+  (define-key ediff-mode-map [C-right]  'ediff-scroll-right-3     )
+  (define-key ediff-mode-map [M-left]   'ediff-split-top-bottom   )
+  (define-key ediff-mode-map [M-right]  'ediff-split-left-right   )
+  (define-key ediff-mode-map [up]       'ediff-previous-difference)
+  (define-key ediff-mode-map [down]     'ediff-next-difference    )
+  (define-key ediff-mode-map [S-up]     'ediff-scroll-up          )
+  (define-key ediff-mode-map [S-down]   'ediff-scroll-down        )
+  (define-key ediff-mode-map [C-up]     'ediff-scroll-up-3        )
+  (define-key ediff-mode-map [C-down]   'ediff-scroll-down-3      )
+  (define-key ediff-mode-map [M-up]     'ediff-previous-difference)
+  (define-key ediff-mode-map [M-down]   'ediff-next-difference    )
+  (define-key ediff-mode-map [?\C-n]    'ediff-next-difference    )
+  (define-key ediff-mode-map [?\C-p]    'ediff-previous-difference)
+  (define-key ediff-mode-map [?\C-v]    'ediff-scroll-down-full   )
+  (define-key ediff-mode-map [?\C-y]    'ediff-scroll-up-full     )
+  (define-key ediff-mode-map [?\C-z] 'ediff-revert-buffers-then-recompute-diffs)
+  (define-key ediff-mode-map [?\M-n]    'ediff-next-difference    )
+  (define-key ediff-mode-map [?\M-p]    'ediff-previous-difference)
+  (define-key ediff-mode-map [?\\]      'ediff-swap-buffers       )
+  (define-key ediff-mode-map [?<]       'ediff-scroll-left-full   )
+  (define-key ediff-mode-map [?>]       'ediff-scroll-right-full  )
+  (define-key ediff-mode-map [?M]
+    'ediff-jump-middle) ; ediff-show-current-session-meta-buffer
+  (define-key ediff-mode-map [?N]       'ediff-next-difference    )
+  (define-key ediff-mode-map [?P]       'ediff-previous-difference)
+  (define-key ediff-mode-map [?U] 'ediff-revert-buffers-then-recompute-diffs)
+  (define-key ediff-mode-map [?c]       'ediff-recenter           )
+  (define-key ediff-mode-map [?i] 'ediff-toggle-ignore-case) ; ediff-status-info
+  (define-key ediff-mode-map [?m]
+    'ediff-jump-middle) ; ediff-toggle-wide-display
+  (define-key ediff-mode-map [?u] 'ediff-revert-buffers-then-recompute-diffs))
 (add-hook 'ediff-keymap-setup-hook 'arni-ediff-keymap-setup-hook)
 (defun arni-ediff-startup-hook ()(message nil))
 (add-hook 'ediff-startup-hook 'arni-ediff-startup-hook)
 ;;------------
 ;; 7.12 Dired
 ;;------------
-(defvar dired-by nil "Current sorting rule (nil:name, S:size, t:time, X:extension)")
-(defvar dired-dot nil "Non-nil if dot files are currently shown in dired. See `dired-toggle-dot-files'.")
+(defvar dired-by nil
+  "Current sorting rule (nil:name, S:size, t:time, X:extension)")
+(defvar dired-dot nil
+  "Non-nil if dot files are currently shown in dired.
+See `dired-toggle-dot-files'.")
 (defun arni-dired-hook ()
   (require 'dired-x) ; provide dired-do-find-marked-files
-  (setq dired-actual-switches dired-fmt                              ) ; set default dired format
-  (setq dired-free-space-args "-Ph"                                  ) ; show GB rather than KB
-  (setq dired-use-ls-dired nil                                       ) ; use Lisp rather than ls
-  (setq ls-lisp-dirs-first t                                         ) ; sort directories before files
-  (setq ls-lisp-format-time-list '("%e-%b-%Y %k:%M" "%e-%b-%Y %k:%M")) ; date format for recent and old files
-  (setq ls-lisp-ignore-case t                                        ) ; sort files ignoring case
-  (setq ls-lisp-use-insert-directory-program nil                     ) ; use Lisp rather than ls
-  (setq ls-lisp-use-localized-time-format t                          ) ; force ls-lisp-format-time-list
-  (setq ls-lisp-verbosity nil                                        ) ; suppress links/user/group info
-  (set-face-attribute 'dired-flagged nil :foreground - :inherit font-lock-comment-face)
-  (set-face-attribute 'dired-header  nil :underline t :inherit -                      )
-  (set-face-attribute 'dired-ignored nil :inherit -                                   )
-  (set-face-attribute 'dired-mark    nil :foreground "brown4"                         )
-  (set-face-attribute 'dired-marked  nil :foreground "red" :underline -               )
-  (set-face-attribute 'dired-warning nil :inherit -                                   )
+  (setq dired-actual-switches dired-fmt         ) ; set default dired format
+  (setq dired-free-space-args "-Ph"             ) ; show GB rather than KB
+  (setq dired-use-ls-dired nil                  ) ; use Lisp rather than ls
+  (setq ls-lisp-dirs-first t                    ) ; sort dirs before files
+  (setq ls-lisp-format-time-list
+        '("%e-%b-%Y %k:%M" "%e-%b-%Y %k:%M")) ; date format for recent/old files
+  (setq ls-lisp-ignore-case t                   ) ; sort files ignoring case
+  (setq ls-lisp-use-insert-directory-program nil) ; use Lisp rather than ls
+  (setq ls-lisp-use-localized-time-format t   ) ; force ls-lisp-format-time-list
+  (setq ls-lisp-verbosity nil                 ) ; suppress links/user/group info
+  (set-face-attribute 'dired-flagged nil
+                      :foreground - :inherit font-lock-comment-face)
+  (set-face-attribute 'dired-header  nil :underline t :inherit -       )
+  (set-face-attribute 'dired-ignored nil :inherit -                    )
+  (set-face-attribute 'dired-mark    nil :foreground "brown4"          )
+  (set-face-attribute 'dired-marked  nil :foreground "red" :underline -)
+  (set-face-attribute 'dired-warning nil :inherit -                    )
   (local-unset-key [?\M-o]) ; reactivate other-window
-  (local-set-key [f9]        'dired-by-N                        )
-  (local-set-key [f10]       'dired-by-S                        )
-  (local-set-key [f11]       'dired-by-T                        )
-  (local-set-key [f12]       'dired-by-X                        )
-  (local-set-key [C-home]    'dired-top                         )
-  (local-set-key [C-end]     'dired-bottom                      )
-  (local-set-key [C-S-home]  'dired-top-mark                    )
-  (local-set-key [C-S-end]   'region-bol-bottom                 )
-  (local-set-key [prior]     'dired-up-page                     )
-  (local-set-key [next]      'dired-down-page                   )
-  (local-set-key [backspace] 'dired-up-directory                )
-  (local-set-key [?\t]       'dired-enter-or-view               )
-  (local-set-key [backtab]   'dired-up-directory                )
-  (local-set-key [S-return]  'dired-do-find-marked-files        ) ; dired-x must be explicitly loaded
-  (local-set-key [left]      'dired-up-directory                )
-  (local-set-key [right]     'dired-enter-or-view               )
-  (local-set-key [S-left]    'dired-up-directory                )
-  (local-set-key [S-right]   'dired-enter-or-view               )
-  (local-set-key [C-left]    'dired-up-directory                )
-  (local-set-key [C-right]   'dired-view-other                  )
-  (local-set-key [up]        'dired-up                          ) ; dired-previous-line
-  (local-set-key [down]      'dired-down                        ) ; dired-next-line
-  (local-set-key [S-up]      'dired-up-mark                     )
-  (local-set-key [S-down]    'region-bol-down                   )
-  (local-set-key [C-up]      'dired-up-3                        )
-  (local-set-key [C-down]    'dired-down-3                      )
-  (local-set-key [M-up]      'dired-up-view                     )
-  (local-set-key [M-down]    'dired-down-view                   )
-  (local-set-key [?\M-s]     'dired-do-isearch-regexp           )
-  (local-set-key [?\C-n]     'dired-down                        )
-  (local-set-key [?\C-p]     'dired-up                          )
-  (local-set-key [?\C-v]     'dired-down-page                   )
-  (local-set-key [?\C-y]     'dired-up-page                     )
-  (local-set-key [?/]        'isearch-forward                   )
-  (local-set-key [?*]        'dired-change-marks                ) ; [map]
-  (local-set-key [?\;]       'dired-mark-files-regexp           )
+  (local-set-key [f9]        'dired-by-N                 )
+  (local-set-key [f10]       'dired-by-S                 )
+  (local-set-key [f11]       'dired-by-T                 )
+  (local-set-key [f12]       'dired-by-X                 )
+  (local-set-key [C-home]    'dired-top                  )
+  (local-set-key [C-end]     'dired-bottom               )
+  (local-set-key [C-S-home]  'dired-top-mark             )
+  (local-set-key [C-S-end]   'region-bol-bottom          )
+  (local-set-key [prior]     'dired-up-page              )
+  (local-set-key [next]      'dired-down-page            )
+  (local-set-key [backspace] 'dired-up-directory         )
+  (local-set-key [?\t]       'dired-enter-or-view        )
+  (local-set-key [backtab]   'dired-up-directory         )
+  ;; dired-x must be explicitly loaded to run `dired-do-find-marked-files'
+  (local-set-key [S-return]  'dired-do-find-marked-files )
+  (local-set-key [left]      'dired-up-directory         )
+  (local-set-key [right]     'dired-enter-or-view        )
+  (local-set-key [S-left]    'dired-up-directory         )
+  (local-set-key [S-right]   'dired-enter-or-view        )
+  (local-set-key [C-left]    'dired-up-directory         )
+  (local-set-key [C-right]   'dired-view-other           )
+  (local-set-key [up]        'dired-up                   ) ; dired-previous-line
+  (local-set-key [down]      'dired-down                 ) ; dired-next-line
+  (local-set-key [S-up]      'dired-up-mark              )
+  (local-set-key [S-down]    'region-bol-down            )
+  (local-set-key [C-up]      'dired-up-3                 )
+  (local-set-key [C-down]    'dired-down-3               )
+  (local-set-key [M-up]      'dired-up-view              )
+  (local-set-key [M-down]    'dired-down-view            )
+  (local-set-key [?\M-s]     'dired-do-isearch-regexp    )
+  (local-set-key [?\C-n]     'dired-down                 )
+  (local-set-key [?\C-p]     'dired-up                   )
+  (local-set-key [?\C-v]     'dired-down-page            )
+  (local-set-key [?\C-y]     'dired-up-page              )
+  (local-set-key [?/]        'isearch-forward            )
+  (local-set-key [?*]        'dired-change-marks         ) ; [map]
+  (local-set-key [?\;]       'dired-mark-files-regexp    )
   (local-set-key [?\:]       'dired-mark-files-containing-regexp) ; [map]
-  (local-set-key [?<]        'dired-up-directory                ) ; dired-prev-dirline
-  (local-set-key [?>]        'dired-enter-or-view               ) ; dired-next-dirline
-  (local-set-key [?,]        'dired-up-directory                )
-  (local-set-key [?.]        'dired-enter-or-view               ) ; dired-clean-directory
-  (local-set-key [?\C-.]     'dired-toggle-dot                  )
-  (local-set-key [?C]        'dired-compare-directories         ) ; dired-do-copy
-  (local-set-key [?D]        'dired-mark-directories            ) ; dired-do-delete
-  (local-set-key [?E]        'dired-do-query-replace-regexp     )
+  (local-set-key [?<]        'dired-up-directory         ) ; dired-prev-dirline
+  (local-set-key [?>]        'dired-enter-or-view        ) ; dired-next-dirline
+  (local-set-key [?,]        'dired-up-directory         )
+  (local-set-key [?.]        'dired-enter-or-view      ) ; dired-clean-directory
+  (local-set-key [?\C-.]     'dired-toggle-dot           )
+  (local-set-key [?C]        'dired-compare-directories  ) ; dired-do-copy
+  (local-set-key [?D]        'dired-mark-directories     ) ; dired-do-delete
+  (local-set-key [?E]        'dired-do-query-replace-regexp)
   (local-set-key [?F]        'dired-mark-files-containing-regexp)
-  (local-set-key [?K]        'dired-create-directory            )
-  (local-set-key [?M]        'dired-middle                      ) ; dired-do-chmod
-  (local-set-key [?N]        'dired-down-view                   )
-  (local-set-key [?P]        'dired-up-view                     )
-  (local-set-key [?R]        'dired-do-rename-regexp            ) ; dired-do-rename
-  (local-set-key [?S]        'dired-do-isearch                  ) ; dired-do-symlink
-  (local-set-key [?V]        'dired-view-file                   ) ; dired-do-run-mail
-  (local-set-key [?a]        'dired-do-chmod                    ) ; dired-find-alternate-file
-  (local-set-key [?b]        'dired-do-byte-compile             )
-  (local-set-key [?c]        'dired-do-copy                     )
-  (local-set-key [?e]        'dired-mark-executables            ) ; dired-find-file
-  (local-set-key [?f]        'dired-mark-files-regexp           ) ; dired-find-file
-  (local-set-key [?g]        'dired-mark-files-containing-regexp) ; revert-buffer
-  (local-set-key [?h]        'dired-do-kill-lines               ) ; describe-mode
-  (local-set-key [?i]        'dired-unmark-up                   ) ; dired-maybe-insert-subdir
-  (local-set-key [?l]        'dired-downcase                    ) ; dired-do-redisplay
-  (local-set-key [?m]        'dired-mark-down                   ) ; dired-mark
-  (local-set-key [?n]        'dired-down                        ) ; dired-next-line
-  (local-set-key [?o]        'dired-view-other                  ) ; dired-find-file-other-window
-  (local-set-key [?p]        'dired-up                          ) ; dired-previous-line
-  (local-set-key [?q]        'dired-quit                        ) ; quit-window
-  (local-set-key [?r]        'dired-do-rename                   )
-  (local-set-key [?u]        'dired-unmark-down                 ) ; dired-unmark
-  (local-set-key [?v]        'dired-view-other                  ) ; dired-view-file
-  (local-set-key [?z]        'dired-do-compress                 )
+  (local-set-key [?K]        'dired-create-directory     )
+  (local-set-key [?M]        'dired-middle               ) ; dired-do-chmod
+  (local-set-key [?N]        'dired-down-view            )
+  (local-set-key [?P]        'dired-up-view              )
+  (local-set-key [?R]        'dired-do-rename-regexp     ) ; dired-do-rename
+  (local-set-key [?S]        'dired-do-isearch           ) ; dired-do-symlink
+  (local-set-key [?V]        'dired-view-file            ) ; dired-do-run-mail
+  (local-set-key [?a]        'dired-do-chmod       ) ; dired-find-alternate-file
+  (local-set-key [?b]        'dired-do-byte-compile      )
+  (local-set-key [?c]        'dired-do-copy              )
+  (local-set-key [?e]        'dired-mark-executables     ) ; dired-find-file
+  (local-set-key [?f]        'dired-mark-files-regexp    ) ; dired-find-file
+  (local-set-key [?g]       'dired-mark-files-containing-regexp) ; revert-buffer
+  (local-set-key [?h]        'dired-do-kill-lines        ) ; describe-mode
+  (local-set-key [?i]        'dired-unmark-up      ) ; dired-maybe-insert-subdir
+  (local-set-key [?l]        'dired-downcase             ) ; dired-do-redisplay
+  (local-set-key [?m]        'dired-mark-down            ) ; dired-mark
+  (local-set-key [?n]        'dired-down                 ) ; dired-next-line
+  (local-set-key [?o]        'dired-view-other  ) ; dired-find-file-other-window
+  (local-set-key [?p]        'dired-up                   ) ; dired-previous-line
+  (local-set-key [?q]        'dired-quit                 ) ; quit-window
+  (local-set-key [?r]        'dired-do-rename            )
+  (local-set-key [?u]        'dired-unmark-down          ) ; dired-unmark
+  (local-set-key [?v]        'dired-view-other           ) ; dired-view-file
+  (local-set-key [?z]        'dired-do-compress          )
   (defun dired-bottom ()
     "Move to bottom."
     (interactive)
@@ -5929,27 +6147,39 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun dired-by-X ()
     "Sort files by filename extension."
     (interactive)
-    (setq dired-by "X")(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))(revert-buffer)
+    (setq dired-by "X")
+    (setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))
+    (revert-buffer)
     (message "Sorted by EXTENSION"))
   (defun dired-by-N ()
     "Sort files by name."
     (interactive)
-    (setq dired-by nil)(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))(revert-buffer)
+    (setq dired-by nil)
+    (setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))
+    (revert-buffer)
     (message "Sorted by NAME"))
   (defun dired-by-S ()
     "Sort files by size."
     (interactive)
-    (setq dired-by "S")(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))(revert-buffer)
+    (setq dired-by "S")
+    (setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))
+    (revert-buffer)
     (message "Sorted by SIZE"))
   (defun dired-by-T ()
     "Sort files by modification time."
     (interactive)
-    (setq dired-by "t")(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))(revert-buffer)
+    (setq dired-by "t")
+    (setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))
+    (revert-buffer)
     (message "Sorted by TIME"))
   (defun dired-down (&optional n)
     "Move down N lines."
     (interactive "p")
-    (deactivate-mark)(forward-line n)(if (< (line-number-at-pos) 3)(dired-top)(dired-move-to-filename))
+    (deactivate-mark)
+    (forward-line n)
+    (if (< (line-number-at-pos) 3)
+        (dired-top)
+      (dired-move-to-filename))
     (if (eobp)(dired-bottom)))
   (defun dired-down-3 ()
     "Move down 3 lines."
@@ -5957,36 +6187,48 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
     (dired-down 3))
   (defun dired-down-page (&optional n)
     "Move down N pages."
-    (interactive "p")(dired-down (pages n)))
+    (interactive "p")
+    (dired-down (pages n)))
   (defun dired-down-view ()
     "Move down one line and view in other window."
     (interactive)
-    (dired-down 1)(dired-view-other))
+    (dired-down 1)
+    (dired-view-other))
   (defun dired-enter-or-view ()
     "Enter directory, or view file in other window."
     (interactive)
-    (if (file-directory-p (dired-get-file-for-visit))(dired-find-file)(dired-view-other)))
+    (if (file-directory-p (dired-get-file-for-visit))
+        (dired-find-file)
+      (dired-view-other)))
   (defun dired-mark-down (&optional n)
     "Mark N items and move to next line."
     (interactive "p")
-    (dired-mark n)(if (eobp)(dired-bottom)))
+    (dired-mark n)
+    (if (eobp)(dired-bottom)))
   (defun dired-middle ()
     "Move to middle."
     (interactive)
-    (dired-top)(dired-next-line (middle-from-here)))
+    (dired-top)
+    (dired-next-line (middle-from-here)))
   (defun dired-quit ()
     "Quit dired."
     (interactive)
-    (dolist (B dired-buffers)(kill-buffer (cdr B)))(delete-other-windows))
+    (dolist (B dired-buffers)
+      (kill-buffer (cdr B)))
+    (delete-other-windows))
   (defun dired-toggle-dot ()
     "Toggle whether dot files are shown in dired."
     (interactive)
-    (setq dired-dot (not dired-dot))(setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))
-    (revert-buffer)(message "Dot files %s" (if dired-dot "ON" "OFF")))
+    (setq dired-dot (not dired-dot))
+    (setq dired-actual-switches (concat dired-fmt (if dired-dot "A") dired-by))
+    (revert-buffer)
+    (message "Dot files %s" (if dired-dot "ON" "OFF")))
   (defun dired-top ()
     "Move to top."
     (interactive)
-    (deactivate-mark)(goto-line-lisp 2)(dired-next-line 1))
+    (deactivate-mark)
+    (goto-line-lisp 2)
+    (dired-next-line 1))
   (defun dired-top-mark ()
     "Extend region to top."
     (interactive)
@@ -5994,15 +6236,23 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun dired-unmark-down (&optional n)
     "Unmark N items and move to next line."
     (interactive "p")
-    (dired-unmark n)(dired-up 1)(dired-down 1))
+    (dired-unmark n)
+    (dired-up 1)
+    (dired-down 1))
   (defun dired-unmark-up (&optional n)
     "Unmark N items and move to previous line."
     (interactive "p")
-    (dotimes (i n)(dired-unmark 1)(dired-up 2)))
+    (dotimes (i n)
+      (dired-unmark 1)
+      (dired-up 2)))
   (defun dired-up (&optional n)
     "Move up N lines."
     (interactive "p")
-    (deactivate-mark)(forward-line (- n))(if (< (line-number-at-pos) 3)(dired-top)(dired-move-to-filename)))
+    (deactivate-mark)
+    (forward-line (- n))
+    (if (< (line-number-at-pos) 3)
+        (dired-top)
+      (dired-move-to-filename)))
   (defun dired-up-3 ()
     "Move up 3 lines."
     (interactive)
@@ -6010,18 +6260,23 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun dired-up-mark (&optional n)
     "Extend region up N lines."
     (interactive "p")
-    (region-bol-up n)(if (< (line-number-at-pos) 3)(dired-top-mark)))
+    (region-bol-up n)
+    (if (< (line-number-at-pos) 3)
+        (dired-top-mark)))
   (defun dired-up-page (&optional n)
     "Move up N pages."
-    (interactive "p")(dired-up (pages n)))
+    (interactive "p")
+    (dired-up (pages n)))
   (defun dired-up-view ()
     "Move up one line and view in other window."
     (interactive)
-    (dired-up 1)(dired-view-other))
+    (dired-up 1)
+    (dired-view-other))
   (defun dired-view-other ()
     "View file or directory in other window."
     (interactive)
-    (if (one-window-p)(split-window-right))(dired-display-file)))
+    (if (one-window-p)(split-window-right))
+    (dired-display-file)))
 (add-hook 'dired-mode-hook 'arni-dired-hook)
 ;;--------------
 ;; 7.13 DocView
@@ -6053,15 +6308,18 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun doc-view-100-dpi ()
     "View document at 100 dpi."
     (interactive)
-    (setq doc-view-resolution 100)(doc-view-enlarge 1))
+    (setq doc-view-resolution 100)
+    (doc-view-enlarge 1))
   (defun doc-view-200-dpi ()
     "View document at 200 dpi."
     (interactive)
-    (setq doc-view-resolution 200)(doc-view-enlarge 1))
+    (setq doc-view-resolution 200)
+    (doc-view-enlarge 1))
   (defun doc-view-400-dpi ()
     "View document at 400 dpi."
     (interactive)
-    (setq doc-view-resolution 400)(doc-view-enlarge 1)))
+    (setq doc-view-resolution 400)
+    (doc-view-enlarge 1)))
 (add-hook 'doc-view-mode-hook 'arni-doc-view-hook)
 ;;-------------
 ;; 7.14 Finder
@@ -6071,19 +6329,24 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun finder-view ()
     "View keywords within a finder category."
     (interactive)
-    (finder-select)(finder-list-keywords)(balance-windows)))
+    (finder-select)
+    (finder-list-keywords)
+    (balance-windows)))
 (add-hook 'finder-mode-hook 'arni-finder-hook)
 ;;-----------
 ;; 7.15 Grep
 ;;-----------
-(defun arni-grep-hook ()(other-window 1)(delete-other-windows)) ; inherits compilation-mode-hook
+(defun arni-grep-hook ()
+  (other-window 1)
+  (delete-other-windows)) ; inherits compilation-mode-hook
 (add-hook 'grep-setup-hook 'arni-grep-hook)
 ;;-----------
 ;; 7.16 Help
 ;;-----------
 (defun arni-help-hook ()
   (view-mode 0)
-  (set-face-attribute 'escape-glyph nil :foreground (fg 'font-lock-comment-face) :weight -) ; ^L
+  (set-face-attribute 'escape-glyph nil
+                      :foreground (fg 'font-lock-comment-face) :weight -) ; ^L
   (local-set-key [backspace] 'help-go-back            )
   (local-set-key [?\t]       'forward-button          )
   (local-set-key [backtab]   'backward-button         )
@@ -6099,10 +6362,14 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (local-set-key [?q]        'kill-buffer-maybe-window)
   (defun help-jump-down (&optional n)
     "Move N nodes forward."
-    (interactive "p")(deactivate-mark)(forward-button n))
+    (interactive "p")
+    (deactivate-mark)
+    (forward-button n))
   (defun help-jump-up (&optional n)
     "Move N nodes backward."
-    (interactive "p")(deactivate-mark)(backward-button n)))
+    (interactive "p")
+    (deactivate-mark)
+    (backward-button n)))
 (add-hook 'help-mode-hook 'arni-help-hook)
 ;;-----------
 ;; 7.17 Hexl
@@ -6120,35 +6387,47 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
 ;; 7.18 Hideshow
 ;;---------------
 (defun arni-hs-hook ()
-  (hs-hide-all)(message nil)(setq hs-isearch-open t)
+  (hs-hide-all)
+  (message nil)
+  (setq hs-isearch-open t)
   (define-key hs-minor-mode-map [mouse-1] 'hs-mouse-select)
   (define-key hs-minor-mode-map [?\C-m]   'hs-minor-mode  ) ; return
   (define-key hs-minor-mode-map [escape]  'hs-minor-mode  )
   (defun hs-mouse-select ()
     "Select position and turn off hs-minor-mode."
     (interactive)
-    (hs-minor-mode 0)(beginning-of-line)))
+    (hs-minor-mode 0)
+    (beginning-of-line)))
 (add-hook 'hs-minor-mode-hook 'arni-hs-hook)
 ;;----------------
 ;; 7.19 Highlight
 ;;----------------
-(defun arni-hi-lock-hook ()(define-key hi-lock-map [?\C-x ?w] nil)) ; reactivate widen
+(defun arni-hi-lock-hook ()
+  (define-key hi-lock-map [?\C-x ?w] nil)) ; reactivate widen
 (add-hook 'hi-lock-mode-hook 'arni-hi-lock-hook)
 (defun arni-highlight-changes-hook ()
   (message " ") ; (message nil)
   (if highlight-changes-mode
-      (progn (local-set-key [M-left]   'highlight-changes-rotate-faces   )
-             (local-set-key [M-right]  'highlight-changes-rotate-faces   )
-             (local-set-key [M-up]     'highlight-changes-previous-change)
-             (local-set-key [M-down]   'highlight-changes-next-change    )
-             (set-face-attribute 'highlight-changes-face        nil :background "gray70" :foreground - )
-             (set-face-attribute 'highlight-changes-delete-face nil :background "gray70" :foreground - )
-             (set-face-attribute 'highlight-changes-1           nil :background "gray77" :foreground - )
-             (set-face-attribute 'highlight-changes-2           nil :background "gray77" :foreground - )
-             (set-face-attribute 'highlight-changes-3           nil :background "gray77" :foreground - )
-             (set-face-attribute 'highlight-changes-4           nil :background "gray77" :foreground - )
-             (set-face-attribute 'highlight-changes-5           nil :background "gray77" :foreground - )
-             (set-face-attribute 'highlight-changes-6           nil :background "gray77" :foreground -))
+      (progn (local-set-key [M-left]  'highlight-changes-rotate-faces   )
+             (local-set-key [M-right] 'highlight-changes-rotate-faces   )
+             (local-set-key [M-up]    'highlight-changes-previous-change)
+             (local-set-key [M-down]  'highlight-changes-next-change    )
+             (set-face-attribute 'highlight-changes-face
+                                 nil :background "gray70" :foreground - )
+             (set-face-attribute 'highlight-changes-delete-face
+                                 nil :background "gray70" :foreground - )
+             (set-face-attribute 'highlight-changes-1
+                                 nil :background "gray77" :foreground - )
+             (set-face-attribute 'highlight-changes-2
+                                 nil :background "gray77" :foreground - )
+             (set-face-attribute 'highlight-changes-3
+                                 nil :background "gray77" :foreground - )
+             (set-face-attribute 'highlight-changes-4
+                                 nil :background "gray77" :foreground - )
+             (set-face-attribute 'highlight-changes-5
+                                 nil :background "gray77" :foreground - )
+             (set-face-attribute 'highlight-changes-6
+                                 nil :background "gray77" :foreground -))
     (progn (local-unset-key [M-left]     )
            (local-unset-key [M-right]    )
            (local-unset-key [M-up]       )
@@ -6158,7 +6437,8 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
 ;;------------
 ;; 7.20 Image
 ;;------------
-(defun arni-image-hook ()(local-set-key [?\C-c ?\C-v] 'browse-url-of-file))
+(defun arni-image-hook ()
+  (local-set-key [?\C-c ?\C-v] 'browse-url-of-file))
 (add-hook 'image-mode-hook 'arni-image-hook)
 ;;-----------
 ;; 7.21 Info
@@ -6217,51 +6497,69 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun Info-enter ()
     "Enter node."
     (interactive)
-    (Info-follow-nearest-node)(forward-line 2))
+    (Info-follow-nearest-node)
+    (forward-line 2))
   (defun Info-down-page (&optional n)
     "Move down N pages."
-    (interactive "p")(deactivate-mark)(forward-line (pages n)))
+    (interactive "p")
+    (deactivate-mark)
+    (forward-line (pages n)))
   (defun Info-jump-down ()
     "Jump one node down on page."
     (interactive)
-    (deactivate-mark)(Info-next-reference))
+    (deactivate-mark)
+    (Info-next-reference))
   (defun Info-jump-up ()
     "Jump one node up on page."
     (interactive)
-    (deactivate-mark)(Info-prev-reference))
+    (deactivate-mark)
+    (Info-prev-reference))
   (defun Info-middle ()
     "Move to middle."
     (interactive)
-    (Info-top)(forward-line (middle-from-here)))
+    (Info-top)
+    (forward-line (middle-from-here)))
   (defun Info-top ()
     "Move to top."
     (interactive)
-    (deactivate-mark)(goto-line-lisp 3))
+    (deactivate-mark)
+    (goto-line-lisp 3))
   (defun Info-top-mark ()
     "Extend region to top."
     (interactive)
-    (region-bol-top 1)(forward-line 2))
+    (region-bol-top 1)
+    (forward-line 2))
   (defun Info-up-bounded (&optional n)
     "Move N lines up."
-    (interactive "p")(forward-line -1)
-    (if (< (line-number-at-pos) 3)(Info-top)))
+    (interactive "p")
+    (forward-line -1)
+    (if (< (line-number-at-pos) 3)
+        (Info-top)))
   (defun Info-up-mark (&optional n)
     "Extend region up N lines."
     (interactive "p")
-    (region-bol-up n)(if (< (line-number-at-pos) 3)(Info-top-mark)))
+    (region-bol-up n)
+    (if (< (line-number-at-pos) 3)
+        (Info-top-mark)))
   (defun Info-up-page (&optional n)
     "Move up N pages."
     (interactive "p")
-    (deactivate-mark)(forward-line (- (pages n)))(if (< (line-number-at-pos) 3)(Info-top))))
+    (deactivate-mark)
+    (forward-line (- (pages n)))
+    (if (< (line-number-at-pos) 3)
+        (Info-top))))
 (add-hook 'Info-mode-hook 'arni-Info-hook)
 ;;----------
 ;; 7.22 Man
 ;;----------
-(defun arni-nroff-hook ()(font-lock-mode 1)(set-face-attribute 'font-lock-keyword-face nil :weight 'bold))
+(defun arni-nroff-hook ()
+  (font-lock-mode 1)
+  (set-face-attribute 'font-lock-keyword-face nil :weight 'bold))
 (add-hook 'nroff-mode-hook 'arni-nroff-hook)
 (defvar Man-width 65)
 (defun arni-Man-hook ()
-  (message nil)(setq Man-notify-method 'bully) ; maximize window
+  (message nil)
+  (setq Man-notify-method 'bully) ; maximize window
   (local-unset-key [?\M-n]) ; reactivate bs-cycle-next
   (local-unset-key [?\M-p]) ; reactivate bs-cycle-previous
   (local-set-key [?\t]     'Man-next-section     )
@@ -6279,7 +6577,8 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
 ;; 7.23 Markdown
 ;;---------------
 (defun arni-markdown-hook ()
-  (setq make-backup-files t)(font-lock-mode 1) ; refresh
+  (setq make-backup-files t)
+  (font-lock-mode 1) ; refresh
   (set-face-attribute 'markdown-pre-face nil :inherit - :foreground "brown4")
   (set-face-attribute 'markdown-inline-code-face nil :inherit markdown-pre-face)
   (local-unset-key [backtab]      )
@@ -6303,33 +6602,44 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
     "Convert Markdown or R Markdown document to HTML."
     (interactive)
     (if (string-equal (downcase (file-name-extension (buffer-name))) "rmd")
-        (markdown-compile-rmd)(markdown-compile-md))
+        (markdown-compile-rmd)
+      (markdown-compile-md))
     (maximize-window-top))
   (defun markdown-compile-md ()
     "Convert Markdown document to HTML."
     (interactive)
-    (save-buffer)(if (one-window-p)(split-window-right))
-    (compile (concat "pandoc " (buffer-name) " > " (file-name-sans-extension (buffer-name)) ".html")))
+    (save-buffer)
+    (if (one-window-p)(split-window-right))
+    (compile (concat "pandoc " (buffer-name) " > "
+                     (file-name-sans-extension (buffer-name)) ".html")))
   (defun markdown-compile-rmd ()
     "Convert R Markdown document to HTML."
     (interactive)
-    (save-buffer)(if (one-window-p)(split-window-right))(compile (concat "render " (buffer-name))))
+    (save-buffer)
+    (if (one-window-p)(split-window-right))
+    (compile (concat "render " (buffer-name))))
   (defun markdown-delete-html ()
     "Delete HTML file corresponding to Markdown file."
     (interactive)
     (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
-      (delete-file html-file)(message "Deleted %s" html-file)))
+      (delete-file html-file)
+      (message "Deleted %s" html-file)))
   (defun markdown-peek ()
     "Open HTML file in secondary window."
     (interactive)
-    (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html"))(md-window (selected-window)))
-      (if (not (file-regular-p html-file))(error "%s not found" html-file)
-        (if (one-window-p)(split-window-right))(find-file-noselect html-file)
-        (set-window-buffer (next-window) html-file)(select-window md-window))))
+    (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html"))
+          (md-window (selected-window)))
+      (if (not (file-regular-p html-file))
+          (error "%s not found" html-file)
+        (if (one-window-p)(split-window-right))
+        (find-file-noselect html-file)
+        (set-window-buffer (next-window) html-file)
+        (select-window md-window))))
   (defun markdown-template ()
     "Insert Markdown template."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 Section
 =======
 
@@ -6354,15 +6664,19 @@ break
     "Validate HTML document with Tidy."
     (interactive)
     (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
-      (if (one-window-p)(split-window))(get-buffer-create "*Shell Command Output*")
-      (with-current-buffer "*Shell Command Output*" (delete-region (point-min)(point-max))
-                           (shell-command (concat "tidy -e -utf8 " html-file))
-                           (delete-trailing-spc-tab-m)(message nil))
+      (if (one-window-p)(split-window))
+      (get-buffer-create "*Shell Command Output*")
+      (with-current-buffer "*Shell Command Output*"
+        (delete-region (point-min)(point-max))
+        (shell-command (concat "tidy -e -utf8 " html-file))
+        (delete-trailing-spc-tab-m)
+        (message nil))
       (set-window-buffer (next-window) "*Shell Command Output*")))
   (defun markdown-view ()
     "View HTML file with same prefix as current Markdown document."
     (interactive)
-    (browse-url (concat (file-name-sans-extension (buffer-file-name)) ".html"))))
+    (browse-url (concat (file-name-sans-extension (buffer-file-name))
+                        ".html"))))
 (add-hook 'markdown-mode-hook 'arni-markdown-hook)
 ;;------------
 ;; 7.24 Occur
@@ -6403,36 +6717,47 @@ break
   (defun occur-bottom ()
     "Move to bottom."
     (interactive)
-    (deactivate-mark)(goto-char (point-max))(occur-prev))
+    (deactivate-mark)
+    (goto-char (point-max))
+    (occur-prev))
   (defun occur-down (&optional n)
     "Move down N occurrences."
-    (interactive "p")(deactivate-mark)(occur-next n))
+    (interactive "p")
+    (deactivate-mark)
+    (occur-next n))
   (defun occur-down-3 ()
     "Move down 3 occurrences."
     (interactive)
     (occur-down 3))
   (defun occur-down-page (&optional n)
     "Move down N pages."
-    (interactive "p")(occur-down (pages n)))
+    (interactive "p")
+    (occur-down (pages n)))
   (defun occur-down-view ()
     "Move down one occurrence and view in other window."
     (interactive)
-    (occur-down 1)(occur-mode-display-occurrence))
+    (occur-down 1)
+    (occur-mode-display-occurrence))
   (defun occur-middle ()
     "Move to middle."
     (interactive)
-    (jump-middle)(occur-down 1))
+    (jump-middle)
+    (occur-down 1))
   (defun occur-top ()
     "Move to top."
     (interactive)
-    (deactivate-mark)(goto-char (point-min))(occur-next))
+    (deactivate-mark)
+    (goto-char (point-min))
+    (occur-next))
   (defun occur-top-mark ()
     "Extend region to top."
     (interactive)
     (region-bol-top 2))
   (defun occur-up (&optional n)
     "Move up N occurrences."
-    (interactive "p")(deactivate-mark)(occur-prev n))
+    (interactive "p")
+    (deactivate-mark)
+    (occur-prev n))
   (defun occur-up-3 ()
     "Move up 3 occurrences."
     (interactive)
@@ -6440,39 +6765,55 @@ break
   (defun occur-up-mark (&optional n)
     "Extend region up N lines."
     (interactive "p")
-    (region-bol-up n)(if (< (line-number-at-pos) 2)(occur-top-mark)))
+    (region-bol-up n)
+    (if (< (line-number-at-pos) 2)
+        (occur-top-mark)))
   (defun occur-up-page (&optional n)
     "Move up N pages."
-    (interactive "p")(occur-up (pages n)))
+    (interactive "p")
+    (occur-up (pages n)))
   (defun occur-up-view ()
     "Move up one occurrence and view in other window."
     (interactive)
-    (occur-up 1)(occur-mode-display-occurrence)))
-(defun arni-occur-switch-hook ()(other-window 1)(occur-down 1))
+    (occur-up 1)
+    (occur-mode-display-occurrence)))
+(defun arni-occur-switch-hook ()
+  (other-window 1)
+  (occur-down 1))
 (add-hook 'occur-mode-hook 'arni-occur-hook)
 (add-hook 'occur-hook 'arni-occur-switch-hook)
 ;;----------
 ;; 7.25 Org
 ;;----------
 (defun arni-org-hook ()
-  (setq make-backup-files t)(font-lock-mode 1)(outline-show-all)
-  (setq fill-column 72)(setq org-cycle-global-at-bob t)(setq comment-start ": ")
-  (org-remove-from-invisibility-spec '(org-link))(setq org-descriptive-links nil) ; [[.]] from `org-toggle-link-display'
+  (setq make-backup-files t)
+  (font-lock-mode 1)
+  (outline-show-all)
+  (setq fill-column 72)
+  (setq org-cycle-global-at-bob t)
+  (setq comment-start ": ")
+  (org-remove-from-invisibility-spec '(org-link))
+  (setq org-descriptive-links nil) ; [[.]] from `org-toggle-link-display'
   (setq org-export-with-section-numbers 2) ; enumerate heading level 1 and 2
   (setq org-export-with-sub-superscripts nil) ; export _ and ^ to HTML as is
   (setq org-export-with-toc 2) ; create TOC with heading level 1 and 2
-  (setq org-footnote-section nil) ; so a section named Footnotes won't be ignored
+  (setq org-footnote-section nil) ; so section named Footnotes won't be ignored
   (setq org-html-doctype "html5")
-  (setq org-html-head (concat "<link rel=\"stylesheet\" href=\"file:///"
-                              (replace-regexp-in-string " " "%20" (expand-file-name "~/emacs/css/org.css")) "\">"))
+  (setq org-html-head
+        (concat "<link rel=\"stylesheet\" href=\"file:///"
+                (replace-regexp-in-string
+                 " " "%20" (expand-file-name "~/emacs/css/org.css"))
+                "\">"))
   (setq org-html-head-include-default-style nil) ; no default style
   (setq org-html-head-include-scripts nil) ; no JavaScript
   (setq org-html-postamble nil) ; no info stamp at end
-  (set-face-attribute 'font-lock-comment-face nil :foreground "brown4"      ) ; # comment
-  (set-face-attribute 'org-level-1            nil :underline t :weight 'bold)
-  (set-face-attribute 'org-level-3            nil :foreground "turquoise4"  )
-  (set-face-attribute 'org-level-4            nil :foreground "forestgreen" )
-  (defun org-arni-keybindings () ; need function to set keybindings after calling `org-html-export-to-html'
+  (set-face-attribute 'font-lock-comment-face
+                      nil :foreground "brown4"      ) ; # comment
+  (set-face-attribute 'org-level-1 nil :underline t :weight 'bold)
+  (set-face-attribute 'org-level-3 nil :foreground "turquoise4"  )
+  (set-face-attribute 'org-level-4 nil :foreground "forestgreen" )
+  (defun org-arni-keybindings ()
+    ;; Need function to set keybindings after calling `org-html-export-to-html'
     "Set keybindings for `org-mode'."
     (interactive)
     (local-unset-key [mouse-1]  ) ; forget outline-mode
@@ -6481,8 +6822,8 @@ break
     (local-unset-key [backtab]  ) ; unindent, rather than visibility
     (local-unset-key [S-tab]    ) ; unindent, rather than visibility
     (local-unset-key [C-return] ) ; recentf files, rather than heading
-    (local-unset-key [S-up]     ) ; extend region, rather than timestamp/priority/item
-    (local-unset-key [S-down]   ) ; extend region, rather than timestamp/priority/item
+    (local-unset-key [S-up]     ) ; extend region, rather than timestamp/item
+    (local-unset-key [S-down]   ) ; extend region, rather than timestamp/item
     (local-unset-key [C-up]     ) ; backward, rather than heading
     (local-unset-key [C-down]   ) ; forward, rather than heading
     (local-unset-key [C-S-up]   ) ; pull line/region, rather than timestamp
@@ -6508,9 +6849,9 @@ break
     (local-unset-key [?\C-y]    ) ; scroll, rather than yank
     (local-unset-key [?\C-\M-\]]) ; scroll, rather than subtree
     (local-unset-key [?\C-\M-'] ) ; scroll, rather than subtree
-    (local-unset-key [?\C-\M-t] ) ; transpose-sexps, rather than org-transpose-element
-    (local-unset-key [?\M-{]    ) ; backward-paragraph, rather than org-backward-element
-    (local-unset-key [?\M-}]    ) ; forward-paragraph, rather than org-forward-element
+    (local-unset-key [?\C-\M-t] ) ; transpose-sexps, rather than org-transpose
+    (local-unset-key [?\M-{]    ) ; backward-paragraph, rather than org-backward
+    (local-unset-key [?\M-}]    ) ; forward-paragraph, rather than org-forward
     (local-unset-key [?\M-a]    ) ; mark buffer, rather than backward
     (local-unset-key [?\M-e]    ) ; replace, rather than forward
     (local-unset-key [?\M-h]    ) ; highlight, rather than mark element
@@ -6526,60 +6867,65 @@ break
     (local-unset-key [?n]       ) ; forget outline-mode
     (local-unset-key [?p]       ) ; forget outline-mode
     (local-unset-key [?q]       ) ; forget outline-mode
-    (local-set-key [M-mouse-1]         'org-mouse-show        )
-    (local-set-key [M-mouse-3]         'org-mouse-cycle       )
-    (local-set-key [f11]               'org-cycle             )
-    (local-set-key [f12]               'org-template          )
-    (local-set-key [?\C-c C-backspace] 'org-html-delete       )
-    (local-set-key [?\t]               'org-cycle             ) ; forget outline-mode
-    (local-set-key [C-S-tab]           'org-collapse-tree     )
-    (local-set-key [C-S-iso-lefttab]   'org-collapse-tree     )
-    (local-set-key [?\C-m]             'org-return            ) ; forget outline-mode
-    (local-set-key [M-return]          'org-open-at-point     ) ; org-meta-return
-    (local-set-key [M-home]            'org-insert-h3-down    )
-    (local-set-key [M-end]             'org-colon-paragraph   )
-    (local-set-key [M-up]              'org-justify-down      )
-    (local-set-key [M-down]            'org-return-down       )
-    (local-set-key [?\C-c C-up]        'org-shiftmetaup       ) ; alternative M-S arrows
-    (local-set-key [?\C-c C-down]      'org-shiftmetadown     ) ; alternative M-S arrows
-    (local-set-key [?\C-c C-left]      'org-shiftmetaleft     ) ; alternative M-S arrows
-    (local-set-key [?\C-c C-right]     'org-shiftmetaright    ) ; alternative M-S arrows
-    (local-set-key [?\C-c ?\C-0]       'org-insert-title      )
-    (local-set-key [?\C-c ?\C-1]       'org-insert-h1         )
-    (local-set-key [?\C-c ?\C-2]       'org-insert-h2         )
-    (local-set-key [?\C-c ?\C-3]       'org-insert-h3         )
-    (local-set-key [?\C-c ?\C-/]       'org-word-help         )
-    (local-set-key [?\C-c ?\C-a]       'org-collapse-tree     ) ; org-attach
-    (local-set-key [?\C-c ?\C-c]       'org-html-write        ) ; org-ctrl-c-ctrl-c
-    (local-set-key [?\C-c ?\C-d]       'org-toc-3             ) ; org-deadline
-    (local-set-key [?\C-c ?\C-e]       'org-copy-visible      ) ; org-export-dispatch
-    (local-set-key [?\C-c ?\C-f]       'org-toc-4             ) ; org-forward-heading-same-level
-    (local-set-key [?\C-c ?\C-l]       'outline-show-all      ) ; org-insert-link
-    (local-set-key [?\C-c ?\C-r]       'org-insert-R-block    ) ; org-reveal
-    (local-set-key [?\C-c ?\C-s]       'org-toc-2             ) ; org-schedule
-    (local-set-key [?\C-c ?\C-t]       'org-ascii-write       ) ; org-todo
-    (local-set-key [?\C-c ?\C-u]       'org-up-element        ) ; outline-up-heading
-    (local-set-key [?\C-c ?\C-v]       'org-html-view         ) ; [map]
-    (local-set-key [?\C-c ?\C-w]       'org-word-convert      ) ; org-refile
-    (local-set-key [?\C-c ?\C-z]       'org-narrow-to-subtree)) ; org-add-note
+    (local-set-key [M-mouse-1]     'org-mouse-show    )
+    (local-set-key [M-mouse-3]     'org-mouse-cycle   )
+    (local-set-key [f11]           'org-cycle         )
+    (local-set-key [f12]           'org-template      )
+    (local-set-key [?\C-c C-backspace] 'org-html-delete)
+    (local-set-key [?\t]           'org-cycle         ) ; forget outline-mode
+    (local-set-key [C-S-tab]       'org-collapse-tree )
+    (local-set-key [C-S-iso-lefttab] 'org-collapse-tree)
+    (local-set-key [?\C-m]         'org-return        ) ; forget outline-mode
+    (local-set-key [M-return]      'org-open-at-point ) ; org-meta-return
+    (local-set-key [M-home]        'org-insert-h3-down)
+    (local-set-key [M-end]         'org-colon-paragraph)
+    (local-set-key [M-up]          'org-justify-down  )
+    (local-set-key [M-down]        'org-return-down   )
+    (local-set-key [?\C-c C-up]    'org-shiftmetaup   ) ; alternative M-S arrows
+    (local-set-key [?\C-c C-down]  'org-shiftmetadown ) ; alternative M-S arrows
+    (local-set-key [?\C-c C-left]  'org-shiftmetaleft ) ; alternative M-S arrows
+    (local-set-key [?\C-c C-right] 'org-shiftmetaright) ; alternative M-S arrows
+    (local-set-key [?\C-c ?\C-0]   'org-insert-title  )
+    (local-set-key [?\C-c ?\C-1]   'org-insert-h1     )
+    (local-set-key [?\C-c ?\C-2]   'org-insert-h2     )
+    (local-set-key [?\C-c ?\C-3]   'org-insert-h3     )
+    (local-set-key [?\C-c ?\C-/]   'org-word-help     )
+    (local-set-key [?\C-c ?\C-a]   'org-collapse-tree ) ; org-attach
+    (local-set-key [?\C-c ?\C-c]   'org-html-write    ) ; org-ctrl-c-ctrl-c
+    (local-set-key [?\C-c ?\C-d]   'org-toc-3         ) ; org-deadline
+    (local-set-key [?\C-c ?\C-e]   'org-copy-visible  ) ; org-export-dispatch
+    (local-set-key [?\C-c ?\C-f]   'org-toc-4) ; org-forward-heading-same-level
+    (local-set-key [?\C-c ?\C-l]   'outline-show-all  ) ; org-insert-link
+    (local-set-key [?\C-c ?\C-r]   'org-insert-R-block) ; org-reveal
+    (local-set-key [?\C-c ?\C-s]   'org-toc-2         ) ; org-schedule
+    (local-set-key [?\C-c ?\C-t]   'org-ascii-write   ) ; org-todo
+    (local-set-key [?\C-c ?\C-u]   'org-up-element    ) ; outline-up-heading
+    (local-set-key [?\C-c ?\C-v]   'org-html-view     ) ; [map]
+    (local-set-key [?\C-c ?\C-w]   'org-word-convert  ) ; org-refile
+    (local-set-key [?\C-c ?\C-z]   'org-narrow-to-subtree)) ; org-add-note
   (org-arni-keybindings)
   (defun org-ascii-write ()
     "Export buffer to text file."
     (interactive)
-    (org-ascii-export-to-ascii)(arni-org-hook))
+    (org-ascii-export-to-ascii)
+    (arni-org-hook))
   (defun org-collapse-tree ()
     "Collapse tree and return to beginning of file."
     (interactive)
-    (outline-hide-sublevels 1)(goto-char (point-min)))
+    (outline-hide-sublevels 1)
+    (goto-char (point-min)))
   (defun org-colon-paragraph ()
     "Put colon in front of paragraph and move down."
     (interactive)
-    (region-forward-paragraph 1)(comment-line-or-region)(forward-line))
+    (region-forward-paragraph 1)
+    (comment-line-or-region)
+    (forward-line))
   (defun org-html-delete ()
     "Delete HTML file corresponding to Org file."
     (interactive)
     (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
-      (delete-file html-file)(message "Deleted %s" html-file)))
+      (delete-file html-file)
+      (message "Deleted %s" html-file)))
   (defun org-html-view ()
     "View HTML file with same prefix as current Org file."
     (interactive)
@@ -6587,27 +6933,34 @@ break
   (defun org-html-write ()
     "Export buffer to HTML and run personal hook."
     (interactive)
-    (save-buffer)(org-html-export-to-html)(org-arni-keybindings))
+    (save-buffer)
+    (org-html-export-to-html)
+    (org-arni-keybindings))
   (defun org-insert-h1 ()
     "Insert heading of level 1."
     (interactive "*")
-    (beginning-of-line)(insert "* "))
+    (beginning-of-line)
+    (insert "* "))
   (defun org-insert-h2 ()
     "Insert heading of level 2."
     (interactive "*")
-    (beginning-of-line)(insert "** "))
+    (beginning-of-line)
+    (insert "** "))
   (defun org-insert-h3 ()
     "Insert heading of level 3."
     (interactive "*")
-    (beginning-of-line)(insert "*** "))
+    (beginning-of-line)
+    (insert "*** "))
   (defun org-insert-h3-down ()
     "Insert heading of level 3 and move down."
     (interactive "*")
-    (org-insert-h3)(forward-line 2))
+    (org-insert-h3)
+    (forward-line 2))
   (defun org-insert-R-block ()
     "Insert R block."
     (interactive "*")
-    (insert "#+begin_src R\n\n#+end_src R\n")(forward-line -2))
+    (insert "#+begin_src R\n\n#+end_src R\n")
+    (forward-line -2))
   (defun org-insert-title ()
     "Insert title."
     (interactive "*")
@@ -6615,23 +6968,30 @@ break
   (defun org-justify-down ()
     "Justify paragraph and move down."
     (interactive "*")
-    (fill-paragraph-forward 1)(forward-line))
+    (fill-paragraph-forward 1)
+    (forward-line))
   (defun org-mouse-cycle (event)
     "Position cursor and cycle visibility."
     (interactive "e")
-    (mouse-set-point event)(org-cycle))
+    (mouse-set-point event)
+    (org-cycle))
   (defun org-mouse-show (event)
     "Position cursor and show all."
     (interactive "e")
-    (mouse-set-point event)(outline-show-all))
+    (mouse-set-point event)
+    (outline-show-all))
   (defun org-return-down ()
     "Insert empty line and move down."
     (interactive "*")
-    (beginning-of-line)(insert "\n")(forward-line))
+    (beginning-of-line)
+    (insert "\n")
+    (forward-line))
   (defun org-template ()
     "Insert minimal Org template."
     (interactive "*")
-    (goto-char (point-min))(insert "#+TITLE: \n\n* ")(backward-char 4))
+    (goto-char (point-min))
+    (insert "#+TITLE: \n\n* ")
+    (backward-char 4))
   (defun org-toc-2 ()
     "Show outline level 2."
     (interactive)
@@ -6648,13 +7008,26 @@ break
     "Convert Word headings to Org format."
     (interactive "*")
     (set-buffer-file-coding-system 'utf-8-unix t)
-    (goto-char (point-min))(insert "#+TITLE: ")(forward-line)(delete-region (point)(line-end-position))
-    (delete-region (point)(re-search-forward "^1\t" nil t))(insert "1\t") ; delete TOC
-    (goto-char (point-min))(while (re-search-forward "^[0-9]*\t\\(.*\\)" nil t)(replace-match "\n* \\1\n"))
-    (goto-char (point-min))(while (re-search-forward "^[0-9]*\.[0-9]*\t\\(.*\\)" nil t)(replace-match "\n** \\1\n"))
-    (goto-char (point-min))(while (search-forward "\n\n\n" nil t)(replace-match "\n\n"))
-    (goto-char (point-max))(delete-blank-lines)(goto-char (point-min))
-    (message "Converted Word headings to Org format.\n1. [down] and [M-down].\n2. [M-home], [M-end], [M-up]."))
+    (goto-char (point-min))
+    (insert "#+TITLE: ")
+    (forward-line)
+    (delete-region (point)(line-end-position))
+    (delete-region (point)(re-search-forward "^1\t" nil t))
+    (insert "1\t") ; delete TOC
+    (goto-char (point-min))
+    (while (re-search-forward "^[0-9]*\t\\(.*\\)" nil t)
+      (replace-match "\n* \\1\n"))
+    (goto-char (point-min))
+    (while (re-search-forward "^[0-9]*\.[0-9]*\t\\(.*\\)" nil t)
+      (replace-match "\n** \\1\n"))
+    (goto-char (point-min))
+    (while (search-forward "\n\n\n" nil t)
+      (replace-match "\n\n"))
+    (goto-char (point-max))
+    (delete-blank-lines)
+    (goto-char (point-min))
+    (message "Converted Word headings to Org format.
+1. [down] and [M-down].\n2. [M-home], [M-end], [M-up]."))
   (defun org-word-help ()
     "Show keybindings to convert Word document to Org format."
     (interactive)
@@ -6663,20 +7036,26 @@ break
 ;;--------------
 ;; 7.26 Outline
 ;;--------------
-(if (<= emacs-major-version 24)(defun outline-show-all ()(interactive)
-                                      (outline-flag-region (point-min)(point-max) nil)))
-(defvar outline-previous-mode '(text-mode) "Mode to return to. See `outline-return'.")
-(defvar outline-top-level 1 "Top outline level, to anchor the `outline-hide' cursor to the shortest `outline-regexp'.")
+(if (<= emacs-major-version 24)
+    (defun outline-show-all ()
+      (interactive)
+      (outline-flag-region (point-min)(point-max) nil)))
+(defvar outline-previous-mode '(text-mode)
+  "Mode to return to. See `outline-return'.")
+(defvar outline-top-level 1
+  "Top outline level, to anchor the `outline-hide' cursor
+to the shortest `outline-regexp'.")
 (defun arni-outline-hook ()
-  (set-face-attribute 'font-lock-warning-face nil :foreground (fg 'font-lock-keyword-face) :weight -)
-  (set-face-attribute 'outline-1              nil :inherit font-lock-keyword-face                   )
-  (set-face-attribute 'outline-2              nil :inherit font-lock-keyword-face                   )
-  (set-face-attribute 'outline-3              nil :inherit font-lock-keyword-face                   )
-  (set-face-attribute 'outline-4              nil :inherit font-lock-keyword-face                   )
-  (set-face-attribute 'outline-5              nil :inherit font-lock-keyword-face                   )
-  (set-face-attribute 'outline-6              nil :inherit font-lock-keyword-face                   )
-  (set-face-attribute 'outline-7              nil :inherit font-lock-keyword-face                   )
-  (set-face-attribute 'outline-8              nil :inherit font-lock-keyword-face                   )
+  (set-face-attribute 'font-lock-warning-face
+                      nil :foreground (fg 'font-lock-keyword-face) :weight -)
+  (set-face-attribute 'outline-1 nil :inherit font-lock-keyword-face)
+  (set-face-attribute 'outline-2 nil :inherit font-lock-keyword-face)
+  (set-face-attribute 'outline-3 nil :inherit font-lock-keyword-face)
+  (set-face-attribute 'outline-4 nil :inherit font-lock-keyword-face)
+  (set-face-attribute 'outline-5 nil :inherit font-lock-keyword-face)
+  (set-face-attribute 'outline-6 nil :inherit font-lock-keyword-face)
+  (set-face-attribute 'outline-7 nil :inherit font-lock-keyword-face)
+  (set-face-attribute 'outline-8 nil :inherit font-lock-keyword-face)
   (local-set-key [mouse-1]         'outline-mouse-select       )
   (local-set-key [escape]          'outline-window-or-return   )
   (local-set-key [f11]             'outline-return             )
@@ -6711,12 +7090,16 @@ break
   (defun outline-hide ()
     "Hide subheadings and return to upper heading."
     (interactive)
-    (deactivate-mark)(outline-back-to-heading)(if (> (outline-level) outline-top-level)(outline-up-heading 1))
+    (deactivate-mark)
+    (outline-back-to-heading)
+    (if (> (outline-level) outline-top-level)
+        (outline-up-heading 1))
     (outline-hide-subtree))
   (defun outline-mouse-select ()
     "Select position and return to `outline-previous-mode'."
     (interactive)
-    (outline-return)(beginning-of-line))
+    (outline-return)
+    (beginning-of-line))
   (defun outline-return ()
     "Return to `outline-previous-mode'."
     (interactive)
@@ -6724,11 +7107,14 @@ break
   (defun outline-show ()
     "Show subheadings."
     (interactive)
-    (deactivate-mark)(outline-show-branches))
+    (deactivate-mark)
+    (outline-show-branches))
   (defun outline-window-or-return ()
     "Delete other windows or return to `outline-previous-mode'."
     (interactive)
-    (if (> (length (window-list)) 1)(delete-other-windows)(outline-return))))
+    (if (> (length (window-list)) 1)
+        (delete-other-windows)
+      (outline-return))))
 (add-hook 'outline-mode-hook 'arni-outline-hook)
 ;;---------------
 ;; 7.27 Packages
@@ -6756,11 +7142,13 @@ break
   (defun package-menu-down-view ()
     "Move down one package and view description in other window."
     (interactive)
-    (forward-button 1)(package-menu-describe-package))
+    (forward-button 1)
+    (package-menu-describe-package))
   (defun package-menu-up-view ()
     "Move up one package and view description in other window."
     (interactive)
-    (backward-button 1)(package-menu-describe-package)))
+    (backward-button 1)
+    (package-menu-describe-package)))
 (add-hook 'package-menu-mode-hook 'arni-package-menu-hook)
 ;;-------------
 ;; 7.28 Proced
@@ -6810,20 +7198,26 @@ break
   (defun recentf-bottom ()
     "Move to bottom."
     (interactive)
-    (deactivate-mark)(goto-char (point-max))(recentf-up 1))
+    (deactivate-mark)
+    (goto-char (point-max))
+    (recentf-up 1))
   (defun recentf-down (&optional n)
     "Move down N lines."
     (interactive "p")
-    (deactivate-mark)(beginning-of-line (+ n 1))
+    (deactivate-mark)
+    (beginning-of-line (+ n 1))
     (let ((last (- (count-lines (point-min)(point-max)) 2)))
-      (if (> (line-number-at-pos) last)(goto-line-lisp last)))(widget-forward 1))
+      (if (> (line-number-at-pos) last)
+          (goto-line-lisp last)))
+    (widget-forward 1))
   (defun recentf-down-3 ()
     "Move down 3 lines."
     (interactive)
     (recentf-down 3))
   (defun recentf-down-page (&optional n)
     "Move down N pages."
-    (interactive "p")(recentf-down (pages n)))
+    (interactive "p")
+    (recentf-down (pages n)))
   (defun recentf-edit-expunge ()
     "Expunge marked files from history."
     (interactive)
@@ -6831,23 +7225,31 @@ break
   (defun recentf-middle ()
     "Move to middle."
     (interactive)
-    (jump-middle)(widget-forward 1))
+    (jump-middle)
+    (widget-forward 1))
   (defun recentf-top ()
     "Move to bottom."
     (interactive)
-    (deactivate-mark)(goto-line-lisp 3)(recentf-down 1))
+    (deactivate-mark)
+    (goto-line-lisp 3)
+    (recentf-down 1))
   (defun recentf-up (&optional n)
     "Move up N lines."
     (interactive "p")
-    (deactivate-mark)(end-of-line (- 2 n))
-    (if (< (line-number-at-pos) 5)(progn (goto-line-lisp 5)(end-of-line)))(widget-backward 1))
+    (deactivate-mark)
+    (end-of-line (- 2 n))
+    (if (< (line-number-at-pos) 5)
+        (progn (goto-line-lisp 5)
+               (end-of-line)))
+    (widget-backward 1))
   (defun recentf-up-3 ()
     "Move up 3 lines."
     (interactive)
     (recentf-up 3))
   (defun recentf-up-page (&optional n)
     "Move up N pages."
-    (interactive "p")(recentf-up (pages n)))
+    (interactive "p")
+    (recentf-up (pages n)))
   (defun widget-button-press-eol ()
     "Open file in current line."
     (interactive)
@@ -6867,47 +7269,57 @@ break
   (defun reb-quit-gracefully ()
     "Quit re-builder and restore case-fold-search."
     (interactive)
-    (reb-quit)(reb-toggle-case)(kill-buffer "*RE-Builder*")))
+    (reb-quit)
+    (reb-toggle-case)
+    (kill-buffer "*RE-Builder*")))
 (add-hook 'reb-mode-hook 'arni-reb-hook)
 ;;-----------
 ;; 7.31 reST
 ;;-----------
-(defun arni-rst-hook () (font-lock-mode 1))
+(defun arni-rst-hook ()
+  (font-lock-mode 1))
 (add-hook 'rst-mode-hook 'arni-rst-hook)
 ;;-------------
 ;; 7.32 Search
 ;;-------------
 (setq isearch-lax-whitespace nil)
 (defun arni-isearch-hook ()
-  (define-key isearch-mode-map [127]   'isearch-del-char             ) ; backspace in GUI and terminal
-  (define-key isearch-mode-map [?\t]   'isearch-complete             )
-  (define-key isearch-mode-map [?\C-y] 'isearch-page-up              ) ; reactivate page up
+  (define-key isearch-mode-map [127]
+    'isearch-del-char) ; backspace in GUI and terminal
+  (define-key isearch-mode-map [?\t]   'isearch-complete     )
+  (define-key isearch-mode-map [?\C-y] 'isearch-page-up      ) ; reactivate pgup
   (define-key isearch-mode-map [?\M- ] 'isearch-toggle-lax-whitespace)
-  (define-key isearch-mode-map [?\M-c] 'isearch-copy-line            ) ; reactivate copy
-  (define-key isearch-mode-map [?\M-e] 'isearch-query-replace        )
-  (define-key isearch-mode-map [?\M-f] 'isearch-occur                )
-  (define-key isearch-mode-map [?\M-r] 'isearch-toggle-regexp        )
-  (define-key isearch-mode-map [?\M-s] 'isearch-edit-string          )
-  (define-key isearch-mode-map [?\M-t] 'isearch-toggle-case-fold     )
-  (define-key isearch-mode-map [?\M-w] 'isearch-toggle-word          )
+  (define-key isearch-mode-map [?\M-c] 'isearch-copy-line    ) ; reactivate copy
+  (define-key isearch-mode-map [?\M-e] 'isearch-query-replace)
+  (define-key isearch-mode-map [?\M-f] 'isearch-occur        )
+  (define-key isearch-mode-map [?\M-r] 'isearch-toggle-regexp)
+  (define-key isearch-mode-map [?\M-s] 'isearch-edit-string  )
+  (define-key isearch-mode-map [?\M-t] 'isearch-toggle-case-fold)
+  (define-key isearch-mode-map [?\M-w] 'isearch-toggle-word  )
   (defun isearch-copy-line ()
     "Copy line and exit isearch."
     (interactive)
-    (isearch-exit)(copy-line-or-region))
+    (isearch-exit)
+    (copy-line-or-region))
   (defun isearch-page-up ()
     "Page up from isearch."
     (interactive)
-    (scroll-down)(isearch-dehighlight)(lazy-highlight-cleanup)))
+    (scroll-down)
+    (isearch-dehighlight)
+    (lazy-highlight-cleanup)))
 (add-hook 'isearch-mode-hook 'arni-isearch-hook)
 ;;---------------
 ;; 7.33 Speedbar
 ;;---------------
 (defun arni-speedbar-hook ()
   (setq speedbar-frame-parameters
-        (append (list (car speedbar-frame-parameters))(list '(width . 24))(nthcdr 2 speedbar-frame-parameters))) ; width
+        (append (list (car speedbar-frame-parameters))
+                (list '(width . 24))
+                (nthcdr 2 speedbar-frame-parameters))) ; width
   (setq speedbar-show-unknown-files t)
-  (set-face-attribute 'speedbar-file-face      nil :foreground -                                )
-  (set-face-attribute 'speedbar-directory-face nil :foreground - :inherit font-lock-keyword-face)
+  (set-face-attribute 'speedbar-file-face nil :foreground -)
+  (set-face-attribute 'speedbar-directory-face
+                      nil :foreground - :inherit font-lock-keyword-face)
   (define-key speedbar-file-key-map [backspace] 'speedbar-up-directory         )
   (define-key speedbar-file-key-map [left]      'speedbar-up-directory         )
   (define-key speedbar-file-key-map [right]     'speedbar-edit-line            )
@@ -6929,24 +7341,30 @@ break
 ;; 7.34 Tabbar
 ;;-------------
 (defun arni-tabbar-hook ()
-  (defun tabbar-common () '("Common"))(setq tabbar-buffer-groups-function 'tabbar-common) ; all tabs in one group
+  (defun tabbar-common ()
+    '("Common"))
+  (setq tabbar-buffer-groups-function 'tabbar-common) ; all tabs in one group
   (setq tabbar-separator '(1.4))
-  (set-face-attribute 'tabbar-default    nil :background "gray65" :foreground -            )
-  (set-face-attribute 'tabbar-button     nil :box -                                        )
-  (set-face-attribute 'tabbar-selected   nil :background (bg 'default) :foreground - :box -)
-  (set-face-attribute 'tabbar-unselected nil :box -                                        )
-  (global-set-key [M-home]  'tabbar-mode       )
-  (global-set-key [M-end]   'tabbar-local-mode)) ; end-of-buffer
+  (set-face-attribute 'tabbar-default    nil :background "gray65" :foreground -)
+  (set-face-attribute 'tabbar-button     nil :box -                            )
+  (set-face-attribute 'tabbar-selected
+                      nil :background (bg 'default) :foreground - :box -)
+  (set-face-attribute 'tabbar-unselected nil :box -                            )
+  (global-set-key [M-home] 'tabbar-mode       )
+  (global-set-key [M-end]  'tabbar-local-mode)) ; end-of-buffer
 (add-hook 'tabbar-init-hook 'arni-tabbar-hook)
 (defun arni-tabbar-quit-hook ()
-  (global-set-key [M-home] 'beginning-of-buffer-other-window) ; reactivate beginning-of-buffer-other-window
+  (global-set-key [M-home] 'beginning-of-buffer-other-window) ; reactivate
   (global-set-key [M-end]  'end-of-buffer-other-window     ))
 (add-hook 'tabbar-quit-hook 'arni-tabbar-quit-hook)
 ;;-----------
 ;; 7.35 Text
 ;;-----------
 (defun arni-text-hook ()
-  (setq indent-line-function 'indent-relative)(auto-fill-mode t)(setq fill-column 80)(font-lock-mode 0)
+  (setq indent-line-function 'indent-relative)
+  (auto-fill-mode t)
+  (setq fill-column 80)
+  (font-lock-mode 0)
   (arni-colors)
   (local-unset-key [?\M-s]) ; reactivate highlight-and-count-regexp
   (local-set-key [?\t] 'indent-relative)
@@ -6954,11 +7372,17 @@ break
   (defun text-outline ()
     "Navigate within NEWS file using `outline-mode'."
     (interactive)
-    (outline-mode)(setq outline-regexp " *[-*o]+ ")(outline-mode)(setq outline-previous-mode '(text-mode))))
+    (outline-mode)
+    (setq outline-regexp " *[-*o]+ ")
+    (outline-mode)
+    (setq outline-previous-mode '(text-mode))))
 (add-hook 'text-mode-hook 'arni-text-hook)
-(defun arni-mail-hook ()(setq fill-column 70))
+(defun arni-mail-hook ()
+  (setq fill-column 70))
 (add-hook 'mail-mode-hook 'arni-mail-hook)
-(defun arni-message-hook ()(set-face-attribute 'message-cited-text nil :foreground - :inherit font-lock-comment-face))
+(defun arni-message-hook ()
+  (set-face-attribute 'message-cited-text
+                      nil :foreground - :inherit font-lock-comment-face))
 (add-hook 'message-mode-hook 'arni-message-hook)
 (defalias 'longlines-mode 'visual-line-mode)
 ;; (setq visual-line-fringe-indicators '(nil right-curly-arrow))
@@ -6969,10 +7393,14 @@ break
   "Diff two selected file versions."
   (interactive)
   (vc-diff t))
-(defun arni-log-edit-hook ()(setq require-final-newline nil)(setq fill-column 72)(mark-buffer))
+(defun arni-log-edit-hook ()
+  (setq require-final-newline nil)
+  (setq fill-column 72)
+  (mark-buffer))
 (add-hook 'log-edit-mode-hook 'arni-log-edit-hook)
 (defun arni-log-view-hook ()
-  (set-face-attribute 'log-view-message nil :foreground (fg 'font-lock-comment-face))
+  (set-face-attribute 'log-view-message
+                      nil :foreground (fg 'font-lock-comment-face))
   (local-unset-key [?\M-n]) ; reactivate bs-cycle-next
   (local-unset-key [?\M-p]) ; reactivate bs-cycle-previous
   (local-set-key [?q] 'kill-buffer-maybe-window))
