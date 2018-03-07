@@ -147,7 +147,8 @@
 ;; Remember startup dir, then build `load-path' recursively
 (defvar startup-directory default-directory)
 (if (file-directory-p "~/emacs/lisp/")
-    (progn (cd "~/emacs/lisp/")(normal-top-level-add-subdirs-to-load-path)))
+    (progn (cd "~/emacs/lisp/")
+           (normal-top-level-add-subdirs-to-load-path)))
 (cd startup-directory) ; return to startup dir
 ;;------------------
 ;; 3.2  Executables
@@ -887,7 +888,6 @@
   (kill-buffer (current-buffer)))
 (defun kill-buffer-maybe-window ()
   "Kill current buffer and window.
-
 Doesn't complain about last window, unlike `kill-buffer-and-window`."
   (interactive)
   (kill-this-buffer)
@@ -1019,12 +1019,10 @@ Doesn't complain about last window, unlike `kill-buffer-and-window`."
       (progn (kill-new (buffer-substring-no-properties (point)(mark)))
              (deactivate-mark))
     (if (< (line-beginning-position)(line-end-position))
-        (progn
-          (kill-new
-           (buffer-substring-no-properties
-            (line-beginning-position)
-            (min (+ (line-end-position) 1)(point-max))))
-          (message "Copied line")))))
+        (progn (kill-new (buffer-substring-no-properties
+                          (line-beginning-position)
+                          (min (+ (line-end-position) 1)(point-max))))
+               (message "Copied line")))))
 (defun delete-word (&optional n)
   "Delete following N words."
   (interactive "*p")
@@ -1082,7 +1080,6 @@ Doesn't complain about last window, unlike `kill-buffer-and-window`."
     (message "Line %d is %d characters" line length)))
 (defun highlight-and-count-regexp (regexp)
   "Highlight and count REGEXP occurrences (case-sensitive).
-
 See also `highlight-and-count-string'."
   (interactive "sRegexp (case-sensitive) to highlight: ")(require 'hi-lock)
   (let ((case-fold-search nil))
@@ -1111,7 +1108,6 @@ See also `highlight-and-count-string'."
                       (how-many regexp (point-min)(point-max)))))))
 (defun highlight-and-count-string (string)
   "Highlight and count STRING occurrences (case-insensitive).
-
 See also `highlight-and-count-regexp'."
   (interactive "sString (case-insensitive) to highlight: ")
   (highlight-and-count-regexp (case-fold-string string)))
@@ -1168,13 +1164,11 @@ See also `highlight-and-count-regexp'."
 (defalias 'occur-multi 'multi-occur)
 (defun pos-at-beginning-of-line (&optional n)
   "Return the position at beginning of line N.
-
 See also `line-beginning-position'."
   (save-excursion (goto-char (point-min))
                   (line-beginning-position n)))
 (defun pos-at-end-of-line (&optional n)
   "Return the position at end of line N.
-
 See also `line-end-position'."
   (save-excursion (goto-char (point-min))
                   (line-end-position n)))
@@ -1222,10 +1216,12 @@ See also `line-end-position'."
                    (pos-at-beginning-of-line
                     (line-number-at-pos (region-end))))))
     (if shrink
-        (progn (if point-first (exchange-point-and-mark))(backward-char)))
+        (progn (if point-first (exchange-point-and-mark))
+               (backward-char)))
     (drag-stuff-up n)
     (if shrink
-        (progn (forward-char)(if point-first (exchange-point-and-mark))))))
+        (progn (forward-char)
+               (if point-first (exchange-point-and-mark))))))
 (defun region-backward-char (&optional n)
   "Extend region backward N characters."
   (interactive "p")
@@ -1430,11 +1426,9 @@ See also `line-end-position'."
   "Default comment color. See `toggle-comments'.")
 (defvar green-cite nil
   "Non-nil if bibliographic citations are currently green.
-
 See `toggle-green-cite'.")
 (defvar red-special nil
   "Non-nil if special characters are currently red.
-
 See `toggle-red-special'.")
 (defun arni-after-setting-font-hook () ; Windows
   (frame-restore)
@@ -1454,7 +1448,6 @@ See `toggle-red-special'.")
     (message "Only ASCII chars after this point")))
 (defun goto-special-char ()
   "Go to next special character.
-
 See also `toggle-red-special'."
   (interactive)
   (deactivate-mark)
@@ -1470,7 +1463,7 @@ See also `toggle-red-special'."
   "Apply maximum colors, so every face can be distinguished."
   (interactive)
   (arni-colors)
-  (set-face-attribute 'font-lock-doc-face           nil :foreground "orange"
+  (set-face-attribute 'font-lock-doc-face nil :foreground "orange"
                       :weight 'bold ) ; Emacs "docstring"
   (set-face-attribute 'font-lock-variable-name-face nil :foreground "brown4"
                       :weight 'bold)) ; x
@@ -1517,7 +1510,6 @@ See also `toggle-red-special'."
     (message "Red non-ASCII chars %s" (if red-special "ON" "OFF"))))
 (defun toggle-red-special ()
   "Toggle red highlighting of special characters.
-
 Special means problematic characters, mainly outside Latin-1, that are hard to
 read or save."
   (interactive)
@@ -1546,12 +1538,11 @@ read or save."
   (if green-cite (hi-lock-mode 0)
     ;; Open parenthesis, not closing parenthesis, anything,
     ;; four digits, not closing parenthesis, anything
-    (progn
-      (hi-lock-face-buffer "([^)]*[0-9]\\{4\\}[^)]*)" 'hi-green)
-      (hi-lock-face-buffer "[()\n]" 'default)
-      ;; Commas between anything, parenthesized tail without four digits
-      (hi-lock-face-buffer ", " 'default)
-      (hi-lock-face-buffer ",[^0-9]*[0-9]\\{0,3\\})" 'default)))
+    (progn (hi-lock-face-buffer "([^)]*[0-9]\\{4\\}[^)]*)" 'hi-green)
+           (hi-lock-face-buffer "[()\n]" 'default)
+           ;; Commas between anything, parenthesized tail without four digits
+           (hi-lock-face-buffer ", " 'default)
+           (hi-lock-face-buffer ",[^0-9]*[0-9]\\{0,3\\})" 'default)))
   (setq green-cite (not green-cite))
   (force-mode-line-update)
   (message "Green citations %s" (if green-cite "ON" "OFF")))
@@ -1646,7 +1637,6 @@ anim id est laborum."))
 (defalias 'clean-trails 'delete-trailing-spc-tab-m)
 (defun delete-trailing-spc-tab-m ()
   "Delete spaces, tabs, and ^M glyphs from line ends.
-
 Unlike `delete-trailing-whitespace', deletes ^M in `lisp-mode'."
   (interactive "*")
   (let ((count 0))
@@ -1704,13 +1694,11 @@ Unlike `delete-trailing-whitespace', deletes ^M in `lisp-mode'."
       (indent-line-or-region))))
 (defun indent-region-whole ()
   "Indent all lines in region.
-
 Unlike `indent-region',  also indent the first half-marked line."
   (interactive "*")
   (let ((end (region-end)))
-    (save-excursion
-      (goto-char (region-beginning))
-      (indent-region (line-beginning-position) end nil))))
+    (save-excursion (goto-char (region-beginning))
+                    (indent-region (line-beginning-position) end nil))))
 ;; The following alias is better than
 ;; `indent-relative' with `indent-according-to-mode'
 (defalias 'indent-relative-definitely 'indent-relative)
@@ -1745,7 +1733,8 @@ Unlike `indent-region',  also indent the first half-marked line."
       (goto-char end)
       ;; In each iteration: skip empty lines, append lines, go one line up
       (while (> (point) beg)
-        (while (and (bolp)(eolp)(> (point) beg))(forward-line -1))
+        (while (and (bolp)(eolp)(> (point) beg))
+          (forward-line -1))
         (while (and (> (point) beg)
                     (< (line-beginning-position 0)(line-end-position 0)))
           (delete-indentation)
@@ -1789,9 +1778,8 @@ Unlike `indent-region',  also indent the first half-marked line."
   "Unindent region, removing all whitespace at beginning of line."
   (interactive "*")
   (let ((end (region-end)))
-    (save-excursion
-      (goto-char (region-beginning))
-      (indent-rigidly (line-beginning-position) end -1000))))
+    (save-excursion (goto-char (region-beginning))
+                    (indent-rigidly (line-beginning-position) end -1000))))
 (defun unindent-buffer ()
   "Unindent all lines."
   (interactive "*")
@@ -1830,9 +1818,8 @@ Unlike `indent-region',  also indent the first half-marked line."
   (if (zerop (how-many ")" (point)(line-end-position)))
       (message "No closing parenthesis between point and end of line.")
     (while (not (= (char-after) #x29))
-      (progn
-        (delete-char 1)
-        (insert " ")))))
+      (progn (delete-char 1)
+             (insert " ")))))
 (defun case-fold-string (str)
   "Create case-insensitive regexp from string."
   (mapconcat
@@ -1864,7 +1851,6 @@ Unlike `indent-region',  also indent the first half-marked line."
     (forward-line 1)))
 (defun convert-special ()
   "Convert special characters to Latin-1.
-
 Remove hex 00-08,0b-1f and convert 7f-a0
 using 'plain' \"quotes\" and double -- em dash."
   (interactive "*")
@@ -1941,7 +1927,6 @@ using 'plain' \"quotes\" and double -- em dash."
 (defun count-everything ()
   "Show line number and position, then count lines and characters
 in region or buffer.
-
 See also `count-words'."
   (interactive)
   (if (use-region-p)
@@ -1949,7 +1934,6 @@ See also `count-words'."
     (count-everything-region (point-min)(point-max))))
 (defun count-everything-region (beg end)
   "Show line number and position, then count lines and characters in region.
-
 See also `count-words'."
   (interactive "r")
   (let ((current-line (what-line))
@@ -1980,7 +1964,6 @@ See also `count-words'."
   (diff-buffer-with-file (buffer-name)))
 (defun doc-to-txt ()
   "Routine for pasting from Word into a text file (to diff two versions:
-
 Clear buffer, paste, untabify, unindent, use single spaces, delete blank lines."
   (interactive)
   (delete-region (point-min)(point-max))
@@ -2057,7 +2040,6 @@ Clear buffer, paste, untabify, unindent, use single spaces, delete blank lines."
     (message "No duplicate words found after this point")))
 (defun uncomment-line-or-region ()
   "Uncomment line or region.
-
 Warning: uncomments appended comments, so that
   int i=0;  // counter
 becomes
@@ -2138,11 +2120,10 @@ which doesn't compile."
         (was-bottom (and (already-top-bottom-p)
                          (not (eq (selected-window)(frame-first-window))))))
     (if (not (already-left-right-p))
-        (progn
-          (delete-other-windows)
-          (split-window-right)
-          (set-window-buffer (next-window) other-window-buffer)
-          (if was-bottom (transpose-windows))))))
+        (progn (delete-other-windows)
+               (split-window-right)
+               (set-window-buffer (next-window) other-window-buffer)
+               (if was-bottom (transpose-windows))))))
 (defun split-window-top-bottom ()
   "Arrange two windows on top and bottom of frame."
   (interactive)
@@ -2150,11 +2131,10 @@ which doesn't compile."
         (was-right (and (already-left-right-p)
                         (not (eq (selected-window)(frame-first-window))))))
     (if (not (already-top-bottom-p))
-        (progn
-          (delete-other-windows)
-          (split-window-below)
-          (set-window-buffer (next-window) other-window-buffer)
-          (if was-right (transpose-windows))))))
+        (progn (delete-other-windows)
+               (split-window-below)
+               (set-window-buffer (next-window) other-window-buffer)
+               (if was-right (transpose-windows))))))
 (defun transpose-windows ()
   "Swap contents of two windows."
   (interactive)
@@ -2219,7 +2199,8 @@ which doesn't compile."
     "Run simple Ada program."
     (interactive)
     (let ((resize-mini-windows nil))
-      (if (one-window-p)(split-window-right))(shell-command (file-name-sans-extension (buffer-name))))))
+      (if (one-window-p)(split-window-right))
+      (shell-command (file-name-sans-extension (buffer-name))))))
 (add-hook 'ada-mode-hook 'arni-ada-hook)
 ;;-----------
 ;; 6.2  ADMB
@@ -2227,19 +2208,29 @@ which doesn't compile."
 (defun std-to-tab ()
   "Convert ADMB *.std output to tab-separated text."
   (interactive)
-  (setq tab-width 23)(goto-char (point-min))(delete-trailing-spc-tab-m)(unindent-buffer)
-  (save-excursion (if (search-forward "std dev" nil t)(replace-match "std.dev")))
-  (save-excursion (while (re-search-forward " +" nil t)(replace-match "\t"))))
+  (setq tab-width 23)
+  (goto-char (point-min))
+  (delete-trailing-spc-tab-m)
+  (unindent-buffer)
+  (save-excursion
+    (if (search-forward "std dev" nil t)
+        (replace-match "std.dev")))
+  (save-excursion
+    (while (re-search-forward " +" nil t)
+      (replace-match "\t"))))
 (defun arni-admb-hook ()
-  (setq make-backup-files t)(arni-colors)
-  (add-to-list 'safe-local-variable-values '(admb-init . "admb050-vc6 & ")) ; allow files to set `admb-init' to this
-  (add-to-list 'safe-local-variable-values '(admb-init . "admb111-gcc472-win32 & ")) ; and this
+  (setq make-backup-files t)
+  (arni-colors)
+  ;; Allow file-local variables to set `admb-init' to these values
+  (add-to-list 'safe-local-variable-values
+               '(admb-init . "admb050-vc6 & "))
+  (add-to-list 'safe-local-variable-values
+               '(admb-init . "admb111-gcc472-win32 & "))
   (set-face-attribute 'font-lock-function-name-face nil :foreground "brown4")
   (local-set-key [f11]         'admb-outline-remember)
   (local-set-key [?\C-c ?\C-r] 'admb-rep-browser     )
   (defun admb-outline-remember ()
     "Navigate within ADMB file using `outline-mode', remembering previous mode."
-
     (interactive)
     (admb-outline)(setq outline-previous-mode '(admb-mode))))
 (add-hook 'admb-mode-hook 'arni-admb-hook)
@@ -2252,52 +2243,74 @@ which doesn't compile."
 ;; 6.4  Bash
 ;;-----------
 (defun arni-sh-hook ()
-  (setq make-backup-files t)(setq sh-basic-offset 2)(setq sh-indentation 2)(setq sh-test '("[[  ]]" . 4))
-  (sh-set-shell "bash")(message nil)
+  (setq make-backup-files t)
+  (setq sh-basic-offset 2)
+  (setq sh-indentation 2)
+  (setq sh-test '("[[  ]]" . 4))
+  (sh-set-shell "bash")
+  (message nil)
   (if (string-match "dos" (prin1-to-string buffer-file-coding-system))
-      (progn (set-buffer-file-coding-system 'utf-8-unix t)
-             (message "Warning: file had Dos format, changed to Unix file format.")))
-  (font-lock-add-keywords nil '(("[\[-]+\\(\\w+\\)" (1 font-lock-type-face append)))) ; [OPTIND-1], -option, --option
-  (font-lock-add-keywords nil '(("^[ \t]*set " . font-lock-warning-face)))(arni-colors)
-  (set-face-attribute 'font-lock-builtin-face       nil :foreground (fg 'font-lock-keyword-face)) ; echo
-  (set-face-attribute 'font-lock-type-face          nil :foreground "magenta4"                  ) ; -arg
-  (set-face-attribute 'font-lock-variable-name-face nil :weight 'bold                           ) ; $x
-  (set-face-attribute 'sh-heredoc                   nil :foreground "red"                       ) ; <<EOF
-  (set-face-attribute 'sh-quoted-exec               nil :foreground "brown4"                    ) ; `cmd`
+      (progn
+        (set-buffer-file-coding-system 'utf-8-unix t)
+        (message "Warning: file had Dos format, changed to Unix file format.")))
+  ;; [OPTIND-1], -option, --option
+  (font-lock-add-keywords nil '(("[\[-]+\\(\\w+\\)"
+                                 (1 font-lock-type-face append))))
+  (font-lock-add-keywords nil '(("^[ \t]*set " . font-lock-warning-face)))
+  (arni-colors)
+  (set-face-attribute 'font-lock-builtin-face nil
+                      :foreground (fg 'font-lock-keyword-face)) ; echo
+  (set-face-attribute 'font-lock-type-face nil :foreground "magenta4") ; -arg
+  (set-face-attribute 'font-lock-variable-name-face nil :weight 'bold) ; $x
+  (set-face-attribute 'sh-heredoc nil :foreground "red") ; <<EOF
+  (set-face-attribute 'sh-quoted-exec nil :foreground "brown4") ; `cmd`
   (local-unset-key [?\C-c ?=]) ; reactivate diff-this-buffer-with-file
-  (local-set-key [f11]         'sh-outline                               )
-  (local-set-key [f12]         'sh-template                              )
-  (local-set-key [S-f12]       'sh-template-mini                         )
-  (local-set-key [?\C-m]       'sh-indent-newline-indent-or-delete-region) ; return
-  (local-set-key [?\C-c ?\C-c] 'sh-eval-buffer                           ) ; sh-case
-  (local-set-key [?\C-c ?\C-v] 'sh-eval-buffer                           )
+  (local-set-key [f11]   'sh-outline                               )
+  (local-set-key [f12]   'sh-template                              )
+  (local-set-key [S-f12] 'sh-template-mini                         )
+  (local-set-key [?\C-m] 'sh-indent-newline-indent-or-delete-region) ; return
+  (local-set-key [?\C-c ?\C-c] 'sh-eval-buffer                       ) ; sh-case
+  (local-set-key [?\C-c ?\C-v] 'sh-eval-buffer                       )
   (defun sh-eval-buffer ()
     "Evaluate commands in buffer in inferior shell.
-
 See also `sh-send-line-or-region-and-step'."
     (interactive)
     (sh-send-text (buffer-string)))
   (defun sh-indent-newline-indent ()
     "Indent, insert newline, indent."
     (interactive "*")
-    (insert " ")(indent-according-to-mode)(newline)(clean-trails)(message nil)
+    (insert " ")
+    (indent-according-to-mode)
+    (newline)
+    (clean-trails)
+    (message nil)
     (indent-according-to-mode)) ; handle 'case'
   (defun sh-indent-newline-indent-or-delete-region ()
     "Indent, insert newline, and indent, or delete region."
-    (interactive "*")(if (use-region-p)(progn (delete-region (point)(mark))(newline))(sh-indent-newline-indent)))
+    (interactive "*")
+    (if (use-region-p)
+        (progn (delete-region (point)(mark))
+               (newline))
+      (sh-indent-newline-indent)))
   (defun sh-outline ()
     "Navigate within shell script using `outline-mode'."
     (interactive)
-    (outline-mode)(setq outline-regexp "#")(outline-mode)(outline-hide-body)(setq outline-previous-mode '(sh-mode))
+    (outline-mode)
+    (setq outline-regexp "#")
+    (outline-mode)
+    (outline-hide-body)
+    (setq outline-previous-mode '(sh-mode))
     (set-face-attribute 'outline-1 nil :inherit font-lock-comment-face))
   (defun sh-template-mini ()
     "Insert minimal sh template."
     (interactive "*")
-    (goto-char (point-min))(insert "#!/bin/bash\n\n"))
+    (goto-char (point-min))
+    (insert "#!/bin/bash\n\n"))
   (defun sh-template ()
     "Insert sh template."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 #!/bin/bash
 shopt -s expand_aliases
 alias help='echo \"Usage: \"'
@@ -2328,7 +2341,10 @@ while getopts \"p:\" A; do
 done
 shift $((OPTIND-1))
 
-")(goto-char (point-min))(search-forward ":   ")(overwrite-mode t)))
+")
+    (goto-char (point-min))
+    (search-forward ":   ")
+    (overwrite-mode t)))
 (add-hook 'sh-mode-hook 'arni-sh-hook)
 ;;---------
 ;; 6.5  C#
@@ -2339,34 +2355,37 @@ shift $((OPTIND-1))
 ;; 6.6  C++
 ;;----------
 (defun arni-c-hook ()
-  (setq make-backup-files t)(abbrev-mode 0) ; (setq-default c-electric-flag nil)
-  (c-set-offset 'case-label '+      ) ; indent switch cases
-  (c-set-offset 'comment-intro 0    ) ; don't indent comments more than statements
-  (c-set-offset 'func-decl-cont 0   ) ; don't indent comments between function() and {
+  (setq make-backup-files t)
+  (abbrev-mode 0)
+  ;; (setq-default c-electric-flag nil)
+  (c-set-offset 'case-label '+) ; indent switch cases
+  (c-set-offset 'comment-intro 0) ; don't indent comments more than statements
+  ;; Don't indent comments between function() and {
+  (c-set-offset 'func-decl-cont 0)
   (c-set-offset 'substatement-open 0) ; don't indent {
-  (local-unset-key [?\C-\M-e])        ; reactivate query-replace-regexp
-  (local-unset-key [?\C-c ?.])        ; reactivate comment-line-or-region
-  (local-unset-key [?/]      )        ; reactivate normal slash
-  (local-set-key [f11]               'hs-minor-mode          )
-  (local-set-key [f12]               'cpp-template-mini      )
-  (local-set-key [S-f12]             'cpp-template           )
-  (local-set-key [?\C-m]             'newline-and-indent     ) ; return
-  (local-set-key [M-return]          'cpp-endl               )
-  (local-set-key [?\C-\M-m]          'cpp-endl               ) ; M-return in terminal
-  (local-set-key [?\C-c C-backspace] 'cpp-clean              )
-  (local-set-key [?\C-c ?\C-,]       'previous-error         )
-  (local-set-key [?\C-c ?\C-.]       'next-error             )
-  (local-set-key [?\C-c ?\C-a]       'cpp-run-args           )
-  (local-set-key [?\C-c ?\C-b]       'cpp-run-gdb            )
-  (local-set-key [?\C-c ?\C-c]       'cpp-compile            )
-  (local-set-key [?\C-c ?\C-d]       'cpp-compile-symbols    )
-  (local-set-key [?\C-c ?\C-f]       'cpp-for                )
-  (local-set-key [?\C-c ?\C-h]       'cpp-header             )
-  (local-set-key [?\C-c ?\C-i]       'cpp-include            )
-  (local-set-key [?\C-c ?\C-l]       'lex-compile            )
-  (local-set-key [?\C-c ?\C-m]       'cpp-compile-make       )
-  (local-set-key [?\C-c ?\C-t]       'cpp-typeid             )
-  (local-set-key [?\C-c ?\C-v]       'cpp-run                )
+  (local-unset-key [?\C-\M-e]) ; reactivate query-replace-regexp
+  (local-unset-key [?\C-c ?.]) ; reactivate comment-line-or-region
+  (local-unset-key [?/]      ) ; reactivate normal slash
+  (local-set-key [f11]               'hs-minor-mode      )
+  (local-set-key [f12]               'cpp-template-mini  )
+  (local-set-key [S-f12]             'cpp-template       )
+  (local-set-key [?\C-m]             'newline-and-indent ) ; return
+  (local-set-key [M-return]          'cpp-endl           )
+  (local-set-key [?\C-\M-m]          'cpp-endl           ) ; M-RET in terminal
+  (local-set-key [?\C-c C-backspace] 'cpp-clean          )
+  (local-set-key [?\C-c ?\C-,]       'previous-error     )
+  (local-set-key [?\C-c ?\C-.]       'next-error         )
+  (local-set-key [?\C-c ?\C-a]       'cpp-run-args       )
+  (local-set-key [?\C-c ?\C-b]       'cpp-run-gdb        )
+  (local-set-key [?\C-c ?\C-c]       'cpp-compile        )
+  (local-set-key [?\C-c ?\C-d]       'cpp-compile-symbols)
+  (local-set-key [?\C-c ?\C-f]       'cpp-for            )
+  (local-set-key [?\C-c ?\C-h]       'cpp-header         )
+  (local-set-key [?\C-c ?\C-i]       'cpp-include        )
+  (local-set-key [?\C-c ?\C-l]       'lex-compile        )
+  (local-set-key [?\C-c ?\C-m]       'cpp-compile-make   )
+  (local-set-key [?\C-c ?\C-t]       'cpp-typeid         )
+  (local-set-key [?\C-c ?\C-v]       'cpp-run            )
   (local-set-key [?\C-c ?\C-y]       'doxymacs-mode-with-hook)
   (defun cpp-clean ()
     "Remove C++ binary files (*.o *.so *.dll)."
@@ -2374,50 +2393,71 @@ shift $((OPTIND-1))
     (let* ((prog (file-name-sans-extension (buffer-name)))
            (pattern (concat prog "\\.o\\|" prog "\\.so\\|" prog "\\.dll"))
            (files (directory-files "." nil pattern t)))
-      (dolist (x files)(delete-file x)))(message "Removed binary files."))
+      (dolist (x files)(delete-file x)))
+    (message "Removed binary files."))
   (defun cpp-compile ()
     "Build simple C++ program (one source file)."
     (interactive)
-    (save-buffer)(if (one-window-p)(split-window-right))
-    (compile (concat "g++ -s -static -Wall -o " (file-name-sans-extension (buffer-name)) " " (buffer-name))))
+    (save-buffer)
+    (if (one-window-p)(split-window-right))
+    (compile (concat "g++ -s -static -Wall -o "
+                     (file-name-sans-extension (buffer-name)) " "
+                     (buffer-name))))
   (defun cpp-compile-make ()
     "Build C++ program using Makefile."
     (interactive)
-    (save-buffer)(if (one-window-p)(split-window-right))(compile "make"))
+    (save-buffer)
+    (if (one-window-p)(split-window-right))
+    (compile "make"))
   (defun cpp-compile-symbols ()
     "Build simple C++ program (one source file) with debug symbols."
     (interactive)
-    (save-buffer)(if (one-window-p)(split-window-right))
-    (compile (concat "g++ -g -static -Wall -o " (file-name-sans-extension (buffer-name)) " " (buffer-name))))
+    (save-buffer)
+    (if (one-window-p)(split-window-right))
+    (compile (concat "g++ -g -static -Wall -o "
+                     (file-name-sans-extension (buffer-name)) " "
+                     (buffer-name))))
   (defun cpp-endl ()
     "Insert << endl; (or just endl;) and newline."
     (interactive "*")
-    (delete-horizontal-space)(if (looking-back "<" 10)(insert " endl;")(insert " << endl;")))
+    (delete-horizontal-space)
+    (if (looking-back "<" 10)
+        (insert " endl;")
+      (insert " << endl;")))
   (defun cpp-for ()
     "Insert for(int i=0; i<; i++)."
     (interactive "*")
-    (insert "for(int i=0; i<; i++)")(search-backward ";"))
+    (insert "for(int i=0; i<; i++)")
+    (search-backward ";"))
   (defun cpp-header ()
-    "Insert header #include guards (#ifndef, #define, #endif) at buffer top and bottom."
+    "Insert include guards (#ifndef, #define, #endif) at buffer top and bottom."
     (interactive "*")
-    (let ((_CLASS_H (concat "_" (upcase (file-name-sans-extension (buffer-name))) "_H")))
-      (save-excursion (goto-char (point-min))(insert "#ifndef " _CLASS_H "\n#define " _CLASS_H "\n")
-                      (goto-line-lisp (line-number-at-pos (point-max)))(insert "\n#endif // " _CLASS_H "\n"))))
+    (let ((_CLASS_H (concat "_"
+                            (upcase (file-name-sans-extension (buffer-name)))
+                            "_H")))
+      (save-excursion (goto-char (point-min))
+                      (insert "#ifndef " _CLASS_H "\n#define " _CLASS_H "\n")
+                      (goto-line-lisp (line-number-at-pos (point-max)))
+                      (insert "\n#endif // " _CLASS_H "\n"))))
   (defun cpp-include ()
     "Insert #include <>."
     (interactive "*")
-    (insert "#include <>")(if (not (= (char-after) ?\n))(insert "\n"))(search-backward ">"))
+    (insert "#include <>")
+    (if (not (= (char-after) ?\n))(insert "\n"))
+    (search-backward ">"))
   (defun cpp-run ()
     "Run simple C++ program."
     (interactive)
     (let ((resize-mini-windows nil))
-      (if (one-window-p)(split-window-right))(shell-command (file-name-sans-extension (buffer-name)))))
+      (if (one-window-p)(split-window-right))
+      (shell-command (file-name-sans-extension (buffer-name)))))
   (defun cpp-run-args (args)
     "Run simple C++ program with args."
     (interactive "sArgs: ")
     (let ((resize-mini-windows nil))
       (if (one-window-p)(split-window-right))
-      (shell-command (concat (file-name-sans-extension (buffer-name)) " " args))))
+      (shell-command
+       (concat (file-name-sans-extension (buffer-name)) " " args))))
   (defun cpp-run-gdb ()
     "Debug C++ program using gdb."
     (interactive)
@@ -2425,7 +2465,8 @@ shift $((OPTIND-1))
   (defun cpp-template ()
     "Insert C++ template."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 //==============================================================================
 // Program:
 // Usage:
@@ -2451,11 +2492,13 @@ int main(int argc, char** argv)
 {
   cout << \"\" << endl;
 }
-")(goto-char (point-min)))
+")
+    (goto-char (point-min)))
   (defun cpp-template-mini ()
     "Insert minimal C++ template."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 #include <iostream>
 using namespace std;
 
@@ -2463,144 +2506,208 @@ int main()
 {
   cout << \"\" << endl;
 }
-")(goto-char (point-min))(search-forward "\""))
+")
+    (goto-char (point-min))
+    (search-forward "\""))
   (defun cpp-typeid ()
     "Insert typeid().name()."
-    (interactive "*")(insert "typeid().name()")(search-backward ")."))
+    (interactive "*")
+    (insert "typeid().name()")
+    (search-backward ")."))
   (defun lex-compile ()
     "Translate lex to C."
     (interactive)
     (compile (concat "flex " (buffer-name)))))
 (add-hook 'c-mode-common-hook 'arni-c-hook)
 (defun arni-ebrowse-hook ()
-  (split-window-right)(ebrowse-tree-command:show-member-functions)(skip-chars-forward " \t")
+  (split-window-right)
+  (ebrowse-tree-command:show-member-functions)
+  (skip-chars-forward " \t")
   (local-unset-key [?\C-l]) ; reactivate recenter
-  (local-set-key [down-mouse-1] 'ebrowse-mouse-tree-variables              )
-  (local-set-key [mouse-2]      'ebrowse-mouse-tree-declaration            )
-  (local-set-key [down-mouse-3] 'ebrowse-mouse-2-in-tree-buffer            )
-  (local-set-key [f5]           'ebrowse-restore-windows                   )
-  (local-set-key [S-f5]         'ebrowse-redraw-tree                       )
-  (local-set-key [C-home]       'ebrowse-tree-top                          )
-  (local-set-key [C-S-home]     'region-bol-top                            )
-  (local-set-key [C-end]        'ebrowse-tree-bottom                       )
-  (local-set-key [C-S-end]      'region-bol-bottom                         )
-  (local-set-key [prior]        'ebrowse-tree-up-page                      )
-  (local-set-key [next]         'ebrowse-tree-down-page                    )
-  (local-set-key [?\t]          'ebrowse-tree-switch                       )
-  (local-set-key [backtab]      'ebrowse-tree-switch                       )
-  (local-set-key [?\C-m]        'ebrowse-tree-view-declaration             ) ; return
-  (local-set-key [C-return]     'ebrowse-tree-view-declaration             )
-  (local-set-key [left]         'ebrowse-tree-command:show-member-variables)
-  (local-set-key [right]        'ebrowse-tree-command:show-member-functions)
-  (local-set-key [up]           'ebrowse-tree-up                           )
-  (local-set-key [down]         'ebrowse-tree-down                         )
-  (local-set-key [S-up]         'region-bol-up                             )
-  (local-set-key [S-down]       'region-bol-down                           )
-  (local-set-key [C-up]         'ebrowse-tree-up-3                         )
-  (local-set-key [C-down]       'ebrowse-tree-down-3                       )
-  (local-set-key [M-up]         'ebrowse-tree-up-view                      )
-  (local-set-key [M-down]       'ebrowse-tree-down-view                    )
-  (local-set-key [?\C-n]        'ebrowse-tree-down                         )
-  (local-set-key [?\C-p]        'ebrowse-tree-up                           )
-  (local-set-key [?\C-v]        'ebrowse-tree-down-page                    )
-  (local-set-key [?\C-y]        'ebrowse-tree-up-page                      )
-  (local-set-key [?*]           'ebrowse-tree-member-public                )
-  (local-set-key [?M]           'ebrowse-tree-middle                       )
-  (local-set-key [?N]           'ebrowse-tree-down-view                    )
-  (local-set-key [?P]           'ebrowse-tree-up-view                      )
-  (local-set-key [?U]           'ebrowse-mark-all-classes                  )
-  (local-set-key [?a]           'ebrowse-tree-member-attributes            )
-  (local-set-key [?f]           'ebrowse-toggle-file-name-display          )
-  (local-set-key [?i]           'ebrowse-statistics                        )
-  (local-set-key [?l]           'ebrowse-tags-list-members-in-file         )
-  (local-set-key [?m]           'ebrowse-tree-mark                         )
-  (local-set-key [?o]           'ebrowse-tree-command:show-member-functions)
-  (local-set-key [?n]           'ebrowse-tree-down                         )
-  (local-set-key [?p]           'ebrowse-tree-up                           )
-  (local-set-key [?q]           'ebrowse-quit                              )
-  (local-set-key [?r]           'ebrowse-tags-apropos                      )
-  (local-set-key [?s]           'ebrowse-tags-view-definition-other-window )
-  (local-set-key [?t]           'ebrowse-tree-member-type                  )
-  (local-set-key [?u]           'ebrowse-tree-mark                         )
-  (local-set-key [?v]           'ebrowse-tree-command:show-member-functions)
-  (define-key ebrowse-member-mode-map [mouse-1]      'ebrowse-member-view-declaration          )
-  (define-key ebrowse-member-mode-map [mouse-2]      'ebrowse-restore-windows                  )
-  (define-key ebrowse-member-mode-map [mouse-3]      'ebrowse-member-view-definition           )
-  (define-key ebrowse-member-mode-map [down-mouse-3] 'mouse-set-point                          )
-  (define-key ebrowse-member-mode-map [f5]           'ebrowse-restore-windows                  )
-  (define-key ebrowse-member-mode-map [C-home]       'ebrowse-member-top                       )
-  (define-key ebrowse-member-mode-map [C-end]        'ebrowse-member-bottom                    )
-  (define-key ebrowse-member-mode-map [C-S-home]     'ebrowse-member-top-mark                  )
-  (define-key ebrowse-member-mode-map [C-S-end]      'region-bol-bottom                        )
-  (define-key ebrowse-member-mode-map [prior]        'ebrowse-member-up-page                   )
-  (define-key ebrowse-member-mode-map [next]         'ebrowse-member-down-page                 )
-  (define-key ebrowse-member-mode-map [?\t]          'ebrowse-pop-from-member-to-tree-buffer   )
-  (define-key ebrowse-member-mode-map [backtab]      'ebrowse-pop-from-member-to-tree-buffer   )
-  (define-key ebrowse-member-mode-map [?\C-m]        'ebrowse-member-view-declaration          ) ; return
-  (define-key ebrowse-member-mode-map [C-return]     'ebrowse-member-view-definition           )
-  (define-key ebrowse-member-mode-map [M-return]     'ebrowse-member-view-definition           )
-  (define-key ebrowse-member-mode-map [up]           'ebrowse-member-up                        )
-  (define-key ebrowse-member-mode-map [down]         'ebrowse-member-down                      )
-  (define-key ebrowse-member-mode-map [S-up]         'ebrowse-member-up-mark                   )
-  (define-key ebrowse-member-mode-map [S-down]       'region-bol-down                          )
-  (define-key ebrowse-member-mode-map [C-up]         'ebrowse-member-up-3                      )
-  (define-key ebrowse-member-mode-map [C-down]       'ebrowse-member-down-3                    )
-  (define-key ebrowse-member-mode-map [M-up]         'ebrowse-member-up-view                   )
-  (define-key ebrowse-member-mode-map [M-down]       'ebrowse-member-down-view                 )
-  (define-key ebrowse-member-mode-map [left]         'ebrowse-member-variables                 )
-  (define-key ebrowse-member-mode-map [right]        'ebrowse-member-functions                 )
-  (define-key ebrowse-member-mode-map [?\C-y]        'ebrowse-member-up-page                   )
-  (define-key ebrowse-member-mode-map [?\C-v]        'ebrowse-member-down-page                 )
-  (define-key ebrowse-member-mode-map [?*]           'ebrowse-toggle-public-member-filter      )
-  (define-key ebrowse-member-mode-map [?/]           'ebrowse-goto-visible-member              )
-  (define-key ebrowse-member-mode-map [?M]           'ebrowse-member-middle                    )
-  (define-key ebrowse-member-mode-map [?N]           'ebrowse-member-down-3                    )
-  (define-key ebrowse-member-mode-map [?P]           'ebrowse-member-up-3                      )
-  (define-key ebrowse-member-mode-map [?a]           'ebrowse-toggle-member-attributes-display )
-  (define-key ebrowse-member-mode-map [?f]           'ebrowse-member-tree-filenames            )
-  (define-key ebrowse-member-mode-map [?i]           'ebrowse-statistics                       )
-  (define-key ebrowse-member-mode-map [?l]           'ebrowse-tags-list-members-in-file        )
-  (define-key ebrowse-member-mode-map [?m]           'ignore                                   )
-  (define-key ebrowse-member-mode-map [?o]           'ebrowse-member-view-declaration          )
-  (define-key ebrowse-member-mode-map [?n]           'ebrowse-member-down                      )
-  (define-key ebrowse-member-mode-map [?p]           'ebrowse-member-up                        )
-  (define-key ebrowse-member-mode-map [?q]           'ebrowse-restore-windows                  )
-  (define-key ebrowse-member-mode-map [?r]           'ebrowse-tags-apropos                     )
-  (define-key ebrowse-member-mode-map [?s]           'ebrowse-tags-view-definition-other-window)
-  (define-key ebrowse-member-mode-map [?t]           'ebrowse-toggle-long-short-display        )
-  (define-key ebrowse-member-mode-map [?v]           'ebrowse-member-view-declaration          )
+  (local-set-key [down-mouse-1] 'ebrowse-mouse-tree-variables         )
+  (local-set-key [mouse-2] 'ebrowse-mouse-tree-declaration            )
+  (local-set-key [down-mouse-3] 'ebrowse-mouse-2-in-tree-buffer       )
+  (local-set-key [f5]      'ebrowse-restore-windows                   )
+  (local-set-key [S-f5]    'ebrowse-redraw-tree                       )
+  (local-set-key [C-home]  'ebrowse-tree-top                          )
+  (local-set-key [C-S-home] 'region-bol-top                           )
+  (local-set-key [C-end]   'ebrowse-tree-bottom                       )
+  (local-set-key [C-S-end] 'region-bol-bottom                         )
+  (local-set-key [prior]   'ebrowse-tree-up-page                      )
+  (local-set-key [next]    'ebrowse-tree-down-page                    )
+  (local-set-key [?\t]     'ebrowse-tree-switch                       )
+  (local-set-key [backtab] 'ebrowse-tree-switch                       )
+  (local-set-key [?\C-m]   'ebrowse-tree-view-declaration             ) ; return
+  (local-set-key [C-return] 'ebrowse-tree-view-declaration            )
+  (local-set-key [left]    'ebrowse-tree-command:show-member-variables)
+  (local-set-key [right]   'ebrowse-tree-command:show-member-functions)
+  (local-set-key [up]      'ebrowse-tree-up                           )
+  (local-set-key [down]    'ebrowse-tree-down                         )
+  (local-set-key [S-up]    'region-bol-up                             )
+  (local-set-key [S-down]  'region-bol-down                           )
+  (local-set-key [C-up]    'ebrowse-tree-up-3                         )
+  (local-set-key [C-down]  'ebrowse-tree-down-3                       )
+  (local-set-key [M-up]    'ebrowse-tree-up-view                      )
+  (local-set-key [M-down]  'ebrowse-tree-down-view                    )
+  (local-set-key [?\C-n]   'ebrowse-tree-down                         )
+  (local-set-key [?\C-p]   'ebrowse-tree-up                           )
+  (local-set-key [?\C-v]   'ebrowse-tree-down-page                    )
+  (local-set-key [?\C-y]   'ebrowse-tree-up-page                      )
+  (local-set-key [?*]      'ebrowse-tree-member-public                )
+  (local-set-key [?M]      'ebrowse-tree-middle                       )
+  (local-set-key [?N]      'ebrowse-tree-down-view                    )
+  (local-set-key [?P]      'ebrowse-tree-up-view                      )
+  (local-set-key [?U]      'ebrowse-mark-all-classes                  )
+  (local-set-key [?a]      'ebrowse-tree-member-attributes            )
+  (local-set-key [?f]      'ebrowse-toggle-file-name-display          )
+  (local-set-key [?i]      'ebrowse-statistics                        )
+  (local-set-key [?l]      'ebrowse-tags-list-members-in-file         )
+  (local-set-key [?m]      'ebrowse-tree-mark                         )
+  (local-set-key [?o]      'ebrowse-tree-command:show-member-functions)
+  (local-set-key [?n]      'ebrowse-tree-down                         )
+  (local-set-key [?p]      'ebrowse-tree-up                           )
+  (local-set-key [?q]      'ebrowse-quit                              )
+  (local-set-key [?r]      'ebrowse-tags-apropos                      )
+  (local-set-key [?s]      'ebrowse-tags-view-definition-other-window )
+  (local-set-key [?t]      'ebrowse-tree-member-type                  )
+  (local-set-key [?u]      'ebrowse-tree-mark                         )
+  (local-set-key [?v]      'ebrowse-tree-command:show-member-functions)
+  (define-key ebrowse-member-mode-map [mouse-1]
+    'ebrowse-member-view-declaration)
+  (define-key ebrowse-member-mode-map [mouse-2]
+    'ebrowse-restore-windows)
+  (define-key ebrowse-member-mode-map [mouse-3]
+    'ebrowse-member-view-definition)
+  (define-key ebrowse-member-mode-map [down-mouse-3]
+    'mouse-set-point)
+  (define-key ebrowse-member-mode-map [f5]
+    'ebrowse-restore-windows)
+  (define-key ebrowse-member-mode-map [C-home]
+    'ebrowse-member-top)
+  (define-key ebrowse-member-mode-map [C-end]
+    'ebrowse-member-bottom)
+  (define-key ebrowse-member-mode-map [C-S-home]
+    'ebrowse-member-top-mark)
+  (define-key ebrowse-member-mode-map [C-S-end]
+    'region-bol-bottom)
+  (define-key ebrowse-member-mode-map [prior]
+    'ebrowse-member-up-page)
+  (define-key ebrowse-member-mode-map [next]
+    'ebrowse-member-down-page)
+  (define-key ebrowse-member-mode-map [?\t]
+    'ebrowse-pop-from-member-to-tree-buffer)
+  (define-key ebrowse-member-mode-map [backtab]
+    'ebrowse-pop-from-member-to-tree-buffer)
+  (define-key ebrowse-member-mode-map [?\C-m]
+    'ebrowse-member-view-declaration) ; return
+  (define-key ebrowse-member-mode-map [C-return]
+    'ebrowse-member-view-definition)
+  (define-key ebrowse-member-mode-map [M-return]
+    'ebrowse-member-view-definition)
+  (define-key ebrowse-member-mode-map [up]
+    'ebrowse-member-up)
+  (define-key ebrowse-member-mode-map [down]
+    'ebrowse-member-down)
+  (define-key ebrowse-member-mode-map [S-up]
+    'ebrowse-member-up-mark)
+  (define-key ebrowse-member-mode-map [S-down]
+    'region-bol-down)
+  (define-key ebrowse-member-mode-map [C-up]
+    'ebrowse-member-up-3)
+  (define-key ebrowse-member-mode-map [C-down]
+    'ebrowse-member-down-3)
+  (define-key ebrowse-member-mode-map [M-up]
+    'ebrowse-member-up-view)
+  (define-key ebrowse-member-mode-map [M-down]
+    'ebrowse-member-down-view)
+  (define-key ebrowse-member-mode-map [left]
+    'ebrowse-member-variables)
+  (define-key ebrowse-member-mode-map [right]
+    'ebrowse-member-functions)
+  (define-key ebrowse-member-mode-map [?\C-y]
+    'ebrowse-member-up-page)
+  (define-key ebrowse-member-mode-map [?\C-v]
+    'ebrowse-member-down-page)
+  (define-key ebrowse-member-mode-map [?*]
+    'ebrowse-toggle-public-member-filter)
+  (define-key ebrowse-member-mode-map [?/]
+    'ebrowse-goto-visible-member)
+  (define-key ebrowse-member-mode-map [?M]
+    'ebrowse-member-middle)
+  (define-key ebrowse-member-mode-map [?N]
+    'ebrowse-member-down-3)
+  (define-key ebrowse-member-mode-map [?P]
+    'ebrowse-member-up-3)
+  (define-key ebrowse-member-mode-map [?a]
+    'ebrowse-toggle-member-attributes-display)
+  (define-key ebrowse-member-mode-map [?f]
+    'ebrowse-member-tree-filenames)
+  (define-key ebrowse-member-mode-map [?i]
+    'ebrowse-statistics)
+  (define-key ebrowse-member-mode-map [?l]
+    'ebrowse-tags-list-members-in-file)
+  (define-key ebrowse-member-mode-map [?m]
+    'ignore)
+  (define-key ebrowse-member-mode-map [?o]
+    'ebrowse-member-view-declaration)
+  (define-key ebrowse-member-mode-map [?n]
+    'ebrowse-member-down)
+  (define-key ebrowse-member-mode-map [?p]
+    'ebrowse-member-up)
+  (define-key ebrowse-member-mode-map [?q]
+    'ebrowse-restore-windows)
+  (define-key ebrowse-member-mode-map [?r]
+    'ebrowse-tags-apropos)
+  (define-key ebrowse-member-mode-map [?s]
+    'ebrowse-tags-view-definition-other-window)
+  (define-key ebrowse-member-mode-map [?t]
+    'ebrowse-toggle-long-short-display)
+  (define-key ebrowse-member-mode-map [?v]
+    'ebrowse-member-view-declaration)
   (defun ebrowse-member-bottom ()
     "Move to bottom."
     (interactive)
-    (deactivate-mark)(goto-char (point-max))(ebrowse-member-up 1))
+    (deactivate-mark)
+    (goto-char (point-max))
+    (ebrowse-member-up 1))
   (defun ebrowse-member-down (&optional n)
     "Move down N lines."
     (interactive "p")
-    (deactivate-mark)(beginning-of-line (+ 1 n))(if (eobp)(forward-line -1))(skip-chars-forward " \t<\\->"))
+    (deactivate-mark)
+    (beginning-of-line (+ 1 n))
+    (if (eobp)(forward-line -1))
+    (skip-chars-forward " \t<\\->"))
   (defun ebrowse-member-down-3 ()
     "Move down 3 lines."
     (interactive)
     (ebrowse-member-down 3))
   (defun ebrowse-member-down-page (&optional n)
     "Move down N pages."
-    (interactive "p")(ebrowse-member-down (pages n)))
+    (interactive "p")
+    (ebrowse-member-down (pages n)))
   (defun ebrowse-member-down-view ()
     "Move down one line and view member declaration in other window."
     (interactive)
-    (ebrowse-member-down 1)(ebrowse-member-view-declaration))
+    (ebrowse-member-down 1)
+    (ebrowse-member-view-declaration))
   (defun ebrowse-member-functions ()
     "Display member functions."
     (interactive)
     (let ((line (line-number-at-pos)))
-      (ebrowse-display-function-member-list)(goto-line-lisp (- line 1))(ebrowse-member-down 1)))
+      (ebrowse-display-function-member-list)
+      (goto-line-lisp (- line 1))
+      (ebrowse-member-down 1)))
   (defun ebrowse-member-middle ()
     "Move to middle."
     (interactive)
-    (ebrowse-member-top)(ebrowse-member-down (middle-from-here)))
+    (ebrowse-member-top)
+    (ebrowse-member-down (middle-from-here)))
   (defun ebrowse-member-top ()
     "Move to top."
     (interactive)
-    (deactivate-mark)(goto-line-lisp 4)(ebrowse-member-up 1))
+    (deactivate-mark)
+    (goto-line-lisp 4)
+    (ebrowse-member-up 1))
   (defun ebrowse-member-top-mark ()
     "Extend region to top."
     (interactive)
@@ -2608,11 +2715,15 @@ int main()
   (defun ebrowse-member-tree-filenames ()
     "Toggle filename display in tree window."
     (interactive)
-    (other-window 1)(ebrowse-toggle-file-name-display)(other-window 1))
+    (other-window 1)
+    (ebrowse-toggle-file-name-display)
+    (other-window 1))
   (defun ebrowse-member-up (&optional n)
     "Move up N lines."
     (interactive "p")
-    (deactivate-mark)(beginning-of-line (- 1 n))(if (< (line-number-at-pos) 3)(goto-line-lisp 3))
+    (deactivate-mark)
+    (beginning-of-line (- 1 n))
+    (if (< (line-number-at-pos) 3)(goto-line-lisp 3))
     (skip-chars-forward " \t<\\->"))
   (defun ebrowse-member-up-3 ()
     "Move up 3 lines."
@@ -2621,122 +2732,165 @@ int main()
   (defun ebrowse-member-up-mark (&optional n)
     "Extend region up N lines."
     (interactive "p")
-    (region-bol-up n)(if (< (line-number-at-pos) 3)(ebrowse-member-top-mark)))
+    (region-bol-up n)
+    (if (< (line-number-at-pos) 3)(ebrowse-member-top-mark)))
   (defun ebrowse-member-up-page (&optional n)
     "Move up N pages."
-    (interactive "p")(ebrowse-member-up (pages n)))
+    (interactive "p")
+    (ebrowse-member-up (pages n)))
   (defun ebrowse-member-up-view ()
     "Move up one line and view member declaration in other window."
     (interactive)
-    (ebrowse-member-up 1)(ebrowse-member-view-declaration))
+    (ebrowse-member-up 1)
+    (ebrowse-member-view-declaration))
   (defun ebrowse-member-variables ()
     "Display member variables."
     (interactive)
     (let ((line (line-number-at-pos)))
-      (ebrowse-display-variables-member-list)(goto-line-lisp (+ line 1))(ebrowse-member-up 1)))
+      (ebrowse-display-variables-member-list)
+      (goto-line-lisp (+ line 1))
+      (ebrowse-member-up 1)))
   (defun ebrowse-member-view-declaration ()
     "View member declaration in other window."
     (interactive)
-    (ebrowse-view-member-declaration 4)(kill-buffer (current-buffer))(other-window 1)
-    (ebrowse-view-member-declaration 4)(other-window 1))
+    (ebrowse-view-member-declaration 4)
+    (kill-buffer (current-buffer))
+    (other-window 1)
+    (ebrowse-view-member-declaration 4)
+    (other-window 1))
   (defun ebrowse-member-view-definition ()
     "View member definition in other window."
     (interactive)
-    (ebrowse-view-member-definition 4)(kill-buffer (current-buffer))(other-window 1)
-    (ebrowse-view-member-definition 4)(other-window 1))
+    (ebrowse-view-member-definition 4)
+    (kill-buffer (current-buffer))
+    (other-window 1)
+    (ebrowse-view-member-definition 4)
+    (other-window 1))
   (defun ebrowse-mouse-tree-variables (event)
     "View member variables."
     (interactive "e")
-    (mouse-set-point event)(ebrowse-tree-command:show-member-variables t))
+    (mouse-set-point event)
+    (ebrowse-tree-command:show-member-variables t))
   (defun ebrowse-mouse-tree-declaration (event)
     "View class declaration."
     (interactive "e")
-    (mouse-set-point event)(ebrowse-tree-view-declaration))
+    (mouse-set-point event)
+    (ebrowse-tree-view-declaration))
   (defun ebrowse-quit ()
     "Quit ebrowse-tree-mode."
     (interactive)
-    (delete-other-windows)(kill-buffer ebrowse-tree-buffer-name)(kill-buffer ebrowse-member-buffer-name))
+    (delete-other-windows)
+    (kill-buffer ebrowse-tree-buffer-name)
+    (kill-buffer ebrowse-member-buffer-name))
   (defun ebrowse-restore-windows ()
     "Restore original window setup: tree|members."
     (interactive)
-    (delete-other-windows)(split-window-right)(switch-to-buffer ebrowse-tree-buffer-name)
+    (delete-other-windows)
+    (split-window-right)
+    (switch-to-buffer ebrowse-tree-buffer-name)
     (display-buffer ebrowse-member-buffer-name))
   (defun ebrowse-tree-bottom ()
     "Move to bottom."
     (interactive)
-    (deactivate-mark)(goto-char (point-max))
+    (deactivate-mark)
+    (goto-char (point-max))
     (ebrowse-tree-up 1))
   (defun ebrowse-tree-down (&optional n)
     "Move down N lines."
     (interactive "p")
-    (deactivate-mark)(beginning-of-line (+ 1 n))(if (eobp)(forward-line -1))(skip-chars-forward " \t"))
+    (deactivate-mark)
+    (beginning-of-line (+ 1 n))
+    (if (eobp)(forward-line -1))
+    (skip-chars-forward " \t"))
   (defun ebrowse-tree-down-3 ()
     "Move down 3 lines."
     (interactive)
     (ebrowse-tree-down 3))
   (defun ebrowse-tree-down-page (&optional n)
     "Move down N pages."
-    (interactive "p")(ebrowse-tree-down (pages n)))
+    (interactive "p")
+    (ebrowse-tree-down (pages n)))
   (defun ebrowse-tree-down-view ()
     "Move down one line and view member functions in other window."
     (interactive)
-    (ebrowse-tree-down 1)(ebrowse-tree-command:show-member-functions))
+    (ebrowse-tree-down 1)
+    (ebrowse-tree-command:show-member-functions))
   (defun ebrowse-tree-mark ()
     "Mark class and move to next line."
     (interactive)
-    (ebrowse-toggle-mark-at-point)(ebrowse-tree-up 1)(ebrowse-tree-down 1))
+    (ebrowse-toggle-mark-at-point)
+    (ebrowse-tree-up 1)
+    (ebrowse-tree-down 1))
   (defun ebrowse-tree-member-attributes ()
     "Toggle attribute display in member window."
     (interactive)
-    (other-window 1)(ebrowse-toggle-member-attributes-display)(other-window 1))
+    (other-window 1)
+    (ebrowse-toggle-member-attributes-display)
+    (other-window 1))
   (defun ebrowse-tree-member-type ()
     "Toggle type display in member window."
     (interactive)
-    (other-window 1)(ebrowse-toggle-long-short-display)(other-window 1))
+    (other-window 1)
+    (ebrowse-toggle-long-short-display)
+    (other-window 1))
   (defun ebrowse-tree-member-public ()
     "Toggle public display in member window."
     (interactive)
-    (other-window 1)(ebrowse-toggle-public-member-filter)(other-window 1))
+    (other-window 1)
+    (ebrowse-toggle-public-member-filter)
+    (other-window 1))
   (defun ebrowse-tree-middle ()
     "Move to middle."
     (interactive)
-    (ebrowse-tree-top)(ebrowse-tree-down (middle-from-here)))
+    (ebrowse-tree-top)
+    (ebrowse-tree-down (middle-from-here)))
   (defun ebrowse-tree-switch ()
     "Move to member window."
     (interactive)
-    (ebrowse-pop/switch-to-member-buffer-for-same-tree nil)(if (< (line-number-at-pos) 3)(ebrowse-member-top)))
+    (ebrowse-pop/switch-to-member-buffer-for-same-tree nil)
+    (if (< (line-number-at-pos) 3)(ebrowse-member-top)))
   (defun ebrowse-tree-top ()
     "Move to top."
     (interactive)
-    (deactivate-mark)(goto-line-lisp 2)(ebrowse-tree-up 1))
+    (deactivate-mark)
+    (goto-line-lisp 2)
+    (ebrowse-tree-up 1))
   (defun ebrowse-tree-up (&optional n)
     "Move down N lines."
     (interactive "p")
-    (deactivate-mark)(beginning-of-line (- 1 n))(skip-chars-forward " \t"))
+    (deactivate-mark)
+    (beginning-of-line (- 1 n))
+    (skip-chars-forward " \t"))
   (defun ebrowse-tree-up-3 ()
     "Move up 3 lines."
     (interactive)
     (ebrowse-tree-up 3))
   (defun ebrowse-tree-up-page (&optional n)
     "Move up N pages."
-    (interactive "p")(ebrowse-tree-up (pages n)))
+    (interactive "p")
+    (ebrowse-tree-up (pages n)))
   (defun ebrowse-tree-up-view ()
     "Move up one line and view member functions in other window."
     (interactive)
-    (ebrowse-tree-up 1)(ebrowse-tree-command:show-member-functions))
+    (ebrowse-tree-up 1)
+    (ebrowse-tree-command:show-member-functions))
   (defun ebrowse-tree-view-declaration ()
     "View class declaration in other window."
     (interactive)
-    (ebrowse-view-class-declaration 4)(other-window 1)))
+    (ebrowse-view-class-declaration 4)
+    (other-window 1)))
 (add-hook 'ebrowse-tree-mode-hook 'arni-ebrowse-hook)
-(defun arni-gdb-hook () ; leave [?\C-x ?\C-a] unbound, otherwise gdb cannot be started
-  (message nil)(setq indent-line-function 'gud-gdb-complete-command)(setq gdb-show-main t)
+(defun arni-gdb-hook ()
+  (message nil); leave [?\C-x ?\C-a] unbound, otherwise gdb cannot be started
+  (setq indent-line-function 'gud-gdb-complete-command)
+  (setq gdb-show-main t)
   (local-set-key [f5]          'gdb-restore-windows)
   (local-set-key [M-up]        'gdb-many-windows   )
   (local-set-key [M-down]      'gdb-many-windows   )
   (local-set-key [?\C-c ?\C-q] 'comint-quit-subjob))
 (add-hook 'gdb-mode-hook 'arni-gdb-hook)
-(defvar makefile-program-name nil "Name of program built using Makefile. See `makefile-run'.")
+(defvar makefile-program-name nil
+  "Name of program built using Makefile. See `makefile-run'.")
 (defun arni-makefile-hook ()
   (setq indent-line-function 'insert-tab-char-1)
   (set-face-attribute 'font-lock-variable-name-face nil :foreground "brown4")
@@ -2753,11 +2907,15 @@ int main()
   (defun makefile-build ()
     "Build program using Makefile."
     (interactive)
-    (save-buffer)(if (one-window-p)(split-window-right))(compile (concat "make -f " (buffer-name))))
+    (save-buffer)
+    (if (one-window-p)(split-window-right))
+    (compile (concat "make -f " (buffer-name))))
   (defun makefile-clean ()
     "Delete binaries using Makefile."
     (interactive)
-    (save-buffer)(if (one-window-p)(split-window-right))(compile (concat "make -f " (buffer-name) " clean")))
+    (save-buffer)
+    (if (one-window-p)(split-window-right))
+    (compile (concat "make -f " (buffer-name) " clean")))
   (defun makefile-kill-compilation ()
     "Kill Makefile build process."
     (interactive)
@@ -2766,14 +2924,18 @@ int main()
     "Run program built using Makefile."
     (interactive)
     (let ((max-mini-window-height 0))
-      (if (null makefile-program-name)(setq makefile-program-name (read-string "Program name: ")))
-      (if (and (not (file-regular-p makefile-program-name))(not (file-regular-p (concat makefile-program-name ".exe"))))
+      (if (null makefile-program-name)
+          (setq makefile-program-name (read-string "Program name: ")))
+      (if (and (not (file-regular-p makefile-program-name))
+               (not (file-regular-p (concat makefile-program-name ".exe"))))
           (error "File %s not found" makefile-program-name))
-      (if (one-window-p)(split-window-right))(shell-command (concat default-directory makefile-program-name))))
+      (if (one-window-p)(split-window-right))
+      (shell-command (concat default-directory makefile-program-name))))
   (defun makefile-template ()
     "Insert Makefile template."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 # g++ -s -static -Wall -o prog class.cpp prog.cpp
 COMP=g++ -c -Wall $^
 LINK=g++ -s -static -Wall -o $@ $^
@@ -2793,39 +2955,61 @@ class.o: class.cpp
 .PHONY: clean
 clean:
 \trm prog class.o prog.o
-")(goto-char (point-min))))
+")
+    (goto-char (point-min))))
 (add-hook 'makefile-mode-hook 'arni-makefile-hook)
 (defun doxymacs-mode-with-hook ()
   "Start `doxymacs-mode' and run `doxymacs-mode-hook'."
   (interactive)
-  (doxymacs-mode)(run-mode-hooks 'doxymacs-mode-hook)(redraw-display))
+  (doxymacs-mode)
+  (run-mode-hooks 'doxymacs-mode-hook)
+  (redraw-display))
 (defun arni-doxymacs-hook ()
-  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-c] 'doxymacs-insert-member-comment          )
-  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-f] 'doxymacs-insert-function-comment        )
-  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-g] 'doxymacs-insert-grouping-comments       )
-  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-h] 'doxymacs-insert-file-comment            )
-  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-l] 'doxymacs-lookup                         )
-  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-m] 'doxymacs-insert-blank-multiline-comment )
-  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-p] 'doxymacs-view-pdf                       )
-  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-r] 'doxymacs-rescan-tags                    )
-  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-s] 'doxymacs-insert-blank-singleline-comment)
-  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-u] 'doxymacs-compile-latex                  )
-  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-v] 'doxymacs-view-html                      )
-  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-y] 'doxymacs-compile                        )
+  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-c]
+    'doxymacs-insert-member-comment          )
+  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-f]
+    'doxymacs-insert-function-comment        )
+  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-g]
+    'doxymacs-insert-grouping-comments       )
+  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-h]
+    'doxymacs-insert-file-comment            )
+  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-l]
+    'doxymacs-lookup                         )
+  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-m]
+    'doxymacs-insert-blank-multiline-comment )
+  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-p]
+    'doxymacs-view-pdf                       )
+  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-r]
+    'doxymacs-rescan-tags                    )
+  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-s]
+    'doxymacs-insert-blank-singleline-comment)
+  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-u]
+    'doxymacs-compile-latex                  )
+  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-v]
+    'doxymacs-view-html                      )
+  (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-y]
+    'doxymacs-compile                        )
   (defun doxymacs-compile ()
     "Compile Doxygen file in current directory."
     (interactive)
-    (save-buffer)(if (one-window-p)(split-window-right))(compile (concat "doxygen " (doxymacs-file))))
+    (save-buffer)
+    (if (one-window-p)(split-window-right))
+    (compile (concat "doxygen " (doxymacs-file))))
   (defun doxymacs-compile-latex ()
     "Compile Doxygen LaTeX document."
     (interactive)
-    (cd "latex")(compile "make")(cd ".."))
+    (cd "latex")
+    (compile "make")
+    (cd ".."))
   (defun doxymacs-file (&optional dir)
     "Return name of Doxygen configuration file in DIR."
     (if (null dir)(setq dir "."))
     (cond ((directory-files dir nil "^Doxyfile$") "Doxyfile")
-          ((directory-files dir nil "\\.dox$")(car (directory-files "." nil "\\.dox$")))
-          ((directory-files dir nil "\\.doxyfile$")(car (directory-files "." nil "\\.doxyfile$")))(t nil)))
+          ((directory-files dir nil "\\.dox$")
+           (car (directory-files "." nil "\\.dox$")))
+          ((directory-files dir nil "\\.doxyfile$")
+           (car (directory-files "." nil "\\.doxyfile$")))
+          (t nil)))
   (defun doxymacs-view-html ()
     "View Doxygen HTML document."
     (interactive)
@@ -2833,21 +3017,31 @@ clean:
   (defun doxymacs-view-pdf ()
     "View Doxygen LaTeX document."
     (interactive)
-    (shell-command "ghostview latex/refman.pdf&")(delete-other-windows)))
+    (shell-command "ghostview latex/refman.pdf&")
+    (delete-other-windows)))
 (add-hook 'doxymacs-mode-hook 'arni-doxymacs-hook)
 (defalias 'flex-mode 'c-mode)
 ;;----------
 ;; 6.7  Dos
 ;;----------
 (defun arni-bat-hook ()
-  (setq make-backup-files t)(setq indent-line-function 'indent-relative-definitely)(arni-colors)
-  (modify-syntax-entry ?_ "w" bat-mode-syntax-table)(modify-syntax-entry ?~ "w" bat-mode-syntax-table)
-  (modify-syntax-entry ?{ "w" bat-mode-syntax-table)(modify-syntax-entry ?} "w" bat-mode-syntax-table)
-  (set-face-attribute 'font-lock-builtin-face       nil :foreground (fg 'font-lock-keyword-face)) ; dir, del
-  (set-face-attribute 'font-lock-function-name-face nil :foreground "brown4"                    ) ; [call, goto]
-  (set-face-attribute 'font-lock-type-face          nil :foreground "magenta4"                  ) ; -arg
-  (set-face-attribute 'font-lock-variable-name-face nil :foreground "brown4"                    ) ; %x%
-  (set-face-attribute 'font-lock-warning-face       nil :weight -                               ) ; ls, rm
+  (setq make-backup-files t)
+  (setq indent-line-function 'indent-relative-definitely)
+  (arni-colors)
+  (modify-syntax-entry ?_ "w" bat-mode-syntax-table)
+  (modify-syntax-entry ?~ "w" bat-mode-syntax-table)
+  (modify-syntax-entry ?{ "w" bat-mode-syntax-table)
+  (modify-syntax-entry ?} "w" bat-mode-syntax-table)
+  (set-face-attribute 'font-lock-builtin-face
+                      nil :foreground (fg 'font-lock-keyword-face)) ; dir, del
+  (set-face-attribute 'font-lock-function-name-face
+                      nil :foreground "brown4") ; [call, goto]
+  (set-face-attribute 'font-lock-type-face
+                      nil :foreground "magenta4") ; -arg
+  (set-face-attribute 'font-lock-variable-name-face
+                      nil :foreground "brown4")  ; %x%
+  (set-face-attribute 'font-lock-warning-face
+                      nil :weight -) ; ls, rm
   (local-set-key [f11]         'bat-outline-remember)
   (local-set-key [S-f12]       'bat-template        )
   (local-set-key [f12]         'bat-template-full   )
@@ -2855,19 +3049,25 @@ clean:
   (defun bat-outline ()
     "Navigate within Dos script using `outline-mode'."
     (interactive)
-    (let ((outreg outline-regexp))(outline-mode)(setq outline-regexp "^:[^:]"))(outline-mode)(outline-hide-body))
+    (outline-mode)
+    (setq outline-regexp "^:[^:]")
+    (outline-mode)
+    (outline-hide-body))
   (defun bat-outline-remember ()
-    "Navigate within Dos script using `outline-mode', remembering previous mode."
-
+    "Navigate within Dos script using `outline-mode',
+remembering previous mode."
     (interactive)
-    (bat-outline)(setq outline-top-level 2)(setq outline-previous-mode '(bat-mode)))
+    (bat-outline)
+    (setq outline-top-level 2)
+    (setq outline-previous-mode '(bat-mode)))
   (defun bat-sep ()
     "Insert & separator."
     (interactive "*")(insert " & "))
   (defun bat-template-full ()
     "Insert Dos template."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 @echo off
 setlocal
 if [%1]==[] goto HELP
@@ -2905,7 +3105,10 @@ echo Usage:
 echo.
 
 :EOF
-")(goto-char (point-min))(search-forward ":   ")(overwrite-mode t)))
+")
+    (goto-char (point-min))
+    (search-forward ":   ")
+    (overwrite-mode t)))
 (add-hook 'bat-mode-hook 'arni-bat-hook)
 ;;--------------
 ;; 6.8  Fortran
@@ -2921,74 +3124,119 @@ echo.
   (defun fortran-compile ()
     "Build simple Fortran program (one source file)."
     (interactive)
-    (save-buffer)(if (one-window-p)(split-window-right))
-    (compile (concat "gfortran -s -static -Wall -o " (file-name-sans-extension (buffer-name)) " " (buffer-name))))
+    (save-buffer)
+    (if (one-window-p)(split-window-right))
+    (compile (concat "gfortran -s -static -Wall -o "
+                     (file-name-sans-extension (buffer-name)) " "
+                     (buffer-name))))
   (defun fortran-or-f90-mode ()
     "Switch between Fortran and F90 mode."
     (interactive)
-    (if (string-match "Fortran" mode-name)(f90-mode)(fortran-mode)))
+    (if (string-match "Fortran" mode-name)
+        (f90-mode)
+      (fortran-mode)))
   (defun fortran-run ()
     "Run simple Fortran program."
     (interactive)
     (let ((resize-mini-windows nil))
-      (if (one-window-p)(split-window-right))(shell-command (file-name-sans-extension (buffer-name)))))
+      (if (one-window-p)(split-window-right))
+      (shell-command (file-name-sans-extension (buffer-name)))))
   (defun fortran-split-line-smart ()
     "Break Fortran line."
     (interactive)
-    (if (string-match "Fortran" mode-name)(fortran-split-line)(f90-break-line))))
+    (if (string-match "Fortran" mode-name)
+        (fortran-split-line)
+      (f90-break-line))))
 (add-hook 'fortran-mode-hook 'arni-fortran-hook)
 (add-hook 'f90-mode-hook 'arni-fortran-hook)
 ;;-----------
 ;; 6.9  HTML
 ;;-----------
-(defvar html-links nil "Non-nil if links are currently hilighted. See `html-toggle-links'.")
+(defvar html-links nil
+  "Non-nil if links are currently hilighted. See `html-toggle-links'.")
 (defun arni-html-hook ()
-  ;; Using 2.19, which has better syntax highlighting than 3.0.4kilo. Added support for <style>, <div>, <form>, <thead>,
-  ;; <tbody>, {}, and /* css comments */. Made <title> bold. Helped distinguishing between <li> and <link>. Prevented
-  ;; <h1> from being colored as `font-lock-function-name-face'. Prevented <img> from being colored as
-  ;; `font-lock-variable-name-face'. Increased `html-helper-search-limit' from 2000 to 20000.
+  ;; Using 2.19, which has better syntax highlighting than 3.0.4kilo.
+  ;; Added support for <style>, <div>, <form>, <thead>, <tbody>, {},
+  ;; and /* css comments */.
+  ;; Made <title> bold. Helped distinguishing between <li> and <link>.
+  ;; Prevented <h1> from being colored as `font-lock-function-name-face'.
+  ;; Prevented <img> from being colored as `font-lock-variable-name-face'.
+  ;; Increased `html-helper-search-limit' from 2000 to 20000.
   (font-lock-mode 1)
-  (setq make-backup-files t)(setq fill-column 80)(setq indent-line-function 'html-helper-indent-command)
-  (setq html-helper-item-continue-indent 2)(arni-colors)
-  (setq html-helper-any-list-item-start "<li[ >]\\|<dt\\|<dd\\|<option\\|<th\\|<td\\|<thead\\|<tbody") ; thead,tbody,li
-  (setq html-helper-any-list-item-end "</li>\\|</dt>\\|</dd>\\|</th>\\|</td>\\|</thead>\\|</tbody>")   ; thead,tbody
+  (setq make-backup-files t)
+  (setq fill-column 80)
+  (setq indent-line-function 'html-helper-indent-command)
+  (setq html-helper-item-continue-indent 2)
+  (arni-colors)
+  (setq html-helper-any-list-item-start ; thead,tbody,li
+        "<li[ >]\\|<dt\\|<dd\\|<option\\|<th\\|<td\\|<thead\\|<tbody")
+  (setq html-helper-any-list-item-end ; thead,tbody
+        "</li>\\|</dt>\\|</dd>\\|</th>\\|</td>\\|</thead>\\|</tbody>")
   (setq html-helper-any-list-start ; style, div, form, {}
-        "<dl\\|<ul\\|<ol\\|<menu\\|<dir\\|<form\\|<select\\|<table\\|<tr\\|<style\\|<div\\|{")
+        "<dl\\|<ul\\|<ol\\|<menu\\|<dir\\|<form\\|<select\\|<table\\|<tr\\|\
+<style\\|<div\\|{")
   (setq html-helper-any-list-end ; style, div, form, {}
-        "</dl>\\|</ul>\\|</ol>\\|</menu>\\|</dir>\\|</form>\\|</select>\\|</table>\\|</tr>\\|</style>\\|</div>\\|}")
-  (setq html-helper-any-list (format "\\(%s\\)\\|\\(%s\\)\\|\\(%s\\)\\|\\(%s\\)" html-helper-any-list-start
-                                     html-helper-any-list-end html-helper-any-list-item-start
-                                     html-helper-any-list-item-end))
-  (setq html-helper-indentation-list (format "\\(%s\\)\\|\\(%s\\)\\|\\(%s\\)" html-helper-any-list-start
-                                             html-helper-any-list-end html-helper-any-list-item-start))
+        "</dl>\\|</ul>\\|</ol>\\|</menu>\\|</dir>\\|</form>\\|</select>\\|\
+</table>\\|</tr>\\|</style>\\|</div>\\|}")
+  (setq html-helper-any-list
+        (format "\\(%s\\)\\|\\(%s\\)\\|\\(%s\\)\\|\\(%s\\)"
+                html-helper-any-list-start
+                html-helper-any-list-end html-helper-any-list-item-start
+                html-helper-any-list-item-end))
+  (setq html-helper-indentation-list
+        (format "\\(%s\\)\\|\\(%s\\)\\|\\(%s\\)"
+                html-helper-any-list-start
+                html-helper-any-list-end
+                html-helper-any-list-item-start))
   (setq html-helper-search-limit 20000)
-  (setq html-helper-font-lock-keywords                                        ; removed 'tword', containing h1 and title
-        (let ((bword "\\(b\\|title\\|h[1-4]\\|strong\\)\\([ \t\n]+[^>]+\\)?") ; added title
-              (iword "\\(address\\|cite\\|em\\|i\\|var\\)\\([ \t\n]+[^>]+\\)?")
-              (not-bend (concat "\\([^<]\\|<\\([^/]\\|/\\([^bhs]\\|" "b[^>]\\|" "title[^>]\\|" ; added title
-                                "h\\([^1-4]\\|[1-4][^>]\\)\\|" "s\\([^t]\\|t[^r]\\)\\)\\)\\)"))
-              (not-iend (concat "\\([^<]\\|<\\([^/]\\|/\\([^aceiv]\\|" "a\\([^d]\\|d[^d]\\)\\|" "c\\([^i]\\|i[^t]\\)\\|"
-                                "e\\([^m]\\|m[^>]\\)\\|" "i[^>]\\|" "v\\([^a]\\|a[^r]\\)\\)\\)\\)"))
-              (not-tend (concat "\\([^<]\\|<\\([^/]\\|/\\([^ht]\\|" "h[^1]\\|t\\([^i]\\|i[^t]\\)\\)\\)\\)")))
+  (setq html-helper-font-lock-keywords
+        ;; removed 'tword', containing h1 and title
+        (let ((bword ; added title
+               "\\(b\\|title\\|h[1-4]\\|strong\\)\\([ \t\n]+[^>]+\\)?")
+              (iword
+               "\\(address\\|cite\\|em\\|i\\|var\\)\\([ \t\n]+[^>pa]+\\)?")
+              (not-bend (concat "\\([^<]\\|<\\([^/]\\|/\\([^bhs]\\|"
+                                "b[^>]\\|"
+                                "title[^>]\\|" ; added title
+                                "h\\([^1-4]\\|[1-4][^>]\\)\\|"
+                                "s\\([^t]\\|t[^r]\\)\\)\\)\\)"))
+              (not-iend (concat "\\([^<]\\|<\\([^/]\\|/\\([^aceiv]\\|"
+                                "a\\([^d]\\|d[^d]\\)\\|"
+                                "c\\([^i]\\|i[^t]\\)\\|"
+                                "e\\([^m]\\|m[^>]\\)\\|"
+                                "i[^>]\\|"
+                                "v\\([^a]\\|a[^r]\\)\\)\\)\\)"))
+              (not-tend (concat "\\([^<]\\|<\\([^/]\\|/\\([^ht]\\|"
+                                "h[^1]\\|t\\([^i]\\|i[^t]\\)\\)\\)\\)")))
           (list
            '("<a\\s-+href[^>]*>\\([^>]+\\)</a>" 1 font-lock-reference-face t)
-           (list (concat "<" bword ">\\(" not-bend "*\\)</\\1>") 3 'html-helper-bold-face t)
-           (list (concat "<" iword ">\\(" not-iend "*\\)</\\1>") 3 'html-helper-italic-face t)
-           (list (concat "<" bword ">\\("  "[^<]"  "*\\)</\\1>") 3 'html-helper-bold-face t)
+           (list (concat "<" bword ">\\(" not-bend "*\\)</\\1>") 3
+                 'html-helper-bold-face t)
+           (list (concat "<" iword ">\\(" not-iend "*\\)</\\1>") 3
+                 'html-helper-italic-face t)
+           (list (concat "<" bword ">\\("  "[^<]"  "*\\)</\\1>") 3
+                 'html-helper-bold-face t)
            '("\\(<[^>]*>\\)" 1 font-lock-type-face t)
            '("<u>\\([^<]*\\)</u>" 1 html-helper-underline-face t)
            '("</a>" 0 font-lock-keyword-face t)
            '("<a\\b[^>]*>" 0 font-lock-keyword-face t)
            '("=[ \t\n]*\\(\"[^\"]+\"\\)" 1 font-lock-string-face t)
-           '("</?\\(body\\|form\\|h\\(ead\\|tml\\)\\)>" 0 font-lock-variable-name-face t) ; removed from, img, and input
+           '("</?\\(body\\|form\\|h\\(ead\\|tml\\)\\)>" 0
+             font-lock-variable-name-face t) ; removed from, img, and input
            '("&[^;\n]*;" 0 font-lock-string-face t)
-           '("<![a-z]+\\>[^<>]*\\(<[^>]*>[^<>]*\\)*>" 0 font-lock-comment-face t)
+           '("<![a-z]+\\>[^<>]*\\(<[^>]*>[^<>]*\\)*>" 0
+             font-lock-comment-face t)
            '("/\\*.*\\*/" 0 font-lock-comment-face t) ; added /* css comments */
-           '("<!\\(--\\([^-]\\|-[^-]\\)*--\\s-*\\)*>" 0 font-lock-comment-face t))))
-  (set-face-attribute 'font-lock-constant-face      nil :foreground (fg 'font-lock-builtin-face) :underline - ) ; links
-  (set-face-attribute 'font-lock-string-face        nil :foreground (fg 'font-lock-type-face)                 ) ; "text"
-  (set-face-attribute 'font-lock-type-face          nil :foreground (fg 'font-lock-keyword-face)              ) ; <h1>
-  (set-face-attribute 'font-lock-variable-name-face nil :foreground (fg 'font-lock-keyword-face) :weight 'bold) ; <html>
+           '("<!\\(--\\([^-]\\|-[^-]\\)*--\\s-*\\)*>" 0
+             font-lock-comment-face t))))
+  (set-face-attribute 'font-lock-constant-face      nil ; links
+                      :foreground (fg 'font-lock-builtin-face) :underline - )
+  (set-face-attribute 'font-lock-string-face        nil ; "text"
+                      :foreground (fg 'font-lock-type-face)                 )
+  (set-face-attribute 'font-lock-type-face          nil ; <h1>
+                      :foreground (fg 'font-lock-keyword-face)              )
+  (set-face-attribute 'font-lock-variable-name-face nil ; <html>
+                      :foreground (fg 'font-lock-keyword-face) :weight 'bold)
   (local-unset-key [?\t]     ) ; reactivate indent-or-complete
   (local-unset-key [?\C-c ?-]) ; reactivate highlight-changes-mode
   (local-unset-key [?\C-c ?=]) ; reactivate diff-this-buffer-with-file
@@ -2999,7 +3247,7 @@ echo.
   (local-set-key [S-f10]          'html-simplify                        )
   (local-set-key [f11]            'html-outline                         )
   (local-set-key [f12]            'html-template                        )
-  (local-set-key [?\C-m]          'reindent-then-newline-and-indent     ) ; return
+  (local-set-key [?\C-m]          'reindent-then-newline-and-indent     ) ; RET
   (local-set-key [M-return]       'html-br                              )
   (local-set-key [?\C-c ?~]       'tempo-template-html-nonbreaking-space)
   (local-set-key [?\C-\" C-left]  'html-quote-6                         )
@@ -3031,115 +3279,183 @@ echo.
   (defun html-8bit-char ()
     "Insert &sgml; based on keyboard input."
     (interactive "*")
-    (sgml-mode)(sgml-name-char)(html-helper-mode))
+    (sgml-mode)
+    (sgml-name-char)
+    (html-helper-mode))
   (defun html-br ()
     "Insert <br> and end line."
-    (interactive "*")(insert "<br>")(reindent-then-newline-and-indent))
+    (interactive "*")
+    (insert "<br>")
+    (reindent-then-newline-and-indent))
   (defun html-code (&optional arg)
     "Insert <code> tags around object at point."
     (interactive "*P")
-    (insert "<code>")(re-search-forward "[\n, ]" nil t)(backward-char)(if (= (char-before) ?.)(backward-char))
+    (insert "<code>")
+    (re-search-forward "[\n, ]" nil t)
+    (backward-char)
+    (if (= (char-before) ?.)(backward-char))
     (insert "</code>"))
   (defun html-convert-latin1-to-utf8 ()
     "Replace iso-8859-1 with utf-8, save, and quit."
     (interactive "*")
-    (save-excursion (goto-char (point-min))(while (search-forward "iso-8859-1" nil t)(replace-match "utf-8")))
-    (save-buffer)(save-buffers-kill-terminal))
+    (save-excursion
+      (goto-char (point-min))
+      (while (search-forward "iso-8859-1" nil t)
+        (replace-match "utf-8")))
+    (save-buffer)
+    (save-buffers-kill-terminal))
   (defun html-css-inline ()
     "Insert inline CSS block."
     (interactive "*")
-    (insert "<style>\n  body {margin-left:20%; margin-right:20%}\n</style>\n")(search-backward "{"))
+    (insert "<style>\n  body {margin-left:20%; margin-right:20%}\n</style>\n")
+    (search-backward "{"))
   (defun html-css-link ()
     "Link external CSS stylesheet."
     (interactive "*")
-    (insert "<link rel=\"stylesheet\" href=\"\">\n")(search-backward "\""))
+    (insert "<link rel=\"stylesheet\" href=\"\">\n")
+    (search-backward "\""))
   (defun html-delete-comments ()
     "Delete all comments."
     (interactive "*")
-    (save-excursion (goto-char (point-min)) ; just [\t ]* and then regexp from html-helper-font-lock-keywords
-                    (while (re-search-forward "[\t ]*<!\\(--\\([^-]\\|-[^-]\\)*--\\s-*\\)*>" nil t)(replace-match ""))))
+    (save-excursion
+      (goto-char (point-min))
+      ;; Just [\t ]* and then regexp from html-helper-font-lock-keywords
+      (while (re-search-forward
+              "[\t ]*<!\\(--\\([^-]\\|-[^-]\\)*--\\s-*\\)*>" nil t)
+        (replace-match ""))))
   (defun html-dl ()
     "Insert <dl> structure."
     (interactive "*")
-    (insert "<dl>")(reindent-then-newline-and-indent)(insert "<dt>")(reindent-then-newline-and-indent)
+    (insert "<dl>")
+    (reindent-then-newline-and-indent)
+    (insert "<dt>")(reindent-then-newline-and-indent)
     (insert "<dd>")(reindent-then-newline-and-indent)
-    (insert "</dl>")(html-helper-indent-command)(newline)(re-search-backward "\n *</dl>"))
+    (insert "</dl>")
+    (html-helper-indent-command)
+    (newline)
+    (re-search-backward "\n *</dl>"))
   (defun html-emdash ()
     "Insert &mdash;"
-    (interactive "*")(insert "&mdash;"))
+    (interactive "*")
+    (insert "&mdash;"))
   (defun html-endash ()
     "Insert &ndash;"
-    (interactive "*")(insert "&ndash;"))
+    (interactive "*")
+    (insert "&ndash;"))
   (defun html-img ()
     "Insert <img> with args."
     (interactive "*")
-    (insert "<img src=\"\" alt=\"\">")(search-backward "\"" nil t 3))
+    (insert "<img src=\"\" alt=\"\">")
+    (search-backward "\"" nil t 3))
   (defun html-nbsp ()
     "Insert &nbsp;"
-    (interactive "*")(insert "&nbsp;"))
+    (interactive "*")
+    (insert "&nbsp;"))
   (defun html-ol ()
     "Insert <ol> structure."
     (interactive "*")
-    (insert "<ol>")(reindent-then-newline-and-indent)(insert "<li>")(reindent-then-newline-and-indent)
-    (insert "</ol>")(html-helper-indent-command)(newline)(re-search-backward "\n *</ol>"))
+    (insert "<ol>")
+    (reindent-then-newline-and-indent)
+    (insert "<li>")
+    (reindent-then-newline-and-indent)
+    (insert "</ol>")
+    (html-helper-indent-command)
+    (newline)
+    (re-search-backward "\n *</ol>"))
   (defun html-outline ()
     "Navigate within HTML file using `outline-mode'."
     (interactive "*")
-    (outline-mode)(setq outline-regexp ".*<h[0-9]\\|.*<div\\|.*<dl\\|.*<table")(outline-mode)(outline-hide-body)
-    (setq outline-top-level 3)(setq outline-previous-mode '(html-helper-mode)))
+    (outline-mode)
+    (setq outline-regexp ".*<h[0-9]\\|.*<div\\|.*<dl\\|.*<table")
+    (outline-mode)
+    (outline-hide-body)
+    (setq outline-top-level 3)
+    (setq outline-previous-mode '(html-helper-mode)))
   (defun html-quote-6 ()
     "Insert &lsquo;"
-    (interactive "*")(insert "&lsquo;"))
+    (interactive "*")
+    (insert "&lsquo;"))
   (defun html-quote-9 ()
     "Insert &rsquo;"
-    (interactive "*")(insert "&rsquo;"))
+    (interactive "*")
+    (insert "&rsquo;"))
   (defun html-quote-66 ()
     "Insert &ldquo;"
-    (interactive "*")(insert "&ldquo;"))
+    (interactive "*")
+    (insert "&ldquo;"))
   (defun html-quote-99 ()
     "Insert &rdquo;"
-    (interactive "*")(insert "&rdquo;"))
+    (interactive "*")
+    (insert "&rdquo;"))
   (defun html-quote-99-bottom ()
     "Insert &bdquo;"
-    (interactive "*")(insert "&bdquo;"))
+    (interactive "*")
+    (insert "&bdquo;"))
   (defun html-save-and-view ()
     "Save file and open in browser."
     (interactive)
-    (save-buffer)(browse-url-of-file))
+    (save-buffer)
+    (browse-url-of-file))
   (defun html-simplify ()
     "Simplify HTML code by removing unnecessary tags."
     (interactive "*")
     (save-excursion
-      (goto-char (point-min))(while (search-forward "<html>\n" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "</html>\n" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "<head>\n" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "</head>\n" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "</body>\n" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "</p>" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "</li>" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "</dt>" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "</dd>" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "<thead>\n" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "</thead>\n" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "<tbody>\n" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "</tbody>\n" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "</tr>" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "</th>" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "</td>" nil t)(replace-match ""))
-      (goto-char (point-min))(while (search-forward "\n\n\n" nil t)(replace-match "\n\n"))
-      (goto-char (- (point-max) 1))(if (= (current-column) 0)(delete-char 1))))
+      (goto-char (point-min))
+      (while (search-forward "<html>\n" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "</html>\n" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "<head>\n" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "</head>\n" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "</body>\n" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "</p>" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "</li>" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "</dt>" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "</dd>" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "<thead>\n" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "</thead>\n" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "<tbody>\n" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "</tbody>\n" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "</tr>" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "</th>" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "</td>" nil t)(replace-match ""))
+      (goto-char (point-min))
+      (while (search-forward "\n\n\n" nil t)(replace-match "\n\n"))
+      (goto-char (- (point-max) 1))
+      (if (zerop (current-column))(delete-char 1))))
   (defun html-table ()
     "Insert <table> structure."
     (interactive "*")
-    (insert "<table>")(reindent-then-newline-and-indent)(insert "<tr><td>")(reindent-then-newline-and-indent)
-    (insert "</table>")(html-helper-indent-command)(newline)(re-search-backward "\n *</table>"))
+    (insert "<table>")
+    (reindent-then-newline-and-indent)
+    (insert "<tr><td>")
+    (reindent-then-newline-and-indent)
+    (insert "</table>")
+    (html-helper-indent-command)
+    (newline)
+    (re-search-backward "\n *</table>"))
   (defun html-td ()
     "Insert <td> separator."
-    (interactive "*")(insert "<td>"))
+    (interactive "*")
+    (insert "<td>"))
   (defun html-template ()
     "Insert HTML 5 template."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 <!DOCTYPE html>
 <meta charset=\"utf-8\">
 <title></title>
@@ -3148,7 +3464,9 @@ echo.
 </style>
 <body>
 
-")(goto-char (point-min))(search-forward "e>"))
+")
+    (goto-char (point-min))
+    (search-forward "e>"))
   (defun html-tidy ()
     "Validate current HTML file with tidy."
     (interactive)
@@ -3157,35 +3475,57 @@ echo.
     "Toggle highlighting of links (red:href, yellow:most, green:some)."
     (interactive)
     (if html-links (hi-lock-mode 0)
-      (progn (hi-lock-face-buffer " href=\"[^\"]*\\.html\""        'highlight     ) ; html
-             (hi-lock-face-buffer " href=\"[^\"]*\\.htm\""         'highlight     ) ; htm
-             (hi-lock-face-buffer " href=\"[^\"]*\\.css\""         'highlight     ) ; css
-             (hi-lock-face-buffer " href=\"[^\"]*\\.pdf\""         'highlight     ) ; pdf
-             (hi-lock-face-buffer " href=\"[^\"]*\\.zip\""         'highlight     ) ; zip
-             (hi-lock-face-buffer " href=\"mailto:[^\"]*\""        'highlight     ) ; mailto
-             (hi-lock-face-buffer " href=\"[^\"]*/\""              'highlight     ) ; /
-             (hi-lock-face-buffer " href=\"[^\"]*#[^\"]*\""        'highlight     ) ; #
-             (hi-lock-face-buffer " href=\"http[^\"]*[\?][^\"]*\"" 'lazy-highlight) ; ?
+      (progn (hi-lock-face-buffer " href=\"[^\"]*\\.html\""
+                                  'highlight     ) ; html
+             (hi-lock-face-buffer " href=\"[^\"]*\\.htm\""
+                                  'highlight     ) ; htm
+             (hi-lock-face-buffer " href=\"[^\"]*\\.css\""
+                                  'highlight     ) ; css
+             (hi-lock-face-buffer " href=\"[^\"]*\\.pdf\""
+                                  'highlight     ) ; pdf
+             (hi-lock-face-buffer " href=\"[^\"]*\\.zip\""
+                                  'highlight     ) ; zip
+             (hi-lock-face-buffer " href=\"mailto:[^\"]*\""
+                                  'highlight     ) ; mailto
+             (hi-lock-face-buffer " href=\"[^\"]*/\""
+                                  'highlight     ) ; /
+             (hi-lock-face-buffer " href=\"[^\"]*#[^\"]*\""
+                                  'highlight     ) ; #
+             (hi-lock-face-buffer " href=\"http[^\"]*[\?][^\"]*\""
+                                  'lazy-highlight) ; ?
              (hi-lock-face-buffer " href=" 'show-paren-mismatch-face)))
-    (setq html-links (not html-links))(force-mode-line-update)
+    (setq html-links (not html-links))
+    (force-mode-line-update)
     (message "Highlighted links %s" (if html-links "ON" "OFF")))
   (defun html-ul ()
     "Insert <ul> structure."
     (interactive "*")
-    (insert "<ul>")(reindent-then-newline-and-indent)(insert "<li>")(reindent-then-newline-and-indent)
-    (insert "</ul>")(html-helper-indent-command)(newline)(re-search-backward "\n *</ul>")))
+    (insert "<ul>")
+    (reindent-then-newline-and-indent)
+    (insert "<li>")
+    (reindent-then-newline-and-indent)
+    (insert "</ul>")
+    (html-helper-indent-command)
+    (newline)
+    (re-search-backward "\n *</ul>")))
 (add-hook 'html-helper-mode-hook 'arni-html-hook)
-(defun arni-html-load-hook ()(setq html-helper-build-new-buffer nil)(setq html-helper-do-write-file-hooks nil))
+(defun arni-html-load-hook ()
+  (setq html-helper-build-new-buffer nil)
+  (setq html-helper-do-write-file-hooks nil))
 (add-hook 'html-helper-load-hook 'arni-html-load-hook)
-(defun arni-css-hook ()(set-face-attribute 'css-property nil :inherit font-lock-keyword-face))
+(defun arni-css-hook ()
+  (set-face-attribute 'css-property nil :inherit font-lock-keyword-face))
 (add-hook 'css-mode-hook 'arni-css-hook)
 (defun arni-nxml-hook ()
   (font-lock-mode 1)
-  (set-face-attribute 'nxml-element-local-name nil :inherit font-lock-keyword-face))
+  (set-face-attribute 'nxml-element-local-name nil
+                      :inherit font-lock-keyword-face))
 (add-hook 'nxml-mode-hook 'arni-nxml-hook)
 (defun arni-sgml-hook ()
   (font-lock-mode 1)
-  (set-face-attribute 'font-lock-function-name-face nil :foreground (fg 'font-lock-keyword-face) :weight -)) ; <xml>
+  (set-face-attribute 'font-lock-function-name-face nil
+                      :foreground (fg 'font-lock-keyword-face)
+                      :weight -)) ; <xml>
 (add-hook 'sgml-mode-hook 'arni-sgml-hook)
 ;;-----------
 ;; 6.10 Inno
@@ -3204,14 +3544,19 @@ echo.
   (defun java-compile ()
     "Build simple Java program (one source file)."
     (interactive)
-    (save-buffer)(if (one-window-p)(split-window-right))
+    (save-buffer)
+    (if (one-window-p)(split-window-right))
     (compile (concat "javac " (buffer-name))))
   (defun java-run ()
     "Run simple Java program (first class defined in source)."
     (interactive)
-    (let ((resize-mini-windows nil)(java-class nil)) ; will look for java-class in source code
-      (save-excursion (goto-char (point-min))(search-forward "class " nil t)(setq java-class (current-word)))
-      (if (one-window-p)(split-window-right))(shell-command (concat "java " java-class)))))
+    (let ((resize-mini-windows nil)
+          (java-class nil)) ; will look for java-class in source code
+      (save-excursion (goto-char (point-min))
+                      (search-forward "class " nil t)
+                      (setq java-class (current-word)))
+      (if (one-window-p)(split-window-right))
+      (shell-command (concat "java " java-class)))))
 (add-hook 'java-mode-hook 'arni-java-hook)
 ;;-----------------
 ;; 6.12 JavaScript
@@ -3223,82 +3568,106 @@ echo.
 ;;------------
 ;; Case-sensitive hooks, so use LaTeX everywhere
 (defvar LaTeX-icelandic-quotes nil
-  "Non-nil if LaTeX quotation marks are ,,Icelandic`` style. See `LaTeX-toggle-quotes'.")
-(defun arni-LaTeX-hook ()                                                ; can't suppress "Applying style hooks... done"
-  (setq make-backup-files t)(setq indent-line-function 'LaTeX-indent-line)(reftex-mode 1)(message nil)(font-lock-mode 1)
+  "Non-nil if LaTeX quotation marks are ,,Icelandic`` style.
+See `LaTeX-toggle-quotes'.")
+(defun arni-LaTeX-hook ()
+  (setq make-backup-files t)
+  (setq indent-line-function 'LaTeX-indent-line)
+  (reftex-mode 1)
+  (message nil)
+  (font-lock-mode 1)
   (auto-fill-mode 1) ; load reftex-toc-map
-  (setq LaTeX-verbatim-regexp "\\(semi\\)verbatim\\*?\\|lstlisting") ; Beamer and lstlisting indentation
+  ;; Beamer and lstlisting indentation
+  (setq LaTeX-verbatim-regexp "\\(semi\\)verbatim\\*?\\|lstlisting")
   (setq TeX-clean-confirm nil)           ; remove temp files without asking
   (setq TeX-command-default "LaTeX PDF") ; pdftex is default compiler
   (setq TeX-command-Show "View")         ; ghostview is default viewer
-  (setq TeX-debug-bad-boxes nil)         ; don't report under- and overfull boxes (C-c C-w to toggle)
+  ;; Don't report under- and overfull boxes (C-c C-w to toggle)
+  (setq TeX-debug-bad-boxes nil)
   (setq LaTeX-item-indent 0)             ; indent list items
   (setq TeX-save-query nil)              ; save without asking
-  (setq font-latex-fontify-script nil)(arni-colors) ; suppress tiny super and subscript
+  (setq font-latex-fontify-script nil) ; suppress tiny super and subscript
+  (arni-colors)
   (add-to-list 'LaTeX-clean-intermediate-suffixes "\\.vrb") ; Beamer clean .vrb
-  (add-to-list 'LaTeX-verbatim-environments-local "lstlisting")(font-latex-set-syntactic-keywords)      ; highlight
-  (add-to-list 'LaTeX-verbatim-environments-local "semiverbatim")(font-latex-set-syntactic-keywords) ; Beamer highlight
-  (add-to-list 'LaTeX-verbatim-macros-with-delims-local "lstinline")(font-latex-set-syntactic-keywords) ; highlight
-  (add-to-list 'TeX-command-list '("CompilePDF" "auctex -c -p letter %t" TeX-run-LaTeX nil t))
-  (add-to-list 'TeX-command-list '("CompilePDFa4" "auctex -c -p a4 %t" TeX-run-LaTeX nil t))
-  (add-to-list 'TeX-command-list '("LaTeX PDF" "pdflatex %t" TeX-run-LaTeX nil t))
-  (add-to-list 'TeX-command-list '("View" "auctex -v %t" TeX-run-discard nil t))   ; "View" is defined twice, but works
-  (set-face-attribute 'font-latex-bold-face         nil :foreground -                                ) ; green
-  (set-face-attribute 'font-latex-italic-face       nil :foreground -                                ) ; green
-  (set-face-attribute 'font-latex-math-face         nil :foreground "brown4"                         ) ; saddlebrown
-  (set-face-attribute 'font-latex-sectioning-0-face nil :height -                                    ) ; big
-  (set-face-attribute 'font-latex-sectioning-1-face nil :height -                                    ) ; big
-  (set-face-attribute 'font-latex-sectioning-2-face nil :height -                                    ) ; big
-  (set-face-attribute 'font-latex-sectioning-3-face nil :height -                                    ) ; big
-  (set-face-attribute 'font-latex-sectioning-4-face nil :height -                                    ) ; big
-  (set-face-attribute 'font-latex-sectioning-5-face nil :foreground - :inherit -                     ) ; blue helv
-  (set-face-attribute 'font-latex-sedate-face       nil :foreground - :inherit font-lock-keyword-face) ; gray
-  (set-face-attribute 'font-latex-string-face       nil :foreground - :inherit font-lock-string-face ) ; rosy
-  (set-face-attribute 'font-latex-verbatim-face     nil :foreground - :inherit font-lock-string-face ) ; brown courier
-  (set-face-attribute 'font-latex-warning-face      nil :inherit -                                   ) ; bold
-  (set-face-attribute 'font-lock-function-name-face nil :weight -                                    ) ; {table}, {1mm}
-  (set-face-attribute 'font-lock-type-face          nil :foreground -                                ) ; {text args}
+  (add-to-list 'LaTeX-verbatim-environments-local "lstlisting")
+  (font-latex-set-syntactic-keywords)      ; highlight
+  (add-to-list 'LaTeX-verbatim-environments-local "semiverbatim")
+  (font-latex-set-syntactic-keywords) ; Beamer highlight
+  (add-to-list 'LaTeX-verbatim-macros-with-delims-local "lstinline")
+  (font-latex-set-syntactic-keywords) ; highlight
+  (add-to-list 'TeX-command-list
+               '("CompilePDF" "auctex -c -p letter %t" TeX-run-LaTeX nil t))
+  (add-to-list 'TeX-command-list
+               '("CompilePDFa4" "auctex -c -p a4 %t" TeX-run-LaTeX nil t))
+  (add-to-list 'TeX-command-list
+               '("LaTeX PDF" "pdflatex %t" TeX-run-LaTeX nil t))
+  ;; "View" is defined twice, but works
+  (add-to-list 'TeX-command-list
+               '("View" "auctex -v %t" TeX-run-discard nil t))
+  (set-face-attribute 'font-latex-bold-face   nil :foreground -) ; green
+  (set-face-attribute 'font-latex-italic-face nil :foreground -) ; green
+  (set-face-attribute 'font-latex-math-face
+                      nil :foreground "brown4") ; saddlebrown
+  (set-face-attribute 'font-latex-sectioning-0-face nil :height -) ; big
+  (set-face-attribute 'font-latex-sectioning-1-face nil :height -) ; big
+  (set-face-attribute 'font-latex-sectioning-2-face nil :height -) ; big
+  (set-face-attribute 'font-latex-sectioning-3-face nil :height -) ; big
+  (set-face-attribute 'font-latex-sectioning-4-face nil :height -) ; big
+  (set-face-attribute 'font-latex-sectioning-5-face
+                      nil :foreground - :inherit -) ; blue helvetica
+  (set-face-attribute 'font-latex-sedate-face
+                      nil :foreground - :inherit font-lock-keyword-face) ; gray
+  (set-face-attribute 'font-latex-string-face
+                      nil :foreground - :inherit font-lock-string-face ) ; rosy
+  (set-face-attribute 'font-latex-verbatim-face nil :foreground -
+                      :inherit font-lock-string-face ) ; brown courier
+  (set-face-attribute 'font-latex-warning-face nil :inherit -) ; bold
+  (set-face-attribute 'font-lock-function-name-face nil
+                      :weight -) ; {table}, {1mm}
+  (set-face-attribute 'font-lock-type-face nil :foreground -) ; {text args}
   (local-unset-key [?\t]     ) ; reactivate indent-or-complete
   (local-unset-key [?\C-\M-a]) ; reactivate copy-buffer
   (local-unset-key [?\C-\M-e]) ; reactivate query-replace-regexp
   (local-unset-key [?\C-c ?.]) ; reactivate comment-line-or-region
-  (local-set-key [f9]                'iso-tex2iso                 )
-  (local-set-key [f10]               'iso-iso2tex                 )
-  (local-set-key [f11]               'reftex-toc-fullscreen       )
-  (local-set-key [S-f11]             'reftex-toc-left-right       )
-  (local-set-key [f12]               'LaTeX-template              )
-  (local-set-key [S-f12]             'beamer-template             )
-  (local-set-key [C-f12]             'LaTeX-template-mini         )
-  (local-set-key [?\C-m]             'newline-and-indent          ) ; return
-  (local-set-key [M-return]          'LaTeX-item                  )
-  (local-set-key [?\C-c C-backspace] 'LaTeX-master-clean          )
-  (local-set-key [?\C-c ?\C- ]       'LaTeX-table-sep             )
-  (local-set-key [?\C-c ?\C--]       'LaTeX-break-single          )
-  (local-set-key [?\C-c ?\C-=]       'LaTeX-eqnarray-equals       )
-  (local-set-key [?\C-c ?\C-']       'LaTeX-toggle-quotes         )
-  (local-set-key [?\C-c ?\C-,]       'TeX-previous-error          ) ; defunct
-  (local-set-key [?\C-c ?\C-.]       'TeX-next-error              )
-  (local-set-key [?\C-c ?\C-a]       'LaTeX-master-PDFa4          )
-  (local-set-key [?\C-c ?\C-b]       'LaTeX-babel-fontenc         ) ; TeX-command-buffer
-  (local-set-key [?\C-c ?\C-c]       'LaTeX-master-latex          ) ; TeX-command-master
-  (local-set-key [?\C-c ?\C-d]       'LaTeX-knitr                 ) ; TeX-save-document
-  (local-set-key [?\C-c ?\C-i]       'LaTeX-includegraphics       ) ; TeX-goto-info-page
-  (local-set-key [?\C-c ?\C-m]       'LaTeX-master-open           ) ; TeX-insert-macro
-  (local-set-key [?\C-c ?\C-n]       'LaTeX-noindent              ) ; TeX-normal-mode
-  (local-set-key [?\C-c ?\C-o]       'LaTeX-master-PDF            )
-  (local-set-key [?\C-c ?\C-q]       'kill-process-now            ) ; [map], as `TeX-kill-job' doesn't stop Rnw sweaving
-  (local-set-key [?\C-c ?\C-r]       'LaTeX-R-block               ) ; TeX-command-region
-  (local-set-key [?\C-c ?\C-u]       'LaTeX-usepackage            )
-  (local-set-key [?\C-c ?\C-v]       'LaTeX-ghostview             ) ; TeX-view
-  (local-set-key [?\C-c ?\C-x]       'TeX-command-master          )
-  (local-set-key [?\C-c ?\C-z]       'sweave-compile              )
-  (local-set-key [3 67109110]        'LaTeX-break-single          ) ; ?\C-c ?\C-ö
-  (local-set-key [?\C-j]             'LaTeX-fill-paragraph-forward)
-  (local-set-key [?\C-u]             'universal-argument          ) ; enable C-u C-c C-e
+  (local-set-key [f9]          'iso-tex2iso             )
+  (local-set-key [f10]         'iso-iso2tex             )
+  (local-set-key [f11]         'reftex-toc-fullscreen   )
+  (local-set-key [S-f11]       'reftex-toc-left-right   )
+  (local-set-key [f12]         'LaTeX-template          )
+  (local-set-key [S-f12]       'beamer-template         )
+  (local-set-key [C-f12]       'LaTeX-template-mini     )
+  (local-set-key [?\C-m]       'newline-and-indent      ) ; return
+  (local-set-key [M-return]    'LaTeX-item              )
+  (local-set-key [?\C-c C-backspace] 'LaTeX-master-clean)
+  (local-set-key [?\C-c ?\C- ] 'LaTeX-table-sep         )
+  (local-set-key [?\C-c ?\C--] 'LaTeX-break-single      )
+  (local-set-key [?\C-c ?\C-=] 'LaTeX-eqnarray-equals   )
+  (local-set-key [?\C-c ?\C-'] 'LaTeX-toggle-quotes     )
+  (local-set-key [?\C-c ?\C-,] 'TeX-previous-error      ) ; defunct
+  (local-set-key [?\C-c ?\C-.] 'TeX-next-error          )
+  (local-set-key [?\C-c ?\C-a] 'LaTeX-master-PDFa4      )
+  (local-set-key [?\C-c ?\C-b] 'LaTeX-babel-fontenc     ) ; TeX-command-buffer
+  (local-set-key [?\C-c ?\C-c] 'LaTeX-master-latex      ) ; TeX-command-master
+  (local-set-key [?\C-c ?\C-d] 'LaTeX-knitr             ) ; TeX-save-document
+  (local-set-key [?\C-c ?\C-i] 'LaTeX-includegraphics   ) ; TeX-goto-info-page
+  (local-set-key [?\C-c ?\C-m] 'LaTeX-master-open       ) ; TeX-insert-macro
+  (local-set-key [?\C-c ?\C-n] 'LaTeX-noindent          ) ; TeX-normal-mode
+  (local-set-key [?\C-c ?\C-o] 'LaTeX-master-PDF        )
+  ;; `TeX-kill-job' doesn't stop Rnw sweaving, so bind to `kill-process-now'
+  (local-set-key [?\C-c ?\C-q] 'kill-process-now        ) ; [map]
+  (local-set-key [?\C-c ?\C-r] 'LaTeX-R-block           ) ; TeX-command-region
+  (local-set-key [?\C-c ?\C-u] 'LaTeX-usepackage        )
+  (local-set-key [?\C-c ?\C-v] 'LaTeX-ghostview         ) ; TeX-view
+  (local-set-key [?\C-c ?\C-x] 'TeX-command-master      )
+  (local-set-key [?\C-c ?\C-z] 'sweave-compile          )
+  (local-set-key [3 67109110]  'LaTeX-break-single      ) ; ?\C-c ?\C-ö
+  (local-set-key [?\C-j]       'LaTeX-fill-paragraph-forward)
+  (local-set-key [?\C-u]       'universal-argument      ) ; enable C-u C-c C-e
   (defun beamer-template ()
     "Insert Beamer template."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 % \\documentclass{article}\\usepackage{beamerarticle}
 \\documentclass[ignorenonframetext,hyperref={bookmarks=false}]{beamer}
 \\mode<article>
@@ -3320,7 +3689,9 @@ echo.
 \\end{frame}
 
 \\end{document}
-")(goto-char (point-min))(search-forward "title{"))
+")
+    (goto-char (point-min))
+    (search-forward "title{"))
   (defun LaTeX-babel-fontenc ()
     "Insert lines to load babel and fontenc packages."
     (interactive "*")
@@ -3332,48 +3703,69 @@ echo.
   (defun LaTeX-break-double ()
     "Insert visual section break at end of line, like % ====="
     (interactive "*")
-    (end-of-line)(insert "% ")(while (< (current-column) fill-column)(insert "=")))
+    (end-of-line)
+    (insert "% ")
+    (while (< (current-column) fill-column)
+      (insert "=")))
   (defun LaTeX-break-single ()
     "Insert visual section break at end of line, like % _____"
     (interactive "*")
-    (end-of-line)(insert "% ")(while (< (current-column) fill-column)(insert "_")))
+    (end-of-line)
+    (insert "% ")
+    (while (< (current-column) fill-column)
+      (insert "_")))
   (defun LaTeX-eqnarray-equals ()
     "Insert eqnarray &=& separator."
-    (interactive "*")(insert " &=& "))
+    (interactive "*")
+    (insert " &=& "))
   (defun LaTeX-fill-paragraph-forward ()
     "Justify and go to end of paragraph."
     (interactive)
-    (while (and (bolp)(eolp)(not (eobp)))(forward-line)) ; move to next non-empty line
-    (LaTeX-fill-paragraph nil)(clean-trails)(message nil)(forward-paragraph))
+    (while (and (bolp)(eolp)(not (eobp)))
+      (forward-line)) ; move to next non-empty line
+    (LaTeX-fill-paragraph nil)
+    (clean-trails)
+    (message nil)
+    (forward-paragraph))
   (defun LaTeX-ghostview ()
     "Open PDF in viewer."
     (interactive)
-    (shell-command (concat "ghostview \"" (file-name-sans-extension (buffer-name)) ".pdf\"&"))
+    (shell-command (concat "ghostview \""
+                           (file-name-sans-extension (buffer-name)) ".pdf\"&"))
     (delete-other-windows))
   (defun LaTeX-includegraphics ()
     "Insert \\includegraphics{}."
     (interactive "*")
-    (insert "\\includegraphics{}")(search-backward "}"))
+    (insert "\\includegraphics{}")
+    (search-backward "}"))
   (defun LaTeX-item ()
     "Insert \\item, possibly after a newline."
     (interactive "*")
-    (if (not (looking-back "^[ \t]*" 10))(newline-and-indent))(insert "\\item "))
+    (if (not (looking-back "^[ \t]*" 10))
+        (newline-and-indent))
+    (insert "\\item "))
   (defun LaTeX-knitr ()
     "Knit document and compile to PDF."
     (interactive)
-    (save-buffer)(compile (concat "auctex -k " (buffer-name))))
+    (save-buffer)
+    (compile (concat "auctex -k " (buffer-name))))
   (defun LaTeX-master-clean ()
     "Clean LaTeX temporary files."
     (interactive)
-    (save-buffer)(TeX-command "Clean" 'TeX-master-file)(message "Removed temporary files"))
+    (save-buffer)
+    (TeX-command "Clean" 'TeX-master-file)
+    (message "Removed temporary files"))
   (defun LaTeX-master-clean-all ()
     "Clean LaTeX temporary and output files."
     (interactive)
-    (save-buffer)(TeX-command "Clean All" 'TeX-master-file)(message "Removed temporary and output files"))
+    (save-buffer)
+    (TeX-command "Clean All" 'TeX-master-file)
+    (message "Removed temporary and output files"))
   (defun LaTeX-master-latex ()
     "Compile LaTeX document with pdfTeX."
     (interactive)
-    (save-buffer)(TeX-command "LaTeX PDF" 'TeX-master-file))
+    (save-buffer)
+    (TeX-command "LaTeX PDF" 'TeX-master-file))
   (defun LaTeX-master-open ()
     "Open LaTeX master document."
     (interactive)
@@ -3381,27 +3773,33 @@ echo.
   (defun LaTeX-master-PDF ()
     "Compile LaTeX document with LaTeX, dvips, and ps2pdf (letter page)."
     (interactive)
-    (save-buffer)(TeX-command "CompilePDF" 'TeX-master-file))
+    (save-buffer)
+    (TeX-command "CompilePDF" 'TeX-master-file))
   (defun LaTeX-master-PDFa4 ()
     "Compile LaTeX document with LaTeX, dvips, and ps2pdf (A4 page)."
     (interactive)
-    (save-buffer)(TeX-command "CompilePDFa4" 'TeX-master-file))
+    (save-buffer)
+    (TeX-command "CompilePDFa4" 'TeX-master-file))
   (defun LaTeX-master-view ()
     "View LaTeX document with PDF viewer."
     (interactive)
     (TeX-command "View" 'TeX-master-file))
   (defun LaTeX-noindent ()
     "Insert \\noindent."
-    (interactive "*")(insert "\\noindent\n"))
+    (interactive "*")
+    (insert "\\noindent\n"))
   (defun LaTeX-table-sep ()
     "Insert tabular & separator."
-    (interactive "*")(insert " & "))
+    (interactive "*")
+    (insert " & "))
   (defun LaTeX-template ()
     "Insert LaTeX template."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 \\documentclass[fleqn]{article}
-\\usepackage{datetime}\\newdateformat{mydate}{\\THEDAY~\\monthname~\\THEYEAR}\\mydate
+\\usepackage{datetime}\
+\\newdateformat{mydate}{\\THEDAY~\\monthname~\\THEYEAR}\\mydate
 \\usepackage[a4paper,height=23cm]{geometry}
 \\usepackage{parskip}
 \\begin{document}
@@ -3413,52 +3811,68 @@ echo.
 
 
 \\end{document}
-")(goto-char (point-min))(search-forward "title{"))
+")
+    (goto-char (point-min))
+    (search-forward "title{"))
   (defun LaTeX-template-mini ()
     "Insert minimal LaTeX template."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 \\documentclass{article}
 \\begin{document}
 
 
 
 \\end{document}
-")(goto-char (point-min))(search-forward "\n\n"))
+")
+    (goto-char (point-min))
+    (search-forward "\n\n"))
   (defun LaTeX-toggle-quotes ()
     "Toggle Icelandic quotation marks."
     (interactive)
-    (if LaTeX-icelandic-quotes (progn (setq TeX-open-quote "``")(setq TeX-close-quote "''"))
-      (progn (setq TeX-open-quote "\\quotedblbase{}")(setq TeX-close-quote "``")))
+    (if LaTeX-icelandic-quotes
+        (progn (setq TeX-open-quote "``")
+               (setq TeX-close-quote "''"))
+      (progn (setq TeX-open-quote "\\quotedblbase{}")
+             (setq TeX-close-quote "``")))
     (setq LaTeX-icelandic-quotes (not LaTeX-icelandic-quotes))
     (message "Icelandic quotes %s" (if LaTeX-icelandic-quotes "ON" "OFF")))
   (defun LaTeX-usepackage ()
     "Insert an empty \\usepackage{}."
     (interactive "*")
-    (if (< (line-beginning-position)(line-end-position))(open-line 1))
-    (insert "\\usepackage{}")(search-backward "}"))
+    (if (< (line-beginning-position)(line-end-position))
+        (open-line 1))
+    (insert "\\usepackage{}")
+    (search-backward "}"))
   (defun reftex-toc-left-right ()
     "Show RefTeX table of contents in left window."
     (interactive)
-    (reftex-toc)(split-window-left-right))
+    (reftex-toc)
+    (split-window-left-right))
   (defun reftex-toc-fullscreen ()
     "Show RefTeX table of contents in full screen."
     (interactive)
-    (reftex-toc)(delete-other-windows))
+    (reftex-toc)
+    (delete-other-windows))
   (defun sweave-compile ()
     "Sweave document and compile to PDF."
     (interactive)
-    (save-buffer)(compile (concat "auctex -s " (buffer-name))))
+    (save-buffer)
+    (compile (concat "auctex -s " (buffer-name))))
   (defun sweave-block ()
     "Insert <<>>= R block in a Sweave document."
     (interactive "*")
-    (if (not (= (char-before (- (point) 1)) ?\n))(insert "\n"))(insert "<<>>=\n\n@")
-    (if (not (= (char-after) ?\n))(insert "\n"))(if (not (= (char-after (+ (point) 1)) ?\n))(insert "\n"))
+    (if (not (= (char-before (- (point) 1)) ?\n))(insert "\n"))
+    (insert "<<>>=\n\n@")
+    (if (not (= (char-after) ?\n))(insert "\n"))
+    (if (not (= (char-after (+ (point) 1)) ?\n))(insert "\n"))
     (search-backward ">>"))
   (defun sweave-template-mini ()
     "Insert minimal Sweave template."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 \\documentclass{article}
 \\begin{document}
 
@@ -3467,11 +3881,14 @@ echo.
 @
 
 \\end{document}
-")(goto-char (point-min))(search-forward "\n\n")))
+")
+    (goto-char (point-min))
+    (search-forward "\n\n")))
 (add-hook 'LaTeX-mode-hook 'arni-LaTeX-hook)
 (defun arni-reftex-hook ()
-  (define-key reftex-mode-map [?\C-c ?-] nil) ; reactivate highlight-changes-mode
-  (define-key reftex-mode-map [?\C-c ?=] nil)) ; reactivate diff-this-buffer-with-file
+  ;; Reactivate highlight-changes-mode and diff-this-buffer-with-file
+  (define-key reftex-mode-map [?\C-c ?-] nil)
+  (define-key reftex-mode-map [?\C-c ?=] nil))
 (add-hook 'reftex-mode-hook 'arni-reftex-hook)
 (defun arni-reftex-toc-hook ()
   (local-set-key [f5]       'reftex-toc-Rescan          )
@@ -3509,7 +3926,9 @@ echo.
   (defun reftex-toc-bottom ()
     "Move to bottom."
     (interactive)
-    (deactivate-mark)(goto-char (point-max))(reftex-toc-up 1))
+    (deactivate-mark)
+    (goto-char (point-max))
+    (reftex-toc-up 1))
   (defun reftex-toc-bottom-mark ()
     "Extend region to bottom."
     (interactive)
@@ -3517,22 +3936,29 @@ echo.
   (defun reftex-toc-down (&optional n)
     "Move down N lines."
     (interactive "p")
-    (deactivate-mark)(beginning-of-line (+ 1 n))(if (eobp)(forward-line -1)))
+    (deactivate-mark)
+    (beginning-of-line (+ 1 n))
+    (if (eobp)(forward-line -1)))
   (defun reftex-toc-down-page (&optional n)
     "Move down N pages."
-    (interactive "p")(reftex-toc-down (pages n)))
+    (interactive "p")
+    (reftex-toc-down (pages n)))
   (defun reftex-toc-down-view ()
     "Move down one line and view in other window."
     (interactive)
-    (reftex-toc-down 1)(reftex-toc-view-line))
+    (reftex-toc-down 1)
+    (reftex-toc-view-line))
   (defun reftex-toc-middle ()
     "Move to middle."
     (interactive)
-    (jump-middle)(reftex-toc-down)(reftex-toc-view-line))
+    (jump-middle)
+    (reftex-toc-down)
+    (reftex-toc-view-line))
   (defun reftex-toc-top ()
     "Move to top."
     (interactive)
-    (deactivate-mark)(goto-line-lisp 4))
+    (deactivate-mark)
+    (goto-line-lisp 4))
   (defun reftex-toc-top-mark ()
     "Extend region to top."
     (interactive)
@@ -3540,17 +3966,23 @@ echo.
   (defun reftex-toc-up (&optional n)
     "Move up N lines."
     (interactive "p")
-    (deactivate-mark)(beginning-of-line (- 1 n))(if (< (line-number-at-pos) 4)(reftex-toc-top)))
+    (deactivate-mark)
+    (beginning-of-line (- 1 n))
+    (if (< (line-number-at-pos) 4)
+        (reftex-toc-top)))
   (defun reftex-toc-up-page (&optional n)
     "Move up N pages."
-    (interactive "p")(reftex-toc-up (pages n)))
+    (interactive "p")
+    (reftex-toc-up (pages n)))
   (defun reftex-toc-up-view ()
     "Move up one line and view in other window."
     (interactive)
-    (reftex-toc-up 1)(reftex-toc-view-line)))
+    (reftex-toc-up 1)
+    (reftex-toc-view-line)))
 (add-hook 'reftex-toc-mode-hook 'arni-reftex-toc-hook)
 (defun arni-texinfo-hook ()
-  (setq make-backup-files t)(font-lock-mode 1)
+  (setq make-backup-files t)
+  (font-lock-mode 1)
   (local-set-key [M-return]    'texinfo-insert-@item-properly )
   (local-set-key [f11]         'texinfo-show-structure        )
   (local-set-key [S-f11]       'texinfo-show-structure-nodes  )
@@ -3578,55 +4010,73 @@ echo.
   (defun makeinfo-buffer-html ()
     "Compile Texinfo document to HTML."
     (interactive)
-    (save-buffer)(compile (concat "makeinfo --html --no-split " (buffer-name))))
+    (save-buffer)
+    (compile (concat "makeinfo --html --no-split " (buffer-name))))
   (defun makeinfo-buffer-info ()
     "Compile Texinfo document to Info."
     (interactive)
-    (save-buffer)(makeinfo-buffer))
+    (save-buffer)
+    (makeinfo-buffer))
   (defun texinfo-all-menus-update-clean ()
     "Update all menus and clean whitespace trails."
     (interactive)
     (save-excursion
-      (texinfo-all-menus-update)(clean-trails)(message "Done...updated all the menus.  You may save the buffer.")))
+      (texinfo-all-menus-update)
+      (clean-trails)
+      (message "Done...updated all the menus.  You may save the buffer.")))
   (defun texinfo-ghostview ()
     "Open PDF in viewer."
     (interactive)
-    (shell-command (concat "ghostview " (file-name-sans-extension (buffer-name))
-                           ".pdf&"))(delete-other-windows))
+    (shell-command (concat "ghostview "
+                           (file-name-sans-extension (buffer-name)) ".pdf&"))
+    (delete-other-windows))
   (defun texinfo-header-icelandic ()
     "Insert lines to support Icelandic."
     (interactive "*")
     (insert "@documentlanguage is\n" "@documentencoding UTF-8\n"))
   (defun texinfo-insert-@arrow ()
     "Insert @arrow."
-    (interactive "*")(insert "@arrow{} "))
+    (interactive "*")
+    (insert "@arrow{} "))
   (defun texinfo-insert-@image ()
     "Insert @image{}."
-    (interactive "*")(insert "@image{}")(backward-char))
+    (interactive "*")
+    (insert "@image{}")
+    (backward-char))
   (defun texinfo-insert-@item-properly ()
     "Insert @item, possibly after a newline."
     (interactive "*")
-    (if (not (looking-back "^[ \t]*" 10))(newline))(insert "@item "))
+    (if (not (looking-back "^[ \t]*" 10))
+        (newline))
+    (insert "@item "))
   (defun texinfo-insert-@node-plain ()
     "Insert @node."
-    (interactive "*")(insert "@node "))
+    (interactive "*")
+    (insert "@node "))
   (defun texinfo-insert-@tab ()
     "Insert @tab."
     (interactive "*")
-    (if (not (= (char-before) #x20))(insert " "))(insert "@tab "))
+    (if (not (= (char-before) #x20))
+        (insert " "))
+    (insert "@tab "))
   (defun texinfo-insert-node-lines-all ()
     "Insert missing @node lines with section titles."
     (interactive "*")
     (save-excursion
       (texinfo-insert-node-lines (point-min)(point-max) t)
       (if (zerop (how-many "@node Top" (point-min)(point-max)))
-          (progn (goto-char (point-min))(search-forward "@top")(forward-line 0)(insert "@node Top\n")))))
+          (progn (goto-char (point-min))
+                 (search-forward "@top")
+                 (forward-line 0)
+                 (insert "@node Top\n")))))
   (defun texinfo-insert-@section ()
     "Insert @section."
-    (interactive "*")(insert "@section "))
+    (interactive "*")
+    (insert "@section "))
   (defun texinfo-insert-@subsection ()
     "Insert @subsection."
-    (interactive "*")(insert "@subsection "))
+    (interactive "*")
+    (insert "@subsection "))
   (defun texinfo-kill-compilation ()
     "Kill Texinfo compilation process."
     (interactive)
@@ -3634,7 +4084,8 @@ echo.
   (defun texinfo-template ()
     "Insert Texinfo template."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 \\input texinfo
 @c %**start of header
 @setfilename template.info
@@ -3681,11 +4132,13 @@ This is first.
 @printindex cp
 
 @bye
-")(goto-char (point-min)))
+")
+    (goto-char (point-min)))
   (defun texinfo-template-mini ()
     "Insert Texinfo template for PDF output only."
     (interactive "*")
-    (goto-char (point-min))(insert "\
+    (goto-char (point-min))
+    (insert "\
 \\input texinfo
 @c %**start of header
 @setfilename template.info
@@ -3719,7 +4172,8 @@ This is first.
 @printindex cp
 
 @bye
-")(goto-char (point-min)))
+")
+    (goto-char (point-min)))
   (defun texinfo-show-structure-nodes ()
     "Show structure of Texinfo document, including nodes."
     (interactive)
@@ -3727,45 +4181,57 @@ This is first.
   (defun texinfo-texi2dvi-pdf ()
     "Compile Texinfo document to PDF."
     (interactive)
-    (save-buffer)(if (one-window-p)(split-window-right))
-    (compile (concat "texi2dvi -c -p -t @finalout " (buffer-name)))(maximize-window-top)))
+    (save-buffer)
+    (if (one-window-p)(split-window-right))
+    (compile (concat "texi2dvi -c -p -t @finalout " (buffer-name)))
+    (maximize-window-top)))
 (add-hook 'texinfo-mode-hook 'arni-texinfo-hook)
 ;;-----------
 ;; 6.14 Lisp
 ;;-----------
 (defun arni-lisp-hook ()
-  (setq make-backup-files t)(setq comment-column 0)(arni-colors)
+  (setq make-backup-files t)
+  (setq comment-column 0)
+  (arni-colors)
   (set-face-attribute 'font-lock-variable-name-face nil :foreground "magenta2")
   (setq paragraph-start ";\\|[ \t]*$")
-  (local-set-key [f9]          'eval-line-and-step      )
-  (local-set-key [f11]         'dot-emacs-outline       )
-  (local-set-key [S-f11]       'hs-minor-mode           )
-  (local-set-key [f12]         'lisp-template           )
-  (local-set-key [?\C-j]       'region-forward-paragraph) ; fill-paragraph-forward
-  (local-set-key [?\C-m]       'newline-and-indent      ) ; return
-  (local-set-key [?\C-c ?\C- ] 'lisp-comment-inline     )
-  (local-set-key [?\C-c ?\C-b] 'byte-compile-file       )
-  (local-set-key [?\C-c ?\C-c] 'eval-buffer-update      )
-  (local-set-key [?\C-c ?\C-e] 'byte-compile-dot-emacs  ) ; suppress warnings about free variables
-  (local-set-key [?\C-c ?\C-j] 'eval-line               ) ; like ess
-  (local-set-key [?\C-c ?\C-l] 'eval-line               ) ; intuitive
-  (local-set-key [?\C-c ?\C-n] 'eval-line-and-step      )
-  (local-set-key [?\C-c ?\C-r] 'eval-region             )
+  (local-set-key [f9]    'eval-line-and-step      )
+  (local-set-key [f11]   'dot-emacs-outline       )
+  (local-set-key [S-f11] 'hs-minor-mode           )
+  (local-set-key [f12]   'lisp-template           )
+  (local-set-key [?\C-j] 'region-forward-paragraph) ; fill-paragraph-forward
+  (local-set-key [?\C-m] 'newline-and-indent      ) ; return
+  (local-set-key [?\C-c ?\C- ] 'lisp-comment-inline   )
+  (local-set-key [?\C-c ?\C-b] 'byte-compile-file     )
+  (local-set-key [?\C-c ?\C-c] 'eval-buffer-update    )
+  ;; Suppress warnings about free variables
+  (local-set-key [?\C-c ?\C-e] 'byte-compile-dot-emacs)
+  (local-set-key [?\C-c ?\C-j] 'eval-line             ) ; like ess
+  (local-set-key [?\C-c ?\C-l] 'eval-line             ) ; intuitive
+  (local-set-key [?\C-c ?\C-n] 'eval-line-and-step    )
+  (local-set-key [?\C-c ?\C-r] 'eval-region           )
   (defun byte-compile-dot-emacs ()
     "Compile .emacs, to check warnings other than free variables."
     (interactive)
-    (require 'bytecomp)(setq byte-compile-warnings '(not free-vars))
-    (setq byte-compile-dest-file-function (lambda (arg)(concat temporary-file-directory ".emacs.elc")))
+    (require 'bytecomp)
+    (setq byte-compile-warnings '(not free-vars))
+    (setq byte-compile-dest-file-function
+          (lambda (arg)(concat temporary-file-directory ".emacs.elc")))
     (byte-compile-file "~/.emacs"))
   (defun dot-emacs-outline ()
     "Navigate within .emacs using `outline-mode'."
     (interactive)
-    (outline-mode)(setq outline-regexp ";; [0-9][\\.]?")(outline-mode)(outline-hide-body)
-    (setq outline-top-level 4)(setq outline-previous-mode '(emacs-lisp-mode)))
+    (outline-mode)
+    (setq outline-regexp ";; [0-9][\\.]?")
+    (outline-mode)
+    (outline-hide-body)
+    (setq outline-top-level 4)
+    (setq outline-previous-mode '(emacs-lisp-mode)))
   (defun eval-buffer-update ()
     "Evaluate buffer and update Emacs-Lisp mode."
     (interactive)
-    (eval-buffer)(emacs-lisp-mode))
+    (eval-buffer)
+    (emacs-lisp-mode))
   (defun eval-line ()
     "Execute current line as Lisp code."
     (interactive)
@@ -3773,16 +4239,21 @@ This is first.
   (defun eval-line-and-step ()
     "Execute current line as Lisp code and move to next line."
     (interactive)
-    (eval-line)(forward-line))
+    (eval-line)
+    (forward-line))
   (defun lisp-comment-inline ()
     "Insert ;"
-    (interactive "*")(insert " ; "))
+    (interactive "*")
+    (insert " ; "))
   (defun lisp-template ()
     "Insert Lisp template."
     (interactive "*")
-    (insert "(defun  () \"\"
-  (interactive)\n  ())\n")(search-backward " ()
-  ")))
+    (insert "(defun  ()
+  \"\"
+  (interactive)
+  ())
+")
+    (search-backward " ()\n  ")))
 (add-hook 'emacs-lisp-mode-hook       'arni-lisp-hook)
 (add-hook 'lisp-mode-hook             'arni-lisp-hook)
 (add-hook 'lisp-interaction-mode-hook 'arni-lisp-hook)
@@ -3796,57 +4267,98 @@ This is first.
   (local-set-key [?\C-c ?\C-v] 'ps-ghostview)
   (defun pdf-clean ()
     "Call pdf-clean-* functions to replace stamps from PDF document."
-    (interactive "*")(fundamental-mode) ; called by 'pdfclean' shell script
-    (if (re-search-forward "^(Downloaded [Bb]y[:]? \\[.*)Tj$" nil t)(progn (goto-char (point-min))(pdf-clean-1)))
+    (interactive "*")
+    (fundamental-mode) ; called by 'pdfclean' shell script
+    (if (re-search-forward "^(Downloaded [Bb]y[:]? \\[.*)Tj$" nil t)
+        (progn (goto-char (point-min))
+               (pdf-clean-1)))
     (if (re-search-forward "^(Can. J. Fish. Aquat. Sci. Downloaded.*)Tj$" nil t)
-        (progn (goto-char (point-min))(pdf-clean-2)))
-    (if (re-search-forward "^(Downloaded from .*)Tj$" nil t)(progn (goto-char (point-min))(pdf-clean-3)))
+        (progn (goto-char (point-min))
+               (pdf-clean-2)))
+    (if (re-search-forward "^(Downloaded from .*)Tj$" nil t)
+        (progn (goto-char (point-min))
+               (pdf-clean-3)))
     (if (re-search-forward "^(This content downloaded from .*)Tj$" nil t)
-        (progn (goto-char (point-min))(pdf-clean-4))))
+        (progn (goto-char (point-min))
+               (pdf-clean-4))))
   (defun pdf-clean-1 ()
     "Replace PDF stamps like (Downloaded by [Arni Magnusson] ...) with spaces."
     (interactive "*")
     (let ((count 0))
       (fundamental-mode)
-      (while (re-search-forward "^(Downloaded [Bb]y[:]? \\[.*)Tj$" nil t)(move-to-column 1)(blank-to-paren)
-             (setq count (+ count 1)))(move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
+      (while (re-search-forward "^(Downloaded [Bb]y[:]? \\[.*)Tj$" nil t)
+        (move-to-column 1)
+        (blank-to-paren)
+        (setq count (+ count 1)))
+      (move-to-column 0)
+      (ps-mode)
+      (message "Removed %d PDF stamps" count)))
   (defun pdf-clean-2 ()
-    "Replace 2-part PDF stamps like (Can. J. Fish...) and (For personal use only. ) with spaces."
+    "Replace 2-part PDF stamps like (Can. J. Fish...)
+and (For personal use only. ) with spaces."
     (interactive "*")
     (let ((count 0))
       (fundamental-mode)
-      (while (re-search-forward "^(Can. J. Fish. Aquat. Sci. Downloaded.*)Tj$" nil t)(move-to-column 1)(blank-to-paren))
+      (while (re-search-forward
+              "^(Can. J. Fish. Aquat. Sci. Downloaded.*)Tj$" nil t)
+        (move-to-column 1)
+        (blank-to-paren))
       (goto-char (point-min))
-      (while (re-search-forward "^(For personal use only. )Tj$" nil t)(move-to-column 1)(blank-to-paren)
-             (setq count (+ count 1)))(move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
+      (while (re-search-forward "^(For personal use only. )Tj$" nil t)
+        (move-to-column 1)
+        (blank-to-paren)
+        (setq count (+ count 1)))
+      (move-to-column 0)
+      (ps-mode)
+      (message "Removed %d PDF stamps" count)))
   (defun pdf-clean-3 ()
     "Replace 3-part PDF stamps like with (Downloaded from ) with spaces."
     (interactive "*")
     (let ((count 0))
       (fundamental-mode)
       (while (re-search-forward "^(Downloaded from .*)Tj$" nil t)
-        (if (string-match "^(Downloaded from )Tj$" (match-string 0))(re-search-backward "^(" nil t 3))
-        (if (string-match "^(Downloaded from https://academic.oup.com.*)Tj$" (match-string 0))
+        (if (string-match "^(Downloaded from )Tj$" (match-string 0))
+            (re-search-backward "^(" nil t 3))
+        (if (string-match "^(Downloaded from https://academic.oup.com.*)Tj$"
+                          (match-string 0))
             (re-search-backward "^(" nil t 1))
-        (dotimes (i 3)(re-search-forward "^(")(if (= (char-before) #x28)(blank-to-paren)))
-        (setq count (+ count 1)))(move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
+        (dotimes (i 3)
+          (re-search-forward "^(")
+          (if (= (char-before) #x28)(blank-to-paren)))
+        (setq count (+ count 1)))
+      (move-to-column 0)
+      (ps-mode)
+      (message "Removed %d PDF stamps" count)))
   (defun pdf-clean-4 ()
-    "Replace 4-part PDF stamps like (This content downloaded from ...) with spaces."
+    "Replace 4-part PDF stamps like (This content downloaded from ...)
+with spaces."
     (interactive "*")
-    (let ((count 0)(case-fold-search nil))
+    (let ((count 0)
+          (case-fold-search nil))
       (fundamental-mode)
-      (while (re-search-forward "^(This content downloaded from .*)Tj$" nil t)(move-to-column 1)(blank-to-paren))
+      (while (re-search-forward "^(This content downloaded from .*)Tj$" nil t)
+        (move-to-column 1)
+        (blank-to-paren))
       (goto-char (point-min))
-      (while (re-search-forward "^(All use subject to )Tj$" nil t)(move-to-column 1)(blank-to-paren))
+      (while (re-search-forward "^(All use subject to )Tj$" nil t)
+        (move-to-column 1)
+        (blank-to-paren))
       (goto-char (point-min))
-      (while (re-search-forward "^(JSTOR Terms and Conditions)Tj$" nil t)(move-to-column 1)(blank-to-paren))
+      (while (re-search-forward "^(JSTOR Terms and Conditions)Tj$" nil t)
+        (move-to-column 1)
+        (blank-to-paren))
       (goto-char (point-min))
-      (while (re-search-forward "^0 0 1 RG$" nil t)(replace-match "1 1 1 RG")(setq count (+ count 1)))
-      (move-to-column 0)(ps-mode)(message "Removed %d PDF stamps" count)))
+      (while (re-search-forward "^0 0 1 RG$" nil t)
+        (replace-match "1 1 1 RG")
+        (setq count (+ count 1)))
+      (move-to-column 0)
+      (ps-mode)
+      (message "Removed %d PDF stamps" count)))
   (defun ps-ghostview ()
     "Open postscript file in viewer."
     (interactive)
-    (shell-command (concat "ghostview \"" (buffer-name) "\"&"))(delete-other-windows)))
+    (shell-command (concat "ghostview \"" (buffer-name) "\"&"))
+    (delete-other-windows)))
 (add-hook 'ps-mode-hook 'arni-ps-hook) ; see also doc-view-mode-hook
 ;;--------
 ;; 6.16 R
@@ -3872,9 +4384,11 @@ This is first.
 (defun arni-ess-pre-run-hook ()(setq ess-ask-for-ess-directory nil))
 (add-hook 'ess-pre-run-hook 'arni-ess-pre-run-hook)
 (defun arni-inferior-ess-hook ()
-  (set-face-attribute 'comint-highlight-input  nil :foreground "gray20") ; previous commands (bold)
-  (set-face-attribute 'font-lock-constant-face nil :underline -        ) ; <-, library, source, [1] output
-  (set-face-attribute 'font-lock-type-face     nil :foreground -       ) ; TRUE
+  (set-face-attribute 'comint-highlight-input nil
+                      :foreground "gray20") ; previous commands (bold)
+  (set-face-attribute 'font-lock-constant-face nil
+                      :underline -) ; <-, library, source, [1] output
+  (set-face-attribute 'font-lock-type-face nil :foreground -) ; TRUE
   (local-unset-key [?\C-\M-m]) ; avoid ess-dirs
   (local-unset-key [?\C-y]   ) ; reactivate scroll-down-command
   (local-set-key [f11]               'ess-rdired-arni                 )
@@ -3884,16 +4398,22 @@ This is first.
   (local-set-key [?\C-c ?\C-h]       'ess-history                     )
   (defun ess-display-help-on-object (object)
     "Open help page in browser." ; override original function with same name
-    (process-send-string ess-current-process-name (concat "help(" object ",help_type='HTML')")))
+    (process-send-string ess-current-process-name
+                         (concat "help(" object ",help_type='HTML')")))
   (defun ess-history ()
     "Open R history file in other window."
     (interactive)
-    (find-file-other-window ess-history-file)(font-lock-mode 0)(goto-char (point-max))(forward-line -1))
+    (find-file-other-window ess-history-file)
+    (font-lock-mode 0)
+    (goto-char (point-max))
+    (forward-line -1))
   (defalias 'R-history 'ess-history)
   (defun ess-rdired-arni ()
     "Run ess-rdired in large window."
     (interactive) ; ess-rdired runs no hook, so set keys here
-    (ess-rdired)(delete-other-windows)(ess-rdired-next-line 1)
+    (ess-rdired)
+    (delete-other-windows)
+    (ess-rdired-next-line 1)
     (define-key ess-rdired-mode-map [down-mouse-1] 'ess-rdired-mouse-view)
     (define-key ess-rdired-mode-map [C-home]       'ess-rdired-top       )
     (define-key ess-rdired-mode-map [C-end]        'ess-rdired-bottom    )
@@ -3903,7 +4423,7 @@ This is first.
     (define-key ess-rdired-mode-map [next]         'ess-rdired-down-page )
     (define-key ess-rdired-mode-map [?\t]          'ess-rdired-other     )
     (define-key ess-rdired-mode-map [backtab]      'delete-other-windows )
-    (define-key ess-rdired-mode-map [?\C-m]        'ess-rdired-other     ) ; return
+    (define-key ess-rdired-mode-map [?\C-m]        'ess-rdired-other     ) ; RET
     (define-key ess-rdired-mode-map [left]         'delete-other-windows )
     (define-key ess-rdired-mode-map [right]        'ess-rdired-other     )
     (define-key ess-rdired-mode-map [up]           'ess-rdired-up        )
@@ -3926,43 +4446,60 @@ This is first.
     (define-key ess-rdired-mode-map [?n]           'ess-rdired-down      )
     (define-key ess-rdired-mode-map [?o]           'ess-rdired-other     )
     (define-key ess-rdired-mode-map [?p]           'ess-rdired-up        )
-    (define-key ess-rdired-mode-map [?q]           'ess-rdired-quit-clean) ; ess-rdired-quit
-    (define-key ess-rdired-mode-map [?v]           'ess-rdired-other    )) ; ess-rdired-view
+    (define-key ess-rdired-mode-map [?q]
+      'ess-rdired-quit-clean) ; ess-rdired-quit
+    (define-key ess-rdired-mode-map [?v]
+      'ess-rdired-other    )) ; ess-rdired-view
   (defun ess-rdired-bottom ()
     "Move to bottom."
     (interactive)
-    (deactivate-mark)(goto-char (point-max))(ess-rdired-previous-line 1))
+    (deactivate-mark)
+    (goto-char (point-max))
+    (ess-rdired-previous-line 1))
   (defun ess-rdired-down (&optional n)
     "Move down N lines."
     (interactive "p")
-    (deactivate-mark)(forward-line n)(if (eobp)(ess-rdired-previous-line 1)(ess-rdired-move-to-object)))
+    (deactivate-mark)
+    (forward-line n)
+    (if (eobp)
+        (ess-rdired-previous-line 1)
+      (ess-rdired-move-to-object)))
   (defun ess-rdired-down-3 ()
     "Move down 3 lines."
     (interactive)
     (ess-rdired-down 3))
   (defun ess-rdired-down-page (&optional n)
     "Move down N pages."
-    (interactive "p")(ess-rdired-down (pages n)))
+    (interactive "p")
+    (ess-rdired-down (pages n)))
   (defun ess-rdired-down-view ()
     "Move down one line and view in other window."
     (interactive)
-    (ess-rdired-next-line 1)(ess-rdired-other))
+    (ess-rdired-next-line 1)
+    (ess-rdired-other))
   (defun ess-rdired-middle ()
     "Move to middle."
     (interactive)
-    (ess-rdired-top)(forward-line (middle-from-here))(ess-rdired-move-to-object))
+    (ess-rdired-top)
+    (forward-line (middle-from-here))
+    (ess-rdired-move-to-object))
   (defun ess-rdired-other ()
     "Show R object in other window."
     (interactive)
-    (if (one-window-p)(split-window-right))(ess-rdired-view))
+    (if (one-window-p)(split-window-right))
+    (ess-rdired-view))
   (defun ess-rdired-quit-clean ()
     "Quit ess-rdired."
     (interactive)
-    (if (get-buffer "*R view*")(kill-buffer "*R view*"))(delete-other-windows)(ess-rdired-quit))
+    (if (get-buffer "*R view*")(kill-buffer "*R view*"))
+    (delete-other-windows)
+    (ess-rdired-quit))
   (defun ess-rdired-top ()
     "Move to top."
     (interactive)
-    (deactivate-mark)(goto-char (point-min))(ess-rdired-next-line 1))
+    (deactivate-mark)
+    (goto-char (point-min))
+    (ess-rdired-next-line 1))
   (defun ess-rdired-top-mark ()
     "Extend region to top."
     (interactive)
@@ -3970,8 +4507,11 @@ This is first.
   (defun ess-rdired-up (&optional n)
     "Move up N lines."
     (interactive "p")
-    (deactivate-mark)(forward-line (- n))
-    (if (< (line-number-at-pos) 2)(ess-rdired-top)(ess-rdired-move-to-object)))
+    (deactivate-mark)
+    (forward-line (- n))
+    (if (< (line-number-at-pos) 2)
+        (ess-rdired-top)
+      (ess-rdired-move-to-object)))
   (defun ess-rdired-up-3 ()
     "Move up 3 lines."
     (interactive)
@@ -3979,34 +4519,50 @@ This is first.
   (defun ess-rdired-up-mark (&optional n)
     "Extend region up N lines."
     (interactive "p")
-    (region-bol-up n)(if (< (line-number-at-pos) 2)(dired-top-mark)))
+    (region-bol-up n)
+    (if (< (line-number-at-pos) 2)
+        (dired-top-mark)))
   (defun ess-rdired-up-page (&optional n)
     "Move up N pages."
-    (interactive "p")(ess-rdired-up (pages n)))
+    (interactive "p")
+    (ess-rdired-up (pages n)))
   (defun ess-rdired-up-view ()
     "Move up one line and view in other window."
     (interactive)
-    (ess-rdired-previous-line 1)(ess-rdired-other))
+    (ess-rdired-previous-line 1)
+    (ess-rdired-other))
   (defun ess-smart-S-assign ()
     "Insert underscore."
-    (interactive "*")(insert "_"))
+    (interactive "*")
+    (insert "_"))
   (defun ess-switch-to-edit-buffer ()
     "Switch to R edit buffer."
     (interactive)
-    (let* ((buffers (buffer-list))(modes (mapcar (lambda (b)(with-current-buffer b major-mode)) buffers))
+    (let* ((buffers (buffer-list))
+           (modes (mapcar (lambda (b)(with-current-buffer b major-mode))
+                          buffers))
            (pointer (- (length buffers)(length (member 'ess-mode modes)))))
       (switch-to-buffer-other-window (nth pointer buffers)))))
 (add-hook 'inferior-ess-mode-hook 'arni-inferior-ess-hook)
-(defun arni-ess-post-run-hook ()(message nil)(ess-eval-linewise "options(continue='  ',width=100)" t))
+(defun arni-ess-post-run-hook ()
+  (message nil)
+  (ess-eval-linewise "options(continue='  ',width=100)" t))
 (add-hook 'ess-post-run-hook 'arni-ess-post-run-hook)
 (defun arni-ess-hook ()
-  (if (string-equal (buffer-name) "*R*")(inferior-ess-mode))
-  (require 'which-func)(add-to-list 'which-func-modes 'ess-mode)
-  (setq make-backup-files t)(setq ess-eval-visibly-p nil)(ess-toggle-S-assign nil)
-  (setq ess-brace-offset -2)(setq ess-indent-offset 2)
+  (if (string-equal (buffer-name) "*R*")
+      (inferior-ess-mode))
+  (require 'which-func)
+  (add-to-list 'which-func-modes 'ess-mode)
+  (setq make-backup-files t)
+  (setq ess-eval-visibly-p nil)
+  (ess-toggle-S-assign nil)
+  (setq ess-brace-offset -2)
+  (setq ess-indent-offset 2)
   (add-to-list 'safe-local-variable-values '(ess-indent-offset . 4))
-  (font-lock-add-keywords nil '(("tafpng(\"\\(\\w+\\)" (1 font-lock-builtin-face t))))
-  (set-face-attribute 'font-lock-constant-face nil :underline - ) ; <-, library, source, [1] output
+  (font-lock-add-keywords nil '(("tafpng(\"\\(\\w+\\)"
+                                 (1 font-lock-builtin-face t))))
+  (set-face-attribute 'font-lock-constant-face
+                      nil :underline - ) ; <-, library, source, [1] output
   (set-face-attribute 'font-lock-type-face     nil :foreground -) ; TRUE
   (local-unset-key [?\t]     ) ; reactivate indent-or-complete
   (local-unset-key [C-return]) ; reactivate recentf-open-files
@@ -4018,125 +4574,205 @@ This is first.
   (local-unset-key [?\C-\M-e]) ; reactivate query-replace-regexp
   (local-unset-key [?_]      ) ; reactivate self-insert-command
   (local-unset-key [?,]      ) ; reactivate self-insert-command
-  (local-set-key [f9]          'ess-eval-region-or-line-and-step                 )
-  (local-set-key [f10]         'R-format-code                                    )
-  (local-set-key [S-f10]       'R-format-code-longline-nocomment                 )
-  (local-set-key [f11]         'R-outline                                        )
-  (local-set-key [S-f11]       'hs-minor-mode                                    )
-  (local-set-key [f12]         'R-template-roxygen                               )
-  (local-set-key [S-f12]       'R-template-general                               )
-  (local-set-key [C-f12]       'R-header-to-roxy                                 )
-  (local-set-key [M-f12]       'R-template-minimal                               )
-  (local-set-key [?\C-c C-backspace] 'ess-graphics-off                           )
-  (local-set-key [M-return]    'ess-eval-region-or-function-or-paragraph-and-step)
-  (local-set-key [?\C-c up]    'ess-eval-buffer-from-beg-to-here                 )
-  (local-set-key [?\C-c down]  'ess-eval-buffer-from-here-to-end                 )
-  (local-set-key [C-M-down]    'ess-eval-line-and-step                           )
-  (local-set-key [?\C-c ?\C-a] 'ess-roxy-insert-code                             )
-  (local-set-key [?\C-c ?\C-d] 'ess-eval-buffer-and-go                           ) ; [map]
-  (local-set-key [?\C-c ?\C-i] 'ess-roxy-insert-import                           ) ; ess-complete-object-name-deprecated
-  (local-set-key [?\C-c ?\C-l] 'ess-clear-R-window                               ) ; ess-load-file
-  (local-set-key [?\C-c ?\C-p] 'ess-roxy-insert-param                            ) ; ess-eval-paragraph-and-step
-  (local-set-key [?\C-c ?\C-v] 'ess-save-buffer-and-eval                         ) ; ess-display-help-on-object
-  (local-set-key [?\C-c ?\C-x] 'ess-eval-command                                 )
-  (local-set-key [?\C-c ?\C- ] 'ess-switch-to-end-of-ESS                         )
-  (local-set-key [?{]          'ess-electric-brace-open                          )
+  (local-set-key [f9]                'ess-eval-region-or-line-and-step)
+  (local-set-key [f10]               'R-format-code                   )
+  (local-set-key [S-f10]             'R-format-code-longline-nocomment)
+  (local-set-key [f11]               'R-outline                       )
+  (local-set-key [S-f11]             'hs-minor-mode                   )
+  (local-set-key [f12]               'R-template-roxygen              )
+  (local-set-key [S-f12]             'R-template-general              )
+  (local-set-key [C-f12]             'R-header-to-roxy                )
+  (local-set-key [M-f12]             'R-template-minimal              )
+  (local-set-key [?\C-c C-backspace] 'ess-graphics-off                )
+  (local-set-key [M-return]  'ess-eval-region-or-function-or-paragraph-and-step)
+  (local-set-key [?\C-c up]          'ess-eval-buffer-from-beg-to-here)
+  (local-set-key [?\C-c down]        'ess-eval-buffer-from-here-to-end)
+  (local-set-key [C-M-down]          'ess-eval-line-and-step          )
+  (local-set-key [?\C-c ?\C-a]       'ess-roxy-insert-code            )
+  (local-set-key [?\C-c ?\C-d]       'ess-eval-buffer-and-go          ) ; [map]
+  (local-set-key [?\C-c ?\C-i]
+                 'ess-roxy-insert-import) ; ess-complete-object-name-deprecated
+  (local-set-key [?\C-c ?\C-l] 'ess-clear-R-window) ; ess-load-file
+  (local-set-key [?\C-c ?\C-p]
+                 'ess-roxy-insert-param) ; ess-eval-paragraph-and-step
+  (local-set-key [?\C-c ?\C-v]
+                 'ess-save-buffer-and-eval) ; ess-display-help-on-object
+  (local-set-key [?\C-c ?\C-x] 'ess-eval-command        )
+  (local-set-key [?\C-c ?\C- ] 'ess-switch-to-end-of-ESS)
+  (local-set-key [?{]          'ess-electric-brace-open )
   (defun ess-clear-R-window ()
     "Run `comint-flush-window' in *R* window to clear screen."
     (interactive)
     (let ((old-window (selected-window)))
-      (select-window (get-buffer-window "*R*"))(comint-clear-window)(select-window old-window)))
+      (select-window (get-buffer-window "*R*"))
+      (comint-clear-window)
+      (select-window old-window)))
   (defun ess-electric-brace-open ()
     "Insert { and indent line."
     (interactive "*")
-    (insert "{")(unindent-line)(indent-according-to-mode))
+    (insert "{")
+    (unindent-line)
+    (indent-according-to-mode))
   (defun ess-eval-command (cmd)
     "Evaluate R command."
-    (interactive "sCommand: ")(ess-eval-linewise cmd))
+    (interactive "sCommand: ")
+    (ess-eval-linewise cmd))
   (defun ess-roxy-insert-code (&optional arg)
-    "Insert \\code{} around object at point, or \\code{\\link{}} if ARG is non-nil."
+    "Insert \\code{} around object at point,
+or \\code{\\link{}} if ARG is non-nil."
     (interactive "*P")
-    (let ((open (if arg "\\code{\\link{" "\\code{"))(close (if arg "}}" "}")))
-      (insert open)(if (eolp)(progn (insert close)(search-backward "{")(forward-char))(re-search-forward "[\n, ]" nil t)
-                       (backward-char)(if (= (char-before) ?.)(backward-char))(insert close))))
+    (let ((open (if arg "\\code{\\link{" "\\code{"))
+          (close (if arg "}}" "}")))
+      (insert open)
+      (if (eolp)
+          (progn (insert close)
+                 (search-backward "{")
+                 (forward-char))
+        (re-search-forward "[\n, ]" nil t)
+        (backward-char)
+        (if (= (char-before) ?.)
+            (backward-char))
+        (insert close))))
   (defun ess-roxy-insert-import ()
     "Insert @importFrom."
     (interactive "*")
-    (cycle-spacing)(insert "@importFrom pkg fun"))
+    (cycle-spacing)
+    (insert "@importFrom pkg fun"))
   (defun ess-roxy-insert-newline ()
     "Insert empty #' line."
     (interactive "*")
-    (let ((col (current-column)))(beginning-of-line)(insert "#'\n")(move-to-column col)))
+    (let ((col (current-column)))
+      (beginning-of-line)
+      (insert "#'\n")
+      (move-to-column col)))
   (defun ess-roxy-insert-param ()
     "Insert @param."
-    (interactive "*")(cycle-spacing)(insert "@param "))
+    (interactive "*")
+    (cycle-spacing)
+    (insert "@param "))
   (defun ess-save-buffer-and-eval ()
     "Save buffer and evaluate."
     (interactive)
-    (save-excursion (if (buffer-file-name)(save-buffer))(ess-eval-buffer nil)))
+    (save-excursion (if (buffer-file-name)(save-buffer))
+                    (ess-eval-buffer nil)))
   (defun R-format-code ()
     "Format R in Arni style."
     (interactive "*")
     (let ((old-bsize (buffer-size)))
-      (clean-trails)(untabify-buffer)
+      (clean-trails)
+      (untabify-buffer)
       (save-excursion
-        (goto-char (point-min))(if (= (char-after) ?\")
-                                   (progn (delete-char 1)(search-forward "\"" nil t)(replace-match "" ))) ; "myfunc"
-        (goto-char (point-min))(while (search-forward    "function ("  nil t)(replace-match "function(")) ; function
-        (goto-char (point-min))(while (search-forward    "for ("       nil t)(replace-match "for("     )) ; for
-        (goto-char (point-min))(while (search-forward    "if ("        nil t)(replace-match "if("      )) ; if
-        (goto-char (point-min))(while (search-forward    " ~ "         nil t)(replace-match "~"        )) ; ~
-        (goto-char (point-min))(while (search-forward    " = "         nil t)(replace-match "="        )) ; =
-        (goto-char (point-min))(while (search-forward    " + "         nil t)(replace-match "+"        )) ; +
-        (goto-char (point-min))(while (search-forward    " - "         nil t)(replace-match "-"        )) ; -
-        (goto-char (point-min))(while (search-forward    " * "         nil t)(replace-match "*"        )) ; *
-        (goto-char (point-min))(while (search-forward    " / "         nil t)(replace-match "/"        )) ; /
-        (goto-char (point-min))(while (search-forward    "{"           nil t)(replace-match "\n{\n"    )) ; {
-        (goto-char (point-min))(while (search-forward    "}"           nil t)(replace-match "\n}\n"    )) ; {
-        (goto-char (point-min))(while (re-search-forward "\n[ \n]+"    nil t)(replace-match "\n"       )) ; \n
-        (clean-trails)(indent-buffer))
-      (if (= (buffer-size) old-bsize)(message "Formatted R code (still %d bytes)" (buffer-size))
+        (goto-char (point-min))
+        (if (= (char-after) ?\")
+            (progn (delete-char 1)
+                   (search-forward "\"" nil t)
+                   (replace-match "" ))) ; "myfunc"
+        (goto-char (point-min))
+        (while (search-forward "function (" nil t)
+          (replace-match "function(")) ; function
+        (goto-char (point-min))
+        (while (search-forward "for (" nil t)(replace-match "for("    )) ; for
+        (goto-char (point-min))
+        (while (search-forward "if ("  nil t)(replace-match "if("     )) ; if
+        (goto-char (point-min))
+        (while (search-forward " ~ "   nil t)(replace-match "~"       )) ; ~
+        (goto-char (point-min))
+        (while (search-forward " = "   nil t)(replace-match "="       )) ; =
+        (goto-char (point-min))
+        (while (search-forward " + "   nil t)(replace-match "+"       )) ; +
+        (goto-char (point-min))
+        (while (search-forward " - "   nil t)(replace-match "-"       )) ; -
+        (goto-char (point-min))
+        (while (search-forward " * "   nil t)(replace-match "*"       )) ; *
+        (goto-char (point-min))
+        (while (search-forward " / "   nil t)(replace-match "/"       )) ; /
+        (goto-char (point-min))
+        (while (search-forward "{"     nil t)(replace-match "\n{\n"   )) ; {
+        (goto-char (point-min))
+        (while (search-forward "}"     nil t)(replace-match "\n}\n"   )) ; {
+        (goto-char (point-min))
+        (while (re-search-forward "\n[ \n]+" nil t)(replace-match "\n")) ; \n
+        (clean-trails)
+        (indent-buffer))
+      (if (= (buffer-size) old-bsize)
+          (message "Formatted R code (still %d bytes)" (buffer-size))
         (message "Formatted R code (%d->%d bytes)" old-bsize (buffer-size)))))
   (defun R-format-code-longline-nocomment ()
     "Format R code in Arni style, with long lines and no comments."
     (interactive "*")
     (let ((old-bsize (buffer-size)))
-      (R-format-code)(delete-comments)
+      (R-format-code)
+      (delete-comments)
       (save-excursion
-        (goto-char (point-min))(while (re-search-forward ",\n[\t ]*"   nil t)(replace-match ", ")) ; ,
-        (goto-char (point-min))(while (re-search-forward "~\n[\t ]*"   nil t)(replace-match "~ ")) ; ~
-        (goto-char (point-min))(while (re-search-forward "=\n[\t ]*"   nil t)(replace-match "= ")) ; =
-        (goto-char (point-min))(while (re-search-forward "+\n[\t ]*"   nil t)(replace-match "+ ")) ; +
-        (goto-char (point-min))(while (re-search-forward "-\n[\t ]*"   nil t)(replace-match "- ")) ; -
-        (goto-char (point-min))(while (re-search-forward "*\n[\t ]*"   nil t)(replace-match "* ")) ; *
-        (goto-char (point-min))(while (re-search-forward "/\n[\t ]*"   nil t)(replace-match "/ ")) ; /
-        (goto-char (point-min))(while (re-search-forward "&\n[\t ]*"   nil t)(replace-match "& ")) ; &
-        (goto-char (point-min))(while (re-search-forward "|\n[\t ]*"   nil t)(replace-match "| ")) ; |
-        (goto-char (point-min))(while (re-search-forward "(\n[\t ]*"   nil t)(replace-match "( ")) ; (
-        (goto-char (point-min))(while (re-search-forward "\n[\t ]*)"   nil t)(replace-match ")" )) ; )
-        (goto-char (point-min))(while (re-search-forward "\\[\n[\t ]*" nil t)(replace-match "[ ")) ; [
-        (goto-char (point-min))(while (re-search-forward "\n[\t ]*\\]" nil t)(replace-match "]"))) ; ]
-      (R-format-code)(if (= (buffer-size) old-bsize)(message "Formatted R code (still %d bytes)" (buffer-size))
-                       (message "Formatted R code (%d->%d bytes)" old-bsize (buffer-size)))))
+        (goto-char (point-min))
+        (while (re-search-forward ",\n[\t ]*"   nil t)(replace-match ", ")) ; ,
+        (goto-char (point-min))
+        (while (re-search-forward "~\n[\t ]*"   nil t)(replace-match "~ ")) ; ~
+        (goto-char (point-min))
+        (while (re-search-forward "=\n[\t ]*"   nil t)(replace-match "= ")) ; =
+        (goto-char (point-min))
+        (while (re-search-forward "+\n[\t ]*"   nil t)(replace-match "+ ")) ; +
+        (goto-char (point-min))
+        (while (re-search-forward "-\n[\t ]*"   nil t)(replace-match "- ")) ; -
+        (goto-char (point-min))
+        (while (re-search-forward "*\n[\t ]*"   nil t)(replace-match "* ")) ; *
+        (goto-char (point-min))
+        (while (re-search-forward "/\n[\t ]*"   nil t)(replace-match "/ ")) ; /
+        (goto-char (point-min))
+        (while (re-search-forward "&\n[\t ]*"   nil t)(replace-match "& ")) ; &
+        (goto-char (point-min))
+        (while (re-search-forward "|\n[\t ]*"   nil t)(replace-match "| ")) ; |
+        (goto-char (point-min))
+        (while (re-search-forward "(\n[\t ]*"   nil t)(replace-match "( ")) ; (
+        (goto-char (point-min))
+        (while (re-search-forward "\n[\t ]*)"   nil t)(replace-match ")" )) ; )
+        (goto-char (point-min))
+        (while (re-search-forward "\\[\n[\t ]*" nil t)(replace-match "[ ")) ; [
+        (goto-char (point-min))
+        (while (re-search-forward "\n[\t ]*\\]" nil t)(replace-match "]"))) ; ]
+      (R-format-code)
+      (if (= (buffer-size) old-bsize)
+          (message "Formatted R code (still %d bytes)" (buffer-size))
+        (message "Formatted R code (%d->%d bytes)" old-bsize (buffer-size)))))
   (defun R-header-to-roxy ()
     "Convert R function from Arni-style comment header to Roxygen format."
     (interactive "*")
-    (require 'drag-stuff)(goto-char (point-min))
-    (while (= (char-after (line-beginning-position 2)) ?#)(pull-line-down 1))
-    (kill-line -1)(insert "#' @export\n\n")(goto-char (point-min))(kill-line 4)
-    (goto-char (point-min))(while (re-search-forward "###" nil t)(replace-match "#'"))
-    (goto-char (point-min))(while (re-search-forward " +#$" nil t)(replace-match ""))
-    (goto-char (point-min))(while (re-search-forward "Purpose:  " nil t)(replace-match ""))
-    (goto-char (point-min))(while (re-search-forward "Args:    " nil t)(replace-match "@param"))
-    (goto-char (point-min))(while (re-search-forward "Notes:   " nil t)(replace-match "@note\n#'"))
-    (goto-char (point-min))(while (re-search-forward "Returns: " nil t)(replace-match "@return\n#'"))
-    (goto-char (point-min))(kill-new (buffer-substring-no-properties (point-min)(line-beginning-position 3)))
-    (yank)(goto-char (+ (point-min) 3))(titlecase-dwim))
+    (require 'drag-stuff)
+    (goto-char (point-min))
+    (while (= (char-after (line-beginning-position 2)) ?#)
+      (pull-line-down 1))
+    (kill-line -1)
+    (insert "#' @export\n\n")
+    (goto-char (point-min))
+    (kill-line 4)
+    (goto-char (point-min))
+    (while (re-search-forward "###" nil t)(replace-match "#'"))
+    (goto-char (point-min))
+    (while (re-search-forward " +#$" nil t)(replace-match ""))
+    (goto-char (point-min))
+    (while (re-search-forward "Purpose:  " nil t)(replace-match ""))
+    (goto-char (point-min))
+    (while (re-search-forward "Args:    "  nil t)(replace-match "@param"))
+    (goto-char (point-min))
+    (while (re-search-forward "Notes:   "  nil t)(replace-match "@note\n#'"))
+    (goto-char (point-min))
+    (while (re-search-forward "Returns: "  nil t)(replace-match "@return\n#'"))
+    (goto-char (point-min))
+    (kill-new (buffer-substring-no-properties (point-min)
+                                              (line-beginning-position 3)))
+    (yank)
+    (goto-char (+ (point-min) 3))
+    (titlecase-dwim))
   (defun R-template-general ()
     "Insert general R template."
     (interactive "*")
-    (goto-char (point-min))(if (search-forward "{" nil t)(progn (beginning-of-line)(backward-char))
-                             (progn (insert "temp <- function()\n{\n\n}\n")(backward-char 6)))(insert "
+    (goto-char (point-min))
+    (if (search-forward "{" nil t)
+        (progn (beginning-of-line)
+               (backward-char))
+      (progn (insert "temp <- function()\n{\n\n}\n")
+             (backward-char 6)))
+    (insert "
 ################################################################################
 ###                                                                            #
 ### Function:                                                                  #
@@ -4153,12 +4789,17 @@ This is first.
 ###                                                                            #
 ### Returns:                                                                   #
 ###                                                                            #
-################################################################################\
-")(goto-char (point-min))(search-forward ": ")(overwrite-mode t))
+################################################################################
+")
+    (delete-char 1)
+    (goto-char (point-min))
+    (search-forward ": ")
+    (overwrite-mode t))
   (defun R-template-roxygen ()
     "Insert Roxygen template."
     (interactive "*")
-    (goto-char (point-min))(insert "
+    (goto-char (point-min))
+    (insert "
 #' Title Case
 #'
 #' What the function does.
@@ -4170,7 +4811,10 @@ This is first.
 #'
 #' @export
 
-")(goto-char (point-min))(delete-char 1)(forward-char 3))
+")
+    (goto-char (point-min))
+    (delete-char 1)
+    (forward-char 3))
   (defun R-template-minimal ()
     "Insert minimal R template."
     (interactive "*")
@@ -4178,15 +4822,21 @@ This is first.
 {
 
 }
-")(forward-line -4))
+")
+    (forward-line -4))
   (defun R-outline ()
     "Navigate within R code using `outline-mode'."
     (interactive)
-    (outline-mode)(setq outline-regexp " *## [0-9]")(outline-mode)(outline-hide-body)
+    (outline-mode)
+    (setq outline-regexp " *## [0-9]")
+    (outline-mode)
+    (outline-hide-body)
     (setq outline-previous-mode '(R-mode))))
 (add-hook 'ess-mode-hook 'arni-ess-hook)
 (defun arni-Rd-hook ()
-  (message nil)(setq make-backup-files t)(setq save-abbrevs nil)
+  (message nil)
+  (setq make-backup-files t)
+  (setq save-abbrevs nil)
   (set-face-attribute 'font-lock-constant-face nil :weight 'bold :underline -)
   (local-set-key [f11]         'Rd-outline               )
   (local-set-key [?\C-c ?\C- ] 'Rd-table-sep             )
@@ -4200,61 +4850,90 @@ This is first.
     "Compile Rd file to HTML."
     (interactive)
     (save-buffer)
-    (compile (concat "R CMD Rdconv -t html -o " (file-name-sans-extension (buffer-name)) ".html " (buffer-name))))
+    (compile (concat "R CMD Rdconv -t html -o "
+                     (file-name-sans-extension (buffer-name)) ".html "
+                     (buffer-name))))
   (defun Rd-compile-latex ()
     "Compile Rd file to LaTeX."
     (interactive)
     (save-buffer)
-    (compile (concat "R CMD Rdconv -t latex -o " (file-name-sans-extension (buffer-name)) ".tex " (buffer-name))))
+    (compile (concat "R CMD Rdconv -t latex -o "
+                     (file-name-sans-extension (buffer-name)) ".tex "
+                     (buffer-name))))
   (defun Rd-fill-paragraph-forward ()
     "Justify and go to end of paragraph."
     (interactive "*")
-    (fill-paragraph nil)(clean-trails)(message nil)(forward-paragraph))
+    (fill-paragraph nil)
+    (clean-trails)
+    (message nil)
+    (forward-paragraph))
   (defun Rd-link ()
     "Insert \\code{\\link{}}."
-    (interactive "*")(insert "\\code{\\link{}}")(search-backward "}}"))
+    (interactive "*")
+    (insert "\\code{\\link{}}")
+    (search-backward "}}"))
   (defun Rd-outline ()
     "Navigate within .Rd file using `outline-mode'."
     (interactive)
-    (outline-mode)(setq outline-regexp "\\\\nam\\|\\\\....")(outline-mode)(outline-hide-sublevels 4)
+    (outline-mode)
+    (setq outline-regexp "\\\\nam\\|\\\\....")
+    (outline-mode)
+    (outline-hide-sublevels 4)
     (setq outline-previous-mode '(Rd-mode)))
   (defun Rd-table-sep ()
     "Insert \\tab"
-    (interactive "*")(insert " \\tab "))
+    (interactive "*")
+    (insert " \\tab "))
   (defun Rd-view-html ()
     "View HTML file with same prefix as current Rd file."
     (interactive)
-    (browse-url (concat (file-name-sans-extension (buffer-file-name)) ".html"))))
+    (browse-url (concat (file-name-sans-extension (buffer-file-name))
+                        ".html"))))
 (add-hook 'Rd-mode-hook 'arni-Rd-hook)
-(defun arni-Rnw-hook ()(message nil)(local-set-key [?\C-c ?\C-w] 'ess-swv-weave))
+(defun arni-Rnw-hook ()
+  (message nil)
+  (local-set-key [?\C-c ?\C-w] 'ess-swv-weave))
 (add-hook 'Rnw-mode-hook 'arni-Rnw-hook)
-(defun arni-roxy-hook ()(define-key ess-roxy-mode-map [?\C-c ?\C-o] 'ess-roxy-insert-newline)) ; [map]
+(defun arni-roxy-hook ()
+  (define-key ess-roxy-mode-map [?\C-c ?\C-o] 'ess-roxy-insert-newline)) ; [map]
 (add-hook 'ess-roxy-mode-hook 'arni-roxy-hook)
 (defun Rni ()
   "Start interactive R session."
   (interactive)
-  (R)(sleep-for 0.01)(comint-clear-window))
+  (R)
+  (sleep-for 0.01)
+  (comint-clear-window))
 ;;----------
 ;; 6.17 SQL
 ;;----------
 (defun arni-sql-hook ()
-  (setq make-backup-files t)(sql-set-product 'oracle)(setq indent-line-function 'indent-relative-definitely)
+  (setq make-backup-files t)
+  (sql-set-product 'oracle)
+  (setq indent-line-function 'indent-relative-definitely)
   (setq tab-stop-list '(4 8))
   (arni-colors)
   (set-face-attribute 'font-lock-builtin-face nil :foreground - :weight 'bold)
-  (set-face-attribute 'font-lock-keyword-face nil :weight 'bold              )
+  (set-face-attribute 'font-lock-keyword-face nil               :weight 'bold)
   (local-set-key [M-return] 'newline-and-indent)
-  (if (string-equal (buffer-name) "*SQL*")(sql-interactive-mode)))
+  (if (string-equal (buffer-name) "*SQL*")
+      (sql-interactive-mode)))
 (add-hook 'sql-mode-hook 'arni-sql-hook)
-(defun arni-sql-interactive-hook ()(add-to-list 'same-window-buffer-names "*SQL*")(setq indent-line-function 'ignore))
+(defun arni-sql-interactive-hook ()
+  (add-to-list 'same-window-buffer-names "*SQL*")
+  (setq indent-line-function 'ignore))
 (add-hook 'sql-interactive-mode-hook 'arni-sql-interactive-hook)
 (defun sql-oracle-default()
   "Start Oracle session as default user."
   (interactive)
-  (require 'sql)(setq sql-user "/")
-  (defalias 'sql-get-login 'ignore)(sql-oracle)(message nil)(sleep-for 0.4)
+  (require 'sql)
+  (setq sql-user "/")
+  (defalias 'sql-get-login 'ignore)
+  (sql-oracle)
+  (message nil)
+  (sleep-for 0.4)
   (comint-send-string sql-buffer
-                      "SET EMBED ON FEEDBACK OFF PAGESIZE 50000 PAUSE OFF SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
+                      "SET EMBED ON FEEDBACK OFF PAGESIZE 50000 PAUSE OFF \
+SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (comint-clear-window))
 ;;----------
 ;; 6.18 TMB
@@ -4268,28 +4947,32 @@ This is first.
   (set-face-attribute 'tmb-data-face          nil :foreground "sienna")
   (set-face-attribute 'tmb-parameter-face     nil :foreground "sienna")
   (set-face-attribute 'tmb-report-face        nil :foreground "sienna")
-  (local-unset-key [?\C-c ?\C-h]) ; override c++ hook to show an overview of keybindings
-  (local-set-key [f7]                'tmb-clean           )
-  (local-set-key [f8]                'tmb-compile         )
-  (local-set-key [f9]                'tmb-run             )
-  (local-set-key [f10]               'tmb-debug           )
-  (local-set-key [f11]               'tmb-open            )
-  (local-set-key [f12]               'tmb-template-mini   )
-  (local-set-key [?\C-c C-backspace] 'tmb-clean           ) ; show keybinding in menu
-  (local-set-key [?\C-c ?\C-a]       'tmb-run-any         )
-  (local-set-key [?\C-c ?\C-b]       'tmb-run             )
-  (local-set-key [?\C-c ?\C-c]       'tmb-compile         )
-  (local-set-key [?\C-c ?\C-d]       'tmb-debug           )
-  (local-set-key [?\C-c ?\C-l]       'tmb-show-compilation)
-  (local-set-key [?\C-c ?\C-m]       'tmb-make            ) ; show keybinding in menu
-  (local-set-key [?\C-c ?\C-v]       'tmb-run            ))
+  ;; Unset C-c C-h from c++ hook to show an overview of keybindings
+  (local-unset-key [?\C-c ?\C-h])
+  (local-set-key [f7]          'tmb-clean           )
+  (local-set-key [f8]          'tmb-compile         )
+  (local-set-key [f9]          'tmb-run             )
+  (local-set-key [f10]         'tmb-debug           )
+  (local-set-key [f11]         'tmb-open            )
+  (local-set-key [f12]         'tmb-template-mini   )
+  (local-set-key [?\C-c C-backspace] 'tmb-clean     ) ; show keybinding in menu
+  (local-set-key [?\C-c ?\C-a] 'tmb-run-any         )
+  (local-set-key [?\C-c ?\C-b] 'tmb-run             )
+  (local-set-key [?\C-c ?\C-c] 'tmb-compile         )
+  (local-set-key [?\C-c ?\C-d] 'tmb-debug           )
+  (local-set-key [?\C-c ?\C-l] 'tmb-show-compilation)
+  (local-set-key [?\C-c ?\C-m] 'tmb-make            ) ; show keybinding in menu
+  (local-set-key [?\C-c ?\C-v] 'tmb-run            ))
 (add-hook 'tmb-mode-hook 'arni-tmb-hook)
 ;;---------
 ;; 6.19 VB
 ;;---------
 (defun arni-visual-basic-hook ()
-  (abbrev-mode 0)(setq save-abbrevs nil)(setq visual-basic-mode-indent 2)(arni-colors))
-(set-face-attribute 'font-lock-function-name-face nil :foreground "brown4")
+  (abbrev-mode 0)
+  (setq save-abbrevs nil)
+  (setq visual-basic-mode-indent 2)
+  (arni-colors)
+  (set-face-attribute 'font-lock-function-name-face nil :foreground "brown4"))
 (add-hook 'visual-basic-mode-hook 'arni-visual-basic-hook)
 ;;==============================================================================
 ;;
@@ -4775,7 +5458,6 @@ This is first.
       (save-buffers-kill-emacs)))
   (defun kill-process-or-buffer ()
     "Stop process if current buffer has one, otherwise close current buffer."
-
     (interactive)
     (if (get-buffer-process (current-buffer)) ; active process in this buffer?
         (cond ((string-match "^\\*R" (buffer-name (current-buffer)))(ess-quit))
@@ -5908,13 +6590,16 @@ break
     (save-buffer)(org-html-export-to-html)(org-arni-keybindings))
   (defun org-insert-h1 ()
     "Insert heading of level 1."
-    (interactive "*")(beginning-of-line)(insert "* "))
+    (interactive "*")
+    (beginning-of-line)(insert "* "))
   (defun org-insert-h2 ()
     "Insert heading of level 2."
-    (interactive "*")(beginning-of-line)(insert "** "))
+    (interactive "*")
+    (beginning-of-line)(insert "** "))
   (defun org-insert-h3 ()
     "Insert heading of level 3."
-    (interactive "*")(beginning-of-line)(insert "*** "))
+    (interactive "*")
+    (beginning-of-line)(insert "*** "))
   (defun org-insert-h3-down ()
     "Insert heading of level 3 and move down."
     (interactive "*")
@@ -5925,7 +6610,8 @@ break
     (insert "#+begin_src R\n\n#+end_src R\n")(forward-line -2))
   (defun org-insert-title ()
     "Insert title."
-    (interactive "*")(insert "#+TITLE: "))
+    (interactive "*")
+    (insert "#+TITLE: "))
   (defun org-justify-down ()
     "Justify paragraph and move down."
     (interactive "*")
