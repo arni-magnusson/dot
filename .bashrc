@@ -7,14 +7,21 @@ export PATH="/opt/bin:$PATH"    # /opt/bin
 export PATH=".:$PATH"           # current dir
 
 # Shell
-export LS_COLORS='no=0:fi=0:di=34:ln=37:pi=37:so=37:do=37:bd=37:cd=37:or=37:ex=31'
+export LS_COLORS=\
+'no=0:fi=0:di=34:ln=37:pi=37:so=37:do=37:bd=37:cd=37:or=37:ex=31'
 export LS_OPTIONS='-F'
-if ls --color=auto                              &>/dev/null; then export LS_OPTIONS="$LS_OPTIONS --color=auto"; fi
-if ls --dereference-command-line-symlink-to-dir &>/dev/null; then export LS_OPTIONS="$LS_OPTIONS --dereference-command-line-symlink-to-dir"; fi
-if ls --group-directories-first                 &>/dev/null; then export LS_OPTIONS="$LS_OPTIONS --group-directories-first"; fi
-if ls --show-control-chars                      &>/dev/null; then export LS_OPTIONS="$LS_OPTIONS --show-control-chars"; fi
-if ls --time-style=+%e\ %b\ %Y\ %k:%M           &>/dev/null; then export LS_OPTIONS="$LS_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M"; fi
-export PROMPT_COMMAND='echo -ne "\e];/`if [[ $PWD == $HOME ]];then echo "~";else basename $PWD;fi`\a"'
+if ls --color=auto                              &>/dev/null; then
+  export LS_OPTIONS="$LS_OPTIONS --color=auto"; fi
+if ls --dereference-command-line-symlink-to-dir &>/dev/null; then
+  export LS_OPTIONS="$LS_OPTIONS --dereference-command-line-symlink-to-dir"; fi
+if ls --group-directories-first                 &>/dev/null; then
+  export LS_OPTIONS="$LS_OPTIONS --group-directories-first"; fi
+if ls --show-control-chars                      &>/dev/null; then
+  export LS_OPTIONS="$LS_OPTIONS --show-control-chars"; fi
+if ls --time-style=+%e\ %b\ %Y\ %k:%M           &>/dev/null;
+then export LS_OPTIONS="$LS_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M"; fi
+export PROMPT_COMMAND='echo -ne "\e];/\
+`if [[ $PWD == $HOME ]];then echo "~";else basename $PWD;fi`\a"'
 export PS1='\[\e[1;47;37m\]\h\[\e[0m\]\w $ '
 export SHELL=/bin/bash
 
@@ -28,7 +35,11 @@ export ADMB_HOME=~/admb
 
 # Program: emacs
 export EMACS_VERSION=25.3
-if [[ -d /opt/emacs/$EMACS_VERSION ]]; then export EDITOR="/opt/emacs/$EMACS_VERSION/bin/emacs -nw --no-site-file"; else export EDITOR="/usr/bin/emacs -nw --no-site-file"; fi
+if [[ -d /opt/emacs/$EMACS_VERSION ]]; then
+  export EDITOR="/opt/emacs/$EMACS_VERSION/bin/emacs -nw --no-site-file"
+else
+  export EDITOR="/usr/bin/emacs -nw --no-site-file"
+fi
 
 # Program: git
 export GIT_FORMAT="%Cred%h%Creset %ai %an - %Cblue %s"
@@ -62,7 +73,8 @@ alias ..='cd ..'
 alias a='alpine'
 alias add='git add'
 alias adstudio='~/bin/emacs -Q -mm -l ~/git/admb-project/adstudio/dot/.emacs'
-alias 'admb-ide'='~/bin/emacs -Q -mm -l ~/git/admb-project/admb/contrib/ide/dot/.emacs -f admb-mode'
+alias 'admb-ide'='~/bin/emacs -Q -mm \
+-l ~/git/admb-project/admb/contrib/ide/dot/.emacs -f admb-mode'
 alias benchmark='time'
 alias bin='chmod 700 ~/bin/*'
 alias br='git branch'
@@ -86,7 +98,8 @@ alias diff='colordiff'
 alias dir='ll'
 alias dock='sudo systemctl start docker'
 alias 'dock-off'='sudo systemctl stop docker'
-alias 'dropbox-rsync'='rsync -a --del ~/Dropbox/ArniColin/taf/stocks/ftp/ ~/Dropbox/Public/ftp/'
+alias 'dropbox-rsync'='rsync -a --del \
+~/Dropbox/ArniColin/taf/stocks/ftp/ ~/Dropbox/Public/ftp/'
 alias e='emacs'
 alias eman='emacs -nw -f man'
 alias eR='emacs -e "Rni"'
@@ -101,8 +114,10 @@ alias 'git-unset-sshaskpass'='unset SSH_ASKPASS'
 alias 'git-url'=url
 alias gr='grep -IinRs'
 alias grep='grep --color=auto'
-alias htmltidytree='find -iname "*\.html" -printf "\n\n\n*** %h/%f\n" -exec tidy -e -utf8 {} \;'
-alias htmltidytreeq='find -iname "*\.html" -printf "*** %h/%f\n" -exec tidy -e -utf8 -q {} \;'
+alias htmltidytree='find -iname "*\.html" \
+-printf "\n\n\n*** %h/%f\n" -exec tidy -e -utf8 {} \;'
+alias htmltidytreeq='find -iname "*\.html" \
+-printf "*** %h/%f\n" -exec tidy -e -utf8 -q {} \;'
 alias iconvert='convert'
 alias ifind='find -iname'
 alias 'ip-address'='dig +short myip.opendns.com @resolver1.opendns.com'
@@ -165,8 +180,11 @@ alias t='emacs *.tex'
 alias tag='git tag'
 alias 'tag-full'='git show -s --format="%d $GIT_FORMAT" `git tag`'
 alias take='sudo chown -R arnima:haf'
-alias tmb='~/bin/emacs -Q -mm --eval "(setq initial-scratch-message nil)" --eval "(add-to-list '\''load-path \"~/emacs/lisp/ess/lisp\")" -l ~/emacs/lisp/tmb/tmb.el -f tmb-mode'
-alias 'tmb-ide'='~/bin/emacs -Q -mm -l ~/core/verk/tmb/ide/dot/.emacs -f tmb-mode'
+alias tmb='~/bin/emacs -Q -mm --eval "(setq initial-scratch-message nil)" \
+--eval "(add-to-list '\''load-path \"~/emacs/lisp/ess/lisp\")" \
+-l ~/emacs/lisp/tmb/tmb.el -f tmb-mode'
+alias 'tmb-ide'='~/bin/emacs -Q -mm \
+-l ~/core/verk/tmb/ide/dot/.emacs -f tmb-mode'
 alias topme='top -u $USER'
 alias u='cd ..'
 alias u2d='unix2dos'
@@ -184,8 +202,3 @@ if [[ $- =~ i ]]; then
     bind '"\e ":call-last-kbd-macro'
     bind '"\ei":overwrite-mode'
 fi
-
-################################################################################
-## Temporary stuff
-alias ices='google-chrome https://community.ices.dk/TrainingCourses/tcmdfsa/SitePages/HomePage.aspx'
-alias ref='psa | grep -v grep | grep "ref7[^ ]*" | sed 's/.*ref/ref/' | sort | grep "[^ ]*txt"'
