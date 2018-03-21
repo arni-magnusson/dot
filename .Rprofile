@@ -305,6 +305,7 @@
   autoload("package_dependencies",  "tools") # which local pkgs X depends on
   autoload("Rdindex",               "tools") # write index of functions
   autoload("showNonASCII",          "tools") # special characters
+  autoload("toTitleCase",           "tools") # title case
   autoload("write_PACKAGES",        "tools") # create repository
 
   ## Export table
