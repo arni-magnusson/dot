@@ -11,3 +11,5 @@
 	tool = kompare
 [color]
 	ui = auto
+[core]
+	pager = /usr/share/doc/git-1.8.3.1/contrib/diff-highlight/diff-highlight
