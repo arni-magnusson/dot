@@ -4551,8 +4551,6 @@ with spaces."
 (defun arni-ess-hook ()
   (if (string-equal (buffer-name) "*R*")
       (inferior-ess-mode))
-  (require 'which-func)
-  (add-to-list 'which-func-modes 'ess-mode)
   (setq make-backup-files t)
   (setq ess-eval-visibly-p nil)
   (ess-toggle-S-assign nil)
