@@ -34,7 +34,7 @@ export LC_NUMERIC=en_US.UTF-8
 export ADMB_HOME=~/admb
 
 # Program: emacs
-export EMACS_VERSION=25.3
+export EMACS_VERSION=26.1
 if [[ -d /opt/emacs/$EMACS_VERSION ]]; then
   export EDITOR="/opt/emacs/$EMACS_VERSION/bin/emacs -nw --no-site-file"
 else
@@ -140,6 +140,7 @@ alias llr="ls -lR $LS_OPTIONS"
 alias llra="ls -AlR $LS_OPTIONS"
 alias lls="ls -l $LS_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M:%S"
 alias llt='ll --time-style="+%Y-%m-%d %H:%M:%S"'
+# ll -t sorts by time (newest first), so lls -t and llt -t are useful
 alias log='git log --abbrev-commit --format=oneline'
 alias 'log-full'='git log --format="$GIT_FORMAT"'
 alias longprompt="export PS1='\[\e[1;47;37m\]\h\[\e[0m\]\w $ '"
@@ -174,9 +175,9 @@ alias shortprompt="export PS1='$ '"
 alias show='git show -s --abbrev-commit --format=oneline'
 alias 'show-full'='git show -s --format="$GIT_FORMAT"'
 alias sqlitestudio='/opt/sqlitestudio/sqlitestudio'
+alias stash='git stash'
 alias stk='cd /opt/stk/0.9.2; run_game.sh'
 alias svnADMB='echo "svn co svn+ssh://admb-project.org/trunk admb-trunk"'
-alias t='emacs *.tex'
 alias tag='git tag'
 alias 'tag-full'='git show -s --format="%d $GIT_FORMAT" `git tag`'
 alias take='sudo chown -R arnima:haf'
