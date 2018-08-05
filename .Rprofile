@@ -45,6 +45,9 @@
   autoload("mcmc",          "coda") # create mcmc object
   autoload("traceplot",     "coda") # diagnostics: convergence
 
+  ## Data table
+  autoload("data.table", "data.table") # data table
+
   ## Developer tools
   autoload("build",          "devtools") # build
   autoload("check",          "devtools") # build and check
@@ -72,7 +75,9 @@
   autoload("inv.logit",   "gtools") # inv.logit(eta) = binomial()$linkinv(eta)
 
   ## ggplot
-  autoload("ggplot", "ggplot2") # ggplot
+  autoload("ggplot", "ggplot2") # plot
+  autoload("ggsave", "ggplot2") # export
+  autoload("qplot",  "ggplot2") # plot
 
   ## glmmADMB
   autoload("glmmadmb", "glmmADMB") # glmm
@@ -115,7 +120,8 @@
   autoload("getSurveyYearQuarterList", "icesDatras") # survey info: quarters
 
   ## ICES Stock Assessment Graphs
-  autoload("findKey",                     "icesSAG") # look up stock-year key
+  autoload("findKey",                     "icesSAG") # deprecated
+  autoload("findAssessmentKey",           "icesSAG") # look up stock-year key
   autoload("getFishStockReferencePoints", "icesSAG") # Blim, Bpa, Fmsy, Btrigger
   autoload("getListStocks",               "icesSAG") # key, species, region
   autoload("getSAG",                      "icesSAG") # wrapper for get*functions
@@ -143,6 +149,7 @@
   autoload("makeAll",      "icesTAF") # run TAF scripts as needed
   autoload("mkdir",        "icesTAF") # create directory
   autoload("msg",          "icesTAF") # show message
+  autoload("plus",         "icesTAF") # rename plus group column
   autoload("read.dls",     "icesTAF") # read DLS output
   autoload("read.taf",     "icesTAF") # read TAF table
   autoload("rnd",          "icesTAF") # round column values
@@ -172,7 +179,8 @@
   autoload("getCodeTypeList", "icesVocab") # available codes
 
   ## Knitr
-  autoload("knit", "knitr") # literate data analysis
+  autoload("knit", "knitr") # compile Rmd
+  autoload("knit", "spin")  # compile R
 
   ## Lattice graphics
   autoload("barchart",       "lattice") # 1d bar plot
@@ -227,9 +235,10 @@
   autoload("grad",    "numDeriv") # gradient
 
   ## Parallel processing
-  autoload("mclapply", "parallel") # parallel apply (list)
-  autoload("mcmapply", "parallel") # parallel apply (multi args)
-  autoload("pvec",     "parallel") # parallel apply (vector)
+  autoload("detectCores", "parallel") # count available cores
+  autoload("mclapply",    "parallel") # parallel apply (list)
+  autoload("mcmapply",    "parallel") # parallel apply (multi args)
+  autoload("pvec",        "parallel") # parallel apply (vector)
 
   ## MCMC
   autoload("plotAuto",  "plotMCMC") # autocorrelation
@@ -246,6 +255,10 @@
 
   ## Reshape
   autoload("melt", "reshape") # unxtab
+
+  ## Gadget
+  autoload("gadget.fit",       "Rgadget") # get model fit
+  autoload("gadget.iterative", "Rgadget") # run model
 
   ## R markdown
   autoload("render", "rmarkdown") # Rmd -> HTML
