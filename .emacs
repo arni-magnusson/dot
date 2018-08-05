@@ -673,7 +673,7 @@
 (global-set-key [?\C-c ?k]    'markdown-mode            )
 (global-set-key [?\C-c ?l]    'TeX-latex-mode           )
 (global-set-key [?\C-c ?m]    'makefile-mode            )
-(global-set-key [?\C-c ?n]    'linum-mode               )
+(global-set-key [?\C-c ?n]    'display-line-numbers-mode) ; emacs 25: linum-mode
 (global-set-key [?\C-c ?o]    'org-mode                 )
 (global-set-key [?\C-c ?p]    'ps-mode                  )
 (global-set-key [?\C-c ?q]    'sql-mode                 )
