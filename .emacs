@@ -123,6 +123,7 @@
       (set-face-attribute 'isearch-fail nil :background "tomato")
       (set-face-attribute 'lazy-highlight nil :background "palegoldenrod")
       (set-face-attribute 'minibuffer-prompt nil :foreground -) ; M-x
+      (set-face-attribute 'region nil :background "lightskyblue")
       (set-face-attribute 'show-paren-match nil :background "chartreuse")
       (set-face-attribute 'show-paren-mismatch nil :background "red")
       (set-face-attribute 'trailing-whitespace nil :background "gray95"))))
@@ -2016,6 +2017,16 @@ Clear buffer, paste, untabify, unindent, use single spaces, delete blank lines."
   (if defining-kbd-macro
       (kmacro-end-macro nil)
     (kmacro-start-macro nil)))
+(defun simplify-vertical-space ()
+  "Replace multiple empty lines to single empty lines."
+  (interactive "*")
+  (let ((count 0))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "\n\n\n+" nil t)
+        (replace-match "\n\n")
+        (setq count (+ count 1))))
+    (message "Converted %d vertical spaces." count)))
 (defun sort-lines-caps-first (beg end)
   "Sort lines in region, with capital letters first."
   (interactive "*r")
@@ -2023,7 +2034,7 @@ Clear buffer, paste, untabify, unindent, use single spaces, delete blank lines."
     (sort-lines nil beg end)))
 (defun tab-to-csv ()
   "Replace all tabs with commas to create a CSV file."
-  (interactive)
+  (interactive "*")
   (let ((count 0))
     (save-excursion
       (goto-char (point-min))
@@ -4573,6 +4584,7 @@ with spaces."
   (local-unset-key [?_]      ) ; reactivate self-insert-command
   (local-unset-key [?,]      ) ; reactivate self-insert-command
   (local-set-key [f9]                'ess-eval-region-or-line-and-step)
+  (local-set-key [S-f9]              'ess-save-buffer-and-eval        )
   (local-set-key [f10]               'R-format-code                   )
   (local-set-key [S-f10]             'R-format-code-longline-nocomment)
   (local-set-key [f11]               'R-outline                       )
@@ -7365,8 +7377,9 @@ to the shortest `outline-regexp'.")
   (font-lock-mode 0)
   (arni-colors)
   (local-unset-key [?\M-s]) ; reactivate highlight-and-count-regexp
-  (local-set-key [?\t] 'indent-relative)
-  (local-set-key [f11] 'text-outline   )
+  (local-set-key [?\t]      'indent-relative        )
+  (local-set-key [f11]      'text-outline           )
+  (local-set-key [?\C-x ?m] 'simplify-vertical-space)
   (defun text-outline ()
     "Navigate within NEWS file using `outline-mode'."
     (interactive)
