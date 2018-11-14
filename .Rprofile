@@ -7,9 +7,10 @@
   options(continue="  ")
   options(help_type="html")
   options(repos=c(
+            ## https may not work on a VM
             "http://mirrors.dotsrc.org/cran",
             ## "http://cran.uib.no",
-            ## "http://cran.hafro.is", # https does not work on a VM
+            ## "http://cran.hafro.is",
             ## "http://cran.r-project.org",
             ## "http://r-forge.r-project.org",
             ## "http://www.stats.ox.ac.uk/pub/RWin",
@@ -49,11 +50,8 @@
   autoload("data.table", "data.table") # data table
 
   ## Developer tools
-  autoload("build",          "devtools") # build
-  autoload("check",          "devtools") # build and check
-  autoload("document",       "devtools") # roxygenize
-  autoload("install_github", "devtools") # install package
-  autoload("lint",           "devtools") # check style
+  autoload("check",    "devtools") # call rcmdcheck
+  autoload("document", "devtools") # call roxygenize
 
   ## Correlation plot
   autoload("ellipse",  "ellipse") # 2d confidence region
@@ -159,12 +157,14 @@
   autoload("taf.blue",     "icesTAF") # TAF colors
   autoload("taf.dark",     "icesTAF") # TAF colors
   autoload("taf.green",    "icesTAF") # TAF colors
+  autoload("taf.install",  "icesTAF") # install into TAF library
+  autoload("taf.library",  "icesTAF") # enable TAF library
   autoload("taf.light",    "icesTAF") # TAF colors
   autoload("taf.orange",   "icesTAF") # TAF colors
+  autoload("taf.png",      "icesTAF") # open graphics device
   autoload("taf.skeleton", "icesTAF") # create TAF template
   autoload("taf2long",     "icesTAF") # TAF -> long
   autoload("taf2xtab",     "icesTAF") # TAF -> crosstab
-  autoload("tafpng",       "icesTAF") # open graphics device
   autoload("tt",           "icesTAF") # transpose
   autoload("unix2dos",     "icesTAF") # convert line endings
   autoload("upload",       "icesTAF") # upload file to database
@@ -197,6 +197,9 @@
   autoload("trellis.device", "lattice") # device
   autoload("wireframe",      "lattice") # 3d surface
   autoload("xyplot",         "lattice") # 2d scatterplot
+
+  ## Check style
+  autoload("lint", "lintr") # check style
 
   ## Mixed effects
   autoload("glmer",      "lme4") # generalized linear mixed effects
@@ -240,6 +243,9 @@
   autoload("mcmapply",    "parallel") # parallel apply (multi args)
   autoload("pvec",        "parallel") # parallel apply (vector)
 
+  ## Build packages
+  autoload("build", "pkgbuild") # build
+
   ## MCMC
   autoload("plotAuto",  "plotMCMC") # autocorrelation
   autoload("plotCumu",  "plotMCMC") # cumulative quantiles
@@ -252,6 +258,12 @@
   autoload("conf2d",   "r2d2") # bivariate confint
   autoload("freq2d",   "r2d2") # bivariate frequency
   autoload("shrink2d", "r2d2") # bivariate confset
+
+  ## Check package
+  autoload("rcmdcheck", "rcmdcheck") # build and check
+
+  ## Install from repositories
+  autoload("install_github", "remotes") # install package
 
   ## Reshape
   autoload("melt", "reshape") # unxtab
@@ -291,6 +303,9 @@
   autoload("x.saithe",    "scape") # assessment
   autoload("x.sbw",       "scape") # assessment
 
+  ## Session info
+  autoload("session_info", "sessioninfo") # session info
+
   ## Martin Maechler's toolbox
   autoload("primes",    "sfsmisc") # prime numbers
   autoload("factorize", "sfsmisc") # factorize into prime numbers
@@ -327,8 +342,7 @@
 
 .Last <- function()
 {
-  ## Set directory
-  setwd(if(.Platform$OS.type=="windows") "c:/home/r" else path.expand("~/r"))
+  setwd(if(dir.exists("c:/home/r")) "c:/home/r" else path.expand("~/r"))
 
   ## Backup user workspace
   if(file.exists(".RData"))
