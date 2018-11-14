@@ -189,6 +189,8 @@ alias 'tmb-ide'='~/bin/emacs -Q -mm \
 alias topme='top -u $USER'
 alias u='cd ..'
 alias u2d='unix2dos'
+alias user3='echo \
+https://www.stockassessment.org/datadisk/stockassessment/userdirs/user3/'
 alias utf='export LANG=en_US.UTF-8'
 alias uu='cd ../..'
 alias v='sudo vpnc haf'
