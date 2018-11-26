@@ -98,8 +98,10 @@ alias diff='colordiff'
 alias dir='ll'
 alias dock='sudo systemctl start docker'
 alias 'dock-off'='sudo systemctl stop docker'
-alias 'dropbox-rsync'='rsync -a --del \
-~/Dropbox/ArniColin/taf/stocks/ftp/ ~/Dropbox/Public/ftp/'
+alias dropbox='docker exec -it dropbox dropbox'
+alias 'dropbox-start'='docker run -d --restart=always --name=dropbox \
+-v /home/arnima/Dropbox:/dbox/Dropbox -v /home/arnima/.dropbox:/dbox/.dropbox \
+-e DBOX_UID=3890 -e DBOX_GID=4000 janeczku/dropbox'
 alias e='emacs'
 alias eman='emacs -nw -f man'
 alias eR='emacs -e "Rni"'
@@ -201,7 +203,8 @@ alias x='exit'
 
 # Keybindings (only in interactive shell, to avoid login warnings)
 if [[ $- =~ i ]]; then
-    bind '"\C- ":dabbrev-expand'
+    # The C-SPC binding messes up Dolphin terminal prompt
+    # bind '"\C- ":dabbrev-expand'
     bind '"\e ":call-last-kbd-macro'
     bind '"\ei":overwrite-mode'
 fi
