@@ -27,14 +27,20 @@
   else
   {
     options(browser="google-chrome")
+    ## options(browser="chromium-browser --incognito")
+    ## options(browser="firefox")
     options(editor=paste0("'/opt/emacs/", Sys.getenv("EMACS_VERSION"),
                           "/bin/emacs --no-site-file'"))
     options(width=100)
   }
 
   ## Area plot
-  autoload("areaplot",      "areaplot") # stacked areas
-  autoload("confplot",      "areaplot") # confidence bands
+  autoload("areaplot", "areaplot") # stacked areas
+  autoload("confplot", "areaplot") # confidence bands
+
+  ## BibTeX
+  autoload("read.bib",  "bibtex")
+  autoload("write.bib", "bibtex")
 
   ## MCMC diagnostics
   autoload("autocorr",      "coda") # autocorrelation
@@ -103,9 +109,11 @@
   autoload("Fpa",       "icesAdvice") # Fpa from Flim
   autoload("icesRound", "icesAdvice") # rounding method
   autoload("mohn",      "icesAdvice") # retro bias
+  autoload("read.dls",  "icesAdvice") # read DLS output
   autoload("shake",     "icesAdvice") # retro example
   autoload("sigmaCI",   "icesAdvice") # sigma from confint
   autoload("sigmaPA",   "icesAdvice") # sigma from refpts
+  autoload("write.dls", "icesAdvice") # write DLS output
 
   ## ICES DATRAS web service
   autoload("getCAdata",                "icesDatras") # age, weight, maturity
@@ -148,7 +156,6 @@
   autoload("mkdir",        "icesTAF") # create directory
   autoload("msg",          "icesTAF") # show message
   autoload("plus",         "icesTAF") # rename plus group column
-  autoload("read.dls",     "icesTAF") # read DLS output
   autoload("read.taf",     "icesTAF") # read TAF table
   autoload("rnd",          "icesTAF") # round column values
   autoload("sourceAll",    "icesTAF") # run all TAF scripts
@@ -157,7 +164,6 @@
   autoload("taf.blue",     "icesTAF") # TAF colors
   autoload("taf.dark",     "icesTAF") # TAF colors
   autoload("taf.green",    "icesTAF") # TAF colors
-  autoload("taf.install",  "icesTAF") # install into TAF library
   autoload("taf.library",  "icesTAF") # enable TAF library
   autoload("taf.light",    "icesTAF") # TAF colors
   autoload("taf.orange",   "icesTAF") # TAF colors
@@ -168,7 +174,6 @@
   autoload("tt",           "icesTAF") # transpose
   autoload("unix2dos",     "icesTAF") # convert line endings
   autoload("upload",       "icesTAF") # upload file to database
-  autoload("write.dls",    "icesTAF") # write DLS output
   autoload("write.taf",    "icesTAF") # write TAF table
   autoload("xtab2taf",     "icesTAF") # crosstab -> TAF
 
