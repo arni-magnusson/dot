@@ -2280,8 +2280,8 @@ which doesn't compile."
   (local-set-key [f12]   'sh-template                              )
   (local-set-key [S-f12] 'sh-template-mini                         )
   (local-set-key [?\C-m] 'sh-indent-newline-indent-or-delete-region) ; return
-  (local-set-key [?\C-c ?\C-c] 'sh-eval-buffer                       ) ; sh-case
-  (local-set-key [?\C-c ?\C-v] 'sh-eval-buffer                       )
+  (local-set-key [?\C-c ?\C-c] 'sh-eval-buffer                     ) ; sh-case
+  (local-set-key [?\C-c ?\C-v] 'sh-eval-buffer                     )
   (defun sh-eval-buffer ()
     "Evaluate commands in buffer in inferior shell.
 See also `sh-send-line-or-region-and-step'."
@@ -3581,6 +3581,17 @@ echo.
 (defvar LaTeX-icelandic-quotes nil
   "Non-nil if LaTeX quotation marks are ,,Icelandic`` style.
 See `LaTeX-toggle-quotes'.")
+(defun arni-bibtex-hook ()
+  (set-face-attribute 'font-lock-variable-name-face nil :foreground "brown4")
+  (local-unset-key [?\t]     ) ; reactivate indent-or-complete
+  (local-unset-key [?\C-\M-a]) ; reactivate goto-non-ascii
+  (local-unset-key [?\C-\M-e]) ; reactivate query-replace-regexp
+  (local-set-key [?\C-o] 'bibtex-open-line) ; `open-line' is erratic in BibTeX
+  (defun bibtex-open-line ()
+    (interactive "*")
+    (insert "\n")
+    (backward-char)))
+(add-hook 'bibtex-mode-hook 'arni-bibtex-hook)
 (defun arni-LaTeX-hook ()
   (setq make-backup-files t)
   (setq indent-line-function 'LaTeX-indent-line)
