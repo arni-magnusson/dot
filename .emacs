@@ -1166,13 +1166,15 @@ See also `highlight-and-count-regexp'."
 (defun pos-at-beginning-of-line (&optional n)
   "Return the position at beginning of line N.
 See also `line-beginning-position'."
-  (save-excursion (goto-char (point-min))
-                  (line-beginning-position n)))
+  (save-excursion
+    (goto-char (point-min))
+    (line-beginning-position n)))
 (defun pos-at-end-of-line (&optional n)
   "Return the position at end of line N.
 See also `line-end-position'."
-  (save-excursion (goto-char (point-min))
-                  (line-end-position n)))
+  (save-excursion
+    (goto-char (point-min))
+    (line-end-position n)))
 (defun pull-line-down (&optional n)
   "Pull line down N lines."
   (let ((auto-fill-function nil))
@@ -1624,16 +1626,17 @@ anim id est laborum."))
   "Delete all blank lines."
   (interactive "*")
   (let ((count 0))
-    (save-excursion (goto-char (point-min))
-                    (while (search-forward "\n\n" nil t)
-                      (goto-char (point-min))
-                      (while (search-forward "\n\n" nil t)
-                        (replace-match "\n")
-                        (setq count (+ count 1)))
-                      (goto-char (point-min)))
-                    (if (= (char-after) ?\n)
-                        (progn (delete-char 1)
-                               (setq count (+ count 1)))))
+    (save-excursion
+      (goto-char (point-min))
+      (while (search-forward "\n\n" nil t)
+        (goto-char (point-min))
+        (while (search-forward "\n\n" nil t)
+          (replace-match "\n")
+          (setq count (+ count 1)))
+        (goto-char (point-min)))
+      (if (= (char-after) ?\n)
+          (progn (delete-char 1)
+                 (setq count (+ count 1)))))
     (message "Deleted %d blank lines" count)))
 (defalias 'clean-trails 'delete-trailing-spc-tab-m)
 (defun delete-trailing-spc-tab-m ()
@@ -1662,7 +1665,8 @@ Unlike `delete-trailing-whitespace', deletes ^M in `lisp-mode'."
 (defun fill-buffer ()
   "Fill all paragraphs."
   (interactive "*")
-  (save-excursion (fill-region (point-min)(point-max)))
+  (save-excursion
+    (fill-region (point-min)(point-max)))
   (message "Filled buffer to %d columns" fill-column))
 (defun toggle-tab-function ()
   "Toggle whether TAB does `insert-tab-char' or `indent-or-complete'."
@@ -1698,8 +1702,9 @@ Unlike `delete-trailing-whitespace', deletes ^M in `lisp-mode'."
 Unlike `indent-region',  also indent the first half-marked line."
   (interactive "*")
   (let ((end (region-end)))
-    (save-excursion (goto-char (region-beginning))
-                    (indent-region (line-beginning-position) end nil))))
+    (save-excursion
+      (goto-char (region-beginning))
+      (indent-region (line-beginning-position) end nil))))
 ;; The following alias is better than
 ;; `indent-relative' with `indent-according-to-mode'
 (defalias 'indent-relative-definitely 'indent-relative)
@@ -1779,8 +1784,9 @@ Unlike `indent-region',  also indent the first half-marked line."
   "Unindent region, removing all whitespace at beginning of line."
   (interactive "*")
   (let ((end (region-end)))
-    (save-excursion (goto-char (region-beginning))
-                    (indent-rigidly (line-beginning-position) end -1000))))
+    (save-excursion
+      (goto-char (region-beginning))
+      (indent-rigidly (line-beginning-position) end -1000))))
 (defun unindent-buffer ()
   "Unindent all lines."
   (interactive "*")
@@ -2069,8 +2075,12 @@ which doesn't compile."
   (interactive "*")
   (if (use-region-p)
       (uncomment-region
-       (save-excursion (goto-char (region-beginning))(line-beginning-position))
-       (save-excursion (goto-char (region-end))(line-end-position)))
+       (save-excursion
+         (goto-char (region-beginning))
+         (line-beginning-position))
+       (save-excursion
+         (goto-char (region-end))
+         (line-end-position)))
     (uncomment-region (line-beginning-position)(line-end-position))))
 (defun uncomment-then-up (&optional n)
   "Uncomment line/region and go to previous line, N times."
@@ -2456,10 +2466,11 @@ shift $((OPTIND-1))
     (let ((_CLASS_H (concat "_"
                             (upcase (file-name-sans-extension (buffer-name)))
                             "_H")))
-      (save-excursion (goto-char (point-min))
-                      (insert "#ifndef " _CLASS_H "\n#define " _CLASS_H "\n")
-                      (goto-line-lisp (line-number-at-pos (point-max)))
-                      (insert "\n#endif // " _CLASS_H "\n"))))
+      (save-excursion
+        (goto-char (point-min))
+        (insert "#ifndef " _CLASS_H "\n#define " _CLASS_H "\n")
+        (goto-line-lisp (line-number-at-pos (point-max)))
+        (insert "\n#endif // " _CLASS_H "\n"))))
   (defun cpp-include ()
     "Insert #include <>."
     (interactive "*")
@@ -3573,9 +3584,10 @@ echo.
     (interactive)
     (let ((resize-mini-windows nil)
           (java-class nil)) ; will look for java-class in source code
-      (save-excursion (goto-char (point-min))
-                      (search-forward "class " nil t)
-                      (setq java-class (current-word)))
+      (save-excursion
+        (goto-char (point-min))
+        (search-forward "class " nil t)
+        (setq java-class (current-word)))
       (if (one-window-p)(split-window-right))
       (shell-command (concat "java " java-class)))))
 (add-hook 'java-mode-hook 'arni-java-hook)
@@ -4684,8 +4696,9 @@ or \\code{\\link{}} if ARG is non-nil."
   (defun ess-save-buffer-and-eval ()
     "Save buffer and evaluate."
     (interactive)
-    (save-excursion (if (buffer-file-name)(save-buffer))
-                    (ess-eval-buffer nil)))
+    (save-excursion
+      (if (buffer-file-name)(save-buffer))
+      (ess-eval-buffer nil)))
   (defun R-format-code ()
     "Format R in Arni style."
     (interactive "*")
@@ -5226,8 +5239,9 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (defun Buffer-menu-unmark-all ()
     "Unmark all buffers."
     (interactive)
-    (save-excursion (Buffer-menu-top)
-                    (while (not (eobp))(Buffer-menu-unmark))))
+    (save-excursion
+      (Buffer-menu-top)
+      (while (not (eobp))(Buffer-menu-unmark))))
   (defun Buffer-menu-unmark-down ()
     "Unmark and move down."
     (interactive)
