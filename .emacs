@@ -2010,7 +2010,7 @@ Clear buffer, paste, untabify, unindent, use single spaces, delete blank lines."
     (while (search-forward "\u001b[34m " nil t)(replace-match ""))))
 (defun google-decode-url ()
   "Convert Google URL to plain URL and copy line to clipboard."
-  (interactive)
+  (interactive "*")
   (url-unhex-region (line-beginning-position)(line-end-position))
   ;; Remove head and tail if "google" in url
   (if (string-match "google"
@@ -3339,7 +3339,7 @@ echo.
   (defun html-css-inline ()
     "Insert inline CSS block."
     (interactive "*")
-    (insert "<style>\n  body {margin-left:20%; margin-right:20%}\n</style>\n")
+    (insert "<style>\n  body {margin:2%; max-width:80ex}\n</style>\n")
     (search-backward "{"))
   (defun html-css-link ()
     "Link external CSS stylesheet."
@@ -3492,7 +3492,7 @@ echo.
 <meta charset=\"utf-8\">
 <title></title>
 <style>
-  body {margin-left:20%; margin-right:20%}
+  body {margin:2%; max-width:80ex}
 </style>
 <body>
 
@@ -4601,7 +4601,7 @@ with spaces."
   (setq ess-brace-offset -2)
   (setq ess-indent-offset 2)
   (add-to-list 'safe-local-variable-values '(ess-indent-offset . 4))
-  (font-lock-add-keywords nil '(("tafpng(\"\\(\\w+\\)"
+  (font-lock-add-keywords nil '(("taf\\.png(\"\\(.*\\)\""
                                  (1 font-lock-builtin-face t))))
   (set-face-attribute 'font-lock-constant-face
                       nil :underline - ) ; <-, library, source, [1] output
@@ -6457,10 +6457,11 @@ See `dired-toggle-dot-files'.")
              (local-set-key [M-right] 'highlight-changes-rotate-faces   )
              (local-set-key [M-up]    'highlight-changes-previous-change)
              (local-set-key [M-down]  'highlight-changes-next-change    )
-             (set-face-attribute 'highlight-changes-face
+             (set-face-attribute 'highlight-changes
                                  nil :background "gray70" :foreground - )
-             (set-face-attribute 'highlight-changes-delete-face
-                                 nil :background "gray70" :foreground - )
+             (set-face-attribute 'highlight-changes-delete
+                                 nil :background "gray70" :foreground -
+                                 :underline nil)
              (set-face-attribute 'highlight-changes-1
                                  nil :background "gray77" :foreground - )
              (set-face-attribute 'highlight-changes-2
