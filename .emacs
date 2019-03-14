@@ -476,9 +476,9 @@
 ;; Windows
 ;;                                                DEL
 ;; KDE           d      k
-;; Emacs      a   e    j   n p rs      z05   -=     ,.
+;; Emacs      a   e g  j   n p rs      z05   -=     ,.
 ;;            SPC     RET      END PGUP PGDN
-;; Available    c   ghi  l  o q  tuvwxy 1..9`
+;; Available    c    hi  l  o q  tuvwxy 1..9`
 ;;                TAB     HOME               BKSP     ESC
 ;;------------------------------------------------------------------------------
 ;; C-c
@@ -497,9 +497,9 @@
 ;; Don't use  a                 s    x
 ;; Default     b d      k  no  r   vw   0..9       \
 ;;                                           BKSP     ESC
-;; Custom       c  fghij lm  p   tu   y      -= ];' ,./          )
+;; Custom       c  fghij lm  p   tu   y      -=[ ;' ,./          )
 ;;            SPC TAB RET
-;; Available      e           q        z    `  [
+;; Available      e           q        z    `   ]
 ;;                        HOME END PGUP PGDN      DEL
 ;;------------------------------------------------------------------------------
 ;; C-x C
@@ -698,8 +698,7 @@
 (global-set-key [?\C-x ?-] 'insert-en-dash) ;shrink-window-if-larger-than-buffer
 (global-set-key [?\C-x ?=]    'duplicate                ) ; what-cursor-position
 (global-set-key [?\C-x ?+]    'split-window-grid        ) ; balance-windows
-(global-set-key [?\C-x ?\[]   'up-list                  ) ; backward-page
-(global-set-key [?\C-x ?\]]   'down-list                ) ; forward-page
+(global-set-key [?\C-x ?\[]   'git-log-clean            ) ; backward-page
 (global-set-key [?\C-x ?\\]   'toggle-enable-multibyte-characters)
 (global-set-key [?\C-x ?']    'toggle-red-special       ) ; expand-abbrev
 (global-set-key [?\C-x ?\;]   'set-fill-column          ) ; comment-set-column
@@ -797,6 +796,7 @@
 (global-set-key [?\C-\M-.]  'forward-paragraph       ) ; find-tag-regexp
 (global-set-key [?\C-\M-a]  'goto-non-ascii          ) ; beginning-of-defun
 (global-set-key [?\C-\M-e]  'query-replace-regexp    ) ; end-of-defun
+(global-set-key [?\C-\M-g]  'goto-char               )
 (global-set-key [?\C-\M-j]  'join-line-nospace       ) ; indent-new-comment-line
 (global-set-key [?\C-\M-n]  'pull-line-or-region-down) ; forward-list
 (global-set-key [?\C-\M-p]  'pull-line-or-region-up  ) ; backward-list
@@ -1992,6 +1992,16 @@ Clear buffer, paste, untabify, unindent, use single spaces, delete blank lines."
       (downcase-region (point)(mark))
     (downcase-word n)))
 (defalias 'find-duplicate-word 'the-the)
+(defun git-log-clean ()
+  "Clean up output from git log, e.g. from GitHub."
+  (interactive "*")
+  (save-excursion
+    (goto-char (point-min))
+    (while (search-forward "\u001b[31m" nil t)(replace-match ""))
+    (goto-char (point-min))
+    (while (search-forward "\u001b[m" nil t)(replace-match ""))
+    (goto-char (point-min))
+    (while (search-forward "\u001b[34m " nil t)(replace-match ""))))
 (defun google-decode-url ()
   "Convert Google URL to plain URL and copy line to clipboard."
   (interactive)
