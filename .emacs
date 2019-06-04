@@ -695,7 +695,7 @@
 (global-set-key [?\C-h ?l]    'apropos-library          ) ; view-lossage
 (global-set-key [?\C-x ?4]    'maximize-window-top      ) ; [map]
 (global-set-key [?\C-x ?$]    'insert-euro             ) ; set-selective-display
-(global-set-key [?\C-x ?-] 'insert-en-dash) ;shrink-window-if-larger-than-buffer
+(global-set-key [?\C-x ?-]    'insert-en-dash) ; shrink-window-if-larger-than...
 (global-set-key [?\C-x ?=]    'duplicate                ) ; what-cursor-position
 (global-set-key [?\C-x ?+]    'split-window-grid        ) ; balance-windows
 (global-set-key [?\C-x ?\[]   'git-log-clean            ) ; backward-page
@@ -708,7 +708,7 @@
 (global-set-key [?\C-x ?J]    'region-backward-paragraph)
 (global-set-key [?\C-x ?N]    'new-buffer               )
 (global-set-key [?\C-x ?T]    'titlecase-dwim           )
-(global-set-key [?\C-x ?c]    'count-words              )
+(global-set-key [?\C-x ?c]    'save-buffers-kill-emacs  )
 (global-set-key [?\C-x ?f]    'find-file-literally      ) ; set-fill-column
 (global-set-key [?\C-x ?g]    'region-to-line           )
 (global-set-key [?\C-x ?h]    'copy-buffer              ) ; mark-whole-buffer
@@ -759,7 +759,6 @@
 (global-set-key [?\C-\(]    'backward-sexp-start     )
 (global-set-key [?\C-\)]    'forward-sexp-start      )
 (global-set-key [?\C-=]     'duplicate               )
-(global-set-key [?\C-+]     'switch-to-buffer        )
 (global-set-key [?\C-\]]    'region-backward-line    ) ; abort-recursive-edit
 (global-set-key [?\C-{]     'backward-paragraph      )
 (global-set-key [?\C-}]     'forward-paragraph       )
@@ -2101,6 +2100,12 @@ which doesn't compile."
   (if (use-region-p)
       (upcase-region (point)(mark))
     (upcase-word n)))
+(defun url-hexify-region (beg end)
+  "Convert characters to %XX codes."
+  (interactive "*r")
+  (let ((text (url-hexify-string (buffer-substring beg end))))
+    (delete-region beg end)
+    (insert text)))
 (defun url-unhex-region (beg end)
   "Convert %XX codes to characters."
   (interactive "*r")
@@ -3327,15 +3332,6 @@ echo.
     (backward-char)
     (if (= (char-before) ?.)(backward-char))
     (insert "</code>"))
-  (defun html-convert-latin1-to-utf8 ()
-    "Replace iso-8859-1 with utf-8, save, and quit."
-    (interactive "*")
-    (save-excursion
-      (goto-char (point-min))
-      (while (search-forward "iso-8859-1" nil t)
-        (replace-match "utf-8")))
-    (save-buffer)
-    (save-buffers-kill-terminal))
   (defun html-css-inline ()
     "Insert inline CSS block."
     (interactive "*")
@@ -4601,7 +4597,7 @@ with spaces."
   (setq ess-brace-offset -2)
   (setq ess-indent-offset 2)
   (add-to-list 'safe-local-variable-values '(ess-indent-offset . 4))
-  (font-lock-add-keywords nil '(("taf\\.png(\"\\(.*\\)\""
+  (font-lock-add-keywords nil '(("taf\\.png(\"\\(.*?\\)\""
                                  (1 font-lock-builtin-face t))))
   (set-face-attribute 'font-lock-constant-face
                       nil :underline - ) ; <-, library, source, [1] output
