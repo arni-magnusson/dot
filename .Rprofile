@@ -52,6 +52,10 @@
   autoload("mcmc",          "coda") # create mcmc object
   autoload("traceplot",     "coda") # diagnostics: convergence
 
+  ## CRAN downloads
+  autoload("cran_downloads",     "cranlogs") # any package
+  autoload("cran_top_downloads", "cranlogs") # most popular
+
   ## Data table
   autoload("data.table", "data.table") # data table
 
@@ -142,6 +146,7 @@
   autoload("catage.taf",     "icesTAF") # catage example
   autoload("catage.xtab",    "icesTAF") # catage example
   autoload("clean",          "icesTAF") # remove TAF directories
+  autoload("convert.spaces", "icesTAF") # convert spaces
   autoload("cp",             "icesTAF") # copy file
   autoload("deps",           "icesTAF") # list dependencies
   autoload("div",            "icesTAF") # divide column values
@@ -164,12 +169,15 @@
   autoload("os.macos",       "icesTAF") # operating system
   autoload("os.unix",        "icesTAF") # operating system
   autoload("os.windows",     "icesTAF") # operating system
+  autoload("period",         "icesTAF") # paste two years
   autoload("plus",           "icesTAF") # rename plus group column
   autoload("process.bib",    "icesTAF") # read and process metadata
   autoload("read.taf",       "icesTAF") # read TAF table
   autoload("rmdir",          "icesTAF") # remove empty directory
   autoload("rnd",            "icesTAF") # round column values
+  autoload("sam2taf",        "icesTAF") # SAM -> TAF
   autoload("sourceAll",      "icesTAF") # run all TAF scripts
+  autoload("sourceDir",      "icesTAF") # read all *.R files
   autoload("sourceTAF",      "icesTAF") # run TAF script
   autoload("summary.taf",    "icesTAF") # summary example
   autoload("taf.blue",       "icesTAF") # TAF colors
@@ -189,6 +197,10 @@
   autoload("utf8.to.latin1", "icesTAF") # convert file encoding
   autoload("write.taf",      "icesTAF") # write TAF table
   autoload("xtab2taf",       "icesTAF") # crosstab -> TAF
+  autoload("zoom",           "icesTAF") # lattice text size
+
+  ## ICES TAF extra
+  autoload("zoom.ggplot", "icesTAFextra") # ggplot text size
 
   ## ICES Vocab reference codes
   autoload("findAphia",       "icesVocab") # look up species code
@@ -280,6 +292,9 @@
   ## Check package
   autoload("rcmdcheck", "rcmdcheck") # build and check
 
+  ## RCT3
+  autoload("rct3", "rct3")  # recruitment forecast
+
   ## Install from repositories
   autoload("install_github", "remotes") # install package
 
@@ -333,7 +348,10 @@
   autoload("ns", "splines") # natural cubic spline
 
   ## SAM
-  autoload("read.ices", "stockassessment") # ICES data format
+  autoload("fbarplot",   "stockassessment") # Plot Fbar
+  autoload("fitfromweb", "stockassessment") # Read fit from SAO server
+  autoload("ssbplot",    "stockassessment") # Plot SSB
+  autoload("read.ices",  "stockassessment") # ICES data format
 
   ## Template Model Builder
   autoload("compile",    "TMB") # compile model
