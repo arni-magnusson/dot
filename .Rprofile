@@ -125,6 +125,7 @@
   autoload("getDatrasDataOverview",    "icesDatras") # surveys by year-quarter
   autoload("getHHdata",                "icesDatras") # year, lat, lon, depth
   autoload("getHLdata",                "icesDatras") # length, count
+  autoload("getIndices",               "icesDatras") # official ICES indices
   autoload("getSurveyList",            "icesDatras") # survey info: surveys
   autoload("getSurveyYearList",        "icesDatras") # survey info: years
   autoload("getSurveyYearQuarterList", "icesDatras") # survey info: quarters
@@ -207,6 +208,9 @@
   autoload("getCodeDetail",   "icesVocab") # detail (parents, children)
   autoload("getCodeList",     "icesVocab") # code definition
   autoload("getCodeTypeList", "icesVocab") # available codes
+
+  ## JSON
+  autoload("fromJSON", "jsonlite") # parse JSON
 
   ## Knitr
   autoload("knit", "knitr") # compile Rmd
@@ -296,7 +300,8 @@
   autoload("rct3", "rct3")  # recruitment forecast
 
   ## Install from repositories
-  autoload("install_github", "remotes") # install package
+  autoload("install_github",  "remotes") # install package
+  autoload("parse_repo_spec", "remotes") # parse repo
 
   ## Reshape
   autoload("melt", "reshape") # unxtab
