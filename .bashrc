@@ -34,7 +34,7 @@ export LC_NUMERIC=en_US.UTF-8
 export ADMB_HOME=~/admb
 
 # Program: emacs
-export EMACS_VERSION=26.1
+export EMACS_VERSION=26.2
 if [[ -d /opt/emacs/$EMACS_VERSION ]]; then
   export EDITOR="/opt/emacs/$EMACS_VERSION/bin/emacs -nw --no-site-file"
 else
@@ -65,6 +65,7 @@ export R_HISTSIZE=5000
 if [[ -z $R_LIBS_SITE ]]; then export R_LIBS_SITE=~/r/site; fi
 export R_LIBS_USER=~/r/library
 export R_MAKEVARS_USER=~/r/Makevars
+export R_VERSION=3.6.0
 export TMPDIR=/tmp
 # export TZ=UTC
 
@@ -78,19 +79,15 @@ alias 'admb-ide'='~/bin/emacs -Q -mm \
 alias benchmark='time'
 alias bin='chmod 700 ~/bin/*'
 alias br='git branch'
-alias boot='bootstrap'
-alias bootstrap='Rscript --vanilla -e "icesTAF::taf.bootstrap()"'
 alias 'byte-compile'='emacs -batch -f batch-byte-compile *.el'
 alias capslock='echo press both Shift keys'
 alias cd..='cd ..'
 alias ch755dir='find -type d -exec chmod 755 {} \;'
 alias ci='git commit -a'
 alias cleanboot='clean bootstrap'
-alias clone='git clone'
 alias co='git checkout'
 alias commit='git commit'
 alias 'commits-full'='commits -f'
-alias cote='~/var/cote'
 alias cp='cp --preserve=timestamps'
 alias cpuspeed='cat /proc/cpuinfo | grep --color=never MHz'
 alias cpuwatch='watch -n 0.5 -t "cat /proc/cpuinfo | grep MHz"'
@@ -133,6 +130,8 @@ alias 'l.'="ls -dx $LS_OPTIONS .*"
 alias l1="ls -1 $LS_OPTIONS"
 alias la="ls -Ax $LS_OPTIONS"
 alias latin='export LANG=en_US.ISO8859-1'
+alias lh='log | head'
+alias lfh='log-full | head'
 alias ll="ls -l $LS_OPTIONS"
 alias ll.="ls -dl $LS_OPTIONS .*"
 alias lla="ls -Al $LS_OPTIONS"
@@ -164,7 +163,6 @@ alias nw='emacs -nw'
 alias optipng='optipng -strip all'
 alias prtscr='gnome-screenshot -d 5'
 alias push='git push'
-alias R='R --quiet --save'
 alias rd='rmdir'
 alias reset='git reset'
 alias rm0='find -maxdepth 1 -size 0 -delete'
@@ -196,7 +194,7 @@ alias topme='top -u $USER'
 alias u='cd ..'
 alias u2d='unix2dos'
 alias user3='echo \
-https://www.stockassessment.org/datadisk/stockassessment/userdirs/user3/'
+https://stockassessment.org/datadisk/stockassessment/userdirs/user3/'
 alias utf='export LANG=en_US.UTF-8'
 alias uu='cd ../..'
 alias v='sudo vpnc haf'
