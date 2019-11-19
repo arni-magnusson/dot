@@ -34,7 +34,7 @@ export LC_NUMERIC=en_US.UTF-8
 export ADMB_HOME=~/admb
 
 # Program: emacs
-export EMACS_VERSION=26.2
+export EMACS_VERSION=26.3
 if [[ -d /opt/emacs/$EMACS_VERSION ]]; then
   export EDITOR="/opt/emacs/$EMACS_VERSION/bin/emacs -nw --no-site-file"
 else
@@ -65,7 +65,7 @@ export R_HISTSIZE=5000
 if [[ -z $R_LIBS_SITE ]]; then export R_LIBS_SITE=~/r/site; fi
 export R_LIBS_USER=~/r/library
 export R_MAKEVARS_USER=~/r/Makevars
-export R_VERSION=3.6.0
+export R_VERSION=3.6.1
 export TMPDIR=/tmp
 # export TZ=UTC
 
@@ -84,7 +84,6 @@ alias capslock='echo press both Shift keys'
 alias cd..='cd ..'
 alias ch755dir='find -type d -exec chmod 755 {} \;'
 alias ci='git commit -a'
-alias cleanboot='clean bootstrap'
 alias co='git checkout'
 alias commit='git commit'
 alias 'commits-full'='commits -f'
@@ -116,6 +115,7 @@ alias 'git-unset-sshaskpass'='unset SSH_ASKPASS'
 alias 'git-url'=url
 alias gr='grep -IinRs'
 alias grep='grep --color=auto'
+alias hi='sudo openvpn --config client.ovpn &'
 alias htmltidytree='find -iname "*\.html" \
 -printf "\n\n\n*** %h/%f\n" -exec tidy -e -utf8 {} \;'
 alias htmltidytreeq='find -iname "*\.html" \
@@ -178,6 +178,7 @@ alias 'shortlog-full=git shortlog --format="%Cred%h%Creset %ai - %Cblue %s"'
 alias shortprompt="export PS1='$ '"
 alias show='git show -s --abbrev-commit --format=oneline'
 alias 'show-full'='git show -s --format="$GIT_FORMAT"'
+alias skeleton='Rscript -e "icesTAF::taf.skeleton()"'
 alias sqlitestudio='/opt/sqlitestudio/sqlitestudio'
 alias stash='git stash'
 alias stk='cd /opt/stk/0.9.2; run_game.sh'
