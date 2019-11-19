@@ -42,6 +42,9 @@
   autoload("read.bib",  "bibtex")
   autoload("write.bib", "bibtex")
 
+  ## Bubble plot
+  autoload("bubbleplot", "bubbleplot") # bubble plot
+
   ## MCMC diagnostics
   autoload("autocorr",      "coda") # autocorrelation
   autoload("autocorr.plot", "coda") # diagnostics: thinning
@@ -143,62 +146,67 @@
   autoload("showStock", "icesSD") # one stock, one year
 
   ## ICES Transparent Assessment Framework
-  autoload("catage.long",    "icesTAF") # catage example
-  autoload("catage.taf",     "icesTAF") # catage example
-  autoload("catage.xtab",    "icesTAF") # catage example
-  autoload("clean",          "icesTAF") # remove TAF directories
-  autoload("convert.spaces", "icesTAF") # convert spaces
-  autoload("cp",             "icesTAF") # copy file
-  autoload("deps",           "icesTAF") # list dependencies
-  autoload("div",            "icesTAF") # divide column values
-  autoload("dos2unix",       "icesTAF") # convert line endings
-  autoload("download",       "icesTAF") # download binary file
-  autoload("draft.data",     "icesTAF") # draft DATA.bib file
-  autoload("draft.software", "icesTAF") # draft SOFTWARE.bib file
-  autoload("file.encoding",  "icesTAF") # examine file encoding
-  autoload("flr2taf",        "icesTAF") # FLR -> TAF
-  autoload("latin1.to.utf8", "icesTAF") # convert file encoding
-  autoload("lim",            "icesTAF") # compute axis limits
-  autoload("long2taf",       "icesTAF") # long -> TAF
-  autoload("make",           "icesTAF") # run R script if needed
-  autoload("makeAll",        "icesTAF") # run TAF scripts as needed
-  autoload("makeTAF",        "icesTAF") # run TAF script if needed
-  autoload("mkdir",          "icesTAF") # create directory
-  autoload("msg",            "icesTAF") # show message
-  autoload("os",             "icesTAF") # operating system
-  autoload("os.linux",       "icesTAF") # operating system
-  autoload("os.macos",       "icesTAF") # operating system
-  autoload("os.unix",        "icesTAF") # operating system
-  autoload("os.windows",     "icesTAF") # operating system
-  autoload("period",         "icesTAF") # paste two years
-  autoload("plus",           "icesTAF") # rename plus group column
-  autoload("process.bib",    "icesTAF") # read and process metadata
-  autoload("read.taf",       "icesTAF") # read TAF table
-  autoload("rmdir",          "icesTAF") # remove empty directory
-  autoload("rnd",            "icesTAF") # round column values
-  autoload("sam2taf",        "icesTAF") # SAM -> TAF
-  autoload("sourceAll",      "icesTAF") # run all TAF scripts
-  autoload("sourceDir",      "icesTAF") # read all *.R files
-  autoload("sourceTAF",      "icesTAF") # run TAF script
-  autoload("summary.taf",    "icesTAF") # summary example
-  autoload("taf.blue",       "icesTAF") # TAF colors
-  autoload("taf.bootstrap",  "icesTAF") # set up data and software
-  autoload("taf.dark",       "icesTAF") # TAF colors
-  autoload("taf.green",      "icesTAF") # TAF colors
-  autoload("taf.library",    "icesTAF") # enable TAF library
-  autoload("taf.light",      "icesTAF") # TAF colors
-  autoload("taf.orange",     "icesTAF") # TAF colors
-  autoload("taf.png",        "icesTAF") # open graphics device
-  autoload("taf.skeleton",   "icesTAF") # create TAF template
-  autoload("taf.unzip",      "icesTAF") # unzip file
-  autoload("taf2long",       "icesTAF") # TAF -> long
-  autoload("taf2xtab",       "icesTAF") # TAF -> crosstab
-  autoload("tt",             "icesTAF") # transpose
-  autoload("unix2dos",       "icesTAF") # convert line endings
-  autoload("utf8.to.latin1", "icesTAF") # convert file encoding
-  autoload("write.taf",      "icesTAF") # write TAF table
-  autoload("xtab2taf",       "icesTAF") # crosstab -> TAF
-  autoload("zoom",           "icesTAF") # lattice text size
+  autoload("catage.long",     "icesTAF") # catage example
+  autoload("catage.taf",      "icesTAF") # catage example
+  autoload("catage.xtab",     "icesTAF") # catage example
+  autoload("clean",           "icesTAF") # clean TAF directories
+  autoload("clean.library",   "icesTAF") # clean TAF library
+  autoload("clean.software",  "icesTAF") # clean TAF software
+  autoload("convert.spaces",  "icesTAF") # convert spaces
+  autoload("cp",              "icesTAF") # copy file
+  autoload("deps",            "icesTAF") # list dependencies
+  autoload("div",             "icesTAF") # divide column values
+  autoload("dos2unix",        "icesTAF") # convert line endings
+  autoload("download",        "icesTAF") # download file
+  autoload("download.github", "icesTAF") # download repository
+  autoload("draft.data",      "icesTAF") # draft DATA.bib file
+  autoload("draft.software",  "icesTAF") # draft SOFTWARE.bib file
+  autoload("file.encoding",   "icesTAF") # examine file encoding
+  autoload("flr2taf",         "icesTAF") # FLR -> TAF
+  autoload("get.remote.sha",  "icesTAF") # look up SHA code
+  autoload("latin1.to.utf8",  "icesTAF") # convert file encoding
+  autoload("lim",             "icesTAF") # compute axis limits
+  autoload("long2taf",        "icesTAF") # long -> TAF
+  autoload("make",            "icesTAF") # run R script if needed
+  autoload("makeAll",         "icesTAF") # run TAF scripts as needed
+  autoload("makeTAF",         "icesTAF") # run TAF script if needed
+  autoload("mkdir",           "icesTAF") # create directory
+  autoload("msg",             "icesTAF") # show message
+  autoload("os",              "icesTAF") # operating system
+  autoload("os.linux",        "icesTAF") # operating system
+  autoload("os.macos",        "icesTAF") # operating system
+  autoload("os.unix",         "icesTAF") # operating system
+  autoload("os.windows",      "icesTAF") # operating system
+  autoload("period",          "icesTAF") # paste two years
+  autoload("plus",            "icesTAF") # rename plus group column
+  autoload("process.bib",     "icesTAF") # read and process metadata
+  autoload("read.taf",        "icesTAF") # read TAF table
+  autoload("rmdir",           "icesTAF") # remove empty directory
+  autoload("rnd",             "icesTAF") # round column values
+  autoload("sam2taf",         "icesTAF") # SAM -> TAF
+  autoload("sourceAll",       "icesTAF") # run all TAF scripts
+  autoload("sourceDir",       "icesTAF") # read all *.R files
+  autoload("sourceTAF",       "icesTAF") # run TAF script
+  autoload("summary.taf",     "icesTAF") # summary example
+  autoload("taf.blue",        "icesTAF") # TAF colors
+  autoload("taf.bootstrap",   "icesTAF") # set up data and software
+  autoload("taf.dark",        "icesTAF") # TAF colors
+  autoload("taf.green",       "icesTAF") # TAF colors
+  autoload("taf.install",     "icesTAF") # install TAF package
+  autoload("taf.library",     "icesTAF") # load TAF package
+  autoload("taf.light",       "icesTAF") # TAF colors
+  autoload("taf.orange",      "icesTAF") # TAF colors
+  autoload("taf.png",         "icesTAF") # open graphics device
+  autoload("taf.skeleton",    "icesTAF") # create TAF template
+  autoload("taf.unzip",       "icesTAF") # unzip file
+  autoload("taf2long",        "icesTAF") # TAF -> long
+  autoload("taf2xtab",        "icesTAF") # TAF -> crosstab
+  autoload("tt",              "icesTAF") # transpose
+  autoload("unix2dos",        "icesTAF") # convert line endings
+  autoload("utf8.to.latin1",  "icesTAF") # convert file encoding
+  autoload("write.taf",       "icesTAF") # write TAF table
+  autoload("xtab2taf",        "icesTAF") # crosstab -> TAF
+  autoload("zoom",            "icesTAF") # lattice text size
 
   ## ICES TAF extra
   autoload("zoom.ggplot", "icesTAFextra") # ggplot text size
