@@ -33,26 +33,26 @@
 ;;--------------
 ;; 2.2  Editing
 ;;--------------
-(defalias 'yes-or-no-p 'y-or-n-p               ) ; ask y or n
-(delete-selection-mode 1                       ) ; typing replaces selected text
+(defalias 'yes-or-no-p 'y-or-n-p              ) ; ask y or n
+(delete-selection-mode 1                      ) ; typing replaces selected text
 (if (>= emacs-major-version 24)
-    (electric-indent-mode -1                  )) ; RET is just newline
-(prefer-coding-system 'utf-8                   ) ; utf8 if not sure
-(require 'imenu)(setq imenu-max-items 43       ) ; code navigation
-(setq initial-major-mode 'text-mode            ) ; text-mode for scratch buffer
-(setq mail-host-address "hafro.is"             ) ; change-log-mode
-(setq save-abbrevs nil                         ) ; don't save abbrevs
-(setq scroll-error-top-bottom t                ) ; pgup and pgdn all the way
-(setq user-full-name "Arni Magnusson"          ) ; change-log-mode
-(setq select-enable-clipboard t                ) ; linux clipboard
-(setq vc-follow-symlinks t                     ) ; open symlinks without warning
-(setq-default buffer-file-coding-system 'utf-8 ) ; utf8 instead of latin1
-(setq-default fill-column 80                   ) ; text width
-(setq-default indent-tabs-mode nil             ) ; no tab characters
-(setq-default major-mode 'text-mode            ) ; text-mode for new buffer
-(setq-default require-final-newline t          ) ; ensure file ends with newline
-(setq-default sentence-end-double-space nil    ) ; one space after period
-(setq-default sort-fold-case t                 ) ; sort-lines ignoring case
+    (electric-indent-mode -1                 )) ; RET is just newline
+(prefer-coding-system 'utf-8                  ) ; utf8 if not sure
+(require 'imenu)(setq imenu-max-items 43      ) ; code navigation
+(setq initial-major-mode 'text-mode           ) ; text-mode for scratch buffer
+(setq mail-host-address "hafro.is"            ) ; change-log-mode
+(setq save-abbrevs nil                        ) ; don't save abbrevs
+(setq scroll-error-top-bottom t               ) ; pgup and pgdn all the way
+(setq user-full-name "Arni Magnusson"         ) ; change-log-mode
+(setq select-enable-clipboard t               ) ; linux clipboard
+(setq vc-follow-symlinks t                    ) ; open symlinks without warning
+(setq-default buffer-file-coding-system 'utf-8) ; utf8 instead of latin1
+(setq-default fill-column 80                  ) ; text width
+(setq-default indent-tabs-mode nil            ) ; no tab characters
+(setq-default major-mode 'text-mode           ) ; text-mode for new buffer
+(setq-default require-final-newline t         ) ; ensure file ends with newline
+(setq-default sentence-end-double-space nil   ) ; one space after period
+(setq-default sort-fold-case t                ) ; sort-lines ignoring case
 (setq bs-must-always-show-regexp ; include in buffer cycle
       "Help\\|R\\|SQL\\|compilation\\|gud\\|info\\|input\\|shell")
 ;;------------
@@ -4706,7 +4706,7 @@ or \\code{\\link{}} if ARG is non-nil."
         (if (= (char-after) ?\")
             (progn (delete-char 1)
                    (search-forward "\"" nil t)
-                   (replace-match "" ))) ; "myfunc"
+                   (replace-match ""))) ; "myfunc"
         (goto-char (point-min))
         (while (search-forward "function (" nil t)
           (replace-match "function(")) ; function
@@ -7421,7 +7421,7 @@ to the shortest `outline-regexp'.")
     (setq outline-previous-mode '(text-mode))))
 (add-hook 'text-mode-hook 'arni-text-hook)
 (defun arni-mail-hook ()
-  (setq fill-column 70))
+  (setq fill-column 74))
 (add-hook 'mail-mode-hook 'arni-mail-hook)
 (defun arni-message-hook ()
   (set-face-attribute 'message-cited-text
