@@ -66,6 +66,7 @@ if [[ -z $R_LIBS_SITE ]]; then export R_LIBS_SITE=~/r/site; fi
 export R_LIBS_USER=~/r/library
 export R_MAKEVARS_USER=~/r/Makevars
 export R_VERSION=3.6.1
+export RSTUDIO_WHICH_R=~/bin/R
 export TMPDIR=/tmp
 # export TZ=UTC
 
