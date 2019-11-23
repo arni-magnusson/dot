@@ -4592,6 +4592,7 @@ with spaces."
       (inferior-ess-mode))
   (setq make-backup-files t)
   (setq ess-eval-visibly-p nil)
+  (setq ess-r-package-auto-set-evaluation-env nil)  ; prevent pkg environment
   (ess-toggle-S-assign nil)
   (setq ess-brace-offset -2)
   (setq ess-indent-offset 2)
