@@ -13,4 +13,3 @@
 	ui = auto
 [core]
 	pager = diff-highlight
-	excludesfile = ~/.gitignore

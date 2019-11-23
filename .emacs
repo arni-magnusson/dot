@@ -162,8 +162,9 @@
 ;;-------------
 ;; 3.3  Backup
 ;;-------------
-(setq auto-save-default nil) ; no #file.txt#
-(setq auto-save-list-file-prefix nil) ; no .emacs.d
+(setq auto-save-default nil)          ; no #file.txt#
+(setq auto-save-list-file-prefix nil) ; no .emacs.d/auto-save-list
+(setq create-lockfiles nil)           ; no .#files in VBox guest
 (defun rm-large-files (dir kb)
   "Remove files larger than KB from directory DIR."
   (let* ((w32-get-true-file-attributes nil)
