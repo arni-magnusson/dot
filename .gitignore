@@ -1,2 +1,2 @@
-# VM guests have .#.bashrc and .#.emacs
-.#.*
+# VBox guests have .#files
+.#*
