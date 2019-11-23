@@ -419,7 +419,6 @@
         ("\\.mak$"         . makefile-mode)
         ("\\.mk$"          . makefile-mode)
         ("/GNUmakefile"    . makefile-mode)
-        ("/Makevars"       . makefile-mode)
         ("/Redit"          . R-mode)
         ("/tmp/Rtmp"       . R-mode)
         ("\\.tar$"         . tar-mode)
