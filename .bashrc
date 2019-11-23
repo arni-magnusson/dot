@@ -115,7 +115,7 @@ alias 'git-unset-sshaskpass'='unset SSH_ASKPASS'
 alias 'git-url'=url
 alias gr='grep -IinRs'
 alias grep='grep --color=auto'
-alias hi='sudo openvpn --config client.ovpn &'
+alias hi='echo "sudo openvpn --config ~/core/arni/vinna/hi/vpn/client.ovpn &"'
 alias htmltidytree='find -iname "*\.html" \
 -printf "\n\n\n*** %h/%f\n" -exec tidy -e -utf8 {} \;'
 alias htmltidytreeq='find -iname "*\.html" \
