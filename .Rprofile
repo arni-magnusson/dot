@@ -26,7 +26,7 @@
   }
   else
   {
-    options(browser="google-chrome")
+    options(browser="firefox")
     ## options(browser="chromium-browser --incognito")
     ## options(browser="firefox")
     options(editor=paste0("'/opt/emacs/", Sys.getenv("EMACS_VERSION"),
@@ -180,6 +180,7 @@
   autoload("period",          "icesTAF") # paste two years
   autoload("plus",            "icesTAF") # rename plus group column
   autoload("process.bib",     "icesTAF") # read and process metadata
+  autoload("process.inner",   "icesTAF") # process metadata
   autoload("read.taf",        "icesTAF") # read TAF table
   autoload("rmdir",           "icesTAF") # remove empty directory
   autoload("rnd",             "icesTAF") # round column values
