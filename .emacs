@@ -3076,7 +3076,7 @@ clean:
   (set-face-attribute 'font-lock-type-face
                       nil :foreground "magenta4") ; -arg
   (set-face-attribute 'font-lock-variable-name-face
-                      nil :foreground "brown4")  ; %x%
+                      nil :foreground "brown4") ; %x%
   (set-face-attribute 'font-lock-warning-face
                       nil :weight -) ; ls, rm
   (local-set-key [f11]         'bat-outline-remember)
@@ -4404,7 +4404,7 @@ with spaces."
 ;; 6.16 R
 ;;--------
 ;; Hook                    When  *R*  R-mode  Rd-mode  Notes
-;; ess-mode-load-hook      load   x   x       x        workaround
+;; eval-after-load         load   x   x       x        workaround
 ;; ess-pre-run-hook        *R*    x                    workaround
 ;; comint-mode-hook        *R*    x                    *R/SQL* session
 ;; inferior-ess-mode-hook  *R*    x                    *R* session
@@ -4413,17 +4413,12 @@ with spaces."
 ;; Rd-mode-hook            man                x
 ;; Rnw-mode-hook           Rnw
 ;; ess-roxy-mode-hook      edit       x
-(defun arni-ess-load-hook ()
-  (setq inferior-R-args "--quiet --save")
-  ;; Provide (ess-graphics-off) both in *R* and R-mode
-  (defun ess-graphics-off ()
-    "Close all graphics devices."
-    (interactive)
-    (ess-eval-linewise "graphics.off()")))
-(add-hook 'ess-mode-load-hook 'arni-ess-load-hook)
+(defun arni-ess-load-hook ()(setq inferior-R-args "--quiet --save"))
+(eval-after-load "ess-site" (arni-ess-load-hook)) ; ess-mode-load-hook
 (defun arni-ess-pre-run-hook ()(setq ess-ask-for-ess-directory nil))
 (add-hook 'ess-pre-run-hook 'arni-ess-pre-run-hook)
 (defun arni-inferior-ess-hook ()
+  (setq ess-use-tracebug nil)
   (set-face-attribute 'comint-highlight-input nil
                       :foreground "gray20") ; previous commands (bold)
   (set-face-attribute 'font-lock-constant-face nil
@@ -4440,6 +4435,10 @@ with spaces."
     "Open help page in browser." ; override original function with same name
     (process-send-string ess-current-process-name
                          (concat "help(" object ",help_type='HTML')")))
+  (defun ess-graphics-off () ; Provide (ess-graphics-off) both in *R* and R-mode
+    "Close all graphics devices."
+    (interactive)
+    (ess-eval-linewise "graphics.off()"))
   (defun ess-history ()
     "Open R history file in other window."
     (interactive)
@@ -4593,7 +4592,7 @@ with spaces."
       (inferior-ess-mode))
   (setq make-backup-files t)
   (setq ess-eval-visibly-p nil)
-  (setq ess-r-package-auto-set-evaluation-env nil)  ; prevent pkg environment
+  (setq ess-r-package-auto-set-evaluation-env nil) ; prevent pkg environment
   (ess-toggle-S-assign nil)
   (setq ess-brace-offset -2)
   (setq ess-indent-offset 2)
@@ -4657,6 +4656,10 @@ with spaces."
     "Evaluate R command."
     (interactive "sCommand: ")
     (ess-eval-linewise cmd))
+  (defun ess-graphics-off () ; Provide (ess-graphics-off) both in *R* and R-mode
+    "Close all graphics devices."
+    (interactive)
+    (ess-eval-linewise "graphics.off()"))
   (defun ess-roxy-insert-code (&optional arg)
     "Insert \\code{} around object at point,
 or \\code{\\link{}} if ARG is non-nil."
