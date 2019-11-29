@@ -16,10 +16,12 @@ if ls --dereference-command-line-symlink-to-dir &>/dev/null; then
   export LS_OPTIONS="$LS_OPTIONS --dereference-command-line-symlink-to-dir"; fi
 if ls --group-directories-first                 &>/dev/null; then
   export LS_OPTIONS="$LS_OPTIONS --group-directories-first"; fi
+if ls -N                                        &>/dev/null; then
+  export LS_OPTIONS="$LS_OPTIONS -N"; fi
 if ls --show-control-chars                      &>/dev/null; then
   export LS_OPTIONS="$LS_OPTIONS --show-control-chars"; fi
-if ls --time-style=+%e\ %b\ %Y\ %k:%M           &>/dev/null;
-then export LS_OPTIONS="$LS_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M"; fi
+if ls --time-style=+%e\ %b\ %Y\ %k:%M           &>/dev/null; then
+  export LS_OPTIONS="$LS_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M"; fi
 export PROMPT_COMMAND='echo -ne "\e];/\
 `if [[ $PWD == $HOME ]];then echo "~";else basename $PWD;fi`\a"'
 export PS1='\[\e[1;47;37m\]\h\[\e[0m\]\w $ '
@@ -35,7 +37,7 @@ export ADMB_HOME=~/admb
 
 # Program: emacs
 export EMACS_VERSION=26.3
-if [[ -d /opt/emacs/$EMACS_VERSION ]]; then
+if [[ -f /opt/emacs/$EMACS_VERSION/bin/emacs ]]; then
   export EDITOR="/opt/emacs/$EMACS_VERSION/bin/emacs -nw --no-site-file"
 else
   export EDITOR="/usr/bin/emacs -nw --no-site-file"
