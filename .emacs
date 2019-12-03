@@ -13,8 +13,12 @@
 ;; 2  INTERFACE
 ;;
 ;;==============================================================================
+;;------------
+;; 2.1  Sound
+;;------------
+(setq ring-bell-function 'ignore)
 ;;-------------
-;; 2.1  Visual
+;; 2.2  Visual
 ;;-------------
 ;; (defun arni-window-setup-hook ()(frame-maximize)) ; linux max frame
 ;; (add-hook 'window-setup-hook 'arni-window-setup-hook)
@@ -31,7 +35,7 @@
 (show-paren-mode t                              ) ; parentheses
 (tool-bar-mode 0                                ) ; no toolbar
 ;;--------------
-;; 2.2  Editing
+;; 2.3  Editing
 ;;--------------
 (defalias 'yes-or-no-p 'y-or-n-p              ) ; ask y or n
 (delete-selection-mode 1                      ) ; typing replaces selected text
@@ -56,7 +60,7 @@
 (setq bs-must-always-show-regexp ; include in buffer cycle
       "Help\\|R\\|SQL\\|compilation\\|gud\\|info\\|input\\|shell")
 ;;------------
-;; 2.3  Faces
+;; 2.4  Faces
 ;;------------
 ;; Only special faces should inherit
 ;; family width height weight slant fg bg underline overline strike box inherit
