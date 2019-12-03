@@ -166,6 +166,7 @@
   autoload("get.remote.sha",  "icesTAF") # look up SHA code
   autoload("latin1.to.utf8",  "icesTAF") # convert file encoding
   autoload("lim",             "icesTAF") # compute axis limits
+  autoload("line.endings",    "icesTAF") # examine line endings
   autoload("long2taf",        "icesTAF") # long -> TAF
   autoload("make",            "icesTAF") # run R script if needed
   autoload("makeAll",         "icesTAF") # run TAF scripts as needed
