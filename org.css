@@ -1,0 +1,24 @@
+/* Link from ~/emacs/css
+
+/* Global */
+body {font-family:sans-serif; margin-bottom:14ex; margin-left:4ex;
+      margin-right:4ex; margin-top:4ex; max-width:66ex}
+
+/* TOC */
+#table-of-contents {color:transparent; margin-bottom:4ex}
+#text-table-of-contents {font-family:monospace; font-weight:bold}
+ul {list-style-type:none; margin-bottom:1ex; padding-left:3ex}
+ul ul {font-weight:normal}
+a {background-color:#c0c0c0; color:black; text-decoration:none}
+
+/* Text */
+h1 {margin-bottom:-4ex; margin-top:5ex}
+h2 {font-size:2em; font-weight:bold; margin-bottom:0ex; margin-top:4ex}
+h3 {font-size:1.5em; font-weight:normal; margin-bottom:0.5ex; margin-top:2.5ex}
+h4 {font-family:monospace; margin-bottom:0.5ex; white-space:pre}
+p {font-size:0.9em; line-height:2.2ex; margin-bottom:0.5ex; margin-top:0.6ex}
+pre {margin:0ex; line-height:2.5ex}
+.org-ul {font-size:0.9em; line-height:2.2ex; list-style-type:disc;
+         margin-top:0ex; margin-bottom:1ex}
+.org-ol {font-size:0.9em; line-height:2.2ex; margin-top:0ex; margin-bottom:1ex;
+         padding-left:3ex}
