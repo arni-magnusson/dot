@@ -42,9 +42,6 @@
   autoload("read.bib",  "bibtex")
   autoload("write.bib", "bibtex")
 
-  ## Bubble plot
-  autoload("bubbleplot", "bubbleplot") # bubble plot
-
   ## MCMC diagnostics
   autoload("autocorr",      "coda") # autocorrelation
   autoload("autocorr.plot", "coda") # diagnostics: thinning
@@ -76,7 +73,9 @@
   ## autoload("is.what",  "gdata")  # show is.* test results
   ## autoload("keep",     "gdata")  # remove objects
   ## autoload("ll",       "gdata")  # show objects or elements
-  autoload("balloonplot", "gplots") # 3d symbol
+  autoload("catch.d",     "gplots") # example data
+  autoload("catch.r",     "gplots") # example data
+  autoload("bubbleplot",  "gplots") # bubble plot
   autoload("hist2d",      "gplots") # 3d symbol
   autoload("plotCI",      "gplots") # 2d error bars
   autoload("plotmeans",   "gplots") # 2d error bars
@@ -168,6 +167,7 @@
   autoload("lim",             "icesTAF") # compute axis limits
   autoload("line.endings",    "icesTAF") # examine line endings
   autoload("long2taf",        "icesTAF") # long -> TAF
+  autoload("long2xtab",       "icesTAF") # long -> crosstab
   autoload("make",            "icesTAF") # run R script if needed
   autoload("makeAll",         "icesTAF") # run TAF scripts as needed
   autoload("makeTAF",         "icesTAF") # run TAF script if needed
@@ -178,6 +178,7 @@
   autoload("os.macos",        "icesTAF") # operating system
   autoload("os.unix",         "icesTAF") # operating system
   autoload("os.windows",      "icesTAF") # operating system
+  autoload("parse.repo",      "icesTAF") # split repo string
   autoload("period",          "icesTAF") # paste two years
   autoload("plus",            "icesTAF") # rename plus group column
   autoload("process.bib",     "icesTAF") # read and process metadata
@@ -207,6 +208,7 @@
   autoload("unix2dos",        "icesTAF") # convert line endings
   autoload("utf8.to.latin1",  "icesTAF") # convert file encoding
   autoload("write.taf",       "icesTAF") # write TAF table
+  autoload("xtab2long",       "icesTAF") # crosstab -> long
   autoload("xtab2taf",        "icesTAF") # crosstab -> TAF
   autoload("zoom",            "icesTAF") # lattice text size
 
@@ -311,6 +313,7 @@
 
   ## Install from repositories
   autoload("install_github",  "remotes") # install package
+  autoload("install_version", "remotes") # install package
   autoload("parse_repo_spec", "remotes") # parse repo
 
   ## Reshape
@@ -358,14 +361,19 @@
   autoload("primes",    "sfsmisc") # prime numbers
   autoload("factorize", "sfsmisc") # factorize into prime numbers
 
+  ## Shiny
+  autoload("fluidPage", "shiny") # html ui generator
+  autoload("runApp",    "shiny") # run app
+  autoload("shinyApp",  "shiny") # run app
+
   ## Splines
   autoload("bs", "splines") # polynomial spline
   autoload("ns", "splines") # natural cubic spline
 
   ## SAM
-  autoload("fbarplot",   "stockassessment") # Plot Fbar
-  autoload("fitfromweb", "stockassessment") # Read fit from SAO server
-  autoload("ssbplot",    "stockassessment") # Plot SSB
+  autoload("fbarplot",   "stockassessment") # plot Fbar
+  autoload("fitfromweb", "stockassessment") # read fit from SAO server
+  autoload("ssbplot",    "stockassessment") # plot SSB
   autoload("read.ices",  "stockassessment") # ICES data format
 
   ## Template Model Builder
