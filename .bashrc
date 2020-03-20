@@ -1,5 +1,7 @@
 #!/bin/bash
 
+xset -b  # disable bell
+
 # Path
 export PATH="~/admb/bin:$PATH"  # admb
 export PATH="~/bin:$PATH"       # ~/bin
@@ -67,7 +69,7 @@ export R_HISTSIZE=5000
 if [[ -z $R_LIBS_SITE ]]; then export R_LIBS_SITE=~/r/site; fi
 export R_LIBS_USER=~/r/library
 export R_MAKEVARS_USER=~/r/Makevars
-export R_VERSION=3.6.1
+export R_VERSION=3.6.3
 export RSTUDIO_WHICH_R=~/bin/R
 export TMPDIR=/tmp
 # export TZ=UTC
@@ -108,11 +110,10 @@ alias file644='find -type f -exec chmod 644 {} \;'
 alias 'files'='git show --abbrev-commit --format=oneline --name-only'
 alias 'files-full'='git show --format="$GIT_FORMAT" --name-only'
 alias 'find?'='echo "find -name '\''*.R'\'' -exec wc -L {} \;"'
-alias foxit='/opt/foxit/1.1/FoxitReader'
 alias g='gwenview'
 alias 'git-unset-sshaskpass'='unset SSH_ASKPASS'
 alias 'git-url'=url
-alias gr='grep -IinRs'
+alias gr='grep -IinRs --exclude-dir=.git'
 alias grep='grep --color=auto'
 alias hi='echo "sudo openvpn --config ~/core/arni/vinna/hi/vpn/client.ovpn &"'
 alias htmltidytree='find -iname "*\.html" \
@@ -130,7 +131,6 @@ alias l1="ls -1 $LS_OPTIONS"
 alias la="ls -Ax $LS_OPTIONS"
 alias latin='export LANG=en_US.ISO8859-1'
 alias lh='log | head'
-alias lfh='log-full | head'
 alias ll="ls -l $LS_OPTIONS"
 alias ll.="ls -dl $LS_OPTIONS .*"
 alias lla="ls -Al $LS_OPTIONS"
@@ -177,10 +177,12 @@ alias shortprompt="export PS1='$ '"
 alias show='git show -s --abbrev-commit --format=oneline'
 alias 'show-full'='git show -s --format="$GIT_FORMAT"'
 alias skeleton='Rscript -e "icesTAF::taf.skeleton()"'
+alias space='rename "s/ /_/g"'
 alias sqlitestudio='/opt/sqlitestudio/sqlitestudio'
 alias stash='git stash'
 alias stk='cd /opt/stk/0.9.2; run_game.sh'
 alias svnADMB='echo "svn co svn+ssh://admb-project.org/trunk admb-trunk"'
+alias t='sudo apt upgrade'
 alias tag='git tag'
 alias 'tag-full'='git show -s --format="%d $GIT_FORMAT" `git tag`'
 alias take='sudo chown -R arnima:haf'
