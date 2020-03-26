@@ -461,9 +461,9 @@
 ;; Special      c     i   m          x         [
 ;; Default    ab defgh  kl nopqrst v x  0..9 -        /
 ;;                        HOME END PGUP PGDN BKSP DEL
-;; Custom              j          u w yz        ];'\,.  ! # %   (     |: <>?
+;; Custom              j          u w yz        ];' ,.  ! #$%   (     |: <>?
 ;;            SPC TAB RET
-;; Available                                `            @ $ ^&* )_+{}  "
+;; Available                                `      \     @   ^&* )_+{}  "
 ;;------------------------------------------------------------------------------
 ;; M
 ;; Special                                     [
@@ -501,9 +501,9 @@
 ;; Don't use  a                 s    x
 ;; Default     b d      k  no  r   vw   0..9       \
 ;;                                           BKSP     ESC
-;; Custom       c  fghij lm  p   tu   y      -=[ ;' ,./          )
+;; Custom       c  fghij lm  pq  tu   y      -=[ ;' ,./          )
 ;;            SPC TAB RET
-;; Available      e           q        z    `   ]
+;; Available      e                    z    `   ]
 ;;                        HOME END PGUP PGDN      DEL
 ;;------------------------------------------------------------------------------
 ;; C-x C
@@ -536,6 +536,7 @@
 (global-unset-key [S-delete]   ) ; kill-region
 (global-unset-key [?\C-\\]     ) ; toggle-input-method
 (global-unset-key [?\C-x ?\C-z]) ; iconify-or-deiconify-frame
+(global-unset-key [?\M-\;]     ) ; comment-dwim
 ;;------------
 ;; 4.2  Mouse
 ;;------------
@@ -703,8 +704,8 @@
 (global-set-key [?\C-x ?=]    'duplicate                ) ; what-cursor-position
 (global-set-key [?\C-x ?+]    'split-window-grid        ) ; balance-windows
 (global-set-key [?\C-x ?\[]   'git-log-clean            ) ; backward-page
-(global-set-key [?\C-x ?\\]   'toggle-enable-multibyte-characters)
-(global-set-key [?\C-x ?']    'toggle-red-special       ) ; expand-abbrev
+(global-set-key [?\C-x ?\\]   'transpose-windows        )
+(global-set-key [?\C-x ?']    'region-forward-line      ) ; expand-abbrev
 (global-set-key [?\C-x ?\;]   'set-fill-column          ) ; comment-set-column
 (global-set-key [?\C-x ?,]    'backward-word            )
 (global-set-key [?\C-x ?.]    'forward-word             ) ; set-fill-prefix
@@ -722,6 +723,7 @@
 (global-set-key [?\C-x ?m]    'mark-function            ) ; compose-mail
 (global-set-key [?\C-x ?n]    'narrow-to-defun-or-region) ; [map]
 (global-set-key [?\C-x ?p]    'list-packages            )
+(global-set-key [?\C-x ?q]    'toggle-red-special       ) ; kbd-macro-query
 (global-set-key [?\C-x ?t]    'transpose-words          )
 (global-set-key [?\C-x ?u]    'google-decode-url        ) ; undo
 (global-set-key [?\C-x ?w]    'widen                    )
@@ -729,7 +731,9 @@
 (global-set-key [?\C-x ?\C-9] 'beginning-of-defun       )
 (global-set-key [?\C-x ?\C-0] 'end-of-defun             )
 (global-set-key [?\C-x ?\C-_] 'tabify-spaces-copy-buffer) ; linux C-x C-/
-(global-set-key [?\C-x ?\C-'] 'convert-special          )
+(global-set-key [?\C-x ?\C-]] 'region-backward-line     )
+(global-set-key [?\C-x ?\C-'] 'region-forward-line      )
+(global-set-key [?\C-x ?\C-\\] 'convert-special         )
 (global-set-key [?\C-x ?\C-,] 'tab-to-csv            ) ; or region-backward-char
 (global-set-key [?\C-x ?\C-.] 'region-forward-char      )
 (global-set-key [?\C-x ?\C-/] 'tabify-spaces-copy-buffer)
@@ -758,18 +762,19 @@
 ;; C, CM, M, plain
 (global-set-key [?\C-!]     'shell-command           )
 (global-set-key [?\C-#]     'toggle-comments         )
-(global-set-key [?\C-%]     'toggle-read-only        )
+(global-set-key [?\C-$]     'count-words             )
+(global-set-key [?\C-%]     'read-only-mode          )
 (global-set-key [?\C-&]     'async-shell-command     )
 (global-set-key [?\C-\(]    'backward-sexp-start     )
 (global-set-key [?\C-\)]    'forward-sexp-start      )
 (global-set-key [?\C-=]     'duplicate               )
-(global-set-key [?\C-\]]    'region-backward-line    ) ; abort-recursive-edit
+(global-set-key [?\C-\]]    'scroll-up-1             ) ; abort-recursive-edit
 (global-set-key [?\C-{]     'backward-paragraph      )
 (global-set-key [?\C-}]     'forward-paragraph       )
 (global-set-key [?\C-|]     'align                   )
 (global-set-key [?\C-\;]    'region-backward-word    )
 (global-set-key [?\C-:]     'region-forward-word     )
-(global-set-key [?\C-']     'region-forward-line     )
+(global-set-key [?\C-']     'scroll-down-1           )
 (global-set-key [?\C-,]     'backward-word           )
 (global-set-key [?\C-<]     'region-backward-word    )
 (global-set-key [?\C-.]     'forward-word            )
@@ -787,7 +792,7 @@
 (global-set-key [67109118]  'undo                    ) ; C-þ
 (global-set-key [67111166]  'undo                    ) ; C-þ
 (global-set-key [C-M-end]   'goto-longest-line       ) ; end-of-defun
-(global-set-key [?\C-\M-5]  'toggle-read-only        ) ; digit-argument
+(global-set-key [?\C-\M-5]  'read-only-mode          ) ; digit-argument
 (global-set-key [?\C-\M-0]  'text-scale-adjust       ) ; digit-argument
 (global-set-key [?\C-\M-_]  'unindent-buffer         ) ; for terminal
 (global-set-key [?\C-\M--]  'text-scale-decrease     ) ; negative-argument
@@ -815,15 +820,15 @@
            (global-set-key [?\M-8] 'font-8           ) ; digit-argument
            (global-set-key [?\M-9] 'font-9           ) ; digit-argument
            (global-set-key [?\M-0] 'font-0         ))) ; digit-argument
-(global-set-key [?\M-%]     'toggle-read-only        ) ; query-replace
+(global-set-key [?\M-%]     'read-only-mode          ) ; query-replace
 (global-set-key [?\M-=]     'duplicate-comment       ) ; count-line-region
 (global-set-key [?\M-+]     'transpose-windows       )
+;; (global-set-key [?\M-\[] 'ignore                  ) ; paste into Emacs -nw
 (global-set-key [?\M-\]]    'scroll-up-1             )
 (global-set-key [?\M-{]     'backward-paragraph      ) ; backward-paragraph
 (global-set-key [?\M-}]     'forward-paragraph       ) ; forward-paragraph
 (global-set-key [?\M-\\]    'transpose-windows       ) ; delete-horizontal-space
-(global-set-key [?\M-\;]    'set-tab-width           ) ; comment-dwim
-(global-set-key [?\M-']     'scroll-down-1           ) ; abbrev-prefix-mark
+(global-set-key [?\M-']     'set-tab-width           ) ; abbrev-prefix-mark
 (global-set-key [?\M-,]     'memo                    ) ; tags-loop-continue
 (global-set-key [?\M-.]     'dot-emacs-edit          ) ; find-tag
 (global-set-key [?\M-/]     'delete-comments         ) ; dabbrev-expand
