@@ -1,6 +1,6 @@
 [user]
 	name = Arni Magnusson
-	email = arnima@hafro.is
+	email = arni.magnusson@ices.dk
 [push]
 	default = simple
 [credential]
@@ -13,3 +13,5 @@
 	ui = auto
 [core]
 	pager = diff-highlight
+[cola]
+	spellcheck = false
