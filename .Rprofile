@@ -196,10 +196,12 @@
   autoload("taf.dark",        "icesTAF") # TAF colors
   autoload("taf.green",       "icesTAF") # TAF colors
   autoload("taf.install",     "icesTAF") # install TAF package
+  autoload("taf.libPaths",    "icesTAF") # add TAF library to path
   autoload("taf.library",     "icesTAF") # load TAF package
   autoload("taf.light",       "icesTAF") # TAF colors
   autoload("taf.orange",      "icesTAF") # TAF colors
   autoload("taf.png",         "icesTAF") # open graphics device
+  autoload("taf.session",     "icesTAF") # session info
   autoload("taf.skeleton",    "icesTAF") # create TAF template
   autoload("taf.unzip",       "icesTAF") # unzip file
   autoload("taf2long",        "icesTAF") # TAF -> long
@@ -355,6 +357,7 @@
   autoload("x.sbw",       "scape") # assessment
 
   ## Session info
+  autoload("package_info", "sessioninfo") # package info
   autoload("session_info", "sessioninfo") # session info
 
   ## Martin Maechler's toolbox
