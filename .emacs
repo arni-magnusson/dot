@@ -1,3 +1,5 @@
+(setq byte-compile-warnings '(cl-functions))  ; Emacs 27.1 with ESS 18.10.2
+
 ;;==============================================================================
 ;;
 ;; 1  OS-SPECIFICS
@@ -827,8 +829,8 @@
 (global-set-key [?\M-\]]    'scroll-up-1             )
 (global-set-key [?\M-{]     'backward-paragraph      ) ; backward-paragraph
 (global-set-key [?\M-}]     'forward-paragraph       ) ; forward-paragraph
-(global-set-key [?\M-\\]    'transpose-windows       ) ; delete-horizontal-space
-(global-set-key [?\M-']     'set-tab-width           ) ; abbrev-prefix-mark
+(global-set-key [?\M-']     'transpose-windows       ) ; delete-horizontal-space
+(global-set-key [?\M-\\]    'set-tab-width           ) ; abbrev-prefix-mark
 (global-set-key [?\M-,]     'memo                    ) ; tags-loop-continue
 (global-set-key [?\M-.]     'dot-emacs-edit          ) ; find-tag
 (global-set-key [?\M-/]     'delete-comments         ) ; dabbrev-expand
@@ -3507,7 +3509,7 @@ echo.
   (defun html-tidy ()
     "Validate current HTML file with tidy."
     (interactive)
-    (compile (concat "tidy -e -utf8 " (buffer-name))))
+    (compile (concat "tidy -e -omit -utf8 " (buffer-name))))
   (defun html-toggle-links ()
     "Toggle highlighting of links (red:href, yellow:most, green:some)."
     (interactive)
@@ -6934,8 +6936,6 @@ break
     (local-set-key [M-return]      'org-open-at-point ) ; org-meta-return
     (local-set-key [M-home]        'org-insert-h3-down)
     (local-set-key [M-end]         'org-colon-paragraph)
-    (local-set-key [M-up]          'org-justify-down  )
-    (local-set-key [M-down]        'org-return-down   )
     (local-set-key [?\C-c C-up]    'org-shiftmetaup   ) ; alternative M-S arrows
     (local-set-key [?\C-c C-down]  'org-shiftmetadown ) ; alternative M-S arrows
     (local-set-key [?\C-c C-left]  'org-shiftmetaleft ) ; alternative M-S arrows
