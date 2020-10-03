@@ -3,6 +3,7 @@
 xset -b  # disable bell
 
 # Path
+export PATH="/usr/sbin:$PATH"
 export PATH="~/admb/bin:$PATH"  # admb
 export PATH="~/bin:$PATH"       # ~/bin
 export PATH="/opt/bin:$PATH"    # /opt/bin
@@ -30,15 +31,16 @@ export PS1='\[\e[1;47;37m\]\h\[\e[0m\]\w $ '
 export SHELL=/bin/bash
 
 # Locale
-export LANG=is_IS.UTF-8
-export NLS_LANG=icelandic_america.AL32UTF8  # Oracle UTF-8 output
-export LC_NUMERIC=en_US.UTF-8
+export LANG=en_US.UTF-8  # export LANG=is_IS.UTF-8
+# export NLS_LANG=icelandic_america.AL32UTF8  # Oracle UTF-8 output
+# export LC_NUMERIC=en_US.UTF-8
+export LC_TIME=en_CA.UTF-8  # show date as 1999-12-31 in Dolphin
 
 # Program: admb
 export ADMB_HOME=~/admb
 
 # Program: emacs
-export EMACS_VERSION=26.3
+export EMACS_VERSION=27.1
 if [[ -f /opt/emacs/$EMACS_VERSION/bin/emacs ]]; then
   export EDITOR="/opt/emacs/$EMACS_VERSION/bin/emacs -nw --no-site-file"
 else
@@ -69,7 +71,7 @@ export R_HISTSIZE=5000
 if [[ -z $R_LIBS_SITE ]]; then export R_LIBS_SITE=~/r/site; fi
 export R_LIBS_USER=~/r/library
 export R_MAKEVARS_USER=~/r/Makevars
-export R_VERSION=3.6.3
+export R_VERSION=4.0.2
 export RSTUDIO_WHICH_R=~/bin/R
 export TMPDIR=/tmp
 # export TZ=UTC
@@ -84,6 +86,7 @@ alias 'admb-ide'='~/bin/emacs -Q -mm \
 alias benchmark='time'
 alias bin='chmod 700 ~/bin/*'
 alias br='git branch'
+alias 'br-full'='git branch -av'
 alias 'byte-compile'='emacs -batch -f batch-byte-compile *.el'
 alias capslock='echo press both Shift keys'
 alias cd..='cd ..'
@@ -113,7 +116,7 @@ alias 'find?'='echo "find -name '\''*.R'\'' -exec wc -L {} \;"'
 alias g='gwenview'
 alias 'git-unset-sshaskpass'='unset SSH_ASKPASS'
 alias 'git-url'=url
-alias gr='grep -IinRs --exclude-dir=.git'
+alias gr='grep -IinRs --exclude-dir=.git --exclude-dir=.svn'
 alias grep='grep --color=auto'
 alias hi='echo "sudo openvpn --config ~/core/arni/vinna/hi/vpn/client.ovpn &"'
 alias htmltidytree='find -iname "*\.html" \
@@ -125,6 +128,7 @@ alias ifind='find -iname'
 alias 'ip-address'='dig +short myip.opendns.com @resolver1.opendns.com'
 alias J='ssh -X hafstokkur'
 alias j='ssh hafdruna'
+alias k='konsole . &'
 alias l="ls -x $LS_OPTIONS"
 alias 'l.'="ls -dx $LS_OPTIONS .*"
 alias l1="ls -1 $LS_OPTIONS"
@@ -160,6 +164,7 @@ alias merge='git merge'
 alias mp3info='id3info'
 alias nw='emacs -nw'
 alias optipng='optipng -strip all'
+alias pdfbook='book'
 alias prtscr='gnome-screenshot -d 5'
 alias push='git push'
 alias rd='rmdir'
@@ -181,7 +186,6 @@ alias space='rename "s/ /_/g"'
 alias sqlitestudio='/opt/sqlitestudio/sqlitestudio'
 alias stash='git stash'
 alias stk='cd /opt/stk/0.9.2; run_game.sh'
-alias svnADMB='echo "svn co svn+ssh://admb-project.org/trunk admb-trunk"'
 alias t='sudo apt upgrade'
 alias tag='git tag'
 alias 'tag-full'='git show -s --format="%d $GIT_FORMAT" `git tag`'
