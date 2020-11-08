@@ -2,14 +2,15 @@
 {
   suppressPackageStartupMessages(library(gdata))  # load gdata first to
   suppressPackageStartupMessages(library(arni))   # get mv() from arni
-  library(icesTAF)
+  ## library(icesTAF)  # not with 36 dependencies
 
   ## .libPaths(sort(.libPaths())) # user library in first slot
   options(continue="  ")
   options(help_type="html")
   options(repos=c(
             ## https may not work on a VM
-            "http://mirrors.dotsrc.org/cran",
+            "http://cloud.r-project.org",
+            ## "http://mirrors.dotsrc.org/cran",
             ## "http://cran.uib.no",
             ## "http://cran.hafro.is",
             ## "http://cran.r-project.org",
@@ -200,6 +201,17 @@
   autoload("gam",         "mgcv") # gam (simon wood)
   autoload("summary.gam", "mgcv") # summary
 
+  ## MS SQL Server
+  autoload("dbOverview",    "MSSQL")  # dims and colnames
+  autoload("dbStorage",     "MSSQL")  # storage size
+  autoload("dbTime",        "MSSQL")  # time created and modified
+  autoload("tableDim",      "MSSQL")  # dim
+  autoload("tableHead",     "MSSQL")  # first rows
+  autoload("tableNcol",     "MSSQL")  # ncol
+  autoload("tableNrow",     "MSSQL")  # nrow
+  autoload("tableOverview", "MSSQL")  # data types and nrow
+  autoload("tableQuote",    "MSSQL")  # quote name
+
   ## Bravington's toolbox
   autoload("foodweb", "mvbutils") # visualize function dependencies
 
@@ -258,6 +270,15 @@
 
   ## R markdown
   autoload("render", "rmarkdown") # Rmd -> HTML
+
+  ## ODBC
+  autoload("odbcConnect",     "RODBC") # connect
+  autoload("odbcClose",       "RODBC") # close
+  autoload("odbcDataSources", "RODBC") # list databases
+  autoload("sqlColumns",      "RODBC") # table columns
+  autoload("sqlFetch",        "RODBC") # get whole table
+  autoload("sqlQuery",        "RODBC") # query part of table
+  autoload("sqlTables",       "RODBC") # list tables
 
   ## Write Rd pages
   autoload("roxygenize", "roxygen2") # write Rd pages
