@@ -1,7 +1,6 @@
 ;;------------
 ;; 2.3  Faces
 ;;------------
-(set-frame-font "-adobe-courier-medium-r-*-*-14-*-*-*-*-*-iso8859-1")
 (setq-default line-spacing 1) ; or :height 126
 ;;------------------
 ;; 3.2  Executables
@@ -23,60 +22,60 @@
 ;;-----------
 ;; 5.3  View
 ;;-----------
-;; (defun font-1 ()
-;;   "Set default font to Courier bold 2"
-;;   (interactive)
-;;   (setq-default line-spacing 0)
-;;   (set-frame-font "-ibm-courier-bold-r-*-*-2-*-*-*-*-*-iso8859-1"))
-;; (defun font-2 ()
-;;   "Set default font to Courier bold 3"
-;;   (interactive)
-;;   (setq-default line-spacing 0)
-;;   (set-frame-font "-ibm-courier-bold-r-*-*-3-*-*-*-*-*-iso8859-1"))
+;;  8  Noto Sans Mono 14  condensed (235 chars)
+;;  9  Noto Mono 16       clearer than courier
+;; 10  Libertine Mono 16  serif but mono
+
 (defun font-1 ()
-  "Set default font to Bitstream Vera Sans Mono 1"
+  "Set default font to Courier 12"
   (interactive)
   (setq-default line-spacing 0)
-  (set-frame-font "-*-bitstream vera sans mono-normal-normal-*-*-1\
--*-*-*-*-*-iso8859-1"))
+  (set-frame-font "-*-Latin Modern Mono-normal-*-*-*-14-*-*-*-*-*-*-*"))
 (defun font-2 ()
-  "Set default font to Bitstream Vera Sans Mono 3" (interactive)
-  (setq-default line-spacing 0)
-  (set-frame-font "-*-bitstream vera sans mono-normal-normal-*-*-3\
--*-*-*-*-*-iso8859-1"))
+  "Set default font to Courier 12"
+  (interactive)
+  (setq-default line-spacing 1)
+  (set-frame-font "-*-Courier 10 Pitch-normal-*-*-*-12-*-*-*-*-*-*-*"))
 (defun font-3 ()
-  "Set default font to Fixed 6" (interactive)
-  (setq-default line-spacing 0)
-  (set-frame-font "-*-fixed-normal-normal-*-*-6-*-*-*-*-*-iso8859-1"))
+  "Set default font to Courier 12"
+  (interactive)
+  (setq-default line-spacing 1)
+  (set-frame-font "-*-Courier 10 Pitch-normal-*-*-*-12-*-*-*-*-*-*-*"))
 (defun font-4 ()
-  "Set default font to Courier 12" (interactive)
-  (setq-default line-spacing 3)
-  (set-frame-font "-adobe-courier-medium-r-*-*-12-*-*-*-*-*-iso8859-1"))
+  "Set default font to Courier 14"
+  (interactive)
+  (setq-default line-spacing 1)
+  (set-frame-font "-*-Courier 10 Pitch-normal-*-*-*-14-*-*-*-*-*-*-*"))
 (defun font-5 ()
-  "Set default font to Courier 14" (interactive)
-  (setq-default line-spacing 3)
-  (set-frame-font "-adobe-courier-medium-r-*-*-14-*-*-*-*-*-iso8859-1"))
+  "Set default font to Courier 16"
+  (interactive)
+  (setq-default line-spacing 1)
+  (set-frame-font "-*-Courier 10 Pitch-normal-*-*-*-16-*-*-*-*-*-*-*"))
 (defun font-6 ()
-  "Set default font to Courier bold 14" (interactive)
+  "Set default font to Courier bold 16"
+  (interactive)
   (setq-default line-spacing 1)
-  (set-frame-font "-adobe-courier-bold-r-*-*-14-*-*-*-*-*-iso8859-1"))
+  (set-frame-font "-*-Courier 10 Pitch-bold-*-*-*-16-*-*-*-*-*-*-*"))
 (defun font-7 ()
-  "Set default font to Courier bold 20" (interactive)
-  (setq-default line-spacing 3)
-  (set-frame-font "-adobe-courier-bold-r-*-*-20-*-*-*-*-*-iso8859-1"))
+  "Set default font to Courier bold 36"
+  (interactive)
+  (setq-default line-spacing 1)
+  (set-frame-font "-bitstream-Courier 10 Pitch-bold-*-*-*-36-*-*-*-*-*-*-*"))
 (defun font-8 ()
-  "Set default font to Helvetica 10" (interactive)
-  (setq-default line-spacing 1)
-  (set-frame-font "-*-helvetica-normal-r-*-*-14-*-*-*-*-*-iso8859-1"))
+  "Set default font to Noto Sans Mono 14"
+  (interactive)
+  (setq-default line-spacing 0)
+  (set-frame-font "-*-Noto Sans Mono-normal-*-*-*-14-*-*-*-*-*-*-*"))
 (defun font-9 ()
-  "Set default font to Helvetica 12" (interactive)
+  "Set default font to Noto Mono 16"
+  (interactive)
   (setq-default line-spacing 1)
-  (set-frame-font "-*-helvetica-normal-r-*-*-12-*-*-*-*-*-iso8859-1"))
+  (set-frame-font "-*-Noto Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
 (defun font-0 ()
-  "Set default font to New Century Schoolbook 10" (interactive)
+  "Set default font to Linux Libertine Mono 16"
+  (interactive)
   (setq-default line-spacing 1)
-  (set-frame-font "-*-new century schoolbook-medium-r-*--10\
--*-*-*-*-*-iso8859-1"))
+  (set-frame-font "-*-Linux Libertine Mono O-normal-*-*-*-16-*-*-*-*-*-*-*"))
 ;; (defalias 'frame-maximize 'ignore) ; not required on Hafstrambur
 ;; (defun frame-maximize ()
 ;;   "Maximize frame."
