@@ -74,6 +74,7 @@
       (progn  ; black  red  green  yellow  blue  magenta  cyan  white
         (set-face-attribute 'default nil :background -)
         (set-face-attribute 'escape-glyph nil :foreground "red")
+        (set-face-attribute 'fixed-pitch nil :family -)
         (set-face-attribute 'font-lock-builtin-face nil :foreground "red"
                             :weight -)
         (set-face-attribute 'font-lock-comment-face nil :foreground "yellow"
@@ -106,6 +107,7 @@
     (progn
       (set-face-attribute 'default nil :background "gray85")
       (set-face-attribute 'escape-glyph nil :foreground "brown4" :weight 'bold)
+      (set-face-attribute 'fixed-pitch nil :family -)
       (set-face-attribute 'font-lock-builtin-face nil :foreground "red")
       (set-face-attribute 'font-lock-comment-face nil :foreground "gray60")
       (set-face-attribute 'font-lock-comment-delimiter-face nil :foreground -)
@@ -1437,6 +1439,8 @@ See also `line-end-position'."
 ;;-----------
 (defvar default-comment-color (fg 'font-lock-comment-face)
   "Default comment color. See `toggle-comments'.")
+(defvar default-escape-color (fg 'escape-glyph)
+  "Default comment color. See `toggle-escape-glyphs'.")
 (defvar green-cite nil
   "Non-nil if bibliographic citations are currently green.
 See `toggle-green-cite'.")
@@ -1500,13 +1504,13 @@ See also `toggle-red-special'."
 (defun toggle-comments ()
   "Toggle invisible comments."
   (interactive)
-  (if (string-equal (fg 'font-lock-comment-face) default-comment-color)
-      (set-face-attribute 'font-lock-comment-face nil :foreground (bg 'default))
-    (set-face-attribute 'font-lock-comment-face nil
-                        :foreground default-comment-color))
+  (if (string-equal (fg 'font-lock-comment-face)(bg 'default))
+      (set-face-attribute 'font-lock-comment-face nil
+                          :foreground default-comment-color)
+    (set-face-attribute 'font-lock-comment-face nil :foreground (bg 'default)))
   (message "Comments %s"
-           (if (string-equal (fg 'font-lock-comment-face) default-comment-color)
-               "ON" "OFF")))
+           (if (string-equal (fg 'font-lock-comment-face)(bg 'default))
+               "OFF" "ON")))
 (defun toggle-red-non-ascii ()
   "Toggle red highlighting of non-ASCII characters."
   (interactive)
@@ -1540,11 +1544,11 @@ read or save."
 (defun toggle-escape-glyphs ()
   "Toggle invisible escape glyphs."
   (interactive)
-  (if invisible-escapes
-      (set-face-attribute 'escape-glyph nil :foreground (bg 'default))
-    (set-face-attribute 'escape-glyph nil :foreground "brown4"))
-  (setq invisible-escapes (not invisible-escapes))
-  (message "Invisible escape glyphs %s" (if invisible-escapes "ON" "OFF")))
+  (if (string-equal (fg 'escape-glyph)(bg 'default))
+      (set-face-attribute 'escape-glyph nil :foreground default-escape-color)
+    (set-face-attribute 'escape-glyph nil :foreground (bg 'default)))
+  (message "Escape glyphs %s"
+           (if (string-equal (fg 'escape-glyph)(bg 'default)) "OFF" "ON")))
 (defun toggle-green-cite ()
   "Toggle green highlighting of citations (like this 2000) and this (2000)."
   (interactive)
@@ -4993,7 +4997,7 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
 ;;----------
 ;; 6.18 TMB
 ;;----------
-(require 'tmb)
+(require 'tmb nil t)
 (defun arni-tmb-hook ()
   ;; (setq tmb-compile-args ",'-fno-gnu-unique -O0 -Wall'") ; in .emacs-linux.el
   ;; (setq tmb-debug-args ",'-fno-gnu-unique -g -O0'") ; in .emacs-linux.el
@@ -6636,8 +6640,9 @@ See `dired-toggle-dot-files'.")
 (defun arni-markdown-hook ()
   (setq make-backup-files t)
   (font-lock-mode 1) ; refresh
-  (set-face-attribute 'markdown-pre-face nil :inherit - :foreground "brown4")
-  (set-face-attribute 'markdown-inline-code-face nil :inherit markdown-pre-face)
+  (set-face-attribute 'markdown-code-face nil :background -
+                      :foreground "brown4")
+  (set-face-attribute 'markdown-pre-face nil :inherit -)
   (local-unset-key [backtab]      )
   (local-unset-key [S-iso-lefttab])
   (local-unset-key [M-left]       )
