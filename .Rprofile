@@ -357,7 +357,7 @@
 .Last <- function()
 {
   setwd(if(dir.exists("c:/home/r")) "c:/home/r"
-        else if(dir.exists(path.expand("~/r"))) dir.exists(path.expand("~/r"))
+        else if(dir.exists(path.expand("~/r"))) path.expand("~/r")
         else getwd())
 
   ## Backup user workspace
