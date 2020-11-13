@@ -2,14 +2,14 @@
 {
   suppressPackageStartupMessages(library(gdata))  # load gdata first to
   suppressPackageStartupMessages(library(arni))   # get mv() from arni
-  ## library(icesTAF)  # not with 36 dependencies
+  library(icesTAF)
 
   ## .libPaths(sort(.libPaths())) # user library in first slot
   options(continue="  ")
   options(help_type="html")
   options(repos=c(
             ## https may not work on a VM
-            "http://cloud.r-project.org",
+            CRAN="http://cloud.r-project.org",
             ## "http://mirrors.dotsrc.org/cran",
             ## "http://cran.uib.no",
             ## "http://cran.hafro.is",
