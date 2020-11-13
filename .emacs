@@ -214,8 +214,9 @@
 (autoload 'ess-bugs-mode     "ess-bugs-d"        "Edit BUGS code."          t)
 (defalias 'bugs-mode 'ess-bugs-mode)
 (autoload 'html-helper-mode  "html-helper-mode"  "Edit HTML documents."     t)
-(autoload 'julia-mode        "ess-site"          "Edit Julia code."         t)
 (autoload 'iss-mode          "iss-mode"          "Edit Inno Setup scripts." t)
+(autoload 'json-mode         "json-mode"         "Edit JSON data."          t)
+(autoload 'julia-mode        "ess-site"          "Edit Julia code."         t)
 (autoload 'markdown-mode     "markdown-mode"     "Edit Markdown document."  t)
 (autoload 'php-mode          "php-mode"          "Edit PHP code."           t)
 (autoload 'R                 "ess-site"          "Interactive R session."   t)
@@ -300,6 +301,7 @@
         ("\\.gdbinit$"     . conf-space-mode)
         ("\\.gitignore$"   . conf-space-mode)
         ("\\.inputrc$"     . conf-space-mode)
+        ("\\.json$"        . json-mode)
         ("\\.lst$"         . conf-space-mode)
         ("\\.muttrc$"      . conf-space-mode)
         ("\\.nanorc$"      . conf-space-mode)
@@ -3605,7 +3607,9 @@ echo.
 ;;-----------------
 ;; 6.12 JavaScript
 ;;-----------------
-(defun arni-js-hook ()(setq js-indent-level 2))
+(defun arni-js-hook ()
+  (setq js-indent-level 2)
+  (local-unset-key [?\M-.])) ; reactivate dot-emacs-edit
 (add-hook 'js-mode-hook 'arni-js-hook)
 ;;------------
 ;; 6.13 LaTeX
