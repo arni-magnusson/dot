@@ -34,7 +34,7 @@ export SHELL=/bin/bash
 export LANG=en_US.UTF-8  # export LANG=is_IS.UTF-8
 # export NLS_LANG=icelandic_america.AL32UTF8  # Oracle UTF-8 output
 # export LC_NUMERIC=en_US.UTF-8
-export LC_TIME=en_CA.UTF-8  # show date as 1999-12-31 in Dolphin
+# export LC_TIME=en_CA.UTF-8  # show date as 1999-12-31 in Dolphin (~monospace)
 
 # Program: admb
 export ADMB_HOME=~/admb
