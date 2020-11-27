@@ -112,9 +112,11 @@
   autoload("panel.xYplot",    "Hmisc") # 2d error bars
 
   ## ICES advice
+  autoload("agesFbar",  "icesAdvice") # ages for Fbar
   autoload("Bpa",       "icesAdvice") # Bpa from Blim
   autoload("DLS3.2",    "icesAdvice") # DLS method 3.2
   autoload("Fpa",       "icesAdvice") # Fpa from Flim
+  autoload("gss",       "icesAdvice") # agesFbar example
   autoload("icesRound", "icesAdvice") # rounding method
   autoload("mohn",      "icesAdvice") # retro bias
   autoload("read.dls",  "icesAdvice") # read DLS output
