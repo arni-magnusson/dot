@@ -74,7 +74,7 @@
 (defun font-0 ()
   "Set default font to Linux Libertine Mono 16"
   (interactive)
-  (setq-default line-spacing 1)
+  (setq-default line-spacing 2)
   (set-frame-font "-*-Linux Libertine Mono O-normal-*-*-*-16-*-*-*-*-*-*-*"))
 ;; (defalias 'frame-maximize 'ignore) ; not required on Hafstrambur
 ;; (defun frame-maximize ()
