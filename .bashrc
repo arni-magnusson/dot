@@ -66,6 +66,7 @@ export TEXINPUTS='.//:~/latex/cls//:~/latex/sty//:'
 export LPDEST=marsvin
 
 # Program: r
+export _R_CHECK_SYSTEM_CLOCK_=FALSE
 export R_HISTFILE=~/r/.Rhistory
 export R_HISTSIZE=5000
 if [[ -z $R_LIBS_SITE ]]; then export R_LIBS_SITE=~/r/site; fi
@@ -78,7 +79,7 @@ export TMPDIR=/tmp
 
 # Alias
 alias ..='cd ..'
-alias a='alpine'
+# alias a='alpine'
 alias add='git add'
 alias adstudio='~/bin/emacs -Q -mm -l ~/git/admb-project/adstudio/dot/.emacs'
 alias 'admb-ide'='~/bin/emacs -Q -mm \
