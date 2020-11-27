@@ -1,4 +1,4 @@
-(setq byte-compile-warnings '(cl-functions))  ; Emacs 27.1 with ESS 18.10.2
+(setq byte-compile-warnings '(cl-functions)) ; Emacs 27.1 with ESS 18.10.2
 
 ;;==============================================================================
 ;;
@@ -71,7 +71,7 @@
   "Apply my preferred colors."
   (interactive) ; provide enough details to reset faces
   (if (not window-system)
-      (progn  ; black  red  green  yellow  blue  magenta  cyan  white
+      (progn ; black  red  green  yellow  blue  magenta  cyan  white
         (set-face-attribute 'default nil :background -)
         (set-face-attribute 'escape-glyph nil :foreground "red")
         (set-face-attribute 'fixed-pitch nil :family -)
@@ -3253,7 +3253,7 @@ echo.
                 html-helper-any-list-item-start))
   (setq html-helper-search-limit 20000)
   (setq html-helper-font-lock-keywords
-        ;; removed 'tword', containing h1 and title
+        ;; Removed 'tword', containing h1 and title
         (let ((bword ; added title
                "\\(b\\|title\\|h[1-4]\\|strong\\)\\([ \t\n]+[^>]+\\)?")
               (iword
@@ -3652,13 +3652,13 @@ See `LaTeX-toggle-quotes'.")
   (setq TeX-command-Show "View")         ; ghostview is default viewer
   ;; Don't report under- and overfull boxes (C-c C-w to toggle)
   (setq TeX-debug-bad-boxes nil)
-  (setq LaTeX-item-indent 0)             ; indent list items
-  (setq TeX-save-query nil)              ; save without asking
+  (setq LaTeX-item-indent 0)           ; indent list items
+  (setq TeX-save-query nil)            ; save without asking
   (setq font-latex-fontify-script nil) ; suppress tiny super and subscript
   (arni-colors)
   (add-to-list 'LaTeX-clean-intermediate-suffixes "\\.vrb") ; Beamer clean .vrb
   (add-to-list 'LaTeX-verbatim-environments-local "lstlisting")
-  (font-latex-set-syntactic-keywords)      ; highlight
+  (font-latex-set-syntactic-keywords) ; highlight
   (add-to-list 'LaTeX-verbatim-environments-local "semiverbatim")
   (font-latex-set-syntactic-keywords) ; Beamer highlight
   (add-to-list 'LaTeX-verbatim-macros-with-delims-local "lstinline")
@@ -6628,8 +6628,8 @@ See `dired-toggle-dot-files'.")
 ;;------------
 (defun arni-magit-hook ()
   (message nil)
-  ;; (add-to-list 'safe-local-variable-values  ; suppress warning when viewing commit
-               ;; '(git-commit-major-mode . git-commit-elisp-text-mode))
+  (add-to-list 'safe-local-variable-values ; suppress warning when viewing a
+               '(git-commit-major-mode . git-commit-elisp-text-mode)) ; commit
   (set-face-attribute 'magit-diff-added nil
                       :background "#bbeebb" :foreground "gray50")
   (set-face-attribute 'magit-diff-added-highlight nil
