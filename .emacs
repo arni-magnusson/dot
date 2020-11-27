@@ -217,6 +217,7 @@
 (autoload 'iss-mode          "iss-mode"          "Edit Inno Setup scripts." t)
 (autoload 'json-mode         "json-mode"         "Edit JSON data."          t)
 (autoload 'julia-mode        "ess-site"          "Edit Julia code."         t)
+(autoload 'magit-status      "magit"             "Browse Git repository."   t)
 (autoload 'markdown-mode     "markdown-mode"     "Edit Markdown document."  t)
 (autoload 'php-mode          "php-mode"          "Edit PHP code."           t)
 (autoload 'R                 "ess-site"          "Interactive R session."   t)
@@ -507,9 +508,9 @@
 ;; Don't use  a                 s    x
 ;; Default     b d      k  no  r   vw   0..9       \
 ;;                                           BKSP     ESC
-;; Custom       c  fghij lm  pq  tu   y      -=[ ;' ,./          )
+;; Custom       c efghij lm  pq  tu   y      -=[ ;' ,./          )
 ;;            SPC TAB RET
-;; Available      e                    z    `   ]
+;; Available                           z    `   ]
 ;;                        HOME END PGUP PGDN      DEL
 ;;------------------------------------------------------------------------------
 ;; C-x C
@@ -707,7 +708,7 @@
 (global-set-key [?\C-x ?4]    'maximize-window-top      ) ; [map]
 (global-set-key [?\C-x ?$]    'insert-euro             ) ; set-selective-display
 (global-set-key [?\C-x ?-]    'insert-en-dash) ; shrink-window-if-larger-than...
-(global-set-key [?\C-x ?=]    'duplicate                ) ; what-cursor-position
+(global-set-key [?\C-x ?=]    'ediff-current-file       ) ; what-cursor-position
 (global-set-key [?\C-x ?+]    'split-window-grid        ) ; balance-windows
 (global-set-key [?\C-x ?\[]   'git-log-clean            ) ; backward-page
 (global-set-key [?\C-x ?\\]   'transpose-windows        )
@@ -720,8 +721,9 @@
 (global-set-key [?\C-x ?N]    'new-buffer               )
 (global-set-key [?\C-x ?T]    'titlecase-dwim           )
 (global-set-key [?\C-x ?c]    'save-buffers-kill-emacs  )
+(global-set-key [?\C-x ?e]    'region-to-line      ) ; kmacro-end-and-call-macro
 (global-set-key [?\C-x ?f]    'find-file-literally      ) ; set-fill-column
-(global-set-key [?\C-x ?g]    'region-to-line           )
+(global-set-key [?\C-x ?g]    'magit-status             )
 (global-set-key [?\C-x ?h]    'copy-buffer              ) ; mark-whole-buffer
 (global-set-key [?\C-x ?i]    'insert-date              ) ; insert-file
 (global-set-key [?\C-x ?j]    'region-forward-paragraph )
@@ -811,6 +813,7 @@
 (global-set-key [?\C-\M-a]  'goto-non-ascii          ) ; beginning-of-defun
 (global-set-key [?\C-\M-e]  'query-replace-regexp    ) ; end-of-defun
 (global-set-key [?\C-\M-g]  'goto-char               )
+(global-set-key [?\C-\M-h]  'backward-delete-word    ) ; M-backspace in terminal
 (global-set-key [?\C-\M-j]  'join-line-nospace       ) ; indent-new-comment-line
 (global-set-key [?\C-\M-n]  'pull-line-or-region-down) ; forward-list
 (global-set-key [?\C-\M-p]  'pull-line-or-region-up  ) ; backward-list
@@ -2231,6 +2234,12 @@ which doesn't compile."
   (dotimes (i 256)
     (insert (format "%4d | \\%03o | \\x%02x | %c\n" i i i i)))
   (goto-char (point-min)))
+(defun list-colors-fullscreen ()
+  "List colors in full screen."
+  (interactive)
+  (list-colors-display)
+  (delete-other-windows (get-buffer-window "*Colors*"))
+  (message nil))
 ;;==============================================================================
 ;;
 ;; 6  LANGUAGE MODES
@@ -6614,8 +6623,53 @@ See `dired-toggle-dot-files'.")
     (if (< (line-number-at-pos) 3)
         (Info-top))))
 (add-hook 'Info-mode-hook 'arni-Info-hook)
+;;------------
+;; 7.22 Magit
+;;------------
+(defun arni-magit-hook ()
+  (message nil)
+  ;; (add-to-list 'safe-local-variable-values  ; suppress warning when viewing commit
+               ;; '(git-commit-major-mode . git-commit-elisp-text-mode))
+  (set-face-attribute 'magit-diff-added nil
+                      :background "#bbeebb" :foreground "gray50")
+  (set-face-attribute 'magit-diff-added-highlight nil
+                      :background "lightgreen" :foreground "darkgreen")
+  (set-face-attribute 'magit-diff-context-highlight nil
+                      :background - :foreground "gray60")
+  (set-face-attribute 'magit-diff-context nil :foreground "gray60")
+  (set-face-attribute 'magit-diff-removed nil
+                      :background "#ffbbaa" :foreground "gray50")
+  (set-face-attribute 'magit-diff-removed-highlight nil
+                      :background "lightsalmon" :foreground "darkred")
+  (local-unset-key [?\M-n]) ; reactivate bs-cycle-next
+  (local-unset-key [?\M-p]) ; reactivate bs-cycle-previous
+  (local-set-key [f5] 'magit-refresh                 ) ; revert-buffer
+  (local-set-key [?E] 'magit-ediff-dwim              ) ; magit-ediff [map]
+  (local-set-key [?N] 'magit-section-forward-sibling )
+  (local-set-key [?P] 'magit-section-backward-sibling) ; magit-push [map]
+  (local-set-key [?V] 'magit-show-commit-other-window) ; magit-revert [map]
+  (local-set-key [?d] 'magit-diff-dwim               ) ; magit-diff [map]
+  (local-set-key [?e] 'magit-ediff-current-edits     ) ; magit-ediff-dwim
+  (local-set-key [?l] 'magit-log-current             ) ; magit-log [map]
+  (local-set-key [?t] 'magit-show-refs               ) ; magit-tag [map]
+  (local-set-key [?v] 'magit-diff-other-window       ) ; magit-reverse
+  (define-key magit-diff-mode-map [?=] 'magit-diff-more-context)
+  (define-key magit-file-section-map [?a] 'magit-stage)
+  (defun magit-diff-other-window ()
+    "Show diff in other window."
+    (interactive)
+    (save-selected-window (magit-diff-dwim)))
+  (defun magit-ediff-current-edits ()
+    "Compare current edits with HEAD."
+    (interactive)
+    (magit-ediff-show-working-tree (magit-file-at-point t t)))
+  (defun magit-show-commit-other-window ()
+    "Show commit in other window."
+    (interactive)
+    (save-selected-window (magit-show-commit (magit-commit-at-point)))))
+(add-hook 'magit-mode-hook 'arni-magit-hook)
 ;;----------
-;; 7.22 Man
+;; 7.23 Man
 ;;----------
 (defun arni-nroff-hook ()
   (font-lock-mode 1)
@@ -6639,7 +6693,7 @@ See `dired-toggle-dot-files'.")
   (set-face-attribute 'woman-italic nil :inherit - :underline t))
 (add-hook 'woman-pre-format-hook 'arni-woman-hook)
 ;;---------------
-;; 7.23 Markdown
+;; 7.24 Markdown
 ;;---------------
 (defun arni-markdown-hook ()
   (setq make-backup-files t)
@@ -6745,7 +6799,7 @@ break
                         ".html"))))
 (add-hook 'markdown-mode-hook 'arni-markdown-hook)
 ;;------------
-;; 7.24 Occur
+;; 7.25 Occur
 ;;------------
 (defun arni-occur-hook ()
   (local-unset-key [?\M-n]) ; reactivate bs-cycle-next
@@ -6849,7 +6903,7 @@ break
 (add-hook 'occur-mode-hook 'arni-occur-hook)
 (add-hook 'occur-hook 'arni-occur-switch-hook)
 ;;----------
-;; 7.25 Org
+;; 7.26 Org
 ;;----------
 (defun arni-org-hook ()
   (setq make-backup-files t)
@@ -7098,7 +7152,7 @@ break
     (message "1. [down] and [M-down].\n2. [M-home], [M-end], [M-up].")))
 (add-hook 'org-mode-hook 'arni-org-hook)
 ;;--------------
-;; 7.26 Outline
+;; 7.27 Outline
 ;;--------------
 (if (<= emacs-major-version 24)
     (defun outline-show-all ()
@@ -7181,7 +7235,7 @@ to the shortest `outline-regexp'.")
       (outline-return))))
 (add-hook 'outline-mode-hook 'arni-outline-hook)
 ;;---------------
-;; 7.27 Packages
+;; 7.28 Packages
 ;;---------------
 ;; (if (>= emacs-major-version 24)(require 'package))
 ;; (setq package-archives '(("gnu"       . "http://elpa.gnu.org/packages/")))
@@ -7215,14 +7269,14 @@ to the shortest `outline-regexp'.")
     (package-menu-describe-package)))
 (add-hook 'package-menu-mode-hook 'arni-package-menu-hook)
 ;;-------------
-;; 7.28 Proced
+;; 7.29 Proced
 ;;-------------
 (defun arni-proced-hook ()
   (local-set-key [?h] 'proced-omit-processes)
   (local-set-key [?r] 'revert-buffer       ))
 (add-hook 'proced-mode-hook 'arni-proced-hook)
 ;;--------------
-;; 7.29 Recentf
+;; 7.30 Recentf
 ;;--------------
 (defun arni-recentf-dialog-hook ()
   (local-unset-key [escape])
@@ -7320,7 +7374,7 @@ to the shortest `outline-regexp'.")
     (widget-button-press (line-end-position))))
 (add-hook 'recentf-dialog-mode-hook 'arni-recentf-dialog-hook)
 ;;-------------
-;; 7.30 Regexp
+;; 7.31 Regexp
 ;;-------------
 (defun arni-reb-hook ()
   (reb-toggle-case)
@@ -7338,13 +7392,13 @@ to the shortest `outline-regexp'.")
     (kill-buffer "*RE-Builder*")))
 (add-hook 'reb-mode-hook 'arni-reb-hook)
 ;;-----------
-;; 7.31 reST
+;; 7.32 reST
 ;;-----------
 (defun arni-rst-hook ()
   (font-lock-mode 1))
 (add-hook 'rst-mode-hook 'arni-rst-hook)
 ;;-------------
-;; 7.32 Search
+;; 7.33 Search
 ;;-------------
 (setq isearch-lax-whitespace nil)
 (defun arni-isearch-hook ()
@@ -7373,7 +7427,7 @@ to the shortest `outline-regexp'.")
     (lazy-highlight-cleanup)))
 (add-hook 'isearch-mode-hook 'arni-isearch-hook)
 ;;---------------
-;; 7.33 Speedbar
+;; 7.34 Speedbar
 ;;---------------
 (defun arni-speedbar-hook ()
   (setq speedbar-frame-parameters
@@ -7402,7 +7456,7 @@ to the shortest `outline-regexp'.")
   (define-key speedbar-file-key-map [?u]        'speedbar-up-directory        ))
 (add-hook 'speedbar-mode-hook 'arni-speedbar-hook)
 ;;-------------
-;; 7.34 Tabbar
+;; 7.35 Tabbar
 ;;-------------
 (defun arni-tabbar-hook ()
   (defun tabbar-common ()
@@ -7422,7 +7476,7 @@ to the shortest `outline-regexp'.")
   (global-set-key [M-end]  'end-of-buffer-other-window     ))
 (add-hook 'tabbar-quit-hook 'arni-tabbar-quit-hook)
 ;;-----------
-;; 7.35 Text
+;; 7.36 Text
 ;;-----------
 (defun arni-text-hook ()
   (setq indent-line-function 'indent-relative)
@@ -7452,7 +7506,7 @@ to the shortest `outline-regexp'.")
 (defalias 'longlines-mode 'visual-line-mode)
 ;; (setq visual-line-fringe-indicators '(nil right-curly-arrow))
 ;;---------
-;; 7.36 VC
+;; 7.37 VC
 ;;---------
 (defun vc-diff-select ()
   "Diff two selected file versions."
