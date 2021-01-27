@@ -1,7 +1,7 @@
 .First <- function()
 {
-  suppressPackageStartupMessages(library(gdata))  # load gdata first to
-  suppressPackageStartupMessages(library(arni))   # get mv() from arni
+  suppressPackageStartupMessages(library(arni))
+  suppressPackageStartupMessages(library(gdata))
   library(icesTAF)
 
   ## .libPaths(sort(.libPaths())) # user library in first slot
