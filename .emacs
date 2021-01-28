@@ -331,7 +331,9 @@
         ("\\.profile$"     . sh-mode)
         ("\\.Rprofile$"    . R-mode)
         ("\\.tcshrc$"      . sh-mode)
-        ("\\.xml$"         . xml-mode)))
+        ("\\.xml$"         . xml-mode)
+        ("\\.yaml$"        . conf-space-mode)
+        ("\\.yml$"         . conf-space-mode)))
 (setq ext-doc
       '(("\\.bib$"     . bibtex-mode)
         ("\\.bst$"     . bibtex-style-mode)
