@@ -63,7 +63,7 @@ export DESKTOP=~
 export TEXINPUTS='.//:~/latex/cls//:~/latex/sty//:'
 
 # Program: lpr
-export LPDEST=marsvin
+# export LPDEST=marsvin
 
 # Program: r
 export _R_CHECK_SYSTEM_CLOCK_=FALSE
@@ -72,7 +72,7 @@ export R_HISTSIZE=5000
 if [[ -z $R_LIBS_SITE ]]; then export R_LIBS_SITE=~/r/site; fi
 export R_LIBS_USER=~/r/library
 export R_MAKEVARS_USER=~/r/Makevars
-export R_VERSION=4.0.3
+export R_VERSION=devel
 export RSTUDIO_WHICH_R=~/bin/R
 export TMPDIR=/tmp
 # export TZ=UTC
@@ -85,6 +85,7 @@ alias adstudio='~/bin/emacs -Q -mm -l ~/git/admb-project/adstudio/dot/.emacs'
 alias 'admb-ide'='~/bin/emacs -Q -mm \
 -l ~/git/admb-project/admb/contrib/ide/dot/.emacs -f admb-mode'
 alias benchmark='time'
+alias bfg='java -jar /opt/bfg/bfg-*.jar'
 alias bin='chmod 700 ~/bin/*'
 alias br='git branch'
 alias 'br-full'='git branch -av'
