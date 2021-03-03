@@ -286,7 +286,8 @@
         ("\\.rb$"       . ruby-mode)
         ("\\.sh$"       . sh-mode)
         ("\\.bas$"      . visual-basic-mode)
-        ("\\.vbs$"      . visual-basic-mode)))
+        ("\\.vbs$"      . visual-basic-mode)
+        ("\\.y$"        . c-mode)))
 (setq ext-conf ; [section]
       ;;         space:par val,#comment
       ;;         unix:par=val,#comment
@@ -420,7 +421,7 @@
         ("\\.mcmc$"       . space-mode)))
 (setq ext-util
       '(("\\.ac$"          . autoconf-mode)
-	("/ChangeLog"      . change-log-mode)
+        ;; ("/ChangeLog"   . change-log-mode)
         ("\\.cmake$"       . cmake-mode)
         ("\\.diff$"        . diff-mode)
         ("\\.patch$"       . diff-mode)
@@ -2329,6 +2330,7 @@ which doesn't compile."
   (set-face-attribute 'sh-heredoc nil :foreground "red") ; <<EOF
   (set-face-attribute 'sh-quoted-exec nil :foreground "brown4") ; `cmd`
   (local-unset-key [?\C-c ?=]) ; reactivate diff-this-buffer-with-file
+  (local-set-key [f9]    'sh-send-line-or-region-and-step          )
   (local-set-key [f11]   'sh-outline                               )
   (local-set-key [f12]   'sh-template                              )
   (local-set-key [S-f12] 'sh-template-mini                         )
