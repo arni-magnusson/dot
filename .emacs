@@ -1,4 +1,4 @@
-(setq byte-compile-warnings '(cl-functions)) ; Emacs 27.1 with ESS 18.10.2
+(setq byte-compile-warnings '(cl-functions)) ; Emacs >=27.1 with ESS 18.10.2
 
 ;;==============================================================================
 ;;
@@ -565,8 +565,8 @@
 (global-set-key          [mouse-2] 'mouse-yank-at-click) ; mouse-yank-primary
 (global-set-key          [mouse-3] 'ignore    ) ; mouse-secondary-save-then-kill
 (global-set-key     [down-mouse-3] 'imenu              )
-(global-set-key       [C-wheel-up] 'text-scale-increase)
-(global-set-key     [C-wheel-down] 'text-scale-decrease)
+(global-set-key       [C-wheel-up] 'text-scale-increase) ; default Emacs >=27.1
+(global-set-key     [C-wheel-down] 'text-scale-decrease) ; default Emacs >=27.1
 (global-set-key        [C-mouse-4] 'text-scale-increase) ; C-wheel-up in Linux
 (global-set-key        [C-mouse-5] 'text-scale-decrease) ; C-wheel-down in Linux
 (global-set-key       [M-wheel-up] 'scroll-up-100      )
@@ -771,6 +771,7 @@
 ;; 4.6  One stroke
 ;;-----------------
 ;; C, CM, M, plain
+(global-set-key [?\C-`]     'display-fill-column-indicator-mode)
 (global-set-key [?\C-!]     'shell-command           )
 (global-set-key [?\C-#]     'toggle-comments         )
 (global-set-key [?\C-$]     'count-words             )
@@ -3633,9 +3634,12 @@ echo.
 See `LaTeX-toggle-quotes'.")
 (defun arni-bibtex-hook ()
   (set-face-attribute 'font-lock-variable-name-face nil :foreground "brown4")
-  (local-unset-key [?\t]     ) ; reactivate indent-or-complete
-  (local-unset-key [?\C-\M-a]) ; reactivate goto-non-ascii
-  (local-unset-key [?\C-\M-e]) ; reactivate query-replace-regexp
+  (local-unset-key [?\t]        ) ; reactivate indent-or-complete
+  (local-unset-key [?\C-\M-a]   ) ; reactivate goto-non-ascii
+  (local-unset-key [?\C-\M-e]   ) ; reactivate query-replace-regexp
+  (local-unset-key [?\C-c ?\C-c]) ; bibtex-clean-entry
+  (local-set-key [?\C-c ?\C-n] 'bibtex-next-entry    ) ; bibtex-pop-next
+  (local-set-key [?\C-c ?\C-p] 'bibtex-previous-entry) ; bibtex-pop-previous
   (local-set-key [?\C-o] 'bibtex-open-line) ; `open-line' is erratic in BibTeX
   (defun bibtex-open-line ()
     (interactive "*")
@@ -4617,7 +4621,7 @@ with spaces."
 (add-hook 'inferior-ess-mode-hook 'arni-inferior-ess-hook)
 (defun arni-ess-post-run-hook ()
   (message nil)
-  (ess-eval-linewise "options(continue='  ',width=100)" t))
+  (ess-eval-linewise "options(continue='  ',width=92)" t))
 (add-hook 'ess-post-run-hook 'arni-ess-post-run-hook)
 (defun arni-ess-hook ()
   (if (string-equal (buffer-name) "*R*")
@@ -7187,16 +7191,16 @@ to the shortest `outline-regexp'.")
   (local-set-key [C-S-tab]         'outline-hide-sublevels     )
   (local-set-key [C-S-iso-lefttab] 'outline-hide-sublevels     ) ; linux C-S-tab
   (local-set-key [?\C-m]           'outline-return             ) ; return
-  (local-set-key [left]            'hide-entry                 )
-  (local-set-key [right]           'show-entry                 )
+  (local-set-key [left]            'outline-hide-entry         )
+  (local-set-key [right]           'outline-show-entry         )
   (local-set-key [M-left]          'outline-hide               )
   (local-set-key [M-right]         'outline-show               )
   (local-set-key [C-up]            'outline-previous-heading   )
   (local-set-key [C-down]          'outline-next-heading       )
   (local-set-key [M-up]            'outline-backward-same-level)
   (local-set-key [M-down]          'outline-forward-same-level )
-  (local-set-key [?,]              'hide-entry                 )
-  (local-set-key [?.]              'show-entry                 )
+  (local-set-key [?,]              'outline-hide-entry         )
+  (local-set-key [?.]              'outline-show-entry         )
   (local-set-key [?<]              'outline-hide               )
   (local-set-key [?>]              'outline-show               )
   (local-set-key [?\C-\M-\]]       'outline-move-subtree-up    )
@@ -7528,6 +7532,22 @@ to the shortest `outline-regexp'.")
   (local-unset-key [?\M-p]) ; reactivate bs-cycle-previous
   (local-set-key [?q] 'kill-buffer-maybe-window))
 (add-hook 'log-view-mode-hook 'arni-log-view-hook)
+(defun arni-vc-dir-hook ()
+  (local-set-key [f5]    'vc-dir-refresh      )
+  (local-set-key [left]  'vc-diff-stay        )
+  (local-set-key [right] 'vc-dir-display-file )
+  (local-set-key [up]    'vc-dir-previous-line)
+  (local-set-key [down]  'vc-dir-next-line    )
+  (local-set-key [?d]    'vc-diff-stay        ) ; vc-dir-clean-files
+  (local-set-key [?r]    'vc-dir-refresh      )
+  (local-set-key [?v]    'vc-dir-display-file ) ; vc-next-action
+  (defun vc-diff-stay ()
+    "View diff in source file and stay."
+    (interactive)
+    (let ((vc-window (selected-window)))
+      (vc-diff)
+      (select-window vc-window))))
+(add-hook 'vc-dir-mode-hook 'arni-vc-dir-hook)
 ;;==============================================================================
 ;; 8  ENABLE
 ;;==============================================================================
