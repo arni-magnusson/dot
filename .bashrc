@@ -40,7 +40,7 @@ export LANG=en_US.UTF-8  # export LANG=is_IS.UTF-8
 export ADMB_HOME=~/admb
 
 # Program: emacs
-export EMACS_VERSION=27.1
+export EMACS_VERSION=27.2
 if [[ -f /opt/emacs/$EMACS_VERSION/bin/emacs ]]; then
   export EDITOR="/opt/emacs/$EMACS_VERSION/bin/emacs -nw --no-site-file"
 else
@@ -72,7 +72,7 @@ export R_HISTSIZE=5000
 if [[ -z $R_LIBS_SITE ]]; then export R_LIBS_SITE=~/r/site; fi
 export R_LIBS_USER=~/r/library
 export R_MAKEVARS_USER=~/r/Makevars
-export R_VERSION=devel
+export R_VERSION=4.0.5
 export RSTUDIO_WHICH_R=~/bin/R
 export TMPDIR=/tmp
 # export TZ=UTC
