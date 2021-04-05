@@ -2,7 +2,7 @@
 {
   suppressPackageStartupMessages(library(arni))
   suppressPackageStartupMessages(library(gdata))
-  library(icesTAF)
+  library(TAF)
 
   ## .libPaths(sort(.libPaths())) # user library in first slot
   options(continue="  ")
@@ -33,7 +33,7 @@
     ## options(browser="firefox")
     options(editor=paste0("'/opt/emacs/", Sys.getenv("EMACS_VERSION"),
                           "/bin/emacs --no-site-file'"))
-    options(width=100)
+    options(width=92)
   }
 
   ## Area plot
