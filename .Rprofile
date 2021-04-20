@@ -41,8 +41,8 @@
   autoload("confplot", "areaplot") # confidence bands
 
   ## BibTeX
-  autoload("read.bib",  "bibtex")
-  autoload("write.bib", "bibtex")
+  ## autoload("read.bib",  "bibtex")
+  ## autoload("write.bib", "bibtex")
 
   ## MCMC diagnostics
   autoload("autocorr",      "coda") # autocorrelation
@@ -85,6 +85,15 @@
   autoload("ASCIIfy",     "gtools") # encoding
   autoload("logit",       "gtools") # logit(p), same as binomial()$linkfun(mu)
   autoload("inv.logit",   "gtools") # inv.logit(eta) = binomial()$linkinv(eta)
+
+  ## STAR
+  autoload("comma2period",       "gfcmSTAR") # convert string
+  autoload("gsa.names",          "gfcmSTAR") # convert numbers to full names
+  autoload("gsa.table",          "gfcmSTAR") # lookup table
+  autoload("read.star.v10",      "gfcmSTAR") # import template v1.0
+  autoload("readTableLogical",   "gfcmSTAR") # read single-cell logical
+  autoload("readTableTranspose", "gfcmSTAR") # read transposed table
+  autoload("write.star",         "gfcmSTAR") # export to csv
 
   ## ggplot
   autoload("ggplot", "ggplot2") # plot
@@ -351,6 +360,12 @@
   autoload("showNonASCII",          "tools") # special characters
   autoload("toTitleCase",           "tools") # title case
   autoload("write_PACKAGES",        "tools") # create repository
+
+  ## Excel
+  autoload("loadWorkbook",          "XLConnect") # workbook
+  autoload("readTable",             "XLConnect") # table object
+  autoload("readWorksheet",         "XLConnect") # sheet
+  autoload("readWorksheetFromFile", "XLConnect") # sheet
 
   ## Export table
   autoload("xtable", "xtable") # export table
