@@ -87,13 +87,31 @@
   autoload("inv.logit",   "gtools") # inv.logit(eta) = binomial()$linkinv(eta)
 
   ## STAR
-  autoload("comma2period",       "gfcmSTAR") # convert string
-  autoload("gsa.names",          "gfcmSTAR") # convert numbers to full names
-  autoload("gsa.table",          "gfcmSTAR") # lookup table
-  autoload("read.star.v10",      "gfcmSTAR") # import template v1.0
-  autoload("readTableLogical",   "gfcmSTAR") # read single-cell logical
-  autoload("readTableTranspose", "gfcmSTAR") # read transposed table
-  autoload("write.star",         "gfcmSTAR") # export to csv
+  autoload("basic.time",            "gfcmSTAR") # convert to truncated POSIXct
+  autoload("combo",                 "gfcmSTAR") # combine refyear, species, GSA
+  autoload("comma2period",          "gfcmSTAR") # convert string
+  autoload("export.many.csv",       "gfcmSTAR") # export many STAR objects to CSV
+  autoload("gsa.names",             "gfcmSTAR") # convert GSA numbers to names
+  autoload("import.many.csv",       "gfcmSTAR") # import many CSV files
+  autoload("import.many.templates", "gfcmSTAR") # import many templates
+  autoload("peek",                  "gfcmSTAR") # extract metadata field
+  autoload("qc",                    "gfcmSTAR") # run all quality checks
+  autoload("qc.exists",             "gfcmSTAR") # file exists
+  autoload("qc.star",               "gfcmSTAR") # file is a STAR template
+  autoload("qc.vpa",                "gfcmSTAR") # VPA_Model is Yes or No
+  autoload("qc.xlsx",               "gfcmSTAR") # file extension is xlsx
+  autoload("read.properties",       "gfcmSTAR") # read SharePoint properties
+  autoload("read.star.csv",         "gfcmSTAR") # read STAR CSV files
+  autoload("read.template",         "gfcmSTAR") # read STAR template
+  autoload("read.template.v10",     "gfcmSTAR") # read STAR template v1.0
+  autoload("readTable.logical",     "gfcmSTAR") # read single-cell logical
+  autoload("readTable.transpose",   "gfcmSTAR") # read transposed table
+  autoload("set.classes",           "gfcmSTAR") # convert data types
+  autoload("Start_Case",            "gfcmSTAR") # convert column names
+  autoload("template.version",      "gfcmSTAR") # read transposed table
+  autoload("write.star.csv",        "gfcmSTAR") # write STAR object to CSV
+  autoload("lookup.gsa",            "gfcmSTAR") # lookup GSA
+  autoload("lookup.species",        "gfcmSTAR") # lookup species
 
   ## ggplot
   autoload("ggplot", "ggplot2") # plot
