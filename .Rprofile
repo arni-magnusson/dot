@@ -9,7 +9,7 @@
   options(help_type="html")
   options(repos=c(
             ## https may not work on a VM
-            CRAN="http://cloud.r-project.org",
+            CRAN="https://cloud.r-project.org",
             ## "http://mirrors.dotsrc.org/cran",
             ## "http://cran.uib.no",
             ## "http://cran.hafro.is",
