@@ -72,7 +72,7 @@ export R_HISTSIZE=5000
 if [[ -z $R_LIBS_SITE ]]; then export R_LIBS_SITE=~/r/site; fi
 export R_LIBS_USER=~/r/library
 export R_MAKEVARS_USER=~/r/Makevars
-export R_VERSION=4.0.5
+export R_VERSION=4.1.1
 export RSTUDIO_WHICH_R=~/bin/R
 export TMPDIR=/tmp
 # export TZ=UTC
@@ -185,6 +185,7 @@ alias 'shortlog-full=git shortlog --format="%Cred%h%Creset %ai - %Cblue %s"'
 alias shortprompt="export PS1='$ '"
 alias show='git show -s --abbrev-commit --format=oneline'
 alias 'show-full'='git show -s --format="$GIT_FORMAT"'
+alias 'signal-update'='sudo chmod 4755 /opt/Signal/chrome-sandbox'
 alias skeleton='Rscript -e "icesTAF::taf.skeleton()"'
 alias space='rename "s/ /_/g"'
 alias sqlitestudio='/opt/sqlitestudio/sqlitestudio'
@@ -193,6 +194,7 @@ alias stk='cd /opt/stk/0.9.2; run_game.sh'
 alias t='sudo apt upgrade'
 alias tag='git tag'
 alias 'tag-full'='git show -s --format="%d $GIT_FORMAT" `git tag`'
+alias 'tag-delete'='git push origin --delete'
 alias take='sudo chown -R arnima:haf'
 alias tmb='~/bin/emacs -Q -mm --eval "(setq initial-scratch-message nil)" \
 --eval "(add-to-list '\''load-path \"~/emacs/lisp/ess/lisp\")" \
