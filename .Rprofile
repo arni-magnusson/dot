@@ -90,12 +90,15 @@
   autoload("basic.time",            "gfcmSTAR") # convert to truncated POSIXct
   autoload("combo",                 "gfcmSTAR") # combine refyear, species, GSA
   autoload("comma2period",          "gfcmSTAR") # convert string
-  autoload("export.many.csv",       "gfcmSTAR") # export many STAR objects to CSV
+  autoload("diff.stars",            "gfcmSTAR") # show differences between STARs
+  autoload("export.many.csv",       "gfcmSTAR") # export STAR objects to CSV
   autoload("gsa.names",             "gfcmSTAR") # convert GSA numbers to names
-  autoload("import.many.csv",       "gfcmSTAR") # import many CSV files
-  autoload("import.many.templates", "gfcmSTAR") # import many templates
+  autoload("identical.stars",       "gfcmSTAR") # check if STARs are identical
+  autoload("import.many.csv",       "gfcmSTAR") # import CSV files
+  autoload("import.many.templates", "gfcmSTAR") # import templates
   autoload("peek",                  "gfcmSTAR") # extract metadata field
   autoload("qc",                    "gfcmSTAR") # run all quality checks
+  autoload("qc.colnames",           "gfcmSTAR") # column names are intact
   autoload("qc.exists",             "gfcmSTAR") # file exists
   autoload("qc.star",               "gfcmSTAR") # file is a STAR template
   autoload("qc.vpa",                "gfcmSTAR") # VPA_Model is Yes or No
