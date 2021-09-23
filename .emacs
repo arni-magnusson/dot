@@ -24,18 +24,18 @@
 ;;-------------
 ;; (defun arni-window-setup-hook ()(frame-maximize)) ; linux max frame
 ;; (add-hook 'window-setup-hook 'arni-window-setup-hook)
-(blink-cursor-mode 0                            ) ; no blinking
-(column-number-mode t                           ) ; coordinates
-(font-5                                         ) ; default font
-(set-scroll-bar-mode 'right                     ) ; linux scroll bar
-(setq frame-title-format "%b"                   ) ; window title
-(setq inhibit-startup-echo-area-message "arnima") ; blank minibuffer
-(setq inhibit-startup-screen t                  ) ; blank buffer
-(setq initial-scratch-message nil               ) ; blank buffer, really
-(setq-default show-trailing-whitespace t        ) ; show white trail
-(setq-default truncate-lines t                  ) ; long lines
-(show-paren-mode t                              ) ; parentheses
-(tool-bar-mode 0                                ) ; no toolbar
+(blink-cursor-mode 0                           ) ; no blinking
+(column-number-mode t                          ) ; coordinates
+(font-5                                        ) ; default font
+(set-scroll-bar-mode 'right                    ) ; linux scroll bar
+(setq frame-title-format "%b"                  ) ; window title
+(setq inhibit-startup-echo-area-message "arnim") ; blank minibuffer
+(setq inhibit-startup-screen t                 ) ; blank buffer
+(setq initial-scratch-message nil              ) ; blank buffer, really
+(setq-default show-trailing-whitespace t       ) ; show white trail
+(setq-default truncate-lines t                 ) ; long lines
+(show-paren-mode t                             ) ; parentheses
+(tool-bar-mode 0                               ) ; no toolbar
 ;;--------------
 ;; 2.3  Editing
 ;;--------------
