@@ -4,9 +4,8 @@ xset -b  # disable bell
 
 # Path
 export PATH="/usr/sbin:$PATH"
-export PATH="~/admb/bin:$PATH"  # admb
-export PATH="~/bin:$PATH"       # ~/bin
 export PATH="/opt/bin:$PATH"    # /opt/bin
+export PATH="~/bin:$PATH"       # ~/bin
 export PATH=".:$PATH"           # current dir
 
 # Shell
@@ -40,9 +39,8 @@ export LANG=en_US.UTF-8  # export LANG=is_IS.UTF-8
 export ADMB_HOME=~/admb
 
 # Program: emacs
-export EMACS_VERSION=27.2
-if [[ -f /opt/emacs/$EMACS_VERSION/bin/emacs ]]; then
-  export EDITOR="/opt/emacs/$EMACS_VERSION/bin/emacs -nw --no-site-file"
+if [[ -f /opt/bin/emacs ]]; then
+  export EDITOR="/opt/bin/emacs -nw --no-site-file"
 else
   export EDITOR="/usr/bin/emacs -nw --no-site-file"
 fi
@@ -72,8 +70,11 @@ export R_HISTSIZE=5000
 if [[ -z $R_LIBS_SITE ]]; then export R_LIBS_SITE=~/r/site; fi
 export R_LIBS_USER=~/r/library
 export R_MAKEVARS_USER=~/r/Makevars
-export R_VERSION=4.1.1
-export RSTUDIO_WHICH_R=~/bin/R
+if [[ -f /opt/bin/R ]]; then
+  export RSTUDIO_WHICH_R=/opt/bin/R
+else
+  export RSTUDIO_WHICH_R=/usr/bin/R
+fi
 export TMPDIR=/tmp
 # export TZ=UTC
 
@@ -175,7 +176,6 @@ alias rd='rmdir'
 alias reset='git reset'
 alias rm0='find -maxdepth 1 -size 0 -delete'
 alias roxy='Roxy'
-alias rstudio='/opt/rstudio/bin/rstudio &'
 alias Run='Rscript --vanilla'
 alias s='sudo apt update'
 alias sao='user3'
