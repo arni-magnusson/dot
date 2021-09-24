@@ -15,3 +15,7 @@
 	pager = diff-highlight
 [cola]
 	spellcheck = false
+[merge]
+	ff = false
+[pull]
+	ff = true
