@@ -1,6 +1,6 @@
 #!/bin/bash
 
-xset -b  # disable bell
+# xset -b  # disable bell
 
 # Path
 export PATH="/usr/sbin:$PATH"
