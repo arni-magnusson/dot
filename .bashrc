@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# xset -b  # disable bell
+# xset -b  # disable bell - commented out for servers where X is not installed
 
 # Path
 export PATH="/usr/sbin:$PATH"
