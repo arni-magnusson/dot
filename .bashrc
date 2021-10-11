@@ -35,6 +35,9 @@ export LANG=en_US.UTF-8  # export LANG=is_IS.UTF-8
 # export LC_NUMERIC=en_US.UTF-8
 # export LC_TIME=en_CA.UTF-8  # show date as 1999-12-31 in Dolphin (~monospace)
 
+# Security certificates
+export NSS_DEFAULT_DB_TYPE=sql
+
 # Program: admb
 export ADMB_HOME=~/admb
 
@@ -98,7 +101,7 @@ alias ci='git commit -a'
 alias co='git checkout'
 alias commit='git commit'
 alias 'commits-full'='commits -f'
-alias cp='cp --preserve=timestamps'
+alias cp='cp --preserve=all'
 alias cpuwatch='watch -n 0.5 -t cpuspeed -r'
 alias d=docker
 alias d2u='dos2unix'
