@@ -11,8 +11,6 @@
 	tool = kompare
 [color]
 	ui = auto
-[core]
-	pager = diff-highlight
 [cola]
 	spellcheck = false
 [merge]
