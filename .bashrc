@@ -93,8 +93,6 @@ alias bfg='java -jar /opt/bfg/bfg-*.jar'
 alias bin='chmod 700 ~/bin/*'
 alias br='git branch'
 alias 'br-full'='git branch -av'
-alias brightness='qdbus org.kde.Solid.PowerManagement \
-/org/kde/Solid/PowerManagement/Actions/BrightnessControl setBrightness'
 alias 'byte-compile'='emacs -batch -f batch-byte-compile *.el'
 alias capslock='echo press both Shift keys'
 alias cd..='cd ..'
