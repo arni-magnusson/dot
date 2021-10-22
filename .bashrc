@@ -88,6 +88,7 @@ alias add='git add'
 alias adstudio='~/bin/emacs -Q -mm -l ~/git/admb-project/adstudio/dot/.emacs'
 alias 'admb-ide'='~/bin/emacs -Q -mm \
 -l ~/git/admb-project/admb/contrib/ide/dot/.emacs -f admb-mode'
+alias b='bright'
 alias benchmark='time'
 alias bfg='java -jar /opt/bfg/bfg-*.jar'
 alias bin='chmod 700 ~/bin/*'
