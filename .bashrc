@@ -120,6 +120,7 @@ alias file644='find -type f -exec chmod 644 {} \;'
 alias 'files'='git show --abbrev-commit --format=oneline --name-only'
 alias 'files-full'='git show --format="$GIT_FORMAT" --name-only'
 alias 'find?'='echo "find -name '\''*.R'\'' -exec wc -L {} \;"'
+alias foxit=FoxitReader
 alias g='gwenview'
 alias 'git-unset-sshaskpass'='unset SSH_ASKPASS'
 alias 'git-url'=url
