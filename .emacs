@@ -3650,6 +3650,8 @@ See `LaTeX-toggle-quotes'.")
     (backward-char)))
 (add-hook 'bibtex-mode-hook 'arni-bibtex-hook)
 (defun arni-LaTeX-hook ()
+  (defvar auctex-version AUCTeX-version
+    "Alias for AUCTeX-version.")
   (setq make-backup-files t)
   (setq indent-line-function 'LaTeX-indent-line)
   (reftex-mode 1)
@@ -3742,6 +3744,10 @@ See `LaTeX-toggle-quotes'.")
   (local-set-key [3 67109110]  'LaTeX-break-single      ) ; ?\C-c ?\C-ö
   (local-set-key [?\C-j]       'LaTeX-fill-paragraph-forward)
   (local-set-key [?\C-u]       'universal-argument      ) ; enable C-u C-c C-e
+  (defun auctex-version ()
+    "Show AUCTeX version."
+    (interactive)
+    (message AUCTeX-version))
   (defun beamer-template ()
     "Insert Beamer template."
     (interactive "*")
@@ -3818,7 +3824,8 @@ See `LaTeX-toggle-quotes'.")
     (insert "\\includegraphics{}")
     (search-backward "}"))
   (defun LaTeX-item ()
-    "Insert \\item, possibly after a newline."
+    "Insert \\item, possibly after a newline.
+See also `LaTeX-insert-item`."
     (interactive "*")
     (if (not (looking-back "^[ \t]*" 10))
         (newline-and-indent))
