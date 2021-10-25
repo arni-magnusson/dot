@@ -103,7 +103,6 @@ alias co='git checkout'
 alias commit='git commit'
 alias 'commits-full'='commits -f'
 alias cp='cp --preserve=all'
-alias cpuwatch='watch -n 0.5 -t cpuspeed -r'
 alias d=docker
 alias d2u='dos2unix'
 alias di='git diff'
