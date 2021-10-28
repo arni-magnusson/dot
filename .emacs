@@ -474,9 +474,9 @@
 ;; Special      c     i   m          x         [
 ;; Default    ab defgh  kl nopqrst v x  0..9 -        /
 ;;                        HOME END PGUP PGDN BKSP DEL
-;; Custom              j          u w yz        ];' ,.  ! #$%   (     |: <>?
+;; Custom              j          u w yz        ];'\,.  ! #$%   (     |: <>?
 ;;            SPC TAB RET
-;; Available                                `      \     @   ^&* )_+{}  "
+;; Available                                `            @   ^&* )_+{}  "
 ;;------------------------------------------------------------------------------
 ;; M
 ;; Special                                     [
@@ -786,6 +786,7 @@
 (global-set-key [?\C-\]]    'scroll-up-1             ) ; abort-recursive-edit
 (global-set-key [?\C-{]     'backward-paragraph      )
 (global-set-key [?\C-}]     'forward-paragraph       )
+(global-set-key [?\C-\\]    'windows-path            ) ; toggle-input-method
 (global-set-key [?\C-|]     'align                   )
 (global-set-key [?\C-\;]    'region-backward-word    )
 (global-set-key [?\C-:]     'region-forward-word     )
@@ -1792,7 +1793,7 @@ Unlike `indent-region',  also indent the first half-marked line."
   (interactive "*")
   (tabify-spaces)
   (copy-buffer)
-  (message "Tabified and copied buffer."))
+  (message "Tabified and copied buffer"))
 (defun unindent-line ()
   "Unindent line, removing all whitespace at beginning of line."
   (interactive "*")
@@ -1849,7 +1850,7 @@ Unlike `indent-region',  also indent the first half-marked line."
   "Replace every character with space until next closing parenthesis."
   (interactive "*")
   (if (zerop (how-many ")" (point)(line-end-position)))
-      (message "No closing parenthesis between point and end of line.")
+      (message "No closing parenthesis between point and end of line")
     (while (not (= (char-after) #x29))
       (progn (delete-char 1)
              (insert " ")))))
@@ -2068,7 +2069,7 @@ Clear buffer, paste, untabify, unindent, use single spaces, delete blank lines."
       (while (re-search-forward "\n\n\n+" nil t)
         (replace-match "\n\n")
         (setq count (+ count 1))))
-    (message "Converted %d vertical spaces." count)))
+    (message "Converted %d vertical spaces" count)))
 (defun sort-lines-caps-first (beg end)
   "Sort lines in region, with capital letters first."
   (interactive "*r")
@@ -2083,7 +2084,7 @@ Clear buffer, paste, untabify, unindent, use single spaces, delete blank lines."
       (while (search-forward "\t" nil t)
         (replace-match ",")
         (setq count (+ count 1))))
-    (message "Replaced %d tabs with commas." count)))
+    (message "Replaced %d tabs with commas" count)))
 (defun the-the ()
   "Search forward for a duplicate word."
   (interactive)
@@ -2139,6 +2140,14 @@ which doesn't compile."
   (let ((text (url-unhex-string (buffer-substring beg end))))
     (delete-region beg end)
     (insert text)))
+(defun windows-path ()
+  "Copy semicolon-separated path string from a list of path entries."
+  (interactive)
+  (setq path (buffer-string))
+  (setq path (replace-regexp-in-string "\n" ";" path))
+  (setq path (replace-regexp-in-string ";$" "" path))
+  (kill-new path)
+  (message "Copied Windows path to clipboard"))
 ;;-------------
 ;; 5.7  Window
 ;;-------------
@@ -2464,7 +2473,7 @@ shift $((OPTIND-1))
            (pattern (concat prog "\\.o\\|" prog "\\.so\\|" prog "\\.dll"))
            (files (directory-files "." nil pattern t)))
       (dolist (x files)(delete-file x)))
-    (message "Removed binary files."))
+    (message "Removed binary files"))
   (defun cpp-compile ()
     "Build simple C++ program (one source file)."
     (interactive)
