@@ -24,56 +24,58 @@
 ;; 5.3  View
 ;;-----------
 (defun font-1 ()
-  "Set default font to Lucida Console bold 2."
+  "Set default font to Consolas 20."
   (interactive)
-  (setq-default line-spacing 0)
-  (set-frame-font "-*-lucida console-bold-r-*-*-2-*-*-*-*-*-iso8859-1"))
+  (setq-default line-spacing 2)
+  (set-frame-font "-*-consolas-normal-r-*-*-20-*-*-*-c-*-iso10646-1"))
 (defun font-2 ()
-  "Set default font to Courier New bold 4."
+  "Set default font to Courier New 18."
   (interactive)
   (setq-default line-spacing 0)
-  (set-frame-font "-*-courier new-bold-r-*-*-4-*-*-*-*-*-iso8859-1"))
+  (set-frame-font "-*-courier new-normal-r-*-*-18-*-*-*-*-*-iso10646-1"))
 (defun font-3 ()
-  "Set default font to Courier New bold 6."
+  "Set default font to Courier New bold 18."
   (interactive)
   (setq-default line-spacing 0)
-  (set-frame-font "-*-courier new-bold-r-*-*-6-*-*-*-*-*-iso8859-1"))
+  (set-frame-font "-*-courier new-bold-r-*-*-18-*-*-*-*-*-iso10646-1"))
 (defun font-4 ()
-  "Set default font to Courier New 11."
+  "Set default font to Lucida Console 18."
   (interactive)
-  (setq-default line-spacing 0)
-  (set-frame-font "-*-courier new-normal-r-*-*-11-*-*-*-*-*-iso8859-1"))
+  (setq-default line-spacing 5)
+  (set-frame-font "-*-lucida console-normal-r-*-*-18-*-*-*-*-*-iso10646-1"))
 (defun font-5 ()
-  "Set default font to Courier New 13."
+  "Set default font to Lucida Sans Typewriter 18."
   (interactive)
-  (setq-default line-spacing 0)
-  (set-frame-font "-*-courier new-normal-r-*-*-13-*-*-*-*-*-iso8859-1"))
+  (setq-default line-spacing 3)
+  (set-frame-font
+   "-*-lucida sans typewriter-normal-r-*-*-18-*-*-*-*-*-iso10646-1"))
 (defun font-6 ()
-  "Set default font to Courier New bold 13."
+  "Set default font to SimSun 22."
   (interactive)
-  (setq-default line-spacing 0)
-  (set-frame-font "-*-courier new-bold-r-*-*-13-*-*-*-*-*-iso8859-1"))
+  (setq-default line-spacing 4)
+  (set-frame-font "-*-simsun-normal-r-*-*-22-*-*-*-*-*-iso10646-1"))
 (defun font-7 ()
-  "Set default font to Courier New bold 22."
+  "Set default font to SimSun 22."
   (interactive)
-  (setq-default line-spacing 0)
-  (set-frame-font "-*-courier new-bold-r-*-*-22-*-*-*-*-*-iso8859-1"))
+  (setq-default line-spacing 4)
+  (set-frame-font "-*-simsun-normal-r-*-*-22-*-*-*-*-*-iso10646-1"))
 (defun font-8 ()
   "Set default font to Microsoft Sans Serif 9."
   (interactive)
   (setq-default line-spacing 1)
-  (set-frame-font "-*-microsoft sans serif-normal-r-*-*-9-*-*-*-*-*-iso8859-1"))
+  (set-frame-font
+   "-*-microsoft sans serif-normal-r-*-*-9-*-*-*-*-*-iso10646-1"))
 (defun font-9 ()
   "Set default font to Microsoft Sans Serif 13."
   (interactive)
   (setq-default line-spacing 1)
   (set-frame-font "-*-microsoft sans serif-normal-r-*-*-13\
--*-*-*-*-*-iso8859-1"))
+-*-*-*-*-*-iso10646-1"))
 (defun font-0 ()
   "Set default font to Times New Roman 15."
   (interactive)
   (setq-default line-spacing 1)
-  (set-frame-font "-*-times new roman-normal-r-*-*-15-*-*-*-*-*-iso8859-1"))
+  (set-frame-font "-*-times new roman-normal-r-*-*-15-*-*-*-*-*-iso10646-1"))
 (defun frame-maximize ()
   "Maximize window."
   (interactive)
