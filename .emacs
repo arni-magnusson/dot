@@ -1028,7 +1028,8 @@ Doesn't complain about last window, unlike `kill-buffer-and-window`."
 ;;-----------
 (defun backward-delete-word (&optional n)
   "Delete previous N words."
-  (interactive "*p")(delete-word (- n)))
+  (interactive "*p")
+  (delete-word (- n)))
 (defun backward-sexp-start ()
   "Move to previous expression."
   (interactive)
@@ -4455,8 +4456,23 @@ with spaces."
     (shell-command (concat "ghostview \"" (buffer-name) "\"&"))
     (delete-other-windows)))
 (add-hook 'ps-mode-hook 'arni-ps-hook) ; see also doc-view-mode-hook
+;;------------
+;; 6.16 Python
+;;------------
+(defun arni-python-hook ()
+  (message nil)
+  (local-set-key [f9]          'python-run)
+  (local-set-key [M-return]    'python-run)
+  (local-set-key [?\C-c ?\C-c] 'python-run)
+  (local-set-key [?\C-c ?\C-v] 'python-run)
+  (defun python-run ()
+    "Run Python script"
+    (interactive)
+    (save-buffer)
+    (shell-command (concat "python " (buffer-name)))))
+(add-hook 'python-mode-hook 'arni-python-hook)
 ;;--------
-;; 6.16 R
+;; 6.17 R
 ;;--------
 ;; Hook                    When  *R*  R-mode  Rd-mode  Notes
 ;; eval-after-load         load   x   x       x        workaround
@@ -4481,11 +4497,12 @@ with spaces."
   (set-face-attribute 'font-lock-type-face nil :foreground -) ; TRUE
   (local-unset-key [?\C-\M-m]) ; avoid ess-dirs
   (local-unset-key [?\C-y]   ) ; reactivate scroll-down-command
-  (local-set-key [f11]               'ess-rdired-arni                 )
-  (local-set-key [?\C-c C-backspace] 'ess-graphics-off                )
-  (local-set-key [?\C-c ?\C- ]       'ess-switch-to-edit-buffer       )
-  (local-set-key [?\C-c ?\C-d]       'ess-dump-object-into-edit-buffer)
-  (local-set-key [?\C-c ?\C-h]       'ess-history                     )
+  (local-set-key [f11]               'ess-rdired-arni                      )
+  (local-set-key [?\C-c C-backspace] 'ess-graphics-off                     )
+  (local-set-key [?\C-c ?\C- ]       'ess-switch-to-edit-buffer            )
+  (local-set-key [?\C-c ?\C-d]       'ess-dump-object-into-edit-buffer     )
+  (local-set-key [?\C-c ?\C-h]       'ess-history                          )
+  (local-set-key [?\C-c ?\C-l]       'comint-clear-window-keep-current-line)
   (defun ess-display-help-on-object (object)
     "Open help page in browser." ; override original function with same name
     (process-send-string ess-current-process-name
@@ -5003,7 +5020,7 @@ or \\code{\\link{}} if ARG is non-nil."
   (sleep-for 0.01)
   (comint-clear-window))
 ;;----------
-;; 6.17 SQL
+;; 6.18 SQL
 ;;----------
 (defun arni-sql-hook ()
   (setq make-backup-files t)
@@ -5035,7 +5052,7 @@ or \\code{\\link{}} if ARG is non-nil."
 SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (comint-clear-window))
 ;;----------
-;; 6.18 TMB
+;; 6.19 TMB
 ;;----------
 (require 'tmb nil t)
 (defun arni-tmb-hook ()
@@ -5064,7 +5081,7 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (local-set-key [?\C-c ?\C-v] 'tmb-run            ))
 (add-hook 'tmb-mode-hook 'arni-tmb-hook)
 ;;---------
-;; 6.19 VB
+;; 6.20 VB
 ;;---------
 (defun arni-visual-basic-hook ()
   (abbrev-mode 0)
