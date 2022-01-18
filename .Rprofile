@@ -385,8 +385,10 @@
   ## SOFIA-TSAF
   autoload("addDriors", "TSAF")  # add driors column to stocks object
   autoload("addEffort", "TSAF")  # add effort column to catch data
-  autoload("compCat",   "TSAF")  # calculate stock status categories
-  autoload("plotProp",  "TSAF")  # plot stock status categories
+  autoload("calcCat",   "TSAF")  # calculate stock status categories
+  autoload("compCat",   "TSAF")  # old name for calcCat
+  autoload("plotCat",   "TSAF")  # plot stock status categories
+  autoload("plotProp",  "TSAF")  # old name for plotCat
 
   ## Excel
   autoload("loadWorkbook",          "XLConnect") # workbook
