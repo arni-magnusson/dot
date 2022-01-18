@@ -426,6 +426,7 @@
       '(("\\.ac$"          . autoconf-mode)
         ;; ("/ChangeLog"   . change-log-mode)
         ("\\.cmake$"       . cmake-mode)
+        ("/CMakeLists.txt" . cmake-mode)
         ("\\.diff$"        . diff-mode)
         ("\\.patch$"       . diff-mode)
         ("\\.ebrowse$"     . ebrowse-tree-mode)
@@ -6765,7 +6766,7 @@ See `dired-toggle-dot-files'.")
   (defun markdown-compile ()
     "Convert Markdown or R Markdown document to HTML."
     (interactive)
-    (if (string-equal (downcase (file-name-extension (buffer-name))) "rmd")
+    (if (string-equal (downcase (file-name-extension buffer-file-name)) "rmd")
         (markdown-compile-rmd)
       (markdown-compile-md))
     (maximize-window-top))
@@ -6774,24 +6775,24 @@ See `dired-toggle-dot-files'.")
     (interactive)
     (save-buffer)
     (if (one-window-p)(split-window-right))
-    (compile (concat "pandoc " (buffer-name) " > "
-                     (file-name-sans-extension (buffer-name)) ".html")))
+    (compile (concat "pandoc " buffer-file-name " > "
+                     (file-name-sans-extension buffer-file-name) ".html")))
   (defun markdown-compile-rmd ()
     "Convert R Markdown document to HTML."
     (interactive)
     (save-buffer)
     (if (one-window-p)(split-window-right))
-    (compile (concat "render " (buffer-name))))
+    (compile (concat "render " buffer-file-name)))
   (defun markdown-delete-html ()
     "Delete HTML file corresponding to Markdown file."
     (interactive)
-    (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
+    (let ((html-file (concat (file-name-sans-extension buffer-file-name) ".html")))
       (delete-file html-file)
       (message "Deleted %s" html-file)))
   (defun markdown-peek ()
     "Open HTML file in secondary window."
     (interactive)
-    (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html"))
+    (let ((html-file (concat (file-name-sans-extension buffer-file-name) ".html"))
           (md-window (selected-window)))
       (if (not (file-regular-p html-file))
           (error "%s not found" html-file)
@@ -6827,7 +6828,7 @@ break
   (defun markdown-tidy ()
     "Validate HTML document with Tidy."
     (interactive)
-    (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
+    (let ((html-file (concat (file-name-sans-extension buffer-file-name) ".html")))
       (if (one-window-p)(split-window))
       (get-buffer-create "*Shell Command Output*")
       (with-current-buffer "*Shell Command Output*"
@@ -7085,7 +7086,8 @@ break
   (defun org-html-delete ()
     "Delete HTML file corresponding to Org file."
     (interactive)
-    (let ((html-file (concat (file-name-sans-extension (buffer-name)) ".html")))
+    (let ((html-file
+           (concat (file-name-sans-extension buffer-file-name) ".html")))
       (delete-file html-file)
       (message "Deleted %s" html-file)))
   (defun org-html-view ()
