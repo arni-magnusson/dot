@@ -25,7 +25,7 @@ if ls --show-control-chars                      &>/dev/null; then
 if ls --time-style=+%e\ %b\ %Y\ %k:%M           &>/dev/null; then
   export LS_OPTIONS="$LS_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M"; fi
 export PROMPT_COMMAND='echo -ne "\e];/\
-`if [[ $PWD == $HOME ]];then echo "~";else basename $PWD;fi`\a"'
+`if [[ $PWD == $HOME ]];then echo "~";else basename "$PWD";fi`\a"'
 export PS1='\[\e[1;47;37m\]\h\[\e[0m\]\w $ '
 export SHELL=/bin/bash
 
