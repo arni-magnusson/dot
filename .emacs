@@ -46,7 +46,7 @@
 (prefer-coding-system 'utf-8                  ) ; utf8 if not sure
 (require 'imenu)(setq imenu-max-items 43      ) ; code navigation
 (setq initial-major-mode 'text-mode           ) ; text-mode for scratch buffer
-(setq mail-host-address "hafro.is"            ) ; change-log-mode
+(setq mail-host-address "spc.int"             ) ; change-log-mode
 (setq save-abbrevs nil                        ) ; don't save abbrevs
 (setq scroll-error-top-bottom t               ) ; pgup and pgdn all the way
 (setq user-full-name "Arni Magnusson"         ) ; change-log-mode
