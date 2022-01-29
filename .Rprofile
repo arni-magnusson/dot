@@ -87,6 +87,7 @@
   autoload("inv.logit",   "gtools") # inv.logit(eta) = binomial()$linkinv(eta)
 
   ## STAR
+  autoload("append.id",             "gfcmSTAR") # modify existing Assessment_ID
   autoload("basic.time",            "gfcmSTAR") # convert to truncated POSIXct
   autoload("combo",                 "gfcmSTAR") # combine refyear, species, GSA
   autoload("comma2period",          "gfcmSTAR") # convert string
@@ -98,21 +99,25 @@
   autoload("import.many.templates", "gfcmSTAR") # import templates
   autoload("peek",                  "gfcmSTAR") # extract metadata field
   autoload("qc",                    "gfcmSTAR") # run all quality checks
-  autoload("qc.colnames",           "gfcmSTAR") # column names are intact
   autoload("qc.exists",             "gfcmSTAR") # file exists
   autoload("qc.star",               "gfcmSTAR") # file is a STAR template
+  autoload("qc.ts.names",           "gfcmSTAR") # ts column names are intact
+  autoload("qc.ts.numbers",         "gfcmSTAR") # ts are numbers and not strings
   autoload("qc.vpa",                "gfcmSTAR") # VPA_Model is Yes or No
   autoload("qc.xlsx",               "gfcmSTAR") # file extension is xlsx
   autoload("read.properties",       "gfcmSTAR") # read SharePoint properties
   autoload("read.star.csv",         "gfcmSTAR") # read STAR CSV files
   autoload("read.template",         "gfcmSTAR") # read STAR template
   autoload("read.template.v10",     "gfcmSTAR") # read STAR template v1.0
+  autoload("read.template.v21",     "gfcmSTAR") # read STAR template v2.1
   autoload("readTable.logical",     "gfcmSTAR") # read single-cell logical
   autoload("readTable.transpose",   "gfcmSTAR") # read transposed table
+  autoload("report",                "gfcmSTAR") # report files imported
   autoload("set.classes",           "gfcmSTAR") # convert data types
   autoload("Start_Case",            "gfcmSTAR") # convert column names
   autoload("template.version",      "gfcmSTAR") # read transposed table
   autoload("write.star.csv",        "gfcmSTAR") # write STAR object to CSV
+  autoload("write.report",          "gfcmSTAR") # write report to text file
   autoload("lookup.gsa",            "gfcmSTAR") # lookup GSA
   autoload("lookup.species",        "gfcmSTAR") # lookup species
 
@@ -382,13 +387,13 @@
   autoload("toTitleCase",           "tools") # title case
   autoload("write_PACKAGES",        "tools") # create repository
 
-  ## SOFIA-TSAF
-  autoload("addDriors", "TSAF")  # add driors column to stocks object
-  autoload("addEffort", "TSAF")  # add effort column to catch data
-  autoload("calcCat",   "TSAF")  # calculate stock status categories
-  autoload("compCat",   "TSAF")  # old name for calcCat
-  autoload("plotCat",   "TSAF")  # plot stock status categories
-  autoload("plotProp",  "TSAF")  # old name for plotCat
+  ## SOFIA
+  autoload("addDriors", "SOFIA")  # add driors column to stock object
+  autoload("addEffort", "SOFIA")  # add effort column to catch data
+  autoload("calcCat",   "SOFIA")  # calculate stock status categories
+  autoload("compCat",   "SOFIA")  # old name for calcCat
+  autoload("plotCat",   "SOFIA")  # plot stock status categories
+  autoload("plotProp",  "SOFIA")  # old name for plotCat
 
   ## Excel
   autoload("loadWorkbook",          "XLConnect") # workbook
