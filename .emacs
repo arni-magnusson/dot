@@ -3741,6 +3741,7 @@ See `LaTeX-toggle-quotes'.")
   (local-set-key [?\C-c ?\C-b] 'LaTeX-babel-fontenc     ) ; TeX-command-buffer
   (local-set-key [?\C-c ?\C-c] 'LaTeX-master-latex      ) ; TeX-command-master
   (local-set-key [?\C-c ?\C-d] 'LaTeX-knitr             ) ; TeX-save-document
+  (local-set-key [?\C-c ?\C-h] 'LaTeX-master-clean      ) ; C-c C-BKSP terminal
   (local-set-key [?\C-c ?\C-i] 'LaTeX-includegraphics   ) ; TeX-goto-info-page
   (local-set-key [?\C-c ?\C-m] 'LaTeX-master-open       ) ; TeX-insert-macro
   (local-set-key [?\C-c ?\C-n] 'LaTeX-noindent          ) ; TeX-normal-mode
