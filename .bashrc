@@ -106,7 +106,7 @@ alias cp='cp --preserve=all'
 alias d=docker
 alias d2u='dos2unix'
 alias di='git diff'
-alias diff='colordiff'
+alias diff='diff --color'
 alias dir='ll'
 alias dock='sudo systemctl start docker'
 alias 'dock-off'='sudo systemctl stop docker'
