@@ -29,10 +29,7 @@
   else
   {
     options(browser="firefox")
-    ## options(browser="chromium-browser --incognito")
-    ## options(browser="firefox")
-    options(editor=paste0("'/opt/emacs/", Sys.getenv("EMACS_VERSION"),
-                          "/bin/emacs --no-site-file'"))
+    options(editor="'emacs --no-site-file'")
     options(width=92)
   }
 
