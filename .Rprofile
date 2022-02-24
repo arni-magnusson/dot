@@ -37,10 +37,6 @@
   autoload("areaplot", "areaplot") # stacked areas
   autoload("confplot", "areaplot") # confidence bands
 
-  ## BibTeX
-  ## autoload("read.bib",  "bibtex")
-  ## autoload("write.bib", "bibtex")
-
   ## MCMC diagnostics
   autoload("autocorr",      "coda") # autocorrelation
   autoload("autocorr.plot", "coda") # diagnostics: thinning
@@ -355,6 +351,15 @@
   autoload("runApp",    "shiny") # run app
   autoload("shinyApp",  "shiny") # run app
 
+  ## SOFIA
+  autoload("addDriors", "SOFIA")  # add driors column to stock object
+  autoload("addEffort", "SOFIA")  # add effort column to catch data
+  autoload("calcCat",   "SOFIA")  # calculate stock status categories
+  autoload("compCat",   "SOFIA")  # old name for calcCat
+  autoload("groupData", "SOFIA")  # group primary data files
+  autoload("plotCat",   "SOFIA")  # plot stock status categories
+  autoload("plotProp",  "SOFIA")  # old name for plotCat
+
   ## Splines
   autoload("bs", "splines") # polynomial spline
   autoload("ns", "splines") # natural cubic spline
@@ -383,14 +388,6 @@
   autoload("showNonASCII",          "tools") # special characters
   autoload("toTitleCase",           "tools") # title case
   autoload("write_PACKAGES",        "tools") # create repository
-
-  ## SOFIA
-  autoload("addDriors", "SOFIA")  # add driors column to stock object
-  autoload("addEffort", "SOFIA")  # add effort column to catch data
-  autoload("calcCat",   "SOFIA")  # calculate stock status categories
-  autoload("compCat",   "SOFIA")  # old name for calcCat
-  autoload("plotCat",   "SOFIA")  # plot stock status categories
-  autoload("plotProp",  "SOFIA")  # old name for plotCat
 
   ## Excel
   autoload("loadWorkbook",          "XLConnect") # workbook
