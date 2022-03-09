@@ -70,7 +70,7 @@
   ## autoload("ll",       "gdata")  # show objects or elements
   autoload("catch.d",     "gplots") # example data
   autoload("catch.r",     "gplots") # example data
-  autoload("bubbleplot",  "gplots") # bubble plot
+  ## autoload("bubbleplot",  "gplots") # bubble plot, not in CRAN version
   autoload("hist2d",      "gplots") # 3d symbol
   autoload("plotCI",      "gplots") # 2d error bars
   autoload("plotmeans",   "gplots") # 2d error bars
