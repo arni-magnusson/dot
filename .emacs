@@ -473,11 +473,11 @@
 ;; Windows                                             ~
 ;;                                                    ESC
 ;; Special      c     i   m          x         [
-;; Default    ab defgh  kl nopqrst v x  0..9 -        /
+;; Default    ab defgh  kl nopqrst v x  0..9 -        /           _
 ;;                        HOME END PGUP PGDN BKSP DEL
 ;; Custom              j          u w yz        ];'\,.  ! #$%   (     |: <>?
 ;;            SPC TAB RET
-;; Available                                `            @   ^&* )_+{}  "
+;; Available                                `            @   ^&* ) +{}  "
 ;;------------------------------------------------------------------------------
 ;; M
 ;; Special                                     [
@@ -516,9 +516,9 @@
 ;; Default     b d      k  no  r   vw   0..9       \
 ;;                                           BKSP     ESC
 ;; Custom       c efghij lm  pq  tu   y      -=[ ;' ,./          )
-;;            SPC TAB RET
+;;            SPC TAB RET HOME
 ;; Available                           z    `   ]
-;;                        HOME END PGUP PGDN      DEL
+;;                             END PGUP PGDN      DEL
 ;;------------------------------------------------------------------------------
 ;; C-x C
 ;; Don't use  a     gh     n p
@@ -614,6 +614,7 @@
 (global-set-key [27 127]       'backward-delete-word   ) ; M-BKSP in terminal
 (global-set-key [C-delete]     'delete-word            ) ; kill-line
 (global-set-key [M-delete]     'kill-buffer-maybe-window) ; backward-kill-word
+(global-set-key [?\C-x home]   'set-mark-command       )
 (global-set-key [select]       'end-of-line            ) ; [end] in Putty -nw
 (global-set-key [C-M-next]     'scroll-both-down-page  )
 (global-set-key [C-M-prior]    'scroll-both-up-page    )
