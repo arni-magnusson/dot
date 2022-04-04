@@ -4487,7 +4487,8 @@ with spaces."
 ;; Rd-mode-hook            man                x
 ;; Rnw-mode-hook           Rnw
 ;; ess-roxy-mode-hook      edit       x
-(defun arni-ess-load-hook ()(setq inferior-R-args "--quiet --save"))
+(defun arni-ess-load-hook ()
+  (setq inferior-R-args "--no-restore-data --quiet --save"))
 (eval-after-load "ess-site" (arni-ess-load-hook)) ; ess-mode-load-hook
 (defun arni-ess-pre-run-hook ()(setq ess-ask-for-ess-directory nil))
 (add-hook 'ess-pre-run-hook 'arni-ess-pre-run-hook)
