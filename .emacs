@@ -6788,13 +6788,15 @@ See `dired-toggle-dot-files'.")
   (defun markdown-delete-html ()
     "Delete HTML file corresponding to Markdown file."
     (interactive)
-    (let ((html-file (concat (file-name-sans-extension buffer-file-name) ".html")))
+    (let ((html-file
+           (concat (file-name-sans-extension buffer-file-name) ".html")))
       (delete-file html-file)
       (message "Deleted %s" html-file)))
   (defun markdown-peek ()
     "Open HTML file in secondary window."
     (interactive)
-    (let ((html-file (concat (file-name-sans-extension buffer-file-name) ".html"))
+    (let ((html-file
+           (concat (file-name-sans-extension buffer-file-name) ".html"))
           (md-window (selected-window)))
       (if (not (file-regular-p html-file))
           (error "%s not found" html-file)
@@ -6830,7 +6832,8 @@ break
   (defun markdown-tidy ()
     "Validate HTML document with Tidy."
     (interactive)
-    (let ((html-file (concat (file-name-sans-extension buffer-file-name) ".html")))
+    (let ((html-file
+           (concat (file-name-sans-extension buffer-file-name) ".html")))
       (if (one-window-p)(split-window))
       (get-buffer-create "*Shell Command Output*")
       (with-current-buffer "*Shell Command Output*"
