@@ -473,11 +473,11 @@
 ;; Windows                                             ~
 ;;                                                    ESC
 ;; Special      c     i   m          x         [
-;; Default    ab defgh  kl nopqrst v x  0..9 -        /           _
+;; Default    ab defgh  kl nopqrst v x  0..9 -        /  @        _
 ;;                        HOME END PGUP PGDN BKSP DEL
-;; Custom              j          u w yz        ];'\,.  ! #$%   (     |: <>?
+;; Custom              j          u w yz        ];'\,.  ! #$%   ()    |: <>?
 ;;            SPC TAB RET
-;; Available                                `            @   ^&* ) +{}  "
+;; Available                                `                ^&*   +{}  "
 ;;------------------------------------------------------------------------------
 ;; M
 ;; Special                                     [
