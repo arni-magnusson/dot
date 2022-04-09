@@ -2330,11 +2330,15 @@ which doesn't compile."
   (setq sh-test '("[[  ]]" . 4))
   (sh-set-shell "bash")
   (message nil)
+  (defvar sh-dos2unix nil
+    "Whether to automatically convert shell scripts from dos2unix.")
   (if (string-match "dos" (prin1-to-string buffer-file-coding-system))
-      (progn
-        (set-buffer-file-coding-system 'utf-8-unix t)
-        (message "Warning: file had Dos format, changed to Unix file format.")))
-  ;; [OPTIND-1], -option, --option
+      (if sh-dos2unix
+          (progn
+            (set-buffer-file-coding-system 'utf-8-unix t)
+            (message "Warning: file had Dos line endings, changed to Unix."))
+        (message "Warning: file has Dos line endings")))
+  ;; Syntax highlighting for [OPTIND-1], -option, --option
   (font-lock-add-keywords nil '(("[\[-]+\\(\\w+\\)"
                                  (1 font-lock-type-face append))))
   (font-lock-add-keywords nil '(("^[ \t]*set " . font-lock-warning-face)))
