@@ -213,7 +213,7 @@ alias u2d='unix2dos'
 alias user3='echo \
 https://stockassessment.org/datadisk/stockassessment/userdirs/user3/'
 alias uu='cd ../..'
-alias v='sudo vpnc haf'
+alias v='MFCL-Viewer.exe'
 alias wgets='wget --no-check-certificate'
 alias x='exit'
 
