@@ -177,6 +177,7 @@ alias optipng='optipng -strip all'
 alias pdfbook='book'
 alias prtscr='gnome-screenshot -d 5'
 alias push='git push'
+alias q=condor_q
 alias rd='rmdir'
 alias reset='git reset'
 alias skyperestart='pkill skype; sleep 0.5; skypeforlinux'
