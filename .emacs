@@ -1492,6 +1492,7 @@ See also `toggle-red-special'."
   (interactive)
   (set-background-color "gray85"))
 (defalias 'highlight-current-line 'hl-line-mode)
+(defalias 'linum-mode 'display-line-numbers-mode)
 (defun max-colors ()
   "Apply maximum colors, so every face can be distinguished."
   (interactive)
