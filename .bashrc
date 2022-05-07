@@ -166,6 +166,7 @@ alias lr="ls -FHRx $LS_OPTIONS"
 alias lra="ls -AFHRx $LS_OPTIONS"
 alias lt='tree -ACF --dirsfirst'
 alias lta='tree -AaCF --dirsfirst'
+alias m='git commit -m'
 alias markdown='pandoc -t plain'
 alias md='mkdir -p'
 alias merge='git merge'
