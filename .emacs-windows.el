@@ -46,9 +46,8 @@
 (defun font-5 ()
   "Set default font to Lucida Sans Typewriter 18."
   (interactive)
-  (setq-default line-spacing 3)
-  (set-frame-font
-   "-*-lucida sans typewriter-normal-r-*-*-18-*-*-*-*-*-iso10646-1"))
+  (setq-default line-spacing 4)
+  (set-frame-font "-*-lucida console-normal-r-*-*-20-*-*-*-*-*-iso10646-1"))
 (defun font-6 ()
   "Set default font to SimSun 22."
   (interactive)
