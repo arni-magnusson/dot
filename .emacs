@@ -34,7 +34,7 @@
 (setq initial-scratch-message nil               ) ; blank buffer, really
 (setq-default show-trailing-whitespace t        ) ; show white trail
 (setq-default truncate-lines t                  ) ; long lines
-(show-paren-mode t                              ) ; parentheses
+(show-paren-mode t                              ) ; match, default Emacs >=28.1
 (require 'tool-bar)(tool-bar-mode 0             ) ; no toolbar
 ;;--------------
 ;; 2.3  Editing
@@ -96,6 +96,9 @@
         (set-face-attribute 'font-lock-warning-face nil :foreground "red"
                             :weight 'bold)
         (set-face-attribute 'fringe nil :background -)
+        (if (>= emacs-major-version 28)
+            (set-face-attribute 'help-key-binding nil :background - :box -
+                                :foreground -))
         (set-face-attribute 'isearch nil :background "yellow" :foreground -)
         (set-face-attribute 'isearch-fail nil :background "red")
         (set-face-attribute 'lazy-highlight nil :background "yellow")
@@ -126,6 +129,9 @@
       (set-face-attribute 'font-lock-warning-face nil :foreground "red"
                           :weight 'bold)
       (set-face-attribute 'fringe nil :background -)
+      (if (>= emacs-major-version 28)
+          (set-face-attribute 'help-key-binding nil :background - :box -
+                              :foreground -))
       (set-face-attribute 'isearch nil :background "gold" :foreground -)
       (set-face-attribute 'isearch-fail nil :background "tomato")
       (set-face-attribute 'lazy-highlight nil :background "palegoldenrod")
@@ -555,6 +561,7 @@
 ;;------------
 (setq mouse-drag-copy-region t)          ; copy selected region to clipboard
 (setq mouse-wheel-progressive-speed nil) ; scroll at constant speed
+(setq mouse-wheel-scroll-amount '(3 ((shift) . 1)))  ; scroll 3, or 1 with shift
 (global-unset-key      [M-mouse-1]) ; mouse-start-secondary
 (global-unset-key [M-down-mouse-1]) ; mouse-drag-secondary
 (global-unset-key [M-drag-mouse-1]) ; mouse-set-secondary
