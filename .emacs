@@ -41,8 +41,7 @@
 ;;--------------
 (defalias 'yes-or-no-p 'y-or-n-p              ) ; ask y or n
 (delete-selection-mode 1                      ) ; typing replaces selected text
-(if (>= emacs-major-version 24)
-    (electric-indent-mode -1                 )) ; RET is just newline
+(electric-indent-mode -1                      ) ; RET is just newline
 (prefer-coding-system 'utf-8                  ) ; utf8 if not sure
 (require 'imenu)(setq imenu-max-items 43      ) ; code navigation
 (setq initial-major-mode 'text-mode           ) ; text-mode for scratch buffer
@@ -658,15 +657,14 @@
 ;;--------------------
 ;; 4.4  Three strokes
 ;;--------------------
-(global-set-key [?\C-x ?r ? ] 'clear-rectangle       ) ; point-to-register
-(global-set-key [?\C-x ?r ?c] 'copy-rectangle-as-kill) ; clear-rectangle
-(global-set-key [?\C-x ?r ?l] 'recentf-load-list     ) ; bookmark-bmenu-list
-(global-set-key [?\C-x ?r ?m] 'rectangle-mark-mode   ) ; bookmark-set
-(global-set-key [?\C-x ?r ?s] 'recentf-save-list     ) ; copy-to-register
-(global-set-key [?\C-x ?v ?+] 'vc-diff-select        ) ; vc-update
-(if (>= emacs-major-version 24)
-    (progn (global-set-key [?\C-x ?v ?=]    'vc-ediff  ) ; vc-diff
-           (global-set-key [?\C-x ?v ?\M-=] 'vc-diff )))
+(global-set-key [?\C-x ?r ? ]    'clear-rectangle       ) ; point-to-register
+(global-set-key [?\C-x ?r ?c]    'copy-rectangle-as-kill) ; clear-rectangle
+(global-set-key [?\C-x ?r ?l]    'recentf-load-list     ) ; bookmark-bmenu-list
+(global-set-key [?\C-x ?r ?m]    'rectangle-mark-mode   ) ; bookmark-set
+(global-set-key [?\C-x ?r ?s]    'recentf-save-list     ) ; copy-to-register
+(global-set-key [?\C-x ?v ?+]    'vc-diff-select        ) ; vc-update
+(global-set-key [?\C-x ?v ?=]    'vc-ediff              ) ; vc-diff
+(global-set-key [?\C-x ?v ?\M-=] 'vc-diff               )
 ;;------------------
 ;; 4.5  Two strokes
 ;;------------------
@@ -1441,14 +1439,6 @@ See also `line-end-position'."
     (delete-region (point)
                    (progn (search-backward (string char))
                           (forward-char)
-                          (point)))))
-(defun zap-up-to-char (char)
-  "Delete region up to, but not including, CHAR."
-  (interactive "*cZap up to char: ")
-  (let ((case-fold-search nil))
-    (delete-region (point)
-                   (progn (search-forward (string char))
-                          (backward-char)
                           (point)))))
 ;;-----------
 ;; 5.3  View
@@ -7218,10 +7208,6 @@ break
 ;;--------------
 ;; 7.27 Outline
 ;;--------------
-(if (<= emacs-major-version 24)
-    (defun outline-show-all ()
-      (interactive)
-      (outline-flag-region (point-min)(point-max) nil)))
 (defvar outline-previous-mode '(text-mode)
   "Mode to return to. See `outline-return'.")
 (defvar outline-top-level 1
@@ -7301,7 +7287,7 @@ to the shortest `outline-regexp'.")
 ;;---------------
 ;; 7.28 Packages
 ;;---------------
-;; (if (>= emacs-major-version 24)(require 'package))
+;; (require 'package)
 ;; (setq package-archives '(("gnu"       . "http://elpa.gnu.org/packages/")))
 ;; (setq package-archives '(("marmalade" . "http://marmalade-repo.org/"   )))
 ;; (setq package-archives '(("melpa"     . "https://melpa.org/packages/"  )))
