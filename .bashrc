@@ -24,6 +24,7 @@ if ls --show-control-chars                      &>/dev/null; then
   export LS_OPTIONS="$LS_OPTIONS --show-control-chars"; fi
 if ls --time-style=+%e\ %b\ %Y\ %k:%M           &>/dev/null; then
   export LS_OPTIONS="$LS_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M"; fi
+if [[ -n $WINDIR ]]; then export LS_OPTIONS="$LS_OPTIONS -Gg"; fi
 export PROMPT_COMMAND='echo -ne "\e];/\
 `if [[ "$PWD" == "$HOME" ]];then echo "~";else basename "$PWD";fi`\a"'
 export PS1='\[\e[1;7;37m\]\h\[\e[0m\]\w $ '
@@ -220,8 +221,8 @@ alias x='exit'
 
 # Keybindings (only in interactive shell, to avoid login warnings)
 if [[ $- =~ i ]]; then
-    # The C-SPC binding messes up Dolphin terminal prompt
-    # bind '"\C- ":dabbrev-expand'
-    bind '"\e ":call-last-kbd-macro'
-    bind '"\ei":overwrite-mode'
+  # The C-SPC binding messes up Dolphin terminal prompt
+  # bind '"\C- ":dabbrev-expand'
+  bind '"\e ":call-last-kbd-macro'
+  bind '"\ei":overwrite-mode'
 fi
