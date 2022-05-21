@@ -1,0 +1,20 @@
+From: taupin@lps.u-psud.fr
+Subject: Using small caps & bold & slanted
+To: metafont@ens.fr (liste metafont), gut@ens.fr (gut@ens.fr)
+Date: Fri, 24 May 96 18:00:23 METDST
+
+In prevision of the future release of DC1.3 fonts I have built an option
+file and a definition file to have all 4 shapes of Small caps.
+ This is "smallcap.sty" (none exists in the archies)
+ and     "T1cmsc.fd"    (none exists in the archies)
+
+\scshape => \undefined and replaced by \scfamily (SC becomes a family,
+rather than a shape). Thus you can write:
+
+\bf\scfamily\slshape
+
+to get small caps bold slanted...
+
+Available at ftp://ftp.lps.u-psud.fr/pub/latex/*.*
+
+D. Taupin

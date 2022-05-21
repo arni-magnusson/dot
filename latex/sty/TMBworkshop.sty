@@ -1,0 +1,55 @@
+\ProvidesPackage{TMBworkshop}
+
+% Package: TMBworkshop
+% Purpose: Apply settings to many Beamer slideshows
+% Options: [simple] suppresses between-section TOC
+% History: 01 Nov 2015 arnima forked from ADMBworkshop
+
+\DeclareOption{simple}{\AtBeginSection{}}
+\AtBeginSection
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+\ProcessOptions
+
+\mode<article>
+{
+  \usepackage[a4paper,vmargin=3cm]{geometry}
+  \usepackage{graphicx}
+  \usepackage{parskip}
+  \usepackage[urlbordercolor=white,linkbordercolor=white,pdfpagemode=None,
+  pdfhighlight=/O]{hyperref}
+}
+
+\usepackage{listings}\lstset{basicstyle=\ttfamily,literate={~}{$\sim$}{2}}
+
+\usetheme{Warsaw}
+\setbeamercolor{palette primary}{fg=white,bg=green!40!black}
+\setbeamercolor{section in toc}{fg=green!40!black,bg=white}
+\setbeamercolor{item}{fg=green!40!black,bg=white}
+\setbeamertemplate{footline}{}
+\setbeamertemplate{navigation symbols}{}
+
+\frenchspacing
+
+\newcommand\black{\color{black}}
+\newcommand\blue{\color[rgb]{0.1,0.1,0.7}}
+\newcommand\cpp{\mbox{C\raisebox{0.5ex}{\tiny\bfseries ++}}}
+\newcommand\gray{\color{gray}}
+\newcommand\green{\color[rgb]{0,0.4,0}}
+\newcommand\I[1][1em]{\par\mode<beamer>{\vspace{#1}}}
+\newcommand\pkg[1]{\textbf{#1}}
+\newcommand\R{\textblue{R}}
+\newcommand\textblack[1]{\textcolor{black}{#1}}
+\newcommand\textblue[1]{\textcolor[rgb]{0.1,0.1,0.7}{#1}}
+\newcommand\textgray[1]{\textcolor{gray}{#1}}
+\newcommand\textgreen[1]{\textcolor[rgb]{0,0.4,0}{#1}}
+\newcommand\textwhite[1]{\textcolor[rgb]{1,1,1}{#1}}
+\newcommand\TMB{\textgreen{TMB}}
+\newcommand\tmb[1]{\textgreen{#1}}
+\newcommand\white{\color[rgb]{1,1,1}}
+
+\renewcommand\contentsname{\vspace{-2em}}
+\renewcommand\r[1]{\textblue{#1}}

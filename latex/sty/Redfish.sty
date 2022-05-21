@@ -1,0 +1,47 @@
+\ProvidesPackage{Redfish}
+
+% Package: Redfish
+% Purpose: Apply settings to many Beamer slideshows
+% Options: [simple] suppresses between-section TOC
+% History: 2011-12-01 arnima created for ICES presentation
+
+\DeclareOption{simple}{\AtBeginSection{}}
+\AtBeginSection
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+\ProcessOptions
+
+\mode<article>
+{
+  \usepackage[a4paper,vmargin=3cm]{geometry}
+  \usepackage{graphicx}
+  \usepackage{parskip}
+  \usepackage[urlbordercolor=white,linkbordercolor=white,pdfpagemode=None,
+  pdfhighlight=/O]{hyperref}
+}
+
+\usepackage{listings}\lstset{basicstyle=\ttfamily,literate={~}{$\sim$}{2}}
+
+\usetheme{Warsaw}
+\setbeamercolor{palette primary}{fg=white,bg=red!50!black}
+\setbeamercolor{section in toc}{fg=red!50!black,bg=white}
+\setbeamercolor{item}{fg=red!50!black,bg=white}
+\setbeamertemplate{footline}{}
+\setbeamertemplate{navigation symbols}{}
+
+\newcommand\black{\color{black}}
+\newcommand\blue{\color[rgb]{0.1,0.1,0.7}}
+\newcommand\cpp{\mbox{C\raisebox{0.5ex}{\tiny\bfseries ++}}}
+\newcommand\gray{\color{gray}}
+\newcommand\red{\color[rgb]{0.5,0,0}}
+\newcommand\I[1][1em]{\par\mode<beamer>{\vspace{#1}}}
+\newcommand\pkg[1]{\textbf{#1}}
+\newcommand\textblack[1]{\textcolor{black}{#1}}
+\newcommand\textblue[1]{\textcolor[rgb]{0.1,0.1,0.7}{#1}}
+\newcommand\textgray[1]{\textcolor{gray}{#1}}
+\newcommand\textred[1]{\textcolor[rgb]{0.5,0,0}{#1}}
+
+\renewcommand\contentsname{\vspace{-2em}}

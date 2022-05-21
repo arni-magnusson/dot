@@ -1,0 +1,43 @@
+\ProvidesPackage{Rworkshop}
+
+% Package: Rworkshop
+% Purpose: Apply settings to many Beamer slideshows
+% Options: [simple] suppresses between-section TOC
+% History: 09 Nov 2010 arnima created for R workshop
+
+\DeclareOption{simple}{\AtBeginSection{}}
+\AtBeginSection
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+\ProcessOptions
+
+\mode<article>
+{
+  \usepackage[a4paper,vmargin=3cm]{geometry}
+  \usepackage{graphicx}
+  \usepackage{parskip}
+  \usepackage[urlbordercolor=white,linkbordercolor=white,pdfpagemode=None,
+  pdfhighlight=/O]{hyperref}
+}
+
+\usepackage{listings}\lstset{basicstyle=\ttfamily,literate={~}{$\sim$}{2}}
+
+\usetheme{Warsaw}
+\setbeamertemplate{footline}{}
+\setbeamertemplate{navigation symbols}{}
+
+\newcommand\black{\color{black}}
+\newcommand\blue{\color[rgb]{0.2,0.2,0.7}}
+\newcommand\gray{\color{gray}}
+\newcommand\green{\color[rgb]{0,0.6,0}}
+\newcommand\I[1]{\par\mode<beamer>{\rule{0pt}{#1}}}
+\newcommand\pkg[1]{\textbf{#1}}
+\newcommand\textblack[1]{\textcolor{black}{#1}}
+\newcommand\textblue[1]{\textcolor[rgb]{0.2,0.2,0.7}{#1}}
+\newcommand\textgray[1]{\textcolor{gray}{#1}}
+\newcommand\textgreen[1]{\textcolor[rgb]{0,0.6,0}{#1}}
+
+\renewcommand\contentsname{\vspace{-2em}}
