@@ -561,7 +561,7 @@
 ;;------------
 (setq mouse-drag-copy-region t)          ; copy selected region to clipboard
 (setq mouse-wheel-progressive-speed nil) ; scroll at constant speed
-(setq mouse-wheel-scroll-amount '(3 ((shift) . 1)))  ; scroll 3, or 1 with shift
+(setq mouse-wheel-scroll-amount '(4 ((shift) . 1)))  ; scroll 4, or 1 with shift
 (global-unset-key      [M-mouse-1]) ; mouse-start-secondary
 (global-unset-key [M-down-mouse-1]) ; mouse-drag-secondary
 (global-unset-key [M-drag-mouse-1]) ; mouse-set-secondary
@@ -1440,12 +1440,20 @@ See also `line-end-position'."
   (yank arg)
   (message nil))
 (defun zap-back-to-char (char)
-  "Delete region back to, but not including, CHAR."
+  "Delete region back to, but not including, CHAR (case-sensitive)."
   (interactive "*cZap back to char: ")
   (let ((case-fold-search nil))
     (delete-region (point)
                    (progn (search-backward (string char))
                           (forward-char)
+                          (point)))))
+(defun zap-up-to-char (char)
+  "Delete region up to, but not including, CHAR (case-sensitive)."
+  (interactive "*cZap up to char: ")
+  (let ((case-fold-search nil))
+    (delete-region (point)
+                   (progn (search-forward (string char))
+                          (backward-char)
                           (point)))))
 ;;-----------
 ;; 5.3  View
