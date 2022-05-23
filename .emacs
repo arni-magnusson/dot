@@ -611,6 +611,7 @@
 (global-set-key [f7]           'record-macro           )
 (global-set-key [f8]           'kmacro-call-macro      )
 (global-set-key [f11]          'outline-mode         ) ; toggle-frame-fullscreen
+(global-set-key [S-f12]        'region-to-eol          ) ; S-f12=S-end on laptop
 (global-set-key [?\C-x delete] 'blank-region           )
 (global-set-key [C-backspace]  'backward-delete-word   ) ; backward-kill-word
 (global-set-key [M-backspace]  'backward-delete-word   ) ; backward-kill-word
@@ -2359,7 +2360,7 @@ which doesn't compile."
   (local-set-key [f9]    'sh-send-line-or-region-and-step          )
   (local-set-key [f11]   'sh-outline                               )
   (local-set-key [f12]   'sh-template                              )
-  (local-set-key [S-f12] 'sh-template-mini                         )
+  (local-set-key [C-f12] 'sh-template-mini                         )
   (local-set-key [?\C-m] 'sh-indent-newline-indent-or-delete-region) ; return
   (local-set-key [?\C-c ?\C-c] 'sh-eval-buffer                     ) ; sh-case
   (local-set-key [?\C-c ?\C-v] 'sh-eval-buffer                     )
@@ -2460,7 +2461,7 @@ shift $((OPTIND-1))
   (local-unset-key [?/]      ) ; reactivate normal slash
   (local-set-key [f11]               'hs-minor-mode      )
   (local-set-key [f12]               'cpp-template-mini  )
-  (local-set-key [S-f12]             'cpp-template       )
+  (local-set-key [C-f12]             'cpp-template       )
   (local-set-key [?\C-m]             'newline-and-indent ) ; return
   (local-set-key [M-return]          'cpp-endl           )
   (local-set-key [?\C-\M-m]          'cpp-endl           ) ; M-RET in terminal
@@ -3136,7 +3137,7 @@ clean:
   (set-face-attribute 'font-lock-warning-face
                       nil :weight -) ; ls, rm
   (local-set-key [f11]         'bat-outline-remember)
-  (local-set-key [S-f12]       'bat-template        )
+  (local-set-key [C-f12]       'bat-template        )
   (local-set-key [f12]         'bat-template-full   )
   (local-set-key [?\C-c ?\C- ] 'bat-sep             )
   (defun bat-outline ()
@@ -3737,7 +3738,6 @@ See `LaTeX-toggle-quotes'.")
   (local-set-key [f11]         'reftex-toc-fullscreen   )
   (local-set-key [S-f11]       'reftex-toc-left-right   )
   (local-set-key [f12]         'LaTeX-template          )
-  (local-set-key [S-f12]       'beamer-template         )
   (local-set-key [C-f12]       'LaTeX-template-mini     )
   (local-set-key [?\C-m]       'newline-and-indent      ) ; return
   (local-set-key [M-return]    'LaTeX-item              )
@@ -4096,7 +4096,7 @@ See also `LaTeX-insert-item`."
   (local-set-key [f11]         'texinfo-show-structure        )
   (local-set-key [S-f11]       'texinfo-show-structure-nodes  )
   (local-set-key [f12]         'texinfo-template              )
-  (local-set-key [S-f12]       'texinfo-template-mini         )
+  (local-set-key [C-f12]       'texinfo-template-mini         )
   (local-set-key [?\C-c ?\]]   'texinfo-insert-@end           )
   (local-set-key [?\C-c ?\C- ] 'texinfo-insert-@tab           )
   (local-set-key [?\C-c ?\C-a] 'texinfo-insert-@arrow         )
@@ -4705,8 +4705,7 @@ with spaces."
   (local-set-key [f11]               'R-outline                       )
   (local-set-key [S-f11]             'hs-minor-mode                   )
   (local-set-key [f12]               'R-template-roxygen              )
-  (local-set-key [S-f12]             'R-template-general              )
-  (local-set-key [C-f12]             'R-header-to-roxy                )
+  (local-set-key [C-f12]             'R-template-general              )
   (local-set-key [M-f12]             'R-template-minimal              )
   (local-set-key [?\C-c C-backspace] 'ess-graphics-off                )
   (local-set-key [M-return]  'ess-eval-region-or-function-or-paragraph-and-step)
