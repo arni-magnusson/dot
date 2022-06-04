@@ -27,12 +27,12 @@
 ;; 10  Libertine Mono 16  serif but mono
 
 (defun font-1 ()
-  "Set default font to Courier 12"
+  "Set default font to Latin Modern 14"
   (interactive)
   (setq-default line-spacing 0)
   (set-frame-font "-*-Latin Modern Mono-normal-*-*-*-14-*-*-*-*-*-*-*"))
 (defun font-2 ()
-  "Set default font to Courier 12"
+  "Set default font to Courier 10"
   (interactive)
   (setq-default line-spacing 1)
   (set-frame-font "-*-Courier 10 Pitch-normal-*-*-*-12-*-*-*-*-*-*-*"))
