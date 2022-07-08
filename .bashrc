@@ -80,7 +80,7 @@ else
   export RSTUDIO_WHICH_R=/usr/bin/R
 fi
 export TMPDIR=/tmp
-if [[ -n $WINDIR ]]; then export TZ=UTC; fi
+# if [[ -n $WINDIR ]]; then export TZ=UTC; fi
 
 # Alias
 alias ..='cd ..'
