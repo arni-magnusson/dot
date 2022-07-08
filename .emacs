@@ -230,6 +230,7 @@
 (autoload 'r-mode "ess-site") ;*-R-*
 (autoload 'Rd-mode           "ess-site"          "Edit R documentation."    t)
 (autoload 'Rnw-mode          "ess-site"          "Edit Sweave document."    t)
+(autoload 'stan-mode         "stan-mode"         "Edit Stan code."          t)
 ;; "latex" in Windows, "auctex" in Linux
 (autoload 'TeX-latex-mode    "tex-site"          "Edit LaTeX document."     t)
 (autoload 'tabbar-mode       "tabbar"            "Visible buffer tabs."     t)
