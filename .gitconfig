@@ -1,18 +1,6 @@
 [user]
 	name = Arni Magnusson
 	email = thisisarni@gmail.com
-[push]
-	default = simple
-[credential]
-	helper = cache --timeout=3600
-[gui]
-	editor = emacs -Q
-[diff]
-	tool = kompare
-[color]
-	ui = auto
-[cola]
-	spellcheck = false
 [merge]
 	ff = false
 [pull]
