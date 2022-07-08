@@ -24,7 +24,11 @@ if ls --show-control-chars                      &>/dev/null; then
   export LS_OPTIONS="$LS_OPTIONS --show-control-chars"; fi
 if ls --time-style=+%e\ %b\ %Y\ %k:%M           &>/dev/null; then
   export LS_OPTIONS="$LS_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M"; fi
-if [[ -n $WINDIR ]]; then export LS_OPTIONS="$LS_OPTIONS -Gg"; fi
+# Use LL_OPTIONS to suppress owner and group on Windows
+#     Linux  Windows
+# l   .      .
+# ll  .      -Gg
+if [[ -n $WINDIR ]]; then export LL_OPTIONS="-Gg"; fi
 export PROMPT_COMMAND='echo -ne "\e];/\
 `if [[ "$PWD" == "$HOME" ]];then echo "~";else basename "$PWD";fi`\a"'
 export PS1='\[\e[1;7;37m\]\h\[\e[0m\]\w $ '
@@ -143,17 +147,17 @@ alias l1="ls -1 $LS_OPTIONS"
 alias la="ls -Ax $LS_OPTIONS"
 alias latin='export LANG=en_US.ISO8859-1'
 alias lh='log | head'
-alias ll="ls -l $LS_OPTIONS"
-alias ll.="ls -dl $LS_OPTIONS .*"
-alias lla="ls -Al $LS_OPTIONS"
-alias lld='ls -dl --time-style=+%e\ %b\ %Y\ %k:%M */ | sed "s/\///g"'
-alias llh="ls -lh $LS_OPTIONS"
-alias llk="ls -l --block-size=K $LS_OPTIONS"
+alias ll="ls -l $LS_OPTIONS $LL_OPTIONS"
+alias ll.="ls -dl $LS_OPTIONS $LL_OPTIONS .*"
+alias lla="ls -Al $LS_OPTIONS $LL_OPTIONS"
+alias lld='ls -dl $LL_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M */ | sed "s/\///g"'
+alias llh="ls -lh $LS_OPTIONS $LL_OPTIONS"
+alias llk="ls -l --block-size=K $LS_OPTIONS $LL_OPTIONS"
 alias lll='ll'
-alias llm="ls -l --block-size=M $LS_OPTIONS"
-alias llr="ls -lR $LS_OPTIONS"
-alias llra="ls -AlR $LS_OPTIONS"
-alias lls="ls -l $LS_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M:%S"
+alias llm="ls -l --block-size=M $LS_OPTIONS $LL_OPTIONS"
+alias llr="ls -lR $LS_OPTIONS $LL_OPTIONS"
+alias llra="ls -AlR $LS_OPTIONS $LL_OPTIONS"
+alias lls="ls -l $LS_OPTIONS  $LL_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M:%S"
 alias llt='ll --time-style="+%Y-%m-%d %H:%M:%S"'
 # ll -t sorts by time (newest first), so lls -t and llt -t are useful
 alias log='git log --abbrev-commit --format=oneline'
