@@ -1905,70 +1905,72 @@ using 'plain' \"quotes\" and double -- em dash."
             "[\u0000-\u0008\u000b-\u001f\u007f\u0081\u008d\u008f\u0090\u009d]"
             nil t)
       (replace-match ""))
-    (goto-char (point-min)) ; euro
-    (while (re-search-forward "\u0080\\|\u20ac" nil t)(replace-match "EUR "))
-    (goto-char (point-min)) ; comma
-    (while (re-search-forward "\u0082\\|\u201a" nil t)(replace-match ","   ))
-    (goto-char (point-min)) ; ornamental f
-    (while (re-search-forward "\u0083\\|\u0192" nil t)(replace-match "f"   ))
-    (goto-char (point-min)) ; double lowleft ,,
-    (while (re-search-forward "\u0084\\|\u201e" nil t)(replace-match "\""  ))
-    (goto-char (point-min)) ; ellipsis
-    (while (re-search-forward "\u0085\\|\u2026" nil t)(replace-match "..." ))
-    (goto-char (point-min)) ; dagger
-    (while (re-search-forward "\u0086\\|\u2020" nil t)(replace-match "*"   ))
-    (goto-char (point-min)) ; double dagger
-    (while (re-search-forward "\u0087\\|\u2021" nil t)(replace-match "*"   ))
-    (goto-char (point-min)) ; caret
-    (while (re-search-forward "\u0088\\|\u02c6" nil t)(replace-match "^"   ))
-    (goto-char (point-min)) ; promill
-    (while (re-search-forward "\u0089\\|\u2030" nil t)(replace-match "%"   ))
-    (goto-char (point-min)) ; turkish
-    (while (re-search-forward "\u008a\\|\u0160" nil t)(replace-match "S"   ))
-    (goto-char (point-min)) ; less than
-    (while (re-search-forward "\u008b\\|\u2039" nil t)(replace-match "<"   ))
-    (goto-char (point-min)) ; oe ligature
-    (while (re-search-forward "\u008c\\|\u0152" nil t)(replace-match "Æ"   ))
-    (goto-char (point-min)) ; polish
-    (while (re-search-forward "\u008e\\|\u017d" nil t)(replace-match "Z"   ))
-    (goto-char (point-min)) ; single left `
-    (while (re-search-forward "\u0091\\|\u2018" nil t)(replace-match "'"   ))
-    (goto-char (point-min)) ; single right '
-    (while (re-search-forward "\u0092\\|\u2019" nil t)(replace-match "'"   ))
-    (goto-char (point-min)) ; double left ``
-    (while (re-search-forward "\u0093\\|\u201c" nil t)(replace-match "\""  ))
-    (goto-char (point-min)) ; double right ''
-    (while (re-search-forward "\u0094\\|\u201d" nil t)(replace-match "\""  ))
-    (goto-char (point-min)) ; cdot
-    (while (re-search-forward "\u0095\\|\u2022" nil t)(replace-match "."   ))
-    (goto-char (point-min)) ; en dash
-    (while (re-search-forward "\u0096\\|\u2013" nil t)(replace-match "-"   ))
-    (goto-char (point-min)) ; em dash
-    (while (re-search-forward "\u0097\\|\u2014" nil t)(replace-match "--"  ))
-    (goto-char (point-min)) ; upper tilde
-    (while (re-search-forward "\u0098\\|\u02dc" nil t)(replace-match "~"   ))
-    (goto-char (point-min)) ; trademark
-    (while (re-search-forward "\u0099\\|\u2122" nil t)(replace-match "TM"  ))
-    (goto-char (point-min)) ; turkish
-    (while (re-search-forward "\u009a\\|\u0161" nil t)(replace-match "s"   ))
-    (goto-char (point-min)) ; greater than
-    (while (re-search-forward "\u009b\\|\u203a" nil t)(replace-match ">"   ))
-    (goto-char (point-min)) ; oe ligature
-    (while (re-search-forward "\u009c\\|\u0153" nil t)(replace-match "æ"   ))
-    (goto-char (point-min)) ; polish
-    (while (re-search-forward "\u009e\\|\u017e" nil t)(replace-match "z"   ))
-    (goto-char (point-min)) ; y umlaut
-    (while (re-search-forward "\u009f\\|\u0178" nil t)(replace-match "Y"   ))
-    (goto-char (point-min)) ; zero-width space
-    (while (search-forward "\u200b" nil t)(replace-match ""   ))
-    (goto-char (point-min)) ; hyphen
-    (while (search-forward "\u2010" nil t)(replace-match "-"  ))
-    (goto-char (point-min)) ; zero-width joiner
-    (while (search-forward "\u2060" nil t)(replace-match ""   ))
     (goto-char (point-min)) ; no-break space
     (while (search-forward "\u00a0" nil t)(replace-match " "  ))
     (goto-char (point-min)) ; soft hyphen
-    (while (search-forward "\u00ad" nil t)(replace-match "-"))))
+    (while (search-forward "\u00ad" nil t)(replace-match "-"  ))
+    (goto-char (point-min)) ; latin capital ligature oe
+    (while (search-forward "\u0152" nil t)(replace-match "Æ"  ))
+    (goto-char (point-min)) ; latin small ligature oe
+    (while (search-forward "\u0153" nil t)(replace-match "æ"  ))
+    (goto-char (point-min)) ; latin capital letter s with caron
+    (while (search-forward "\u0160" nil t)(replace-match "S"  ))
+    (goto-char (point-min)) ; latin small letter s with caron
+    (while (search-forward "\u0161" nil t)(replace-match "s"  ))
+    (goto-char (point-min)) ; latin capital letter y with diaeresis
+    (while (search-forward "\u0178" nil t)(replace-match "Y"  ))
+    (goto-char (point-min)) ; latin capital letter z with caron
+    (while (search-forward "\u017d" nil t)(replace-match "Z"  ))
+    (goto-char (point-min)) ; latin small letter z with caron
+    (while (search-forward "\u017e" nil t)(replace-match "z"  ))
+    (goto-char (point-min)) ; latin small letter f with hook
+    (while (search-forward "\u0192" nil t)(replace-match "f"  ))
+    (goto-char (point-min)) ; modifier letter circumflex accent
+    (while (search-forward "\u02c6" nil t)(replace-match "^"  ))
+    (goto-char (point-min)) ; small tilde
+    (while (search-forward "\u02dc" nil t)(replace-match "~"  ))
+    (goto-char (point-min)) ; zero width space
+    (while (search-forward "\u200b" nil t)(replace-match ""   ))
+    (goto-char (point-min)) ; hyphen
+    (while (search-forward "\u2010" nil t)(replace-match "-"  ))
+    (goto-char (point-min)) ; en dash
+    (while (search-forward "\u2013" nil t)(replace-match "-"  ))
+    (goto-char (point-min)) ; em dash
+    (while (search-forward "\u2014" nil t)(replace-match "--" ))
+    (goto-char (point-min)) ; left single quotation mark
+    (while (search-forward "\u2018" nil t)(replace-match "'"  ))
+    (goto-char (point-min)) ; right single quotation mark
+    (while (search-forward "\u2019" nil t)(replace-match "'"  ))
+    (goto-char (point-min)) ; single low-9 quotation mark ,
+    (while (search-forward "\u201a" nil t)(replace-match ","  ))
+    (goto-char (point-min)) ; left double quotation mark
+    (while (search-forward "\u201c" nil t)(replace-match "\"" ))
+    (goto-char (point-min)) ; right double quotation mark
+    (while (search-forward "\u201d" nil t)(replace-match "\"" ))
+    (goto-char (point-min)) ; double low-9 quotation mark ,,
+    (while (search-forward "\u201e" nil t)(replace-match "\"" ))
+    (goto-char (point-min)) ; dagger
+    (while (search-forward "\u2020" nil t)(replace-match "*"  ))
+    (goto-char (point-min)) ; double dagger
+    (while (search-forward "\u2021" nil t)(replace-match "*"  ))
+    (goto-char (point-min)) ; bullet
+    (while (search-forward "\u2022" nil t)(replace-match "-"  ))
+    (goto-char (point-min)) ; horizontal ellipsis
+    (while (search-forward "\u2026" nil t)(replace-match "..."))
+    (goto-char (point-min)) ; per mille sign
+    (while (search-forward "\u2030" nil t)(replace-match "%"  ))
+    (goto-char (point-min)) ; single left-pointing angle quotation mark
+    (while (search-forward "\u2039" nil t)(replace-match "<"  ))
+    (goto-char (point-min)) ; single right-pointing angle quotation mark
+    (while (search-forward "\u203a" nil t)(replace-match ">"  ))
+    (goto-char (point-min)) ; word joiner
+    (while (search-forward "\u2060" nil t)(replace-match ""   ))
+    (goto-char (point-min)) ; euro sign
+    (while (search-forward "\u20ac" nil t)(replace-match "EUR"))
+    (goto-char (point-min)) ; trade mark sign
+    (while (search-forward "\u2122" nil t)(replace-match "TM" ))
+    (goto-char (point-min)) ; black circle
+    (while (search-forward "\u25cf" nil t)(replace-match "-"  ))))
 (defun count-everything ()
   "Show line number and position, then count lines and characters
 in region or buffer.
