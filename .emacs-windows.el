@@ -44,10 +44,10 @@
   (setq-default line-spacing 5)
   (set-frame-font "-*-lucida console-normal-r-*-*-18-*-*-*-*-*-iso10646-1"))
 (defun font-5 ()
-  "Set default font to Lucida Sans Typewriter 18."
+  "Set default font to Lucida Console 18."
   (interactive)
   (setq-default line-spacing 4)
-  (set-frame-font "-*-lucida console-normal-r-*-*-20-*-*-*-*-*-iso10646-1"))
+  (set-frame-font "-*-lucida console-normal-r-*-*-18-*-*-*-*-*-iso10646-1"))
 (defun font-6 ()
   "Set default font to SimSun 22."
   (interactive)
