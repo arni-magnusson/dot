@@ -18,7 +18,7 @@
 ;;-----------
 ;; 5.1  File
 ;;-----------
-(defvar ps-outfile "c:/out.ps"
+(defvar ps-outfile "c:/x/out.ps"
   "Filename for `ps-print-buffer-with-faces'.")
 ;;-----------
 ;; 5.3  View
