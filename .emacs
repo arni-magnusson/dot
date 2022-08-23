@@ -4687,6 +4687,7 @@ with spaces."
   (ess-toggle-S-assign nil)
   (setq ess-brace-offset -2)
   (setq ess-indent-offset 2)
+  (setq ess-indent-with-fancy-comments nil) ; # and ## are equivalent
   (add-to-list 'safe-local-variable-values '(ess-indent-offset . 4))
   (font-lock-add-keywords nil '(("taf\\.png(\"\\(.*?\\)\""
                                  (1 font-lock-builtin-face t))))
