@@ -199,6 +199,7 @@
 (defun arni-recentf-load-hook () ; need hook before loading
   (setq recentf-auto-cleanup 'never)
   (setq recentf-max-saved-items 200)
+  (add-to-list 'recentf-exclude "^[Zz]:") ; exclude Z drive (Penguin)
   (if (string-equal (format-time-string "%u") "5") ; Friday clean
       (recentf-cleanup)))
 (add-hook 'recentf-load-hook 'arni-recentf-load-hook)
