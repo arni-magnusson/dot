@@ -108,6 +108,13 @@ alias co='git checkout'
 alias commit='git commit'
 alias 'commits-full'='commits -f'
 alias cp='cp --preserve=all'
+alias 'cpu-current'='cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor'
+alias 'cpu-options'='cat \
+/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors'
+alias 'cpu-performance'='echo performance | \
+sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
+alias 'cpu-powersave'='echo powersave | \
+sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
 alias d=docker
 alias d2u='dos2unix'
 alias di='git diff'
@@ -150,7 +157,8 @@ alias lh='log | head'
 alias ll="ls -l $LS_OPTIONS $LL_OPTIONS"
 alias ll.="ls -dl $LS_OPTIONS $LL_OPTIONS .*"
 alias lla="ls -Al $LS_OPTIONS $LL_OPTIONS"
-alias lld='ls -dl $LL_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M */ | sed "s/\///g"'
+alias lld='ls -dl $LL_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M */ | \
+sed "s/\///g"'
 alias llh="ls -lh $LS_OPTIONS $LL_OPTIONS"
 alias llk="ls -l --block-size=K $LS_OPTIONS $LL_OPTIONS"
 alias lll='ll'
