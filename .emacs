@@ -613,7 +613,9 @@
 (global-set-key [f7]           'record-macro           )
 (global-set-key [f8]           'kmacro-call-macro      )
 (global-set-key [f11]          'outline-mode         ) ; toggle-frame-fullscreen
+(global-set-key [f12]          'move-end-of-line       ) ; f12=end on laptop
 (global-set-key [S-f12]        'region-to-eol          ) ; S-f12=S-end on laptop
+(global-set-key [?\C-x f12]    'goto-longest-line      ) ; end-of-defun
 (global-set-key [?\C-x delete] 'blank-region           )
 (global-set-key [C-backspace]  'backward-delete-word   ) ; backward-kill-word
 (global-set-key [M-backspace]  'backward-delete-word   ) ; backward-kill-word
@@ -1078,7 +1080,9 @@ Doesn't complain about last window, unlike `kill-buffer-and-window`."
         (push-mark (line-beginning-position 0))))
   (kill-new (buffer-substring-no-properties (point)(mark)))
   (if arg (comment-region (point)(mark)))
-  (save-excursion (yank)(current-kill 1))
+  (save-excursion
+    (yank)
+    (current-kill 1))
   (message nil))
 (defun duplicate-comment ()
   "Copy line or region, comment it, then yank."
@@ -2363,10 +2367,11 @@ which doesn't compile."
   (local-unset-key [?\C-c ?=]) ; reactivate diff-this-buffer-with-file
   (local-set-key [f9]    'sh-send-line-or-region-and-step          )
   (local-set-key [f11]   'sh-outline                               )
-  (local-set-key [f12]   'sh-template                              )
   (local-set-key [C-f12] 'sh-template-mini                         )
+  (local-set-key [M-f12] 'sh-template                              )
   (local-set-key [?\C-m] 'sh-indent-newline-indent-or-delete-region) ; return
   (local-set-key [?\C-c ?\C-c] 'sh-eval-buffer                     ) ; sh-case
+  (local-set-key [?\C-c ?\C-j] 'sh-send-line-or-region-stay        )
   (local-set-key [?\C-c ?\C-v] 'sh-eval-buffer                     )
   (defun sh-eval-buffer ()
     "Evaluate commands in buffer in inferior shell.
@@ -2398,6 +2403,11 @@ See also `sh-send-line-or-region-and-step'."
     (outline-hide-body)
     (setq outline-previous-mode '(sh-mode))
     (set-face-attribute 'outline-1 nil :inherit font-lock-comment-face))
+  (defun sh-send-line-or-region-stay ()
+    "Run line or region and stay."
+    (interactive)
+    (save-excursion
+      (sh-send-line-or-region-and-step)))
   (defun sh-template-mini ()
     "Insert minimal sh template."
     (interactive "*")
@@ -2464,8 +2474,8 @@ shift $((OPTIND-1))
   (local-unset-key [?\C-c ?.]) ; reactivate comment-line-or-region
   (local-unset-key [?/]      ) ; reactivate normal slash
   (local-set-key [f11]               'hs-minor-mode      )
-  (local-set-key [f12]               'cpp-template-mini  )
-  (local-set-key [C-f12]             'cpp-template       )
+  (local-set-key [C-f12]             'cpp-template-mini  )
+  (local-set-key [M-f12]             'cpp-template       )
   (local-set-key [?\C-m]             'newline-and-indent ) ; return
   (local-set-key [M-return]          'cpp-endl           )
   (local-set-key [?\C-\M-m]          'cpp-endl           ) ; M-RET in terminal
@@ -2994,7 +3004,7 @@ int main()
   (set-face-attribute 'font-lock-variable-name-face nil :foreground "brown4")
   (local-unset-key [?\M-n]) ; reactivate bs-cycle-next
   (local-unset-key [?\M-p]) ; reactivate bs-cycle-previous
-  (local-set-key [f12]               'makefile-template           )
+  (local-set-key [C-f12]             'makefile-template           )
   (local-set-key [?\C-c C-backspace] 'makefile-clean              )
   (local-set-key [?\C-c ?\C-c]       'makefile-build              )
   (local-set-key [?\C-c ?\C-l]       'makefile-clean              )
@@ -3142,7 +3152,7 @@ clean:
                       nil :weight -) ; ls, rm
   (local-set-key [f11]         'bat-outline-remember)
   (local-set-key [C-f12]       'bat-template        )
-  (local-set-key [f12]         'bat-template-full   )
+  (local-set-key [M-f12]       'bat-template-full   )
   (local-set-key [?\C-c ?\C- ] 'bat-sep             )
   (defun bat-outline ()
     "Navigate within Dos script using `outline-mode'."
@@ -3344,7 +3354,7 @@ echo.
   (local-set-key [f10]            'html-tidy                       )
   (local-set-key [S-f10]          'html-simplify                   )
   (local-set-key [f11]            'html-outline                    )
-  (local-set-key [f12]            'html-template                   )
+  (local-set-key [C-f12]          'html-template                   )
   (local-set-key [?\C-m]          'reindent-then-newline-and-indent) ; return
   (local-set-key [M-return]       'html-br                         )
   (local-set-key [?\C-c ?~]       'tempo-template-html-nonbreaking-space)
@@ -3743,8 +3753,8 @@ See `LaTeX-toggle-quotes'.")
   (local-set-key [f10]         'iso-iso2tex             )
   (local-set-key [f11]         'reftex-toc-fullscreen   )
   (local-set-key [S-f11]       'reftex-toc-left-right   )
-  (local-set-key [f12]         'LaTeX-template          )
   (local-set-key [C-f12]       'LaTeX-template-mini     )
+  (local-set-key [M-f12]       'LaTeX-template          )
   (local-set-key [?\C-m]       'newline-and-indent      ) ; return
   (local-set-key [M-return]    'LaTeX-item              )
   (local-set-key [?\C-c C-backspace] 'LaTeX-master-clean)
@@ -4101,8 +4111,8 @@ See also `LaTeX-insert-item`."
   (local-set-key [M-return]    'texinfo-insert-@item-properly )
   (local-set-key [f11]         'texinfo-show-structure        )
   (local-set-key [S-f11]       'texinfo-show-structure-nodes  )
-  (local-set-key [f12]         'texinfo-template              )
   (local-set-key [C-f12]       'texinfo-template-mini         )
+  (local-set-key [M-f12]       'texinfo-template              )
   (local-set-key [?\C-c ?\]]   'texinfo-insert-@end           )
   (local-set-key [?\C-c ?\C- ] 'texinfo-insert-@tab           )
   (local-set-key [?\C-c ?\C-a] 'texinfo-insert-@arrow         )
@@ -4313,7 +4323,7 @@ This is first.
   (local-set-key [f9]    'eval-line-and-step      )
   (local-set-key [f11]   'dot-emacs-outline       )
   (local-set-key [S-f11] 'hs-minor-mode           )
-  (local-set-key [f12]   'lisp-template           )
+  (local-set-key [C-f12] 'lisp-template           )
   (local-set-key [?\C-j] 'region-forward-paragraph) ; fill-paragraph-forward
   (local-set-key [?\C-m] 'newline-and-indent      ) ; return
   (local-set-key [?\C-c ?\C- ] 'lisp-comment-inline   )
@@ -4711,9 +4721,7 @@ with spaces."
   (local-set-key [S-f10]             'R-format-code-longline-nocomment)
   (local-set-key [f11]               'R-outline                       )
   (local-set-key [S-f11]             'hs-minor-mode                   )
-  (local-set-key [f12]               'R-template-roxygen              )
-  (local-set-key [C-f12]             'R-template-general              )
-  (local-set-key [M-f12]             'R-template-minimal              )
+  (local-set-key [C-f12]             'R-template-roxygen              )
   (local-set-key [?\C-c C-backspace] 'ess-graphics-off                )
   (local-set-key [M-return]  'ess-eval-region-or-function-or-paragraph-and-step)
   (local-set-key [?\C-c up]          'ess-eval-buffer-from-beg-to-here)
@@ -4899,38 +4907,6 @@ or \\code{\\link{}} if ARG is non-nil."
     (yank)
     (goto-char (+ (point-min) 3))
     (titlecase-dwim))
-  (defun R-template-general ()
-    "Insert general R template."
-    (interactive "*")
-    (goto-char (point-min))
-    (if (search-forward "{" nil t)
-        (progn (beginning-of-line)
-               (backward-char))
-      (progn (insert "temp <- function()\n{\n\n}\n")
-             (backward-char 6)))
-    (insert "
-################################################################################
-###                                                                            #
-### Function:                                                                  #
-###                                                                            #
-### Purpose:                                                                   #
-###                                                                            #
-### Args:                                                                      #
-###                                                                            #
-### Notes:                                                                     #
-###                                                                            #
-### Warning:                                                                   #
-###                                                                            #
-### Requires:                                                                  #
-###                                                                            #
-### Returns:                                                                   #
-###                                                                            #
-################################################################################
-")
-    (delete-char 1)
-    (goto-char (point-min))
-    (search-forward ": ")
-    (overwrite-mode t))
   (defun R-template-roxygen ()
     "Insert Roxygen template."
     (interactive "*")
@@ -4951,15 +4927,6 @@ or \\code{\\link{}} if ARG is non-nil."
     (goto-char (point-min))
     (delete-char 1)
     (forward-char 3))
-  (defun R-template-minimal ()
-    "Insert minimal R template."
-    (interactive "*")
-    (insert " <- function()
-{
-
-}
-")
-    (forward-line -4))
   (defun R-outline ()
     "Navigate within R code using `outline-mode'."
     (interactive)
@@ -5090,7 +5057,7 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (local-set-key [f9]          'tmb-run             )
   (local-set-key [f10]         'tmb-debug           )
   (local-set-key [f11]         'tmb-open            )
-  (local-set-key [f12]         'tmb-template-mini   )
+  (local-set-key [C-f12]       'tmb-template-mini   )
   (local-set-key [?\C-c C-backspace] 'tmb-clean     ) ; show keybinding in menu
   (local-set-key [?\C-c ?\C-a] 'tmb-run-any         )
   (local-set-key [?\C-c ?\C-b] 'tmb-run             )
@@ -6777,7 +6744,7 @@ See `dired-toggle-dot-files'.")
   (local-unset-key [?\M-n]        )
   (local-unset-key [?\M-p]        )
   (local-set-key [f10]               'markdown-tidy       )
-  (local-set-key [f12]               'markdown-template   )
+  (local-set-key [C-f12]             'markdown-template   )
   (local-set-key [?\C-c C-backspace] 'markdown-delete-html)
   (local-set-key [?\C-c ?\C-a]       'markdown-preview    )
   (local-set-key [?\C-c ?\C-c]       'markdown-compile    )
@@ -7064,7 +7031,7 @@ break
     (local-set-key [M-mouse-1]     'org-mouse-show    )
     (local-set-key [M-mouse-3]     'org-mouse-cycle   )
     (local-set-key [f11]           'org-cycle         )
-    (local-set-key [f12]           'org-template      )
+    (local-set-key [C-f12]         'org-template      )
     (local-set-key [?\C-c C-backspace] 'org-html-delete)
     (local-set-key [?\t]           'org-cycle         ) ; forget outline-mode
     (local-set-key [C-S-tab]       'org-collapse-tree )
