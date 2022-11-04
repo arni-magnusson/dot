@@ -1,8 +1,8 @@
 .First <- function()
 {
-  suppressPackageStartupMessages(library(arni))
-  suppressPackageStartupMessages(suppressWarnings(library(gdata)))
-  library(TAF)
+  ## suppressPackageStartupMessages(library(arni))
+  ## suppressPackageStartupMessages(suppressWarnings(library(gdata)))
+  ## library(TAF)
 
   ## .libPaths(sort(.libPaths())) # user library in first slot
   options(continue="  ")
