@@ -22,9 +22,9 @@
   options(stringsAsFactors=FALSE)
   if(.Platform$OS.type=="windows")
   {
-    options(editor="emacs")   # write file
-    options(pager="runemacs") # Emacs hide
-    options(pkgType="binary") # fast default, pass type="source" when needed
+    options(editor="emacs")      # write file
+    options(pager="runemacs")    # Emacs hide
+    ## options(pkgType="binary") # crashes taf.bootstrap?
     options(width=80)
   }
   else
