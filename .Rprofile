@@ -22,11 +22,10 @@
   options(stringsAsFactors=FALSE)
   if(.Platform$OS.type=="windows")
   {
-    Sys.setenv(TZ="UTC")
     options(editor="emacs")   # write file
     options(pager="runemacs") # Emacs hide
     options(pkgType="binary") # fast default, pass type="source" when needed
-    options(width=112)
+    options(width=80)
   }
   else
   {
