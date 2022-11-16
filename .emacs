@@ -4687,7 +4687,7 @@ with spaces."
 (add-hook 'inferior-ess-mode-hook 'arni-inferior-ess-hook)
 (defun arni-ess-post-run-hook ()
   (message nil)
-  (ess-eval-linewise "options(continue='  ',width=92)" t))
+  (ess-eval-linewise "options(continue='  ',width=80)" t))
 (add-hook 'ess-post-run-hook 'arni-ess-post-run-hook)
 (defun arni-ess-hook ()
   (if (string-equal (buffer-name) "*R*")
