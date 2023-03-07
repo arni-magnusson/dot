@@ -196,6 +196,7 @@ alias push='git push'
 alias q=condor_q
 alias rd='rmdir'
 alias reset='git reset'
+alias row='line'
 alias skyperestart='pkill skype; sleep 0.5; skypeforlinux'
 alias rm0='find -maxdepth 1 -size 0 -delete'
 alias roxy='Roxy'
