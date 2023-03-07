@@ -307,6 +307,7 @@
         ("\\.dat$"         . conf-space-mode)
         ("\\.dox$"         . conf-space-mode)
         ("\\.doxyfile$"    . conf-space-mode)
+        ("\\.frq$"         . conf-unix-mode)
         ("\\.gdbinit$"     . conf-space-mode)
         ("\\.gitignore$"   . conf-space-mode)
         ("\\.inputrc$"     . conf-space-mode)
