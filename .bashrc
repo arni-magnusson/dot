@@ -191,6 +191,7 @@ alias one='onedrive --synchronize'
 alias p='cpu-performance'
 alias optipng='optipng -strip all'
 alias pdfbook='book'
+alias penguin='echo //penguin/assessments'
 alias prtscr='gnome-screenshot -d 5'
 alias push='git push'
 alias q=condor_q
