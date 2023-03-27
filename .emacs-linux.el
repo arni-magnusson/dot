@@ -22,60 +22,66 @@
 ;;-----------
 ;; 5.3  View
 ;;-----------
-;;  8  Noto Sans Mono 14  condensed (235 chars)
-;;  9  Noto Mono 16       clearer than courier
-;; 10  Libertine Mono 16  serif but mono
+;; N  Font                1Il  0O  Lines  Cols  Serif
+;; 1  Courier 16          1l   0O     48    92  yes
+;; 2  Courier 16 bold     1l   -      48    92  yes
+;; 3  Fira Code 16        -    -      46    92  -
+;; 4  Go Mono 16          -    -      46    92  yes
+;; 5  Liberation Mono 16  -    -      46    92  -
+;; 6  Libertine Mono 16   1l   0O     48    92  yes
+;; 7  Noto Mono 16        -    0O     46    92  -
+;; 8  Noto Sans Mono 16   1l   -      41    92  -
 
 (defun font-1 ()
-  "Set default font to Fira Code 16"
-  (interactive)
-  (setq-default line-spacing 0)
-  (set-frame-font "-*-Fira Code-normal-*-*-*-16-*-*-*-*-*-*-*"))
-(defun font-2 ()
-  "Set default font to Courier 10"
-  (interactive)
-  (setq-default line-spacing 1)
-  (set-frame-font "-*-Courier 10 Pitch-normal-*-*-*-12-*-*-*-*-*-*-*"))
-(defun font-3 ()
-  "Set default font to Courier 12"
-  (interactive)
-  (setq-default line-spacing 1)
-  (set-frame-font "-*-Courier 10 Pitch-normal-*-*-*-12-*-*-*-*-*-*-*"))
-(defun font-4 ()
-  "Set default font to Courier 14"
-  (interactive)
-  (setq-default line-spacing 1)
-  (set-frame-font "-*-Courier 10 Pitch-normal-*-*-*-14-*-*-*-*-*-*-*"))
-(defun font-5 ()
   "Set default font to Courier 16"
   (interactive)
   (setq-default line-spacing 1)
   (set-frame-font "-*-Courier 10 Pitch-normal-*-*-*-16-*-*-*-*-*-*-*"))
-(defun font-6 ()
+(defun font-2 ()
   "Set default font to Courier bold 16"
   (interactive)
   (setq-default line-spacing 1)
   (set-frame-font "-*-Courier 10 Pitch-bold-*-*-*-16-*-*-*-*-*-*-*"))
-(defun font-7 ()
-  "Set default font to Courier bold 36"
+(defun font-3 ()
+  "Set default font to Fira Code 16"
   (interactive)
   (setq-default line-spacing 1)
-  (set-frame-font "-bitstream-Courier 10 Pitch-bold-*-*-*-36-*-*-*-*-*-*-*"))
-(defun font-8 ()
-  "Set default font to Noto Sans Mono 14"
-  (interactive)
-  (setq-default line-spacing 0)
-  (set-frame-font "-*-Noto Sans Mono-normal-*-*-*-14-*-*-*-*-*-*-*"))
-(defun font-9 ()
-  "Set default font to Noto Mono 16"
+  (set-frame-font "-*-Fira Code-normal-*-*-*-16-*-*-*-*-*-*-*"))
+(defun font-4 ()
+  "Set default font to Go Mono 16"
   (interactive)
   (setq-default line-spacing 1)
-  (set-frame-font "-*-Noto Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
-(defun font-0 ()
-  "Set default font to Linux Libertine Mono 16"
+  (set-frame-font "-*-Go Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
+(defun font-5 ()
+  "Set default font to Liberation Mono 16"
   (interactive)
   (setq-default line-spacing 2)
+  (set-frame-font "-*-Liberation Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
+(defun font-6 ()
+  "Set default font to Libertine Mono 16"
+  (interactive)
+  (setq-default line-spacing 1)
   (set-frame-font "-*-Linux Libertine Mono O-normal-*-*-*-16-*-*-*-*-*-*-*"))
+(defun font-7 ()
+  "Set default font to Noto Mono 16"
+  (interactive)
+  (setq-default line-spacing 2)
+  (set-frame-font "-*-Noto Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
+(defun font-8 ()
+  "Set default font to Noto Sans Mono 16"
+  (interactive)
+  (setq-default line-spacing 0)
+  (set-frame-font "-*-Noto Sans Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
+(defun font-9 ()
+  "Set default font to Noto Sans Mono 16"
+  (interactive)
+  (setq-default line-spacing 0)
+  (set-frame-font "-*-Noto Sans Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
+(defun font-10 ()
+  "Set default font to Noto Sans Mono 16"
+  (interactive)
+  (setq-default line-spacing 0)
+  (set-frame-font "-*-Noto Sans Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
 ;; (defalias 'frame-maximize 'ignore) ; not required on Hafstrambur
 ;; (defun frame-maximize ()
 ;;   "Maximize frame."
