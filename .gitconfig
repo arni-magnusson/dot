@@ -1,8 +1,6 @@
 [user]
 	name = Arni Magnusson
 	email = thisisarni@gmail.com
-[merge]
-	ff = false
 [pull]
 	ff = true
 [filter "lfs"]
