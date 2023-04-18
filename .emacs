@@ -1936,8 +1936,18 @@ using 'plain' \"quotes\" and double -- em dash."
     (goto-char (point-min)) ; small tilde
     (while (search-forward "\u02dc" nil t)(replace-match "~"  ))
     (goto-char (point-min)) ; zero width space
+    (while (search-forward "\u200a" nil t)(replace-match ""   ))
+    (goto-char (point-min)) ; hair space
     (while (search-forward "\u200b" nil t)(replace-match ""   ))
     (goto-char (point-min)) ; hyphen
+    (while (search-forward "\u200c" nil t)(replace-match ""   ))
+    (goto-char (point-min)) ; zero width non-joiner
+    (while (search-forward "\u200d" nil t)(replace-match ""   ))
+    (goto-char (point-min)) ; zero width joiner
+    (while (search-forward "\u200e" nil t)(replace-match ""   ))
+    (goto-char (point-min)) ; invisible left-to-right mark
+    (while (search-forward "\u200f" nil t)(replace-match ""   ))
+    (goto-char (point-min)) ; invisible right-to-left mark
     (while (search-forward "\u2010" nil t)(replace-match "-"  ))
     (goto-char (point-min)) ; en dash
     (while (search-forward "\u2013" nil t)(replace-match "-"  ))
@@ -2385,7 +2395,7 @@ See also `sh-send-line-or-region-and-step'."
     (insert " ")
     (indent-according-to-mode)
     (newline)
-    (clean-trails)
+    ;; (clean-trails)
     (message nil)
     (indent-according-to-mode)) ; handle 'case'
   (defun sh-indent-newline-indent-or-delete-region ()
