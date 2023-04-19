@@ -7,6 +7,7 @@
   ## .libPaths(sort(.libPaths())) # user library in first slot
   options(continue="  ")
   options(help_type="html")
+  options(pkgType="binary")
   options(repos=c(
             ## https may not work on a VM
             CRAN="https://cloud.r-project.org",
@@ -24,7 +25,6 @@
   {
     options(editor="emacs")      # write file
     options(pager="runemacs")    # Emacs hide
-    ## options(pkgType="binary") # crashes taf.bootstrap?
     options(width=80)
   }
   else
