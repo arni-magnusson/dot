@@ -221,6 +221,8 @@ alias t='sudo apt upgrade'
 alias tag='git tag'
 alias 'tag-delete'='git push origin --delete'
 alias 'tag-full'='git show -s --format="%d $GIT_FORMAT" `git tag`'
+alias 'tag-full-alt'='git log --tags --simplify-by-decoration \
+--pretty="format: %ai %h %d %an - %s" | sort | grep "(tag: .*)"'
 alias take='sudo chown -R arnim:arnim'
 alias tmb='~/bin/emacs -Q -mm --eval "(setq initial-scratch-message nil)" \
 --eval "(add-to-list '\''load-path \"~/emacs/lisp/ess/lisp\")" \
