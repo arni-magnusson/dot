@@ -237,6 +237,7 @@ https://stockassessment.org/datadisk/stockassessment/userdirs/user3/'
 alias uu='cd ../..'
 alias v='MFCL-Viewer.exe'
 alias wgets='wget --no-check-certificate'
+alias 'wifi-signal'='wavemon'
 alias x='exit'
 
 # Keybindings (only in interactive shell, to avoid login warnings)
