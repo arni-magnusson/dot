@@ -7,7 +7,7 @@
   ## .libPaths(sort(.libPaths())) # user library in first slot
   options(continue="  ")
   options(help_type="html")
-  options(pkgType="binary")
+  options(Ncpus=4)
   options(repos=c(
             ## https may not work on a VM
             CRAN="https://cloud.r-project.org",
@@ -23,8 +23,9 @@
   options(stringsAsFactors=FALSE)
   if(.Platform$OS.type=="windows")
   {
-    options(editor="emacs")      # write file
-    options(pager="runemacs")    # Emacs hide
+    options(editor="emacs")   # write file
+    options(pager="runemacs") # Emacs hide
+    options(pkgType="binary")
     options(width=80)
   }
   else
