@@ -502,9 +502,9 @@
 ;; Windows
 ;;                                                DEL
 ;; KDE           d      k
-;; Emacs      a   e g  j   n p rs      z05   -=     ,.
+;; Emacs      a   e g  j l n p rs      z05   -=     ,.
 ;;            SPC     RET      END PGUP PGDN
-;; Available    c    hi  l  o q  tuvwxy 1..9`
+;; Available    c    hi     o q  tuvwxy 1..9`
 ;;                TAB     HOME               BKSP     ESC
 ;;------------------------------------------------------------------------------
 ;; C-c
@@ -836,6 +836,7 @@
 (global-set-key [?\C-\M-g]  'goto-char               )
 (global-set-key [?\C-\M-h]  'backward-delete-word    ) ; M-backspace in terminal
 (global-set-key [?\C-\M-j]  'join-line-nospace       ) ; indent-new-comment-line
+(global-set-key [?\C-\M-l]  'longlines-mode          ) ; reposition-window
 (global-set-key [?\C-\M-n]  'pull-line-or-region-down) ; forward-list
 (global-set-key [?\C-\M-p]  'pull-line-or-region-up  ) ; backward-list
 (global-set-key [?\C-\M-z]  'zap-back-to-char        )
