@@ -3,3 +3,5 @@
 	email = thisisarni@gmail.com
 [pull]
 	ff = true
+[credential]
+	helper = cache
