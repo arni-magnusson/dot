@@ -2,11 +2,6 @@
 ;; 2.1  Visual
 ;;-------------
 (add-hook 'window-setup-hook 'frame-maximize)
-;;------------------
-;; 3.2  Executables
-;;------------------
-(setq diff-command "winmergeu")
-(setq diff-switches "-e")
 ;;-------------
 ;; 3.3  Backup
 ;;-------------

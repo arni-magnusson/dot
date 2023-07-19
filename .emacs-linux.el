@@ -2,11 +2,6 @@
 ;; 2.3  Faces
 ;;------------
 (setq-default line-spacing 1) ; or :height 126
-;;------------------
-;; 3.2  Executables
-;;------------------
-(setq diff-command "kompare")
-(setq diff-switches "")
 ;;-------------
 ;; 3.3  Backup
 ;;-------------
