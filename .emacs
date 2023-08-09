@@ -746,7 +746,7 @@
 (global-set-key [?\C-x ?h]    'copy-buffer              ) ; mark-whole-buffer
 (global-set-key [?\C-x ?i]    'insert-date              ) ; insert-file
 (global-set-key [?\C-x ?j]    'region-forward-paragraph )
-(global-set-key [?\C-x ?l]    'find-tag-other-window    ) ; count-lines-page
+(global-set-key [?\C-x ?l]    'visual-line-mode         ) ; count-lines-page
 (global-set-key [?\C-x ?m]    'mark-function            ) ; compose-mail
 (global-set-key [?\C-x ?n]    'narrow-to-defun-or-region) ; [map]
 (global-set-key [?\C-x ?p]    'list-packages            )
