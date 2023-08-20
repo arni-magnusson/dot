@@ -4707,7 +4707,6 @@ with spaces."
   (setq make-backup-files t)
   (setq ess-eval-visibly-p nil)
   (setq ess-r-package-auto-set-evaluation-env nil) ; prevent pkg environment
-  (ess-toggle-S-assign nil)
   (setq ess-brace-offset -2)
   (setq ess-indent-offset 2)
   (setq ess-indent-with-fancy-comments nil) ; # and ## are equivalent
@@ -5016,7 +5015,9 @@ or \\code{\\link{}} if ARG is non-nil."
   "Start interactive R session."
   (interactive)
   (R)
-  (sleep-for 0.01)
+  ;; (sleep-for 0.01)
+  (select-window (get-buffer-window "*R*"))
+  (delete-other-windows)
   (comint-clear-window))
 ;;----------
 ;; 6.18 SQL
