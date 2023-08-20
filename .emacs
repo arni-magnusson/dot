@@ -796,7 +796,7 @@
 (global-set-key [?\C-&]     'async-shell-command     )
 (global-set-key [?\C-\(]    'backward-sexp-start     )
 (global-set-key [?\C-\)]    'forward-sexp-start      )
-(global-set-key [?\C-=]     'duplicate-line          )
+(global-set-key [?\C-=]     'duplicate-dwim          )
 (global-set-key [?\C-\]]    'scroll-up-1             ) ; abort-recursive-edit
 (global-set-key [?\C-{]     'backward-paragraph      )
 (global-set-key [?\C-}]     'forward-paragraph       )
@@ -853,7 +853,7 @@
            (global-set-key [?\M-9] 'font-9           ) ; digit-argument
            (global-set-key [?\M-0] 'font-0         ))) ; digit-argument
 (global-set-key [?\M-%]     'read-only-mode          ) ; query-replace
-(global-set-key [?\M-=]     'duplicate-line-comment  ) ; count-line-region
+(global-set-key [?\M-=]     'duplicate-dwim-comment  ) ; count-line-region
 (global-set-key [?\M-+]     'transpose-windows       )
 ;; (global-set-key [?\M-\[] 'ignore                  ) ; paste into Emacs -nw
 (global-set-key [?\M-\]]    'scroll-up-1             )
@@ -1069,12 +1069,13 @@ Doesn't complain about last window, unlike `kill-buffer-and-window`."
   "Delete following N words."
   (interactive "*p")
   (delete-region (point)(save-excursion (forward-word n)(point))))
-(defun duplicate-line-comment ()
+(defun duplicate-dwim-comment ()
   "Duplicate line, commenting out the original one."
   (interactive "*")
   (let ((duplicate-line-final-position 0))
-    (duplicate-line))
-  (comment-line 1))
+    (duplicate-dwim))
+  (comment-line 1)
+  (uncomment-region (line-beginning-position)(line-end-position)))
 (defun forward-sexp-start ()
   "Move to next expression."
   (interactive)
