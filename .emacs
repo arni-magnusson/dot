@@ -43,6 +43,7 @@
 (delete-selection-mode 1                      ) ; typing replaces selected text
 (electric-indent-mode -1                      ) ; RET is just newline
 (prefer-coding-system 'utf-8                  ) ; utf8 if not sure
+(setq duplicate-line-final-position -1        ) ; Move cursor after duplicating
 (require 'imenu)(setq imenu-max-items 43      ) ; code navigation
 (setq initial-major-mode 'text-mode           ) ; text-mode for scratch buffer
 (setq mail-host-address "spc.int"             ) ; change-log-mode
@@ -795,7 +796,7 @@
 (global-set-key [?\C-&]     'async-shell-command     )
 (global-set-key [?\C-\(]    'backward-sexp-start     )
 (global-set-key [?\C-\)]    'forward-sexp-start      )
-(global-set-key [?\C-=]     'duplicate               )
+(global-set-key [?\C-=]     'duplicate-line          )
 (global-set-key [?\C-\]]    'scroll-up-1             ) ; abort-recursive-edit
 (global-set-key [?\C-{]     'backward-paragraph      )
 (global-set-key [?\C-}]     'forward-paragraph       )
@@ -852,7 +853,7 @@
            (global-set-key [?\M-9] 'font-9           ) ; digit-argument
            (global-set-key [?\M-0] 'font-0         ))) ; digit-argument
 (global-set-key [?\M-%]     'read-only-mode          ) ; query-replace
-(global-set-key [?\M-=]     'duplicate-comment       ) ; count-line-region
+(global-set-key [?\M-=]     'duplicate-line-comment  ) ; count-line-region
 (global-set-key [?\M-+]     'transpose-windows       )
 ;; (global-set-key [?\M-\[] 'ignore                  ) ; paste into Emacs -nw
 (global-set-key [?\M-\]]    'scroll-up-1             )
@@ -1068,28 +1069,12 @@ Doesn't complain about last window, unlike `kill-buffer-and-window`."
   "Delete following N words."
   (interactive "*p")
   (delete-region (point)(save-excursion (forward-word n)(point))))
-(defun duplicate (&optional arg)
-  "Copy line or region, then yank it. If arg is non-nil, comment out."
-  (interactive "*P")
-  (if (not (use-region-p))
-      (progn
-        (while
-            (and (= (line-beginning-position)(line-end-position))(not (bobp)))
-          (forward-line -1))
-        (if (= (line-beginning-position)(line-end-position))
-            (message "Nothing to duplicate"))
-        (forward-line)
-        (push-mark (line-beginning-position 0))))
-  (kill-new (buffer-substring-no-properties (point)(mark)))
-  (if arg (comment-region (point)(mark)))
-  (save-excursion
-    (yank)
-    (current-kill 1))
-  (message nil))
-(defun duplicate-comment ()
-  "Copy line or region, comment it, then yank."
+(defun duplicate-line-comment ()
+  "Duplicate line, commenting out the original one."
   (interactive "*")
-  (duplicate t))
+  (let ((duplicate-line-final-position 0))
+    (duplicate-line))
+  (comment-line 1))
 (defun forward-sexp-start ()
   "Move to next expression."
   (interactive)
