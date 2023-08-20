@@ -19,13 +19,17 @@
 ;;-----------
 ;; N  Font                1Il  0O  Lines  Cols  Serif
 ;; 1  Courier 16          1l   0O     48    92  yes
-;; 2  Courier 16 bold     1l   -      48    92  yes
+;; 2  Courier 16 bold     1l   0O     48    92  yes
 ;; 3  Fira Code 16        -    -      46    92  -
 ;; 4  Go Mono 16          -    -      46    92  yes
-;; 5  Liberation Mono 16  -    -      46    92  -
+;; 5  Noto Mono 16        -    0O     46    92  -
 ;; 6  Libertine Mono 16   1l   0O     48    92  yes
-;; 7  Noto Mono 16        -    0O     46    92  -
+;; 7  Liberation Mono 16  -    -      46    92  -
 ;; 8  Noto Sans Mono 16   1l   -      41    92  -
+
+;; 1Il and 0O lists characters that look (somewhat) similar
+;; I like 1Il to look different but 0O to look similar, i.e. open zero
+;; Noto Mono provides that
 
 (defun font-1 ()
   "Set default font to Courier 16"
@@ -48,20 +52,20 @@
   (setq-default line-spacing 1)
   (set-frame-font "-*-Go Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
 (defun font-5 ()
-  "Set default font to Liberation Mono 16"
+  "Set default font to Noto Mono 16"
   (interactive)
   (setq-default line-spacing 2)
-  (set-frame-font "-*-Liberation Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
+  (set-frame-font "-*-Noto Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
 (defun font-6 ()
   "Set default font to Libertine Mono 16"
   (interactive)
   (setq-default line-spacing 1)
   (set-frame-font "-*-Linux Libertine Mono O-normal-*-*-*-16-*-*-*-*-*-*-*"))
 (defun font-7 ()
-  "Set default font to Noto Mono 16"
+  "Set default font to Liberation Mono 16"
   (interactive)
   (setq-default line-spacing 2)
-  (set-frame-font "-*-Noto Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
+  (set-frame-font "-*-Liberation Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
 (defun font-8 ()
   "Set default font to Noto Sans Mono 16"
   (interactive)
