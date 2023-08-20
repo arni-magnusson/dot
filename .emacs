@@ -894,13 +894,13 @@
 ;; 4.7  Minibuffer
 ;;-----------------
 (define-key minibuffer-local-map
-  [C-up]   'previous-history-element) ; previous-line
+            [C-up]   'previous-history-element) ; previous-line
 (define-key minibuffer-local-map
-  [C-down] 'next-history-element    ) ; next-line
+            [C-down] 'next-history-element    ) ; next-line
 (define-key minibuffer-local-map
-  [?\C-n]  'next-history-element    ) ; next-line
+            [?\C-n]  'next-history-element    ) ; next-line
 (define-key minibuffer-local-map
-  [?\C-p]  'previous-history-element) ; previous-line
+            [?\C-p]  'previous-history-element) ; previous-line
 (define-key minibuffer-local-completion-map [?\M-v]  'yank) ; reactivate yank
 ;;==============================================================================
 ;;
@@ -2693,97 +2693,97 @@ int main()
   (local-set-key [?u]      'ebrowse-tree-mark                         )
   (local-set-key [?v]      'ebrowse-tree-command:show-member-functions)
   (define-key ebrowse-member-mode-map [mouse-1]
-    'ebrowse-member-view-declaration)
+              'ebrowse-member-view-declaration)
   (define-key ebrowse-member-mode-map [mouse-2]
-    'ebrowse-restore-windows)
+              'ebrowse-restore-windows)
   (define-key ebrowse-member-mode-map [mouse-3]
-    'ebrowse-member-view-definition)
+              'ebrowse-member-view-definition)
   (define-key ebrowse-member-mode-map [down-mouse-3]
-    'mouse-set-point)
+              'mouse-set-point)
   (define-key ebrowse-member-mode-map [f5]
-    'ebrowse-restore-windows)
+              'ebrowse-restore-windows)
   (define-key ebrowse-member-mode-map [C-home]
-    'ebrowse-member-top)
+              'ebrowse-member-top)
   (define-key ebrowse-member-mode-map [C-end]
-    'ebrowse-member-bottom)
+              'ebrowse-member-bottom)
   (define-key ebrowse-member-mode-map [C-S-home]
-    'ebrowse-member-top-mark)
+              'ebrowse-member-top-mark)
   (define-key ebrowse-member-mode-map [C-S-end]
-    'region-bol-bottom)
+              'region-bol-bottom)
   (define-key ebrowse-member-mode-map [prior]
-    'ebrowse-member-up-page)
+              'ebrowse-member-up-page)
   (define-key ebrowse-member-mode-map [next]
-    'ebrowse-member-down-page)
+              'ebrowse-member-down-page)
   (define-key ebrowse-member-mode-map [?\t]
-    'ebrowse-pop-from-member-to-tree-buffer)
+              'ebrowse-pop-from-member-to-tree-buffer)
   (define-key ebrowse-member-mode-map [backtab]
-    'ebrowse-pop-from-member-to-tree-buffer)
+              'ebrowse-pop-from-member-to-tree-buffer)
   (define-key ebrowse-member-mode-map [?\C-m]
-    'ebrowse-member-view-declaration) ; return
+              'ebrowse-member-view-declaration) ; return
   (define-key ebrowse-member-mode-map [C-return]
-    'ebrowse-member-view-definition)
+              'ebrowse-member-view-definition)
   (define-key ebrowse-member-mode-map [M-return]
-    'ebrowse-member-view-definition)
+              'ebrowse-member-view-definition)
   (define-key ebrowse-member-mode-map [up]
-    'ebrowse-member-up)
+              'ebrowse-member-up)
   (define-key ebrowse-member-mode-map [down]
-    'ebrowse-member-down)
+              'ebrowse-member-down)
   (define-key ebrowse-member-mode-map [S-up]
-    'ebrowse-member-up-mark)
+              'ebrowse-member-up-mark)
   (define-key ebrowse-member-mode-map [S-down]
-    'region-bol-down)
+              'region-bol-down)
   (define-key ebrowse-member-mode-map [C-up]
-    'ebrowse-member-up-3)
+              'ebrowse-member-up-3)
   (define-key ebrowse-member-mode-map [C-down]
-    'ebrowse-member-down-3)
+              'ebrowse-member-down-3)
   (define-key ebrowse-member-mode-map [M-up]
-    'ebrowse-member-up-view)
+              'ebrowse-member-up-view)
   (define-key ebrowse-member-mode-map [M-down]
-    'ebrowse-member-down-view)
+              'ebrowse-member-down-view)
   (define-key ebrowse-member-mode-map [left]
-    'ebrowse-member-variables)
+              'ebrowse-member-variables)
   (define-key ebrowse-member-mode-map [right]
-    'ebrowse-member-functions)
+              'ebrowse-member-functions)
   (define-key ebrowse-member-mode-map [?\C-y]
-    'ebrowse-member-up-page)
+              'ebrowse-member-up-page)
   (define-key ebrowse-member-mode-map [?\C-v]
-    'ebrowse-member-down-page)
+              'ebrowse-member-down-page)
   (define-key ebrowse-member-mode-map [?*]
-    'ebrowse-toggle-public-member-filter)
+              'ebrowse-toggle-public-member-filter)
   (define-key ebrowse-member-mode-map [?/]
-    'ebrowse-goto-visible-member)
+              'ebrowse-goto-visible-member)
   (define-key ebrowse-member-mode-map [?M]
-    'ebrowse-member-middle)
+              'ebrowse-member-middle)
   (define-key ebrowse-member-mode-map [?N]
-    'ebrowse-member-down-3)
+              'ebrowse-member-down-3)
   (define-key ebrowse-member-mode-map [?P]
-    'ebrowse-member-up-3)
+              'ebrowse-member-up-3)
   (define-key ebrowse-member-mode-map [?a]
-    'ebrowse-toggle-member-attributes-display)
+              'ebrowse-toggle-member-attributes-display)
   (define-key ebrowse-member-mode-map [?f]
-    'ebrowse-member-tree-filenames)
+              'ebrowse-member-tree-filenames)
   (define-key ebrowse-member-mode-map [?i]
-    'ebrowse-statistics)
+              'ebrowse-statistics)
   (define-key ebrowse-member-mode-map [?l]
-    'ebrowse-tags-list-members-in-file)
+              'ebrowse-tags-list-members-in-file)
   (define-key ebrowse-member-mode-map [?m]
-    'ignore)
+              'ignore)
   (define-key ebrowse-member-mode-map [?o]
-    'ebrowse-member-view-declaration)
+              'ebrowse-member-view-declaration)
   (define-key ebrowse-member-mode-map [?n]
-    'ebrowse-member-down)
+              'ebrowse-member-down)
   (define-key ebrowse-member-mode-map [?p]
-    'ebrowse-member-up)
+              'ebrowse-member-up)
   (define-key ebrowse-member-mode-map [?q]
-    'ebrowse-restore-windows)
+              'ebrowse-restore-windows)
   (define-key ebrowse-member-mode-map [?r]
-    'ebrowse-tags-apropos)
+              'ebrowse-tags-apropos)
   (define-key ebrowse-member-mode-map [?s]
-    'ebrowse-tags-view-definition-other-window)
+              'ebrowse-tags-view-definition-other-window)
   (define-key ebrowse-member-mode-map [?t]
-    'ebrowse-toggle-long-short-display)
+              'ebrowse-toggle-long-short-display)
   (define-key ebrowse-member-mode-map [?v]
-    'ebrowse-member-view-declaration)
+              'ebrowse-member-view-declaration)
   (defun ebrowse-member-bottom ()
     "Move to bottom."
     (interactive)
@@ -3086,29 +3086,29 @@ clean:
   (redraw-display))
 (defun arni-doxymacs-hook ()
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-c]
-    'doxymacs-insert-member-comment          )
+              'doxymacs-insert-member-comment          )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-f]
-    'doxymacs-insert-function-comment        )
+              'doxymacs-insert-function-comment        )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-g]
-    'doxymacs-insert-grouping-comments       )
+              'doxymacs-insert-grouping-comments       )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-h]
-    'doxymacs-insert-file-comment            )
+              'doxymacs-insert-file-comment            )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-l]
-    'doxymacs-lookup                         )
+              'doxymacs-lookup                         )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-m]
-    'doxymacs-insert-blank-multiline-comment )
+              'doxymacs-insert-blank-multiline-comment )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-p]
-    'doxymacs-view-pdf                       )
+              'doxymacs-view-pdf                       )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-r]
-    'doxymacs-rescan-tags                    )
+              'doxymacs-rescan-tags                    )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-s]
-    'doxymacs-insert-blank-singleline-comment)
+              'doxymacs-insert-blank-singleline-comment)
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-u]
-    'doxymacs-compile-latex                  )
+              'doxymacs-compile-latex                  )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-v]
-    'doxymacs-view-html                      )
+              'doxymacs-view-html                      )
   (define-key doxymacs-mode-map [?\C-c ?\C-y ?\C-y]
-    'doxymacs-compile                        )
+              'doxymacs-compile                        )
   (defun doxymacs-compile ()
     "Compile Doxygen file in current directory."
     (interactive)
@@ -4600,9 +4600,9 @@ with spaces."
     (define-key ess-rdired-mode-map [?o]       'ess-rdired-other    )
     (define-key ess-rdired-mode-map [?p]       'ess-rdired-up       )
     (define-key ess-rdired-mode-map [?q]
-      'ess-rdired-quit-clean) ; ess-rdired-quit
+                'ess-rdired-quit-clean) ; ess-rdired-quit
     (define-key ess-rdired-mode-map [?v]
-      'ess-rdired-other)) ; ess-rdired-view
+                'ess-rdired-other)) ; ess-rdired-view
   (defun ess-rdired-bottom ()
     "Move to bottom."
     (interactive)
@@ -6116,7 +6116,7 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (define-key ediff-mode-map [?\t]      'ediff-next-difference    )
   (define-key ediff-mode-map [backtab]  'ediff-previous-difference)
   (define-key ediff-mode-map [? ]
-    'ediff-toggle-skip-similar) ; ediff-next-difference
+              'ediff-toggle-skip-similar) ; ediff-next-difference
   (define-key ediff-mode-map [left]     'ediff-copy-left          )
   (define-key ediff-mode-map [right]    'ediff-copy-right         )
   (define-key ediff-mode-map [S-left]   'ediff-scroll-left        )
@@ -6144,14 +6144,14 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (define-key ediff-mode-map [?<]       'ediff-scroll-left-full   )
   (define-key ediff-mode-map [?>]       'ediff-scroll-right-full  )
   (define-key ediff-mode-map [?M]
-    'ediff-jump-middle) ; ediff-show-current-session-meta-buffer
+              'ediff-jump-middle) ; ediff-show-current-session-meta-buffer
   (define-key ediff-mode-map [?N]       'ediff-next-difference    )
   (define-key ediff-mode-map [?P]       'ediff-previous-difference)
   (define-key ediff-mode-map [?U] 'ediff-revert-buffers-then-recompute-diffs)
   (define-key ediff-mode-map [?c]       'ediff-recenter           )
   (define-key ediff-mode-map [?i] 'ediff-toggle-ignore-case) ; ediff-status-info
   (define-key ediff-mode-map [?m]
-    'ediff-jump-middle) ; ediff-toggle-wide-display
+              'ediff-jump-middle) ; ediff-toggle-wide-display
   (define-key ediff-mode-map [?u] 'ediff-revert-buffers-then-recompute-diffs))
 (add-hook 'ediff-keymap-setup-hook 'arni-ediff-keymap-setup-hook)
 (defun arni-ediff-startup-hook ()(message nil))
@@ -7456,7 +7456,7 @@ to the shortest `outline-regexp'.")
 (setq isearch-lax-whitespace nil)
 (defun arni-isearch-hook ()
   (define-key isearch-mode-map [127]
-    'isearch-del-char) ; backspace in GUI and terminal
+              'isearch-del-char) ; backspace in GUI and terminal
   (define-key isearch-mode-map [?\t]   'isearch-complete     )
   (define-key isearch-mode-map [?\C-y] 'isearch-page-up      ) ; reactivate pgup
   (define-key isearch-mode-map [?\M- ] 'isearch-toggle-lax-whitespace)
