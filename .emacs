@@ -4708,10 +4708,9 @@ with spaces."
   (setq make-backup-files t)
   (setq ess-eval-visibly-p nil)
   (setq ess-r-package-auto-set-evaluation-env nil) ; prevent pkg environment
-  (setq ess-brace-offset -2)
-  (setq ess-indent-offset 2)
-  (setq ess-indent-with-fancy-comments nil) ; # and ## are equivalent
-  (add-to-list 'safe-local-variable-values '(ess-indent-offset . 4))
+  (setq ess-style 'OWN) ; and then modify entries within ess-own-style-list
+  (setf (cdr (assoc 'ess-indent-offset ess-own-style-list)) 2)
+  (setf (cdr (assoc 'ess-indent-with-fancy-comments ess-own-style-list)) nil)
   (font-lock-add-keywords nil '(("taf\\.png(\"\\(.*?\\)\""
                                  (1 font-lock-builtin-face t))))
   (set-face-attribute 'font-lock-constant-face
