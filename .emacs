@@ -4532,6 +4532,7 @@ with spaces."
 (defun arni-ess-pre-run-hook ()(setq ess-ask-for-ess-directory nil))
 (add-hook 'ess-pre-run-hook 'arni-ess-pre-run-hook)
 (defun arni-inferior-ess-hook ()
+  (setq ess-startup-directory 'default-directory)
   (setq ess-use-tracebug nil)
   (set-face-attribute 'comint-highlight-input nil
                       :foreground "gray20") ; previous commands (bold)
