@@ -3330,7 +3330,7 @@ echo.
               (not-tend (concat "\\([^<]\\|<\\([^/]\\|/\\([^ht]\\|"
                                 "h[^1]\\|t\\([^i]\\|i[^t]\\)\\)\\)\\)")))
           (list
-           '("<a\\s-+href[^>]*>\\([^>]+\\)</a>" 1 font-lock-reference-face t)
+           '("<a\\s-+href[^>]*>\\([^>]+\\)</a>" 1 font-lock-constant-face t)
            (list (concat "<" bword ">\\(" not-bend "*\\)</\\1>") 3
                  'html-helper-bold-face t)
            (list (concat "<" iword ">\\(" not-iend "*\\)</\\1>") 3
@@ -3386,7 +3386,6 @@ echo.
   (local-set-key [?\C-c ?\C-e]    'html-code                       )
   (local-set-key [?\C-c ?\C-h]    'html-toggle-links               )
   (local-set-key [?\C-c ?\C-i]    'html-img                        )
-  (local-set-key [?\C-c ?\C-k]    'html-convert-latin1-to-utf8     )
   (local-set-key [?\C-c ?\C-l]    'html-css-link                   )
   (local-set-key [?\C-c ?\C-n]    'tempo-template-html-link-target )
   (local-set-key [?\C-c ?\C-o]    'html-ol                         )
@@ -3408,9 +3407,9 @@ echo.
     (interactive "*")
     (insert "<br>")
     (reindent-then-newline-and-indent))
-  (defun html-code (&optional arg)
+  (defun html-code ()
     "Insert <code> tags around object at point."
-    (interactive "*P")
+    (interactive "*")
     (insert "<code>")
     (re-search-forward "[\n, ]" nil t)
     (backward-char)
@@ -3634,10 +3633,12 @@ echo.
                       :inherit font-lock-keyword-face))
 (add-hook 'nxml-mode-hook 'arni-nxml-hook)
 (defun arni-sgml-hook ()
+  (setq indent-line-function 'sgml-indent-line)
   (font-lock-mode 1)
   (set-face-attribute 'font-lock-function-name-face nil
                       :foreground (fg 'font-lock-keyword-face)
-                      :weight -)) ; <xml>
+                      :weight -) ; <xml>
+  (local-unset-key [?\t]))
 (add-hook 'sgml-mode-hook 'arni-sgml-hook)
 ;;-----------
 ;; 6.10 Inno
