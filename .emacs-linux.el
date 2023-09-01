@@ -76,7 +76,7 @@
   (interactive)
   (setq-default line-spacing 0)
   (set-frame-font "-*-Hack-normal-*-*-*-16-*-*-*-*-*-*-*"))
-(defun font-10 ()
+(defun font-0 ()
   "Set default font to Noto Sans Mono 16"
   (interactive)
   (setq-default line-spacing 0)
