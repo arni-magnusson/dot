@@ -297,9 +297,9 @@
         ("\\.vbs$"      . visual-basic-mode)
         ("\\.y$"        . c-mode)))
 (setq ext-conf ; [section]
-      ;;         space:par val,#comment
-      ;;         unix:par=val,#comment
-      ;;         windows:par=val,par val,;comment,#gadgetpar
+      ;; space:par val,#comment
+      ;; unix:par=val,#comment
+      ;; windows:par=val,par val,;comment,#gadgetpar
       '(("\\.afm$"         . conf-space-mode)
         ("\\.cfg$"         . conf-space-mode)
         ("\\.conf$"        . conf-space-mode)
@@ -565,7 +565,7 @@
 ;;------------
 (setq mouse-drag-copy-region t)          ; copy selected region to clipboard
 (setq mouse-wheel-progressive-speed nil) ; scroll at constant speed
-(setq mouse-wheel-scroll-amount '(4 ((shift) . 1)))  ; scroll 4, or 1 with shift
+(setq mouse-wheel-scroll-amount '(4 ((shift) . 1))) ; scroll 4, or 1 with shift
 (global-unset-key      [M-mouse-1]) ; mouse-start-secondary
 (global-unset-key [M-down-mouse-1]) ; mouse-drag-secondary
 (global-unset-key [M-drag-mouse-1]) ; mouse-set-secondary
