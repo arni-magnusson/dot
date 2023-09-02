@@ -1,5 +1,3 @@
-(setq byte-compile-warnings '(cl-functions)) ; Emacs >=27.1 with ESS 18.10.2
-
 ;;==============================================================================
 ;;
 ;; 1  OS-SPECIFICS
