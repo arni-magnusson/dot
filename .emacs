@@ -3285,69 +3285,8 @@ echo.
   (setq make-backup-files t)
   (setq fill-column 80)
   (setq indent-line-function 'html-helper-indent-command)
-  (setq html-helper-item-continue-indent 2)
   (arni-colors)
-  (setq html-helper-any-list-item-start ; thead,tbody,li
-        "<li[ >]\\|<dt\\|<dd\\|<option\\|<th\\|<td\\|<thead\\|<tbody")
-  (setq html-helper-any-list-item-end ; thead,tbody
-        "</li>\\|</dt>\\|</dd>\\|</th>\\|</td>\\|</thead>\\|</tbody>")
-  (setq html-helper-any-list-start ; style, div, form, {}
-        "<dl\\|<ul\\|<ol\\|<menu\\|<dir\\|<form\\|<select\\|<table\\|<tr\\|\
-<style\\|<div\\|{")
-  (setq html-helper-any-list-end ; style, div, form, {}
-        "</dl>\\|</ul>\\|</ol>\\|</menu>\\|</dir>\\|</form>\\|</select>\\|\
-</table>\\|</tr>\\|</style>\\|</div>\\|}")
-  (setq html-helper-any-list
-        (format "\\(%s\\)\\|\\(%s\\)\\|\\(%s\\)\\|\\(%s\\)"
-                html-helper-any-list-start
-                html-helper-any-list-end html-helper-any-list-item-start
-                html-helper-any-list-item-end))
-  (setq html-helper-indentation-list
-        (format "\\(%s\\)\\|\\(%s\\)\\|\\(%s\\)"
-                html-helper-any-list-start
-                html-helper-any-list-end
-                html-helper-any-list-item-start))
   (setq html-helper-search-limit 20000)
-  (setq html-helper-font-lock-keywords
-        ;; Removed 'tword', containing h1 and title
-        (let ((bword ; added title
-               "\\(b\\|title\\|h[1-4]\\|strong\\)\\([ \t\n]+[^>]+\\)?")
-              (iword
-               "\\(address\\|cite\\|em\\|i\\|var\\)\\([ \t\n]+[^>pa]+\\)?")
-              (not-bend (concat "\\([^<]\\|<\\([^/]\\|/\\([^bhs]\\|"
-                                "b[^>]\\|"
-                                "title[^>]\\|" ; added title
-                                "h\\([^1-4]\\|[1-4][^>]\\)\\|"
-                                "s\\([^t]\\|t[^r]\\)\\)\\)\\)"))
-              (not-iend (concat "\\([^<]\\|<\\([^/]\\|/\\([^aceiv]\\|"
-                                "a\\([^d]\\|d[^d]\\)\\|"
-                                "c\\([^i]\\|i[^t]\\)\\|"
-                                "e\\([^m]\\|m[^>]\\)\\|"
-                                "i[^>]\\|"
-                                "v\\([^a]\\|a[^r]\\)\\)\\)\\)"))
-              (not-tend (concat "\\([^<]\\|<\\([^/]\\|/\\([^ht]\\|"
-                                "h[^1]\\|t\\([^i]\\|i[^t]\\)\\)\\)\\)")))
-          (list
-           '("<a\\s-+href[^>]*>\\([^>]+\\)</a>" 1 font-lock-constant-face t)
-           (list (concat "<" bword ">\\(" not-bend "*\\)</\\1>") 3
-                 'html-helper-bold-face t)
-           (list (concat "<" iword ">\\(" not-iend "*\\)</\\1>") 3
-                 'html-helper-italic-face t)
-           (list (concat "<" bword ">\\("  "[^<]"  "*\\)</\\1>") 3
-                 'html-helper-bold-face t)
-           '("\\(<[^>]*>\\)" 1 font-lock-type-face t)
-           '("<u>\\([^<]*\\)</u>" 1 html-helper-underline-face t)
-           '("</a>" 0 font-lock-keyword-face t)
-           '("<a\\b[^>]*>" 0 font-lock-keyword-face t)
-           '("=[ \t\n]*\\(\"[^\"]+\"\\)" 1 font-lock-string-face t)
-           '("</?\\(body\\|form\\|h\\(ead\\|tml\\)\\)>" 0
-             font-lock-variable-name-face t) ; removed from, img, and input
-           '("&[^;\n]*;" 0 font-lock-string-face t)
-           '("<![a-z]+\\>[^<>]*\\(<[^>]*>[^<>]*\\)*>" 0
-             font-lock-comment-face t)
-           '("/\\*.*\\*/" 0 font-lock-comment-face t) ; added /* css comments */
-           '("<!\\(--\\([^-]\\|-[^-]\\)*--\\s-*\\)*>" 0
-             font-lock-comment-face t))))
   (set-face-attribute 'font-lock-constant-face      nil ; links
                       :foreground (fg 'font-lock-builtin-face) :underline - )
   (set-face-attribute 'font-lock-string-face        nil ; "text"
