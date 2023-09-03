@@ -1862,7 +1862,7 @@ Unlike `indent-region',  also indent the first half-marked line."
   (let ((len (- end beg))
         (overwrite-mode 'overwrite-mode-textual))
     (delete-region beg end)
-    (insert-char ?\t len)))
+    (insert-char 32 len)))
 (defun blank-to-paren ()
   "Replace every character with space until next closing parenthesis."
   (interactive "*")
