@@ -1074,21 +1074,6 @@ Doesn't complain about last window, unlike `kill-buffer-and-window`."
     (duplicate-dwim))
   (comment-line 1)
   (uncomment-region (line-beginning-position)(line-end-position)))
-(defun find-duplicate-lines ()
-  (interactive "*")
-  (let ((eof (line-number-at-pos (point-max)))
-        (dups))
-    (while (< (line-number-at-pos) eof)
-      (= (forward-line) 0)
-      (let ((this-line (buffer-substring-no-properties
-                        (line-beginning-position 1)
-                        (line-end-position 1)))
-	    (next-line (buffer-substring-no-properties
-                        (line-beginning-position 2)
-                        (line-end-position 2))))
-	(when (equal this-line next-line)
-          (setq dups (cons this-line dups)))))
-    (insert "\n" (format "%s" dups))))
 (defun forward-sexp-start ()
   "Move to next expression."
   (interactive)
@@ -2053,6 +2038,16 @@ Clear buffer, paste, untabify, unindent, use single spaces, delete blank lines."
   (if (use-region-p)
       (downcase-region (point)(mark))
     (downcase-word n)))
+(defun find-duplicate-lines ()
+  "Find duplicated lines in buffer."
+  (interactive)
+  (let ((buffer (current-buffer)))
+    (switch-to-buffer "*unique*")
+    (insert-buffer-substring-no-properties buffer)
+    (delete-duplicate-lines (point-min)(point-max))
+    (read-only-mode)
+    (ediff-buffers buffer "*unique*"))
+  (message "Run `delete-duplicate-lines-all' to delete all duplicates."))
 (defalias 'find-duplicate-word 'the-the)
 (defun git-log-clean ()
   "Clean up output from git log, e.g. from GitHub."
