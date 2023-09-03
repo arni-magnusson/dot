@@ -997,12 +997,12 @@ Doesn't complain about last window, unlike `kill-buffer-and-window`."
                            " " ps-outfile " " pdf-outfile))
     (message "Distilled %s" pdf-outfile)))
 (defun read-file-to-list (file)
-  "Read text from file into list of strings"
+  "Read text from FILE into list of strings."
   (interactive "fRead file: ")
   (with-temp-buffer (insert-file-contents file)
                     (split-string (buffer-string) "\n" t)))
 (defun read-file-to-string (file)
-  "Read text from file into string"
+  "Read text from FILE into string."
   (interactive "fRead file: ")
   (with-temp-buffer (insert-file-contents file)(buffer-string)))
 (defalias 'rm 'delete-file)
@@ -1013,13 +1013,13 @@ Doesn't complain about last window, unlike `kill-buffer-and-window`."
   (setq make-backup-files (not make-backup-files))
   (message "Backup %s" (if make-backup-files "ON" "OFF")))
 (defun toggle-latin-1-coding ()
-  "Toggle between latin-1-unix and latin-1-dos encoding."
+  "Toggle between `latin-1-unix' and `latin-1-dos' encoding."
   (interactive)
   (if (string-match "unix" (prin1-to-string buffer-file-coding-system))
       (set-buffer-file-coding-system 'iso-latin-1-dos t)
     (set-buffer-file-coding-system 'iso-latin-1-unix t)))
 (defun toggle-utf-8-coding ()
-  "Toggle between utf-8-unix and utf-8-dos encoding."
+  "Toggle between `utf-8-unix' and `utf-8-dos' encoding."
   (interactive)
   (if (string-match "unix" (prin1-to-string buffer-file-coding-system))
       (set-buffer-file-coding-system 'utf-8-dos t)
@@ -1029,11 +1029,11 @@ Doesn't complain about last window, unlike `kill-buffer-and-window`."
   (interactive)
   (revert-buffer-with-coding-system 'utf-8))
 (defun utf-8-dos ()
-  "Use utf-8-dos encoding."
+  "Use `utf-8-dos' encoding."
   (interactive)
   (set-buffer-file-coding-system 'utf-8-dos t))
 (defun utf-8-unix ()
-  "Use utf-8-unix encoding."
+  "Use `utf-8-unix' encoding."
   (interactive)
   (set-buffer-file-coding-system 'utf-8-unix t))
 ;;-----------
@@ -1096,7 +1096,7 @@ Doesn't complain about last window, unlike `kill-buffer-and-window`."
   (backward-sexp))
 (defalias 'goto-column 'move-to-column)
 (defun goto-line-lisp (line &optional buffer)
-  "Go to line. Use in Lisp programs instead of `goto-line'."
+  "Go to LINE. Use in Lisp programs instead of `goto-line'."
   (interactive "nGoto line: ")
   (if (not (null buffer))
       (with-current-buffer buffer
@@ -1175,7 +1175,7 @@ See also `highlight-and-count-regexp'."
       (kill-region (point)(mark))
     (if (= n 1)(kill-line)(kill-line n))))
 (defun kill-whole-line-stay (&optional n)
-  "Kill n whole lines and stay in column."
+  "Kill N whole lines and stay in column."
   (interactive "*p")
   (let ((col (current-column)))
     (kill-whole-line n)
@@ -1608,7 +1608,7 @@ read or save."
 ;; 5.4  Insert
 ;;-------------
 (defun fizz ()
-  "Solution to FizzBuzz test"
+  "Solution to FizzBuzz test."
   (interactive "*")
   (dolist (i (number-sequence 1 100))
     (insert (cond ((and (zerop (mod i 3))(zerop (mod i 5))) "FizzBuzz")
@@ -3500,7 +3500,7 @@ echo.
     (interactive "*")
     (insert "<td>"))
   (defun html-template ()
-    "Insert HTML 5 template."
+    "Insert HTML template."
     (interactive "*")
     (goto-char (point-min))
     (insert "\
@@ -6100,7 +6100,7 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
 ;; 7.12 Dired
 ;;------------
 (defvar dired-by nil
-  "Current sorting rule (nil:name, S:size, t:time, X:extension)")
+  "Current sorting rule (nil:name, S:size, t:time, X:extension).")
 (defvar dired-dot nil
   "Non-nil if dot files are currently shown in dired.
 See `dired-toggle-dot-files'.")
