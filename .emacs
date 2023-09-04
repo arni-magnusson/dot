@@ -1707,11 +1707,15 @@ Unlike `delete-trailing-whitespace', deletes ^M in `lisp-mode'."
 (defun indent-buffer ()
   "Indent all lines."
   (interactive "*")
-  (let ((old-bsize (buffer-size)))
+  (let ((old-bsize (buffer-size))
+        (old-hash (buffer-hash))
+        (was-modified-flag (buffer-modified-p)))
     (indent-region (point-min)(point-max) nil)
     (if (= (buffer-size) old-bsize)
         (message "Indented buffer (still %d bytes)" (buffer-size))
-      (message "Indented buffer (%d->%d bytes)" old-bsize (buffer-size)))))
+      (message "Indented buffer (%d->%d bytes)" old-bsize (buffer-size)))
+    (if (and (not was-modified-flag)(string-equal (buffer-hash) old-hash))
+        (set-buffer-modified-p nil))))
 (defun indent-line-or-region ()
   "Indent (`indent-according-to-mode') line, or region if selected."
   (interactive "*")
@@ -3281,7 +3285,6 @@ echo.
   (setq fill-column 80)
   (setq indent-line-function 'html-helper-indent-command)
   (arni-colors)
-  (setq html-helper-search-limit 20000)
   (set-face-attribute 'font-lock-constant-face      nil ; links
                       :foreground (fg 'font-lock-builtin-face) :underline - )
   (set-face-attribute 'font-lock-string-face        nil ; "text"
