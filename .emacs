@@ -3286,17 +3286,12 @@ echo.
   (setq indent-line-function 'html-helper-indent-command)
   (arni-colors)
   (set-face-attribute 'font-lock-constant-face      nil ; links
-                      :foreground (fg 'font-lock-builtin-face) :underline - )
-  (set-face-attribute 'font-lock-string-face        nil ; "text"
-                      :foreground (fg 'font-lock-type-face)                 )
+                      :foreground "brown4" :underline -       )
   (set-face-attribute 'font-lock-type-face          nil ; <h1>
-                      :foreground (fg 'font-lock-keyword-face)              )
+                      :foreground (fg 'font-lock-keyword-face))
   (set-face-attribute 'font-lock-variable-name-face nil ; <html>
-                      :foreground (fg 'font-lock-keyword-face) :weight 'bold)
+                      :foreground (fg 'font-lock-keyword-face))
   (local-unset-key [?\t]     ) ; reactivate indent-or-complete
-  (local-unset-key [?\C-c ?-]) ; reactivate highlight-changes-mode
-  (local-unset-key [?\C-c ?=]) ; reactivate diff-this-buffer-with-file
-  (local-unset-key [?\C-c ? ]) ; reactivate hl-line-mode
   (local-set-key [f9]             'iso-iso2sgml                    )
   (local-set-key [S-f9]           'iso-sgml2iso                    )
   (local-set-key [f10]            'html-tidy                       )
