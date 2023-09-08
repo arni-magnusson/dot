@@ -4888,6 +4888,7 @@ or \\code{\\link{}} if ARG is non-nil."
   (message nil)
   (setq make-backup-files t)
   (setq save-abbrevs nil)
+  (font-lock-mode 1)
   (set-face-attribute 'font-lock-constant-face nil :weight 'bold :underline -)
   (local-set-key [f11]         'Rd-outline               )
   (local-set-key [?\C-c ?\C- ] 'Rd-table-sep             )
