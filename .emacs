@@ -4963,11 +4963,16 @@ or \\code{\\link{}} if ARG is non-nil."
 (defun Rni ()
   "Start interactive R session."
   (interactive)
-  (R)
-  ;; (sleep-for 0.01)
-  (select-window (get-buffer-window "*R*"))
-  (delete-other-windows)
-  (comint-clear-window))
+  (let ((was-one-window (one-window-p))
+        (original-other-buffer (window-buffer (next-window)))
+        (original-window (selected-window)))
+    (R)
+    (if was-one-window
+        (delete-other-windows)                 ; single-window R session
+      (switch-to-buffer original-other-buffer) ; revert secondary window
+      (select-window original-window)          ; go to main window
+      (switch-to-buffer "*R*"))                ; show R in main window
+    (comint-clear-window)))
 ;;----------
 ;; 6.18 SQL
 ;;----------
