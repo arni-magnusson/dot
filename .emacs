@@ -4654,6 +4654,7 @@ with spaces."
   (if (equal (current-buffer) inferior-ess--last-started-process-buffer)
       (inferior-ess-mode))
   (setq make-backup-files t)
+  (electric-indent-mode)
   (setq ess-eval-visibly-p nil)
   (setq ess-r-package-auto-set-evaluation-env nil) ; prevent pkg environment
   (setq ess-style 'OWN) ; and then modify entries within ess-own-style-list
