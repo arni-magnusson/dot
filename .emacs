@@ -4651,7 +4651,7 @@ with spaces."
   (ess-eval-linewise "options(continue='  ',width=80)" t))
 (add-hook 'ess-post-run-hook 'arni-ess-post-run-hook)
 (defun arni-ess-hook ()
-  (if (string-equal (buffer-name) "*R*")
+  (if (equal (current-buffer) inferior-ess--last-started-process-buffer)
       (inferior-ess-mode))
   (setq make-backup-files t)
   (setq ess-eval-visibly-p nil)
@@ -4699,10 +4699,11 @@ with spaces."
   (local-set-key [?\C-c ?\C- ] 'ess-switch-to-end-of-ESS)
   (local-set-key [?{]          'ess-electric-brace-open )
   (defun ess-clear-R-window ()
-    "Run `comint-flush-window' in *R* window to clear screen."
+    "Run `comint-clear-window' in *R* window to clear screen."
     (interactive)
     (let ((old-window (selected-window)))
-      (select-window (get-buffer-window "*R*"))
+      (select-window
+       (get-buffer-window inferior-ess--last-started-process-buffer))
       (comint-clear-window)
       (select-window old-window)))
   (defun ess-electric-brace-open ()
@@ -4971,7 +4972,7 @@ or \\code{\\link{}} if ARG is non-nil."
         (delete-other-windows)                 ; single-window R session
       (switch-to-buffer original-other-buffer) ; revert secondary window
       (select-window original-window)          ; go to main window
-      (switch-to-buffer "*R*"))                ; show R in main window
+      (switch-to-buffer inferior-ess--last-started-process-buffer)) ; show *R*
     (comint-clear-window)))
 ;;----------
 ;; 6.18 SQL
