@@ -460,6 +460,7 @@
         ".cov"                                          ; .cor (admb)
         ".html"                                         ; .org (org)
         ".aux" ".dvi" ".log" ".out" ".pdf" ".ps" ".toc" ; .tex (latex)
+        ".png"                                          ; .R (figures)
         ".o" ".exe"                                  )) ; source code (generic)
 ;;==============================================================================
 ;;
