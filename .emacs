@@ -6701,7 +6701,8 @@ See `dired-toggle-dot-files'.")
   (font-lock-mode 1) ; refresh
   (set-face-attribute 'markdown-code-face nil :background -
                       :foreground "brown4")
-  (set-face-attribute 'markdown-pre-face nil :inherit -)
+  (set-face-attribute 'markdown-italic-face nil :inherit -)
+  (set-face-attribute 'markdown-pre-face    nil :inherit -)
   (local-unset-key [backtab]      )
   (local-unset-key [S-tab]        )
   (local-unset-key [S-iso-lefttab])
