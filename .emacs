@@ -4700,6 +4700,7 @@ with spaces."
   (local-set-key [?\C-c ?\C-x] 'ess-eval-command        )
   (local-set-key [?\C-c ?\C- ] 'ess-switch-to-end-of-ESS)
   (local-set-key [?{]          'ess-electric-brace-open )
+  (local-set-key [?}]          'ess-electric-brace-close)
   (defun ess-clear-R-window ()
     "Run `comint-clear-window' in *R* window to clear screen."
     (interactive)
@@ -4708,6 +4709,12 @@ with spaces."
        (get-buffer-window inferior-ess--last-started-process-buffer))
       (comint-clear-window)
       (select-window old-window)))
+  (defun ess-electric-brace-close ()
+    "Insert } and indent line."
+    (interactive "*")
+    (insert "}")
+    (unindent-line)
+    (indent-according-to-mode))
   (defun ess-electric-brace-open ()
     "Insert { and indent line."
     (interactive "*")
