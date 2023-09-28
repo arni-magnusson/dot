@@ -3303,7 +3303,7 @@ echo.
                       :foreground (fg 'font-lock-keyword-face))
   (set-face-attribute 'font-lock-variable-name-face nil ; <html>
                       :foreground (fg 'font-lock-keyword-face))
-  (local-unset-key [?\t]     ) ; reactivate indent-or-complete
+  (local-unset-key [?\t]) ; reactivate indent-or-complete
   (local-set-key [f9]             'iso-iso2sgml                    )
   (local-set-key [S-f9]           'iso-sgml2iso                    )
   (local-set-key [f10]            'html-tidy                       )
@@ -3582,7 +3582,8 @@ echo.
   (set-face-attribute 'font-lock-function-name-face nil
                       :foreground (fg 'font-lock-keyword-face)
                       :weight -) ; <xml>
-  (local-unset-key [?\t]))
+  (local-unset-key [?\t])) ; reactivate indent-or-complete
+
 (add-hook 'sgml-mode-hook 'arni-sgml-hook)
 ;;-----------
 ;; 6.10 Inno
@@ -4907,10 +4908,12 @@ or \\code{\\link{}} if ARG is non-nil."
 (add-hook 'ess-mode-hook 'arni-ess-hook)
 (defun arni-Rd-hook ()
   (message nil)
+  (setq indent-line-function 'Rd-mode-indent-line)
   (setq make-backup-files t)
   (setq save-abbrevs nil)
   (font-lock-mode 1)
   (set-face-attribute 'font-lock-constant-face nil :weight 'bold :underline -)
+  (local-unset-key [?\t]) ; reactivate indent-or-complete
   (local-set-key [f11]         'Rd-outline               )
   (local-set-key [?\C-c ?\C- ] 'Rd-table-sep             )
   (local-set-key [?\C-c ?\C-c] 'Rd-compile-html          )
