@@ -230,7 +230,6 @@
 (autoload 'R-mode            "ess-site"          "Edit R code."             t)
 (autoload 'r-mode "ess-site") ;*-R-*
 (autoload 'Rd-mode           "ess-site"          "Edit R documentation."    t)
-(autoload 'Rnw-mode          "ess-site"          "Edit Sweave document."    t)
 (autoload 'stan-mode         "stan-mode"         "Edit Stan code."          t)
 ;; "latex" in Windows, "auctex" in Linux
 (autoload 'TeX-latex-mode    "tex-site"          "Edit LaTeX document."     t)
@@ -460,6 +459,7 @@
         ".cov"                                          ; .cor (admb)
         ".html"                                         ; .org (org)
         ".aux" ".dvi" ".log" ".out" ".pdf" ".ps" ".toc" ; .tex (latex)
+        ".nav" ".snm" ".vrb"                            ; .tex (beamer)
         ".png"                                          ; .R (figures)
         ".o" ".exe"                                  )) ; source code (generic)
 ;;==============================================================================
@@ -509,9 +509,9 @@
 ;;                TAB     HOME               BKSP     ESC
 ;;------------------------------------------------------------------------------
 ;; C-c
-;; Custom     abcdefghijklmnopqrstuvwxyz0    -=  ;' ,./
+;; Custom     abcdefghijklmnopqrstuv xyz0    -=  ;' ,./
 ;;            SPC TAB
-;; Available                            1..9`  []  \
+;; Available                        w   1..9`  []  \
 ;;                    RET HOME END PGUP PGDN BKSP DEL ESC
 ;;------------------------------------------------------------------------------
 ;; C-h
@@ -715,7 +715,6 @@
 (global-set-key [?\C-c ?t]    'text-mode                )
 (global-set-key [?\C-c ?u]    'conf-mode                )
 (global-set-key [?\C-c ?v]    'visual-basic-mode        )
-(global-set-key [?\C-c ?w]    'Rnw-mode                 )
 (global-set-key [?\C-c ?x]    'hexl-mode                )
 (global-set-key [?\C-c ?y]    'doxymacs-mode-with-hook  )
 (global-set-key [?\C-c ?z]    'mail-mode                )
@@ -3303,7 +3302,7 @@ echo.
                       :foreground (fg 'font-lock-keyword-face))
   (set-face-attribute 'font-lock-variable-name-face nil ; <html>
                       :foreground (fg 'font-lock-keyword-face))
-  (local-unset-key [?\t]) ; reactivate indent-or-complete
+  (local-unset-key [?\t]     ) ; reactivate indent-or-complete
   (local-set-key [f9]             'iso-iso2sgml                    )
   (local-set-key [S-f9]           'iso-sgml2iso                    )
   (local-set-key [f10]            'html-tidy                       )
@@ -3582,8 +3581,7 @@ echo.
   (set-face-attribute 'font-lock-function-name-face nil
                       :foreground (fg 'font-lock-keyword-face)
                       :weight -) ; <xml>
-  (local-unset-key [?\t])) ; reactivate indent-or-complete
-
+  (local-unset-key [?\t]))
 (add-hook 'sgml-mode-hook 'arni-sgml-hook)
 ;;-----------
 ;; 6.10 Inno
@@ -4472,7 +4470,6 @@ with spaces."
 ;; ess-post-run-hook       *R*    x                    workaround
 ;; ess-mode-hook           edit       x                R-mode
 ;; Rd-mode-hook            man                x
-;; Rnw-mode-hook           Rnw
 ;; ess-roxy-mode-hook      edit       x
 (defun arni-ess-load-hook ()
   (setq inferior-R-args "--no-restore-data --quiet --save"))
@@ -4701,7 +4698,6 @@ with spaces."
   (local-set-key [?\C-c ?\C-x] 'ess-eval-command        )
   (local-set-key [?\C-c ?\C- ] 'ess-switch-to-end-of-ESS)
   (local-set-key [?{]          'ess-electric-brace-open )
-  (local-set-key [?}]          'ess-electric-brace-close)
   (defun ess-clear-R-window ()
     "Run `comint-clear-window' in *R* window to clear screen."
     (interactive)
@@ -4710,12 +4706,6 @@ with spaces."
        (get-buffer-window inferior-ess--last-started-process-buffer))
       (comint-clear-window)
       (select-window old-window)))
-  (defun ess-electric-brace-close ()
-    "Insert } and indent line."
-    (interactive "*")
-    (insert "}")
-    (unindent-line)
-    (indent-according-to-mode))
   (defun ess-electric-brace-open ()
     "Insert { and indent line."
     (interactive "*")
@@ -4908,12 +4898,10 @@ or \\code{\\link{}} if ARG is non-nil."
 (add-hook 'ess-mode-hook 'arni-ess-hook)
 (defun arni-Rd-hook ()
   (message nil)
-  (setq indent-line-function 'Rd-mode-indent-line)
   (setq make-backup-files t)
   (setq save-abbrevs nil)
   (font-lock-mode 1)
   (set-face-attribute 'font-lock-constant-face nil :weight 'bold :underline -)
-  (local-unset-key [?\t]) ; reactivate indent-or-complete
   (local-set-key [f11]         'Rd-outline               )
   (local-set-key [?\C-c ?\C- ] 'Rd-table-sep             )
   (local-set-key [?\C-c ?\C-c] 'Rd-compile-html          )
