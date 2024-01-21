@@ -1911,6 +1911,8 @@ using 'plain' \"quotes\" and double -- em dash."
     (while (search-forward "\u00a0" nil t)(replace-match " "  ))
     (goto-char (point-min)) ; soft hyphen
     (while (search-forward "\u00ad" nil t)(replace-match "-"  ))
+    (goto-char (point-min)) ; degree
+    (while (search-forward "\u00b0" nil t)(replace-match "deg"))
     (goto-char (point-min)) ; latin capital ligature oe
     (while (search-forward "\u0152" nil t)(replace-match "Æ"  ))
     (goto-char (point-min)) ; latin small ligature oe
@@ -1982,7 +1984,7 @@ using 'plain' \"quotes\" and double -- em dash."
     (goto-char (point-min)) ; trade mark sign
     (while (search-forward "\u2122" nil t)(replace-match "TM" ))
     (goto-char (point-min)) ; minus
-    (while (search-forward "\u2212" nil t)(replace-match "-" ))
+    (while (search-forward "\u2212" nil t)(replace-match "-"  ))
     (goto-char (point-min)) ; less than or equal
     (while (search-forward "\u2264" nil t)(replace-match "<=" ))
     (goto-char (point-min)) ; greater than or equal
