@@ -1981,6 +1981,12 @@ using 'plain' \"quotes\" and double -- em dash."
     (while (search-forward "\u20ac" nil t)(replace-match "EUR"))
     (goto-char (point-min)) ; trade mark sign
     (while (search-forward "\u2122" nil t)(replace-match "TM" ))
+    (goto-char (point-min)) ; minus
+    (while (search-forward "\u2212" nil t)(replace-match "-" ))
+    (goto-char (point-min)) ; less than or equal
+    (while (search-forward "\u2264" nil t)(replace-match "<=" ))
+    (goto-char (point-min)) ; greater than or equal
+    (while (search-forward "\u2265" nil t)(replace-match ">=" ))
     (goto-char (point-min)) ; black circle
     (while (search-forward "\u25cf" nil t)(replace-match "-"  ))))
 (defun count-everything ()
@@ -4692,6 +4698,7 @@ with spaces."
   (local-set-key [?\C-c ?\C-i]
                  'ess-roxy-insert-import) ; ess-complete-object-name-deprecated
   (local-set-key [?\C-c ?\C-l] 'ess-clear-R-window) ; ess-load-file
+  (local-set-key [?\C-c ?\C-m] 'ess-eval-region-or-function-or-paragraph)
   (local-set-key [?\C-c ?\C-p]
                  'ess-roxy-insert-param) ; ess-eval-paragraph-and-step
   (local-set-key [?\C-c ?\C-v]
