@@ -616,6 +616,7 @@
 (global-set-key [f8]           'kmacro-call-macro      )
 (global-set-key [f11]          'outline-mode         ) ; toggle-frame-fullscreen
 (global-set-key [f12]          'move-end-of-line       ) ; f12=end on laptop
+(global-set-key [C-f12]        'end-of-buffer          )
 (global-set-key [S-f12]        'region-to-eol          ) ; S-f12=S-end on laptop
 (global-set-key [?\C-x f12]    'goto-longest-line      ) ; end-of-defun
 (global-set-key [?\C-x delete] 'blank-region           )
