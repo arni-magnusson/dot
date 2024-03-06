@@ -81,7 +81,7 @@
 ;;-----------
 ;; 6.2  ADMB
 ;;-----------
-(setq admb-init "admb-set & ")
+;; (setq admb-init "admb-set & ")
 ;;--------
 ;; 6.16 R
 ;;--------
