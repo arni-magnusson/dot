@@ -616,7 +616,10 @@
 (global-set-key [f7]           'record-macro           )
 (global-set-key [f8]           'kmacro-call-macro      )
 (global-set-key [f11]          'outline-mode         ) ; toggle-frame-fullscreen
+(global-set-key [C-f11]        'beginning-of-buffer    )
+(global-set-key [S-f11]        'region-to-bol          )
 (global-set-key [f12]          'move-end-of-line       ) ; f12=end on laptop
+(global-set-key [C-f12]        'end-of-buffer          )
 (global-set-key [S-f12]        'region-to-eol          ) ; S-f12=S-end on laptop
 (global-set-key [?\C-x f12]    'goto-longest-line      ) ; end-of-defun
 (global-set-key [?\C-x delete] 'blank-region           )
@@ -4291,7 +4294,6 @@ This is first.
   (setq paragraph-start ";\\|[ \t]*$")
   (local-set-key [f9]    'eval-line-and-step      )
   (local-set-key [f11]   'dot-emacs-outline       )
-  (local-set-key [S-f11] 'hs-minor-mode           )
   (local-set-key [C-f12] 'lisp-template           )
   (local-set-key [?\C-j] 'region-forward-paragraph) ; fill-paragraph-forward
   (local-set-key [?\C-m] 'newline-and-indent      ) ; return
