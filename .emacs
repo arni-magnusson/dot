@@ -30,6 +30,7 @@
 (setq inhibit-startup-echo-area-message "arnim" ) ; blank minibuffer
 (setq inhibit-startup-screen t                  ) ; blank buffer
 (setq initial-scratch-message nil               ) ; blank buffer, really
+(setq line-number-display-limit-width 10000     ) ; line numbers with long lines
 (setq-default show-trailing-whitespace t        ) ; show white trail
 (setq-default truncate-lines t                  ) ; long lines
 (show-paren-mode t                              ) ; match, default Emacs >=28.1
@@ -616,7 +617,6 @@
 (global-set-key [f8]           'kmacro-call-macro      )
 (global-set-key [f11]          'outline-mode         ) ; toggle-frame-fullscreen
 (global-set-key [f12]          'move-end-of-line       ) ; f12=end on laptop
-(global-set-key [C-f12]        'end-of-buffer          )
 (global-set-key [S-f12]        'region-to-eol          ) ; S-f12=S-end on laptop
 (global-set-key [?\C-x f12]    'goto-longest-line      ) ; end-of-defun
 (global-set-key [?\C-x delete] 'blank-region           )
