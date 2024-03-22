@@ -1936,8 +1936,10 @@ using 'plain' \"quotes\" and double -- em dash."
     (goto-char (point-min)) ; modifier letter circumflex accent
     (while (search-forward "\u02c6" nil t)(replace-match "^"  ))
     (goto-char (point-min)) ; small tilde
-    (while (search-forward "\u02dc" nil t)(replace-match "~"  ))
+    (while (search-forward "\u02dc" nil t)(replace-match ""   ))
     (goto-char (point-min)) ; zero width space
+    (while (search-forward "\u2002" nil t)(replace-match " "  ))
+    (goto-char (point-min)) ; en space
     (while (search-forward "\u200a" nil t)(replace-match ""   ))
     (goto-char (point-min)) ; hair space
     (while (search-forward "\u200b" nil t)(replace-match ""   ))
