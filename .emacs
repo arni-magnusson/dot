@@ -101,6 +101,7 @@
                                 :foreground -))
         (set-face-attribute 'isearch nil :background "yellow" :foreground -)
         (set-face-attribute 'isearch-fail nil :background "red")
+        (set-face-attribute 'italic nil :underline -)
         (set-face-attribute 'lazy-highlight nil :background "yellow")
         (set-face-attribute 'minibuffer-prompt nil :foreground -)
         (set-face-attribute 'show-paren-match nil :background "green")
@@ -134,6 +135,7 @@
                               :foreground -))
       (set-face-attribute 'isearch nil :background "gold" :foreground -)
       (set-face-attribute 'isearch-fail nil :background "tomato")
+      (set-face-attribute 'italic nil :underline -)
       (set-face-attribute 'lazy-highlight nil :background "palegoldenrod")
       (set-face-attribute 'minibuffer-prompt nil :foreground -) ; M-x
       (set-face-attribute 'region nil :background "lightskyblue")
