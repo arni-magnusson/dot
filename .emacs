@@ -1913,6 +1913,24 @@ using 'plain' \"quotes\" and double -- em dash."
             "[\u0000-\u0008\u000b-\u001f\u007f\u0081\u008d\u008f\u0090\u009d]"
             nil t)
       (replace-match ""))
+    (goto-char (point-min)) ; Latin-1 left single quotation mark
+    (while (search-forward "\u0091" nil t)(replace-match "'"))
+    (goto-char (point-min)) ; Latin-1 right single quotation mark
+    (while (search-forward "\u0092" nil t)(replace-match "'"))
+    (goto-char (point-min)) ; Latin-1 left double quotation mark
+    (while (search-forward "\u0093" nil t)(replace-match "\""))
+    (goto-char (point-min)) ; Latin-1 right double quotation mark
+    (while (search-forward "\u0094" nil t)(replace-match "\""))
+    (goto-char (point-min)) ; Latin-1 bullet
+    (while (search-forward "\u0095" nil t)(replace-match "-"  ))
+    (goto-char (point-min)) ; Latin-1 en dash
+    (while (search-forward "\u0096" nil t)(replace-match "-"  ))
+    (goto-char (point-min)) ; Latin-1 em dash
+    (while (search-forward "\u0097" nil t)(replace-match "-"  ))
+    (goto-char (point-min)) ; Latin-1 tilde
+    (while (search-forward "\u0098" nil t)(replace-match "~"  ))
+    (goto-char (point-min)) ; Latin-1 trade mark sign
+    (while (search-forward "\u0099" nil t)(replace-match "TM"  ))
     (goto-char (point-min)) ; no-break space
     (while (search-forward "\u00a0" nil t)(replace-match " "  ))
     (goto-char (point-min)) ; soft hyphen
