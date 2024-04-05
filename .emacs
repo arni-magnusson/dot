@@ -3558,7 +3558,7 @@ echo.
   (defun html-tidy ()
     "Validate current HTML file with tidy."
     (interactive)
-    (compile (concat "tidy -e -omit -utf8 " (buffer-name))))
+    (compile (concat "tidy -e -omit -utf8 '" (buffer-name) "'")))
   (defun html-toggle-links ()
     "Toggle highlighting of links (red:href, yellow:most, green:some)."
     (interactive)
