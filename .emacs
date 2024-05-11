@@ -4006,8 +4006,9 @@ See also `LaTeX-insert-item`."
 (add-hook 'LaTeX-mode-hook 'arni-LaTeX-hook)
 (defun arni-reftex-hook ()
   ;; Reactivate highlight-changes-mode and diff-this-buffer-with-file
-  (define-key reftex-mode-map [?\C-c ?-] nil)
-  (define-key reftex-mode-map [?\C-c ?=] nil))
+  (define-key reftex-mode-map [?\C-c ?-] nil)   ; highlight-changes-mode
+  (define-key reftex-mode-map [?\C-c ?=] nil)   ; diff-this-buffer-with-file
+  (define-key reftex-mode-map [?\C-c ?\\] nil)) ; avoid reftex-index-phrase-s...
 (add-hook 'reftex-mode-hook 'arni-reftex-hook)
 (defun arni-reftex-toc-hook ()
   (local-set-key [f5]       'reftex-toc-Rescan          )
