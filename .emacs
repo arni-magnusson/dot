@@ -302,6 +302,7 @@
       ;; unix:par=val,#comment
       ;; windows:par=val,par val,;comment,#gadgetpar
       '(("\\.afm$"         . conf-space-mode)
+        ("\\.age_length$"  . conf-unix-mode)
         ("\\.cfg$"         . conf-space-mode)
         ("\\.conf$"        . conf-space-mode)
         ("\\.cpt$"         . conf-space-mode)
@@ -1616,6 +1617,10 @@ read or save."
   "Insert current date as string."
   (interactive "*")
   (insert (format-time-string "%d %b %Y")))
+(defun insert-em-dash ()
+  "Insert em dash."
+  (interactive "*")
+  (insert #x2014))
 (defun insert-en-dash ()
   "Insert en dash."
   (interactive "*")
