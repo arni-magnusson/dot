@@ -169,6 +169,8 @@
 ;;------------------
 ;; 3.2  Executables
 ;;------------------
+(require 'browse-url)
+(setq browse-url-browser-function 'browse-url-firefox)
 (require 'grep) ; skip binaries, ignore case, linenum, recursive, no warnings
 (grep-apply-setting 'grep-command "grep -Iinrs \'\'")
 (add-to-list 'exec-path "~/emacs/ispell/bin")
@@ -555,7 +557,7 @@
 ;;    click   -      imenu
 ;; S  extend  -      -
 ;; C  buffers -      toolbar
-;; M  -       -      -
+;; M  browse  -      -
 ;;--------------
 ;; 4.1  Disable
 ;;--------------
@@ -570,14 +572,13 @@
 (setq mouse-drag-copy-region t)          ; copy selected region to clipboard
 (setq mouse-wheel-progressive-speed nil) ; scroll at constant speed
 (setq mouse-wheel-scroll-amount '(4 ((shift) . 1))) ; scroll 4, or 1 with shift
-(global-unset-key      [M-mouse-1]) ; mouse-start-secondary
+(global-set-key        [M-mouse-1] 'browse-url-at-mouse) ; mouse-start-secondary
 (global-unset-key [M-down-mouse-1]) ; mouse-drag-secondary
 (global-unset-key [M-drag-mouse-1]) ; mouse-set-secondary
 (global-unset-key      [C-mouse-2]) ; facemenu-menu
 (global-unset-key      [M-mouse-2]) ; mouse-yank-secondary
 (global-unset-key        [mouse-3]) ; mouse-save-then-kill
 (global-unset-key      [M-mouse-3]) ; mouse-secondary-save-then-kill
-(global-set-key      [C-M-mouse-1] 'browse-url-at-mouse)
 (global-set-key   [S-down-mouse-1] 'mouse-extend-region) ; mouse-set-font
 (global-set-key   [S-drag-mouse-1] 'mouse-extend-region)
 (global-set-key          [mouse-2] 'mouse-yank-at-click) ; mouse-yank-primary
