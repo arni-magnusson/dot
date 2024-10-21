@@ -1,24 +1,24 @@
 .First <- function()
 {
-  ## suppressPackageStartupMessages(library(arni))
-  ## suppressPackageStartupMessages(suppressWarnings(library(gdata)))
-  ## library(TAF)
+  # suppressPackageStartupMessages(library(arni))
+  # suppressPackageStartupMessages(suppressWarnings(library(gdata)))
+  # library(TAF)
 
-  ## .libPaths(sort(.libPaths())) # user library in first slot
+  # .libPaths(sort(.libPaths())) # user library in first slot
   options(continue="  ")
   options(help_type="html")
   options(Ncpus=4)
   options(repos=c(
-            ## https may not work on a VM
+            # https may not work on a VM
             CRAN="https://cloud.r-project.org",
-            ## "http://mirrors.dotsrc.org/cran",
-            ## "http://cran.uib.no",
-            ## "http://cran.hafro.is",
-            ## "http://cran.r-project.org",
-            ## "http://r-forge.r-project.org",
-            ## "http://www.stats.ox.ac.uk/pub/RWin",
-            ## "http://flr-project.org/R",
-            ## "http://r.hafro.is",
+            # "http://mirrors.dotsrc.org/cran",
+            # "http://cran.uib.no",
+            # "http://cran.hafro.is",
+            # "http://cran.r-project.org",
+            # "http://r-forge.r-project.org",
+            # "http://www.stats.ox.ac.uk/pub/RWin",
+            # "http://flr-project.org/R",
+            # "http://r.hafro.is",
             NULL))
   options(stringsAsFactors=FALSE)
   if(.Platform$OS.type=="windows")
@@ -35,11 +35,11 @@
     options(width=92)
   }
 
-  ## Area plot
+  # Area plot
   autoload("areaplot", "areaplot") # stacked areas
   autoload("confplot", "areaplot") # confidence bands
 
-  ## MCMC diagnostics
+  # MCMC diagnostics
   autoload("autocorr",      "coda") # autocorrelation
   autoload("autocorr.plot", "coda") # diagnostics: thinning
   autoload("cumuplot",      "coda") # diagnostics: convergence
@@ -49,30 +49,30 @@
   autoload("mcmc",          "coda") # create mcmc object
   autoload("traceplot",     "coda") # diagnostics: convergence
 
-  ## CRAN downloads
+  # CRAN downloads
   autoload("cran_downloads",     "cranlogs") # any package
   autoload("cran_top_downloads", "cranlogs") # most popular
 
-  ## Data table
+  # Data table
   autoload("data.table", "data.table") # data table
 
-  ## Developer tools
+  # Developer tools
   autoload("check",    "devtools") # call rcmdcheck
   autoload("document", "devtools") # call roxygenize
 
-  ## Correlation plot
+  # Correlation plot
   autoload("ellipse",  "ellipse") # 2d confidence region
   autoload("plotcorr", "ellipse") # plot correlation matrix
 
-  ## Greg Warnes's toolbox
-  ## autoload("Args",     "gdata")  # show function args
-  ## autoload("env",      "gdata")  # show environments
-  ## autoload("is.what",  "gdata")  # show is.* test results
-  ## autoload("keep",     "gdata")  # remove objects
-  ## autoload("ll",       "gdata")  # show objects or elements
+  # Greg Warnes's toolbox
+  # autoload("Args",     "gdata")  # show function args
+  # autoload("env",      "gdata")  # show environments
+  # autoload("is.what",  "gdata")  # show is.* test results
+  # autoload("keep",     "gdata")  # remove objects
+  # autoload("ll",       "gdata")  # show objects or elements
   autoload("catch.d",     "gplots") # example data
   autoload("catch.r",     "gplots") # example data
-  ## autoload("bubbleplot",  "gplots") # bubble plot, not in CRAN version
+  # autoload("bubbleplot",  "gplots") # bubble plot, not in CRAN version
   autoload("hist2d",      "gplots") # 3d symbol
   autoload("plotCI",      "gplots") # 2d error bars
   autoload("plotmeans",   "gplots") # 2d error bars
@@ -81,7 +81,7 @@
   autoload("logit",       "gtools") # logit(p), same as binomial()$linkfun(mu)
   autoload("inv.logit",   "gtools") # inv.logit(eta) = binomial()$linkinv(eta)
 
-  ## STAR
+  # STAR
   autoload("append.id",             "gfcmSTAR") # modify existing Assessment_ID
   autoload("basic.time",            "gfcmSTAR") # convert to truncated POSIXct
   autoload("combo",                 "gfcmSTAR") # combine refyear, species, GSA
@@ -116,24 +116,24 @@
   autoload("lookup.gsa",            "gfcmSTAR") # lookup GSA
   autoload("lookup.species",        "gfcmSTAR") # lookup species
 
-  ## ggplot
+  # ggplot
   autoload("ggplot", "ggplot2") # plot
   autoload("ggsave", "ggplot2") # export
   autoload("qplot",  "ggplot2") # plot
 
-  ## glmmADMB
+  # glmmADMB
   autoload("glmmadmb", "glmmADMB") # glmm
 
-  ## glmmTMB
+  # glmmTMB
   autoload("glmmTMB", "glmmTMB") # glmm
 
-  ## GMT
+  # GMT
   autoload("deg2num", "gmt") # degree or time to number
   autoload("geodist", "gmt") # distance on a sphere
   autoload("gmt",     "gmt") # initialize GMT
   autoload("pscoast", "gmt") # draw map
 
-  ## Frank Harrell's toolbox
+  # Frank Harrell's toolbox
   autoload("bpplot",          "Hmisc") # 1d boxplot
   autoload("contents",        "Hmisc") # summary
   autoload("datadensity",     "Hmisc") # multivariate: hist and jitter
@@ -141,7 +141,7 @@
   autoload("hist.data.frame", "Hmisc") # multivariate: hist
   autoload("panel.xYplot",    "Hmisc") # 2d error bars
 
-  ## ICES advice
+  # ICES advice
   autoload("agesFbar",  "icesAdvice") # ages for Fbar
   autoload("Bpa",       "icesAdvice") # Bpa from Blim
   autoload("DLS3.2",    "icesAdvice") # DLS method 3.2
@@ -155,7 +155,7 @@
   autoload("sigmaPA",   "icesAdvice") # sigma from refpts
   autoload("write.dls", "icesAdvice") # write DLS output
 
-  ## ICES DATRAS web service
+  # ICES DATRAS web service
   autoload("getCAdata",                "icesDatras") # age, weight, maturity
   autoload("getDATRAS",                "icesDatras") # wrapper for get*data
   autoload("getDatrasDataOverview",    "icesDatras") # surveys by year-quarter
@@ -166,7 +166,7 @@
   autoload("getSurveyYearList",        "icesDatras") # survey info: years
   autoload("getSurveyYearQuarterList", "icesDatras") # survey info: quarters
 
-  ## ICES Stock Assessment Graphs
+  # ICES Stock Assessment Graphs
   autoload("findKey",                     "icesSAG") # deprecated
   autoload("findAssessmentKey",           "icesSAG") # look up stock-year key
   autoload("getFishStockReferencePoints", "icesSAG") # Blim, Bpa, Fmsy, Btrigger
@@ -174,27 +174,27 @@
   autoload("getSAG",                      "icesSAG") # wrapper for get*functions
   autoload("getSummaryTable",             "icesSAG") # year, Rec, SSB, F, catch
 
-  ## ICES Stock Database
+  # ICES Stock Database
   autoload("getSD",     "icesSD") # all stocks, all years
   autoload("showStock", "icesSD") # one stock, one year
 
-  ## ICES TAF extra
+  # ICES TAF extra
   autoload("zoom.ggplot", "icesTAFextra") # ggplot text size
 
-  ## ICES Vocab reference codes
+  # ICES Vocab reference codes
   autoload("findAphia",       "icesVocab") # look up species code
   autoload("getCodeDetail",   "icesVocab") # detail (parents, children)
   autoload("getCodeList",     "icesVocab") # code definition
   autoload("getCodeTypeList", "icesVocab") # available codes
 
-  ## JSON
+  # JSON
   autoload("fromJSON", "jsonlite") # parse JSON
 
-  ## Knitr
+  # Knitr
   autoload("knit", "knitr") # compile Rmd
   autoload("knit", "spin")  # compile R
 
-  ## Lattice graphics
+  # Lattice graphics
   autoload("barchart",       "lattice") # 1d bar plot
   autoload("bwplot",         "lattice") # 1d boxplot
   autoload("cloud",          "lattice") # 3d scatter
@@ -210,16 +210,16 @@
   autoload("wireframe",      "lattice") # 3d surface
   autoload("xyplot",         "lattice") # 2d scatterplot
 
-  ## Check style
+  # Check style
   autoload("lint", "lintr") # check style
 
-  ## Mixed effects
+  # Mixed effects
   autoload("glmer",      "lme4") # generalized linear mixed effects
   autoload("lmer",       "lme4") # linear mixed effects
   autoload("nlmer",      "lme4") # nonlinear mixed effects
   autoload("sleepstudy", "lme4") # example dataset used in glmmTMB
 
-  ## Venables and Ripley toolbox
+  # Venables and Ripley toolbox
   autoload("as.fractions", "MASS") # fractions: 1.333<->4:3
   autoload("boxcox",       "MASS") # transform: ^ and log
   autoload("fitdistr",     "MASS") # estimate beta/gamma/negbinom
@@ -229,11 +229,11 @@
   autoload("mvrnorm",      "MASS") # multivariate normal
   autoload("parcoord",     "MASS") # multivariate parallel
 
-  ## GAM
+  # GAM
   autoload("gam",         "mgcv") # gam (simon wood)
   autoload("summary.gam", "mgcv") # summary
 
-  ## MS SQL Server
+  # MS SQL Server
   autoload("dbOverview",    "MSSQL")  # dims and colnames
   autoload("dbStorage",     "MSSQL")  # storage size
   autoload("dbTime",        "MSSQL")  # time created and modified
@@ -244,10 +244,10 @@
   autoload("tableOverview", "MSSQL")  # data types and nrow
   autoload("tableQuote",    "MSSQL")  # quote name
 
-  ## Bravington's toolbox
+  # Bravington's toolbox
   autoload("foodweb", "mvbutils") # visualize function dependencies
 
-  ## Mixed effects
+  # Mixed effects
   autoload("fixef",     "nlme") # estimated fixed effects
   autoload("intervals", "nlme") # confidence intervals
   autoload("lme",       "nlme") # lme model
@@ -256,20 +256,20 @@
   autoload("ranef",     "nlme") # estimated random effects
   autoload("VarCorr",   "nlme") # sigmas: as.numeric(VarCorr(model)[,2])
 
-  ## Numerical derivatives
+  # Numerical derivatives
   autoload("hessian", "numDeriv") # hessian
   autoload("grad",    "numDeriv") # gradient
 
-  ## Parallel processing
+  # Parallel processing
   autoload("detectCores", "parallel") # count available cores
   autoload("mclapply",    "parallel") # parallel apply (list)
   autoload("mcmapply",    "parallel") # parallel apply (multi args)
   autoload("pvec",        "parallel") # parallel apply (vector)
 
-  ## Build packages
+  # Build packages
   autoload("build", "pkgbuild") # build
 
-  ## MCMC
+  # MCMC
   autoload("plotAuto",  "plotMCMC") # autocorrelation
   autoload("plotCumu",  "plotMCMC") # cumulative quantiles
   autoload("plotDens",  "plotMCMC") # density
@@ -277,33 +277,33 @@
   autoload("plotSplom", "plotMCMC") # scatterplot matrix
   autoload("plotTrace", "plotMCMC") # traces
 
-  ## Bivariate confint/freq
+  # Bivariate confint/freq
   autoload("conf2d",   "r2d2") # bivariate confint
   autoload("freq2d",   "r2d2") # bivariate frequency
   autoload("shrink2d", "r2d2") # bivariate confset
 
-  ## Check package
+  # Check package
   autoload("rcmdcheck", "rcmdcheck") # build and check
 
-  ## RCT3
+  # RCT3
   autoload("rct3", "rct3")  # recruitment forecast
 
-  ## Install from repositories
+  # Install from repositories
   autoload("install_github",  "remotes") # install package
   autoload("install_version", "remotes") # install package
   autoload("parse_repo_spec", "remotes") # parse repo
 
-  ## Reshape
+  # Reshape
   autoload("melt", "reshape2") # unxtab
 
-  ## Gadget
+  # Gadget
   autoload("gadget.fit",       "Rgadget") # get model fit
   autoload("gadget.iterative", "Rgadget") # run model
 
-  ## R markdown
+  # R markdown
   autoload("render", "rmarkdown") # Rmd -> HTML
 
-  ## ODBC
+  # ODBC
   autoload("odbcConnect",     "RODBC") # connect
   autoload("odbcClose",       "RODBC") # close
   autoload("odbcDataSources", "RODBC") # list databases
@@ -312,10 +312,10 @@
   autoload("sqlQuery",        "RODBC") # query part of table
   autoload("sqlTables",       "RODBC") # list tables
 
-  ## Write Rd pages
+  # Write Rd pages
   autoload("roxygenize", "roxygen2") # write Rd pages
 
-  ## Coleraine
+  # Coleraine
   autoload("estN",        "scape") # effective sample size
   autoload("estSigmaI",   "scape") # observation noise
   autoload("estSigmaR",   "scape") # recruitment variability
@@ -340,20 +340,20 @@
   autoload("x.saithe",    "scape") # assessment
   autoload("x.sbw",       "scape") # assessment
 
-  ## Session info
+  # Session info
   autoload("package_info", "sessioninfo") # package info
   autoload("session_info", "sessioninfo") # session info
 
-  ## Martin Maechler's toolbox
+  # Martin Maechler's toolbox
   autoload("primes",    "sfsmisc") # prime numbers
   autoload("factorize", "sfsmisc") # factorize into prime numbers
 
-  ## Shiny
+  # Shiny
   autoload("fluidPage", "shiny") # html ui generator
   autoload("runApp",    "shiny") # run app
   autoload("shinyApp",  "shiny") # run app
 
-  ## SOFIA
+  # SOFIA
   autoload("addDriors", "SOFIA")  # add driors column to stock object
   autoload("addEffort", "SOFIA")  # add effort column to catch data
   autoload("calcCat",   "SOFIA")  # calculate stock status categories
@@ -362,24 +362,24 @@
   autoload("plotCat",   "SOFIA")  # plot stock status categories
   autoload("plotProp",  "SOFIA")  # old name for plotCat
 
-  ## Splines
+  # Splines
   autoload("bs", "splines") # polynomial spline
   autoload("ns", "splines") # natural cubic spline
 
-  ## SAM
+  # SAM
   autoload("fbarplot",   "stockassessment") # plot Fbar
   autoload("fitfromweb", "stockassessment") # read fit from SAO server
   autoload("ssbplot",    "stockassessment") # plot SSB
   autoload("read.ices",  "stockassessment") # ICES data format
 
-  ## Template Model Builder
+  # Template Model Builder
   autoload("compile",    "TMB") # compile model
   autoload("gdbsource",  "TMB") # debug model
   autoload("MakeADFun",  "TMB") # construct model
   autoload("precompile", "TMB") # compile main library
   autoload("sdreport",   "TMB") # calculate standard errors
 
-  ## Package development
+  # Package development
   autoload("compactPDF",            "tools") # compress PDF files
   autoload("dependsOnPkgs",         "tools") # which local pkgs depend on X
   autoload("file_ext",              "tools") # filename extension
@@ -391,13 +391,13 @@
   autoload("toTitleCase",           "tools") # title case
   autoload("write_PACKAGES",        "tools") # create repository
 
-  ## Excel
+  # Excel
   autoload("loadWorkbook",          "XLConnect") # workbook
   autoload("readTable",             "XLConnect") # table object
   autoload("readWorksheet",         "XLConnect") # sheet
   autoload("readWorksheetFromFile", "XLConnect") # sheet
 
-  ## Export table
+  # Export table
   autoload("xtable", "xtable") # export table
 }
 
@@ -407,11 +407,11 @@
         else if(dir.exists(path.expand("~/r"))) path.expand("~/r")
         else getwd())
 
-  ## Backup user workspace
+  # Backup user workspace
   if(file.exists(".RData"))
     file.rename(".RData", ".RBack")
 
-  ## Delete .First, .Last, and some common residual objects
+  # Delete .First, .Last, and some common residual objects
   suppressWarnings(rm(.First, .Last,
                       worldMapEnv, .Last.projection, .map.range,  # maps
                       .rdired.objects, pos=1))                    # r-dired
