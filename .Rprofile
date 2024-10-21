@@ -20,7 +20,7 @@
             # "http://flr-project.org/R",
             # "http://r.hafro.is",
             NULL))
-  options(stringsAsFactors=FALSE)
+  # options(stringsAsFactors=FALSE) # R < 4.0
   if(.Platform$OS.type=="windows")
   {
     options(editor="emacs")   # write file
