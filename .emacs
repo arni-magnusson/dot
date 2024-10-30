@@ -360,6 +360,7 @@
         ("\\.html$"    . html-helper-mode)
         ("\\.info$"    . info-buffer)
         ("\\.md$"      . markdown-mode)
+        ("\\.qmd$"     . markdown-mode)
         ("\\.Rmd$"     . markdown-mode)
         ("\\.org$"     . org-mode)
         ("\\.pdf$"     . ps-mode)
