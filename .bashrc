@@ -96,7 +96,6 @@ alias 'admb-ide'='~/bin/emacs -Q -mm \
 alias b='bright'
 alias benchmark='time'
 alias bfg='java -jar /opt/bfg/bfg-*.jar'
-alias bin='chmod 700 ~/bin/*'
 alias br='git branch'
 alias 'br-full'='git branch -av'
 alias 'byte-compile'='emacs -batch -f batch-byte-compile *.el'
