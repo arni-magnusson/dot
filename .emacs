@@ -803,6 +803,7 @@
 (global-set-key [?\C-$]     'count-words             )
 (global-set-key [?\C-%]     'read-only-mode          )
 (global-set-key [?\C-&]     'async-shell-command     )
+(global-set-key [?\C-*]     'comment-paragraph       )
 (global-set-key [?\C-\(]    'backward-sexp-start     )
 (global-set-key [?\C-\)]    'forward-sexp-start      )
 (global-set-key [?\C-=]     'duplicate-dwim          )
@@ -1898,6 +1899,11 @@ Unlike `indent-region',  also indent the first half-marked line."
          (goto-char (region-end))
          (line-end-position)))
     (comment-region (line-beginning-position)(line-end-position))))
+(defun comment-paragraph (&optional n)
+  "Comment N paragraphs."
+  (interactive "*p")
+  (region-forward-paragraph n)
+  (comment-line-or-region))
 (defun comment-then-up (&optional n)
   "Comment line/region and go to previous line, N times."
   (interactive "*p")
