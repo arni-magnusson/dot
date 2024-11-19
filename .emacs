@@ -4723,20 +4723,20 @@ with spaces."
   (local-unset-key [?\C-\M-e]) ; reactivate query-replace-regexp
   (local-unset-key [?_]      ) ; reactivate self-insert-command
   (local-unset-key [?,]      ) ; reactivate self-insert-command
-  (local-set-key [f9]                'ess-eval-region-or-line-and-step)
-  (local-set-key [S-f9]              'ess-save-buffer-and-eval        )
-  (local-set-key [f10]               'R-format-code                   )
-  (local-set-key [S-f10]             'R-format-code-longline-nocomment)
-  (local-set-key [f11]               'R-outline                       )
-  (local-set-key [S-f11]             'hs-minor-mode                   )
-  (local-set-key [C-f12]             'R-template-roxygen              )
-  (local-set-key [?\C-c C-backspace] 'ess-graphics-off                )
+  (local-set-key [f9]          'ess-eval-region-or-line-and-step)
+  (local-set-key [S-f9]        'ess-save-buffer-and-eval        )
+  (local-set-key [f10]         'R-format-code                   )
+  (local-set-key [S-f10]       'R-format-code-longline-nocomment)
+  (local-set-key [f11]         'R-outline                       )
+  (local-set-key [S-f11]       'hs-minor-mode                   )
+  (local-set-key [C-f12]       'R-template-roxygen              )
+  (local-set-key [?\C-c C-backspace] 'ess-graphics-off          )
   (local-set-key [M-return]  'ess-eval-region-or-function-or-paragraph-and-step)
-  (local-set-key [?\C-c up]          'ess-eval-buffer-from-beg-to-here)
-  (local-set-key [?\C-c down]        'ess-eval-buffer-from-here-to-end)
-  (local-set-key [C-M-down]          'ess-eval-line-and-step          )
-  (local-set-key [?\C-c ?\C-a]       'ess-roxy-insert-code            )
-  (local-set-key [?\C-c ?\C-d]       'ess-eval-buffer-and-go          ) ; [map]
+  (local-set-key [?\C-c up]    'ess-eval-buffer-from-beg-to-here)
+  (local-set-key [?\C-c down]  'ess-eval-buffer-from-here-to-end)
+  (local-set-key [C-M-down]    'ess-eval-line-and-step          )
+  (local-set-key [?\C-c ?\C-a] 'ess-roxy-insert-code            )
+  (local-set-key [?\C-c ?\C-d] 'ess-eval-buffer-and-go          ) ; [map]
   (local-set-key [?\C-c ?\C-i]
                  'ess-roxy-insert-import) ; ess-complete-object-name-deprecated
   (local-set-key [?\C-c ?\C-l] 'ess-clear-R-window) ; ess-load-file
