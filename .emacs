@@ -4534,6 +4534,8 @@ with spaces."
                       :underline -) ; <-, library, source, [1] output
   (set-face-attribute 'font-lock-type-face nil :foreground -) ; TRUE
   (local-unset-key [?\C-\M-m]) ; avoid ess-dirs
+  (local-unset-key [M-up]    ) ; reactivate scroll-other-up
+  (local-unset-key [M-down]  ) ; reactivate scroll-other-down
   (local-unset-key [?\C-y]   ) ; reactivate scroll-down-command
   (local-set-key [f11]               'ess-rdired-arni                      )
   (local-set-key [?\C-c C-backspace] 'ess-graphics-off                     )
