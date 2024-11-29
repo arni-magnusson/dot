@@ -37,12 +37,8 @@ export SHELL=/bin/bash
 
 # Locale
 export LANG=en_US.UTF-8  # export LANG=is_IS.UTF-8
-# export NLS_LANG=icelandic_america.AL32UTF8  # Oracle UTF-8 output
 # export LC_NUMERIC=en_US.UTF-8
 # export LC_TIME=en_CA.UTF-8  # show date as 1999-12-31 in Dolphin (~monospace)
-
-# Security certificates
-export NSS_DEFAULT_DB_TYPE=sql
 
 # Program: admb
 export ADMB_HOME=~/admb
@@ -69,9 +65,6 @@ export DESKTOP=~
 # Program: latex
 export TEXINPUTS='.//:~/latex/cls//:~/latex/sty//:'
 
-# Program: lpr
-# export LPDEST=marsvin
-
 # Program: r
 export _R_CHECK_SYSTEM_CLOCK_=FALSE
 export R_HISTFILE=~/r/.Rhistory
@@ -89,7 +82,6 @@ export TMPDIR=/tmp
 
 # Alias
 alias ..='cd ..'
-# alias a='alpine'
 alias add='git add'
 alias adstudio='~/bin/emacs -Q -mm -l ~/git/admb-project/adstudio/dot/.emacs'
 alias 'admb-ide'='~/bin/emacs -Q -mm \
@@ -145,8 +137,6 @@ alias iconvert='convert'
 alias ifind='find -iname'
 alias 'ip-address'='dig +short myip.opendns.com @resolver1.opendns.com'
 alias is='nordvpn connect is'
-alias J='ssh -X hafstokkur'
-alias j='ssh hafdruna'
 alias k='konsole . &'
 alias l="ls -x $LS_OPTIONS"
 alias 'l.'="ls -dx $LS_OPTIONS .*"
