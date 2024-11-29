@@ -160,14 +160,14 @@ alias lla="ls -Al $LS_OPTIONS $LL_OPTIONS"
 alias lld='ls -dl $LL_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M */ | \
 sed "s/\///g"'
 alias llh="ls -lh $LS_OPTIONS $LL_OPTIONS"
+alias lli='ll --time-style="+%Y-%m-%d %H:%M:%S"'
 alias llk="ls -l --block-size=K $LS_OPTIONS $LL_OPTIONS"
 alias lll='ll'
 alias llm="ls -l --block-size=M $LS_OPTIONS $LL_OPTIONS"
 alias llr="ls -lR $LS_OPTIONS $LL_OPTIONS"
 alias llra="ls -AlR $LS_OPTIONS $LL_OPTIONS"
 alias lls="ls -l $LS_OPTIONS  $LL_OPTIONS --time-style=+%e\ %b\ %Y\ %k:%M:%S"
-alias llt='ll --time-style="+%Y-%m-%d %H:%M:%S"'
-# ll -t sorts by time (newest first), so lls -t and llt -t are useful
+alias llt='lls -t | tac | grep -v "^total"'
 alias log='git log --abbrev-commit --format=oneline'
 alias 'log-full'='git log --format="$GIT_FORMAT"'
 alias longprompt="export PS1='\[\e[1;47;37m\]\h\[\e[0m\]\w $ '"
