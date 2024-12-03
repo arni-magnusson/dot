@@ -4712,9 +4712,9 @@ with spaces."
   (setf (cdr (assoc 'ess-indent-with-fancy-comments ess-own-style-list)) nil)
   (font-lock-add-keywords nil '(("taf\\.png(\"\\(.*?\\)\""
                                  (1 font-lock-builtin-face t))))
-  (set-face-attribute 'font-lock-constant-face
-                      nil :underline - ) ; <-, library, source, [1] output
-  (set-face-attribute 'font-lock-type-face     nil :foreground -) ; TRUE
+  (set-face-attribute 'font-lock-constant-face ; <-, library, source, [1] output
+                      nil :inherit 'font-lock-keyword-face :underline -)
+  (set-face-attribute 'font-lock-type-face nil :foreground -) ; TRUE
   (local-unset-key [?\t]     ) ; reactivate indent-or-complete
   (local-unset-key [C-return]) ; reactivate recentf-open-files
   (local-unset-key [?\C-c ?.]) ; reactivate comment-line-or-region
