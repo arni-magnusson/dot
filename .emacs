@@ -939,7 +939,7 @@
   (kill-buffer (current-buffer)))
 (defun kill-buffer-maybe-window ()
   "Kill current buffer and window.
-Doesn't complain about last window, unlike `kill-buffer-and-window`."
+Doesn't complain about last window, unlike `kill-buffer-and-window'."
   (interactive)
   (kill-this-buffer)
   (if (> (length (window-list)) 1)
@@ -3870,7 +3870,7 @@ See `LaTeX-toggle-quotes'.")
     (search-backward "}"))
   (defun LaTeX-item ()
     "Insert \\item, possibly after a newline.
-See also `LaTeX-insert-item`."
+See also `LaTeX-insert-item'."
     (interactive "*")
     (if (not (looking-back "^[ \t]*" 10))
         (newline-and-indent))
