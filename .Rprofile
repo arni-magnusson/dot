@@ -107,7 +107,7 @@
   autoload("read.template.v21",     "gfcmSTAR") # read STAR template v2.1
   autoload("readTable.logical",     "gfcmSTAR") # read single-cell logical
   autoload("readTable.transpose",   "gfcmSTAR") # read transposed table
-  autoload("report",                "gfcmSTAR") # report files imported
+  # autoload("report",                "gfcmSTAR") # report files imported (overlaps with RTMB object)
   autoload("set.classes",           "gfcmSTAR") # convert data types
   autoload("Start_Case",            "gfcmSTAR") # convert column names
   autoload("template.version",      "gfcmSTAR") # read transposed table
@@ -375,9 +375,9 @@
   # Template Model Builder
   autoload("compile",    "TMB") # compile model
   autoload("gdbsource",  "TMB") # debug model
-  autoload("MakeADFun",  "TMB") # construct model
+  # autoload("MakeADFun",  "TMB") # construct model (overlaps with RTMB)
   autoload("precompile", "TMB") # compile main library
-  autoload("sdreport",   "TMB") # calculate standard errors
+  # autoload("sdreport",   "TMB") # calculate standard errors (overlaps with RTMB)
 
   # Package development
   autoload("compactPDF",            "tools") # compress PDF files
