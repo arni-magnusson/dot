@@ -7220,11 +7220,13 @@ break
     (delete-blank-lines)
     (goto-char (point-min))
     (message "Converted Word headings to Org format.
-1. [down] and [M-down].\n2. [M-home], [M-end], [M-up]."))
+1. [down] and [M-down].
+2. [M-home], [M-end], [M-up]."))
   (defun org-word-help ()
     "Show keybindings to convert Word document to Org format."
     (interactive)
-    (message "1. [down] and [M-down].\n2. [M-home], [M-end], [M-up].")))
+    (message "1. [down] and [M-down].
+2. [M-home], [M-end], [M-up].")))
 (add-hook 'org-mode-hook 'arni-org-hook)
 ;;--------------
 ;; 7.27 Outline
