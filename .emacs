@@ -7196,37 +7196,7 @@ break
   (defun org-toc-4 ()
     "Show outline level 4."
     (interactive)
-    (org-global-cycle 4))
-  (defun org-word-convert ()
-    "Convert Word headings to Org format."
-    (interactive "*")
-    (set-buffer-file-coding-system 'utf-8-unix t)
-    (goto-char (point-min))
-    (insert "#+TITLE: ")
-    (forward-line)
-    (delete-region (point)(line-end-position))
-    (delete-region (point)(re-search-forward "^1\t" nil t))
-    (insert "1\t") ; delete TOC
-    (goto-char (point-min))
-    (while (re-search-forward "^[0-9]*\t\\(.*\\)" nil t)
-      (replace-match "\n* \\1\n"))
-    (goto-char (point-min))
-    (while (re-search-forward "^[0-9]*\.[0-9]*\t\\(.*\\)" nil t)
-      (replace-match "\n** \\1\n"))
-    (goto-char (point-min))
-    (while (search-forward "\n\n\n" nil t)
-      (replace-match "\n\n"))
-    (goto-char (point-max))
-    (delete-blank-lines)
-    (goto-char (point-min))
-    (message "Converted Word headings to Org format.
-1. [down] and [M-down].
-2. [M-home], [M-end], [M-up]."))
-  (defun org-word-help ()
-    "Show keybindings to convert Word document to Org format."
-    (interactive)
-    (message "1. [down] and [M-down].
-2. [M-home], [M-end], [M-up].")))
+    (org-global-cycle 4)))
 (add-hook 'org-mode-hook 'arni-org-hook)
 ;;--------------
 ;; 7.27 Outline
