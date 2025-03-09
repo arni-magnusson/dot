@@ -156,15 +156,15 @@
   autoload("write.dls", "icesAdvice") # write DLS output
 
   # ICES DATRAS web service
-  autoload("getCAdata",                "icesDatras") # age, weight, maturity
-  autoload("getDATRAS",                "icesDatras") # wrapper for get*data
-  autoload("getDatrasDataOverview",    "icesDatras") # surveys by year-quarter
-  autoload("getHHdata",                "icesDatras") # year, lat, lon, depth
-  autoload("getHLdata",                "icesDatras") # length, count
-  autoload("getIndices",               "icesDatras") # official ICES indices
-  autoload("getSurveyList",            "icesDatras") # survey info: surveys
-  autoload("getSurveyYearList",        "icesDatras") # survey info: years
-  autoload("getSurveyYearQuarterList", "icesDatras") # survey info: quarters
+  # autoload("getCAdata",                "icesDatras") # age, weight, maturity
+  # autoload("getDATRAS",                "icesDatras") # wrapper for get*data
+  # autoload("getDatrasDataOverview",    "icesDatras") # surveys by year-quarter
+  # autoload("getHHdata",                "icesDatras") # year, lat, lon, depth
+  # autoload("getHLdata",                "icesDatras") # length, count
+  # autoload("getIndices",               "icesDatras") # official ICES indices
+  # autoload("getSurveyList",            "icesDatras") # survey info: surveys
+  # autoload("getSurveyYearList",        "icesDatras") # survey info: years
+  # autoload("getSurveyYearQuarterList", "icesDatras") # survey info: quarters
 
   # ICES Stock Assessment Graphs
   autoload("findKey",                     "icesSAG") # deprecated
@@ -392,10 +392,10 @@
   autoload("write_PACKAGES",        "tools") # create repository
 
   # Excel
-  autoload("loadWorkbook",          "XLConnect") # workbook
-  autoload("readTable",             "XLConnect") # table object
-  autoload("readWorksheet",         "XLConnect") # sheet
-  autoload("readWorksheetFromFile", "XLConnect") # sheet
+  # autoload("loadWorkbook",          "XLConnect") # workbook
+  # autoload("readTable",             "XLConnect") # table object
+  # autoload("readWorksheet",         "XLConnect") # sheet
+  # autoload("readWorksheetFromFile", "XLConnect") # sheet
 
   # Export table
   autoload("xtable", "xtable") # export table
