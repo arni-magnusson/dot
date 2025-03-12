@@ -7511,7 +7511,6 @@ to the shortest `outline-regexp'.")
   (setq indent-line-function 'indent-relative)
   (auto-fill-mode t)
   (setq fill-column 80)
-  (font-lock-mode 0)
   (arni-colors)
   (local-unset-key [?\M-s]) ; reactivate highlight-and-count-regexp
   (local-set-key [?\t]      'indent-relative        )
