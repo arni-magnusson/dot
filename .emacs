@@ -28,6 +28,7 @@
 (setq inhibit-startup-screen t                  ) ; blank buffer
 (setq initial-scratch-message nil               ) ; blank buffer, really
 (setq line-number-display-limit-width 10000     ) ; line numbers with long lines
+(setq project-mode-line t                       ) ; project in mode line
 (setq-default show-trailing-whitespace t        ) ; show white trail
 (setq-default truncate-lines t                  ) ; long lines
 (show-paren-mode t                              ) ; match, default Emacs >=28.1
