@@ -7,7 +7,6 @@
 (if menu-bar-mode (menu-bar-mode 0))
 (if (string-match "windows" (prin1-to-string system-type))
     (load "~/.emacs-windows.el" nil t)(load "~/.emacs-linux.el" nil t))
-;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
 ;;==============================================================================
 ;;
 ;; 2  INTERFACE
@@ -20,8 +19,6 @@
 ;;-------------
 ;; 2.2  Visual
 ;;-------------
-;; (defun arni-window-setup-hook ()(frame-maximize)) ; linux max frame
-;; (add-hook 'window-setup-hook 'arni-window-setup-hook)
 (blink-cursor-mode 0                            ) ; no blinking
 (column-number-mode t                           ) ; coordinates
 (font-5                                         ) ; default font
@@ -440,7 +437,7 @@
         ("\\.mcmc$"       . space-mode)))
 (setq ext-util
       '(("\\.ac$"          . autoconf-mode)
-        ;; ("/ChangeLog"   . change-log-mode)
+        ("/ChangeLog"      . change-log-mode)
         ("\\.cmake$"       . cmake-mode)
         ("/CMakeLists.txt" . cmake-mode)
         ("\\.diff$"        . diff-mode)
@@ -866,7 +863,6 @@
 (global-set-key [?\M-%]     'read-only-mode          ) ; query-replace
 (global-set-key [?\M-=]     'duplicate-dwim-comment  ) ; count-line-region
 (global-set-key [?\M-+]     'transpose-windows       )
-;; (global-set-key [?\M-\[] 'ignore                  ) ; paste into Emacs -nw
 (global-set-key [?\M-\]]    'scroll-up-1             )
 (global-set-key [?\M-{]     'backward-paragraph      ) ; backward-paragraph
 (global-set-key [?\M-}]     'forward-paragraph       ) ; forward-paragraph
@@ -2450,7 +2446,6 @@ See also `sh-send-line-or-region-and-step'."
     (insert " ")
     (indent-according-to-mode)
     (newline)
-    ;; (clean-trails)
     (message nil)
     (indent-according-to-mode)) ; handle 'case'
   (defun sh-indent-newline-indent-or-delete-region ()
@@ -2530,7 +2525,6 @@ shift $((OPTIND-1))
 (defun arni-c-hook ()
   (setq make-backup-files t)
   (abbrev-mode 0)
-  ;; (setq-default c-electric-flag nil)
   (c-set-offset 'case-label '+) ; indent switch cases
   (c-set-offset 'comment-intro 0) ; don't indent comments more than statements
   ;; Don't indent comments between function() and {
@@ -5073,8 +5067,6 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
 ;;----------
 (require 'tmb nil t)
 (defun arni-tmb-hook ()
-  ;; (setq tmb-compile-args ",'-fno-gnu-unique -O0 -Wall'") ; in .emacs-linux.el
-  ;; (setq tmb-debug-args ",'-fno-gnu-unique -g -O0'") ; in .emacs-linux.el
   (set-face-attribute 'font-lock-warning-face nil :weight 'normal     )
   (set-face-attribute 'tmb-block-face         nil :foreground "sienna")
   (set-face-attribute 'tmb-data-face          nil :foreground "sienna")
@@ -6540,7 +6532,7 @@ See `dired-toggle-dot-files'.")
   (define-key hi-lock-map [?\C-x ?w] nil)) ; reactivate widen
 (add-hook 'hi-lock-mode-hook 'arni-hi-lock-hook)
 (defun arni-highlight-changes-hook ()
-  (message " ") ; (message nil)
+  (message " ")
   (if highlight-changes-mode
       (progn (local-set-key [M-left]  'highlight-changes-rotate-faces   )
              (local-set-key [M-right] 'highlight-changes-rotate-faces   )
@@ -7281,13 +7273,6 @@ to the shortest `outline-regexp'.")
 ;;---------------
 ;; 7.28 Packages
 ;;---------------
-;; (require 'package)
-;; (setq package-archives '(("gnu"       . "http://elpa.gnu.org/packages/")))
-;; (setq package-archives '(("marmalade" . "http://marmalade-repo.org/"   )))
-;; (setq package-archives '(("melpa"     . "https://melpa.org/packages/"  )))
-;; (setq package-archives '(("tromey"    . "http://tromey.com/elpa/"      )))
-;; (setq package-enable-at-startup nil)
-;; (package-initialize)
 (defun arni-package-menu-hook ()
   (message nil)
   (local-set-key [left]   'package-menu-describe-package)
@@ -7548,7 +7533,6 @@ to the shortest `outline-regexp'.")
                       nil :foreground - :inherit font-lock-comment-face))
 (add-hook 'message-mode-hook 'arni-message-hook)
 (defalias 'longlines-mode 'visual-line-mode)
-;; (setq visual-line-fringe-indicators '(nil right-curly-arrow))
 ;;---------
 ;; 7.37 VC
 ;;---------
