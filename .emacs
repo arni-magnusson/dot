@@ -169,8 +169,6 @@
 ;;------------------
 (require 'browse-url)
 (setq browse-url-browser-function 'browse-url-firefox)
-(require 'grep) ; skip binaries, ignore case, linenum, recursive, no warnings
-(grep-apply-setting 'grep-command "grep -Iinrs \'\'")
 (add-to-list 'exec-path "~/emacs/ispell/bin")
 (setenv "ispelldictdir" (concat (getenv "home") "/emacs/ispell/lib"))
 (setq ispell-dictionary "american")
@@ -6463,6 +6461,8 @@ See `dired-toggle-dot-files'.")
 ;;-----------
 ;; 7.15 Grep
 ;;-----------
+(require 'grep)
+(defalias 'grep 'rgrep)
 (defun arni-grep-hook ()
   (other-window 1)
   (delete-other-windows)) ; inherits compilation-mode-hook
