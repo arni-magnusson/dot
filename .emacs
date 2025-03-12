@@ -843,7 +843,7 @@
 (global-set-key [?\C-\M-.]  'forward-paragraph       ) ; find-tag-regexp
 (global-set-key [?\C-\M-a]  'goto-non-ascii          ) ; beginning-of-defun
 (global-set-key [?\C-\M-e]  'query-replace-regexp    ) ; end-of-defun
-(global-set-key [?\C-\M-g]  'goto-char               )
+(global-set-key [?\C-\M-g]  'rgrep                   )
 (global-set-key [?\C-\M-h]  'backward-delete-word    ) ; M-backspace in terminal
 (global-set-key [?\C-\M-j]  'join-line-nospace       ) ; indent-new-comment-line
 (global-set-key [?\C-\M-l]  'longlines-mode          ) ; reposition-window
@@ -6354,7 +6354,7 @@ See `dired-toggle-dot-files'.")
     "Move to top."
     (interactive)
     (deactivate-mark)
-    (goto-line-lisp 2)
+    (goto-line-lisp 1)
     (dired-next-line 1))
   (defun dired-top-mark ()
     "Extend region to top."
@@ -6377,7 +6377,7 @@ See `dired-toggle-dot-files'.")
     (interactive "p")
     (deactivate-mark)
     (forward-line (- n))
-    (if (< (line-number-at-pos) 3)
+    (if (< (line-number-at-pos) 2)
         (dired-top)
       (dired-move-to-filename)))
   (defun dired-up-3 ()
