@@ -7495,7 +7495,7 @@ to the shortest `outline-regexp'.")
   (set-face-attribute 'tabbar-default    nil :background "gray65" :foreground -)
   (set-face-attribute 'tabbar-button     nil :box -                            )
   (set-face-attribute 'tabbar-selected
-                      nil :background (bg 'default) :foreground - :box -)
+                      nil :background (bg 'default) :foreground - :box -       )
   (set-face-attribute 'tabbar-unselected nil :box -                            )
   (global-set-key [M-home] 'tabbar-mode       )
   (global-set-key [M-end]  'tabbar-local-mode)) ; end-of-buffer
