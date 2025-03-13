@@ -756,7 +756,6 @@
 (global-set-key [?\C-x ?l]    'visual-line-mode         ) ; count-lines-page
 (global-set-key [?\C-x ?m]    'mark-function            ) ; compose-mail
 (global-set-key [?\C-x ?n]    'narrow-to-defun-or-region) ; [map]
-(global-set-key [?\C-x ?p]    'list-packages            )
 (global-set-key [?\C-x ?q]    'toggle-red-special       ) ; kbd-macro-query
 (global-set-key [?\C-x ?t]    'transpose-words          )
 (global-set-key [?\C-x ?u]    'google-decode-url        ) ; undo
@@ -5940,6 +5939,7 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (local-unset-key [?\M-o]) ; reactivate other-window
   (local-unset-key [?\M-p]) ; reactivate bs-cycle-previous
   (local-set-key [?\C-m] 'diff-goto-source     ) ; return
+  (local-set-key [?a]    'diff-apply-hunk      )
   (local-set-key [?k]    'diff-hunk-kill       )
   (local-set-key [?n]    'diff-hunk-next       )
   (local-set-key [?p]    'diff-hunk-prev       )
