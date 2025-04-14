@@ -3,8 +3,8 @@
   # suppressPackageStartupMessages(library(arni))
   # suppressPackageStartupMessages(suppressWarnings(library(gdata)))
   # library(TAF)
-
   # .libPaths(sort(.libPaths())) # user library in first slot
+  Sys.setlocale(locale="en_US.UTF-8")
   options(continue="  ")
   options(help_type="html")
   options(Ncpus=4)    # https may not work on a VM
