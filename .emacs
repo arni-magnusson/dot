@@ -158,6 +158,7 @@
 ;; emacs -R means start in R-mode
 (setq command-switch-alist '(("-R" . (lambda (arg)(R-mode)))))
 (setq inhibit-default-init t) ; linux suppress default.el
+(setq large-file-warning-threshold nil)
 ;; Remember startup dir, then build `load-path' recursively
 (defvar startup-directory default-directory)
 (if (file-directory-p "~/emacs/lisp/")
