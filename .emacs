@@ -5034,7 +5034,6 @@ or \\code{\\link{}} if ARG is non-nil."
 ;;----------
 (defun arni-sql-hook ()
   (setq make-backup-files t)
-  (sql-set-product 'oracle)
   (setq indent-line-function 'indent-relative-definitely)
   (setq tab-stop-list '(4 8))
   (arni-colors)
