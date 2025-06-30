@@ -626,6 +626,7 @@
 (global-set-key [C-f12]        'end-of-buffer          )
 (global-set-key [S-f12]        'region-to-eol          ) ; S-f12=S-end on laptop
 (global-set-key [?\C-x f12]    'goto-longest-line      ) ; end-of-defun
+(global-set-key [dead-abovering] 'insert-degree        )
 (global-set-key [?\C-x delete] 'blank-region           )
 (global-set-key [C-backspace]  'backward-delete-word   ) ; backward-kill-word
 (global-set-key [M-backspace]  'backward-delete-word   ) ; backward-kill-word
@@ -1617,6 +1618,10 @@ read or save."
   "Insert current date as string."
   (interactive "*")
   (insert (format-time-string "%d %b %Y")))
+(defun insert-degree ()
+  "Insert degree symbol."
+  (interactive "*")
+  (insert #x00b0))
 (defun insert-em-dash ()
   "Insert em dash."
   (interactive "*")
