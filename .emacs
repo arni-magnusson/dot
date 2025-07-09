@@ -233,8 +233,9 @@
 (autoload 'r-mode "ess-site") ;*-R-*
 (autoload 'Rd-mode           "ess-site"          "Edit R documentation."    t)
 (autoload 'stan-mode         "stan-mode"         "Edit Stan code."          t)
-;; "latex" in Windows, "auctex" in Linux
-(autoload 'TeX-latex-mode    "tex-site"          "Edit LaTeX document."     t)
+;; After installing auctex from elpa, LaTeX-mode is already autoloaded
+;; LaTeX-mode is (was?) provided by "latex" in Windows, "auctex" in Linux
+;; (autoload 'LaTeX-mode        "tex-site"          "Edit LaTeX document."  t)
 (autoload 'tabbar-mode       "tabbar"            "Visible buffer tabs."     t)
 (autoload 'titlecase-dwim    "titlecase"         "Convert to Title Case."   t)
 (autoload 'visual-basic-mode "visual-basic-mode" "Edit Visual Basic code."  t)
@@ -367,13 +368,13 @@
         ("\\.ps$"      . ps-mode)
         ("\\.Rd$"      . Rd-mode)
         ("\\.rst$"     . rst-mode)
-        ("\\.bbl$"     . TeX-latex-mode)
-        ("\\.cls$"     . TeX-latex-mode)
-        ("\\.dtx$"     . TeX-latex-mode)
-        ("\\.ins$"     . TeX-latex-mode)
-        ("\\.Rnw$"     . TeX-latex-mode)
-        ("\\.sty$"     . TeX-latex-mode)
-        ("\\.tex$"     . TeX-latex-mode)
+        ("\\.bbl$"     . LaTeX-mode)
+        ("\\.cls$"     . LaTeX-mode)
+        ("\\.dtx$"     . LaTeX-mode)
+        ("\\.ins$"     . LaTeX-mode)
+        ("\\.Rnw$"     . LaTeX-mode)
+        ("\\.sty$"     . LaTeX-mode)
+        ("\\.tex$"     . LaTeX-mode)
         ("\\.texi$"    . texinfo-mode)
         ("\\.texinfo$" . texinfo-mode)
         ("\\.txi$"     . texinfo-mode)))
@@ -713,7 +714,7 @@
 (global-set-key [?\C-c ?i]    'texinfo-mode             )
 (global-set-key [?\C-c ?j]    'java-mode                )
 (global-set-key [?\C-c ?k]    'markdown-mode            )
-(global-set-key [?\C-c ?l]    'TeX-latex-mode           )
+(global-set-key [?\C-c ?l]    'LaTeX-mode               )
 (global-set-key [?\C-c ?m]    'makefile-mode            )
 (global-set-key [?\C-c ?n]    'display-line-numbers-mode) ; emacs 25: linum-mode
 (global-set-key [?\C-c ?o]    'org-mode                 )
