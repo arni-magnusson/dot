@@ -3700,8 +3700,8 @@ See `LaTeX-toggle-quotes'.")
   (message nil)
   (font-lock-mode 1)
   (auto-fill-mode 1) ; load reftex-toc-map
-  (save-excursion (if (re-search-forward "SCreport" 1000 t)
-                      (auto-fill-mode -1)))
+  ;; (save-excursion (if (re-search-forward "SCreport" 1000 t)
+  ;;                     (auto-fill-mode -1)))
   ;; Beamer and lstlisting indentation
   (setq LaTeX-verbatim-regexp "\\(semi\\)verbatim\\*?\\|lstlisting")
   (setq TeX-clean-confirm nil)           ; remove temp files without asking
