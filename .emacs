@@ -2015,6 +2015,10 @@ using 'plain' \"quotes\" and double -- em dash."
     (while (search-forward "\u2026" nil t)(replace-match "..."))
     (goto-char (point-min)) ; per mille sign
     (while (search-forward "\u2030" nil t)(replace-match "%"  ))
+    (goto-char (point-min)) ; prime
+    (while (search-forward "\u2032" nil t)(replace-match "'"  ))
+    (goto-char (point-min)) ; double prime
+    (while (search-forward "\u2033" nil t)(replace-match "\""  ))
     (goto-char (point-min)) ; single left-pointing angle quotation mark
     (while (search-forward "\u2039" nil t)(replace-match "<"  ))
     (goto-char (point-min)) ; single right-pointing angle quotation mark
