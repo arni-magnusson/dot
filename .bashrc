@@ -108,6 +108,7 @@ alias 'cpu-performance'='echo performance | \
 sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
 alias 'cpu-powersave'='echo powersave | \
 sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
+alias cs='ofp-sam -s'
 alias d='docker'
 alias d2u='dos2unix'
 alias di='git diff'
