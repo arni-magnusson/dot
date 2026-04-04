@@ -4541,6 +4541,7 @@ with spaces."
   (local-unset-key [M-up]    ) ; reactivate scroll-other-up
   (local-unset-key [M-down]  ) ; reactivate scroll-other-down
   (local-unset-key [?\C-y]   ) ; reactivate scroll-down-command
+  (local-unset-key [?,]      ) ; reactivate comma
   (local-set-key [f11]               'ess-rdired-arni                      )
   (local-set-key [?\C-c C-backspace] 'ess-graphics-off                     )
   (local-set-key [?\C-c ?\C- ]       'ess-switch-to-edit-buffer            )
