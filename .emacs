@@ -7580,7 +7580,9 @@ to the shortest `outline-regexp'.")
       (select-window vc-window))))
 (add-hook 'vc-dir-mode-hook 'arni-vc-dir-hook)
 ;;==============================================================================
+;;
 ;; 8  ENABLE
+;;
 ;;==============================================================================
 ;;---------------
 ;; 8.1  Commands
@@ -7590,3 +7592,10 @@ to the shortest `outline-regexp'.")
 (put 'scroll-left      'disabled nil)
 (put 'set-goal-column  'disabled nil)
 (put 'upcase-region    'disabled nil)
+;;==============================================================================
+;;
+;; 9  LOCAL SETTINGS
+;;
+;;==============================================================================
+;; Machine-specific settings
+(load "~/.emacs-local.el" t t)
