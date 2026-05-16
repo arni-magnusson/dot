@@ -1881,9 +1881,16 @@ Unlike `indent-region',  also indent the first half-marked line."
   (interactive "*")
   (if (zerop (how-many ")" (point)(line-end-position)))
       (message "No closing parenthesis between point and end of line")
+    ;; Continue until reaching a closing parenthesis
     (while (not (= (char-after) #x29))
-      (progn (delete-char 1)
-             (insert " ")))))
+      ;; Check if cursor is at backslashed parenthesis \(
+      (if (and (= (char-after) #x5c)
+               (= (char-after (+ (point) 1)) #x29))
+          (progn
+            (delete-char 2)  ; blank \( with two spaces
+            (insert "  "))
+        (delete-char 1)      ; otherwise replace character with one space
+        (insert " ")))))
 (defun case-fold-string (str)
   "Create case-insensitive regexp from string."
   (mapconcat
@@ -4406,6 +4413,9 @@ This is first.
     "Call pdf-clean-* functions to replace stamps from PDF document."
     (interactive "*")
     (fundamental-mode) ; called by 'pdfclean' shell script
+    (if (re-search-forward "^([ 0-9,]+ Downloaded from .*\\\\(.*)Tj$" nil t)
+        (progn (goto-char (point-min))
+               (pdf-clean-0)))
     (if (re-search-forward "^(Downloaded [Bb]y[:]? \\[.*)Tj$" nil t)
         (progn (goto-char (point-min))
                (pdf-clean-1)))
@@ -4418,6 +4428,18 @@ This is first.
     (if (re-search-forward "^(This content downloaded from .*)Tj$" nil t)
         (progn (goto-char (point-min))
                (pdf-clean-4))))
+  (defun pdf-clean-0 ()
+    "Replace PDF stamps like ( 4, Downloaded ... \( ... \) ...) with spaces."
+    (interactive "*")
+    (let ((count 0))
+      (fundamental-mode)
+      (while (re-search-forward "^([ 0-9,]+ Downloaded from .*\\\\(.*)Tj$" nil t)
+        (move-to-column 1)
+        (blank-to-paren)
+        (setq count (+ count 1)))
+      (move-to-column 0)
+      (ps-mode)
+      (message "Removed %d PDF stamps" count)))
   (defun pdf-clean-1 ()
     "Replace PDF stamps like (Downloaded by [Arni Magnusson] ...) with spaces."
     (interactive "*")
