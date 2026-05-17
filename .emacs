@@ -4478,8 +4478,10 @@ and (For personal use only. ) with spaces."
       (while (re-search-forward "^(Downloaded from .*)Tj$" nil t)
         (if (string-match "^(Downloaded from )Tj$" (match-string 0))
             (re-search-backward "^(" nil t 3))
-        (if (string-match "^(Downloaded from https://academic.oup.com.*)Tj$"
-                          (match-string 0))
+        (if (or (string-match "^(Downloaded from https://academic.oup.com.*)Tj$"
+                              (match-string 0))
+                (string-match "^(Downloaded from .*royalsocietypublishing.*)Tj$"
+                              (match-string 0)))
             (re-search-backward "^(" nil t 1))
         (dotimes (i 3)
           (re-search-forward "^(")
