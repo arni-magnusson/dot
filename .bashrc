@@ -80,6 +80,9 @@ fi
 export TMPDIR=/tmp
 # if [[ -n $WINDIR ]]; then export TZ=UTC; fi
 
+# Program: qcTAF
+export ICES_ADVICE_FOLDER=~/git/ices/advice
+
 # Alias
 alias ..='cd ..'
 alias add='git add'
