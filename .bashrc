@@ -189,6 +189,7 @@ alias pdfbook='book'
 alias penguin='echo //penguin/assessments'
 alias prtscr='gnome-screenshot -d 5'
 alias pul='pull'
+alias PULL="apply '*' pull"
 alias push='git push'
 alias pus='push'
 alias q='condor_q'
