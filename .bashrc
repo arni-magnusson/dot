@@ -217,6 +217,7 @@ alias skeleton='Rscript -e "TAF::taf.skeleton()"'
 alias 'snap-list'='snap refresh --list'
 alias 'snap-update'='sudo snap refresh'
 alias space='rename "s/ /_/g"'
+alias ST="apply '*' st"
 alias stash='git stash'
 alias su='sudo -i'
 alias t='sudo apt upgrade'
