@@ -1,6 +1,7 @@
 ;;------------
 ;; 2.3  Faces
 ;;------------
+(set-face-attribute 'default nil :height 100)
 (setq-default line-spacing 1) ; or :height 126
 ;;-------------
 ;; 3.3  Backup
