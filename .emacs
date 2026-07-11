@@ -2459,7 +2459,6 @@ See also `sh-send-line-or-region-and-step'."
   (defun sh-indent-newline-indent ()
     "Indent, insert newline, indent."
     (interactive "*")
-    (insert " ")
     (indent-according-to-mode)
     (newline)
     (message nil)
