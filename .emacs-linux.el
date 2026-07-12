@@ -55,7 +55,7 @@
 (defun font-5 ()
   "Set default font to Noto Mono 16"
   (interactive)
-  (setq-default line-spacing 2)
+  (setq-default line-spacing 1)
   (set-frame-font "-*-Noto Mono-normal-*-*-*-16-*-*-*-*-*-*-*"))
 (defun font-6 ()
   "Set default font to Libertine Mono 16"
