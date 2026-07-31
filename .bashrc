@@ -7,6 +7,7 @@ export PATH="/usr/sbin:$PATH"
 export PATH="/usr/local/texlive/2024/bin/x86_64-linux:$PATH"
 export PATH="/opt/bin:$PATH"    # /opt/bin
 export PATH="~/bin:$PATH"       # ~/bin
+export PATH="~/opt/bin:$PATH"   # ~/opt/bin
 export PATH=".:$PATH"           # current dir
 
 # Shell
