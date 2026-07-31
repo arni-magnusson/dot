@@ -18,7 +18,7 @@
   }
   else
   {
-    options(browser="firefox --safe-mode")
+    options(browser="firefox")
     options(editor="'emacs --no-site-file'")
     options(width=92)
   }
