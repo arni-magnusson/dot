@@ -195,6 +195,7 @@ alias PULL="apply '*' pull"
 alias push='git push'
 alias pus='push'
 alias q='condor_q'
+alias qdiff='diff -qr'
 alias rd='rmdir'
 alias rebase='git rebase'
 alias reset='git reset'
