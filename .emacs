@@ -2611,14 +2611,13 @@ shift $((OPTIND-1))
   (defun cpp-header ()
     "Insert include guards (#ifndef, #define, #endif) at buffer top and bottom."
     (interactive "*")
-    (let ((_CLASS_H (concat "_"
-                            (upcase (file-name-sans-extension (buffer-name)))
-                            "_H")))
+    (let ((class-h
+           (concat "_" (upcase (file-name-sans-extension (buffer-name))) "_H")))
       (save-excursion
         (goto-char (point-min))
-        (insert "#ifndef " _CLASS_H "\n#define " _CLASS_H "\n")
+        (insert "#ifndef " class-h "\n#define " class-h "\n")
         (goto-line-lisp (line-number-at-pos (point-max)))
-        (insert "\n#endif // " _CLASS_H "\n"))))
+        (insert "\n#endif // " class-h "\n"))))
   (defun cpp-include ()
     "Insert #include <>."
     (interactive "*")
