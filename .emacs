@@ -6760,7 +6760,6 @@ See `dired-toggle-dot-files'.")
   (font-lock-mode 1)
   (set-face-attribute 'font-lock-keyword-face nil :weight 'bold))
 (add-hook 'nroff-mode-hook 'arni-nroff-hook)
-(defvar Man-width 65)
 (defun arni-Man-hook ()
   (message nil)
   (setq Man-notify-method 'bully) ; maximize window
