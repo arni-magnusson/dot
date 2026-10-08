@@ -3336,7 +3336,7 @@ echo.
 ;; 6.9  HTML
 ;;-----------
 (defvar html-links nil
-  "Non-nil if links are currently hilighted. See `html-toggle-links'.")
+  "Non-nil if links are currently highlighted. See `html-toggle-links'.")
 (defun arni-html-hook ()
   ;; Using 2.19, which has better syntax highlighting than 3.0.4kilo.
   ;; Added support for <style>, <div>, <form>, <thead>, <tbody>, {},
