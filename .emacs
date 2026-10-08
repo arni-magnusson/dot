@@ -4352,7 +4352,7 @@ This is first.
     "Compile .emacs, to check warnings other than free variables."
     (interactive)
     (require 'bytecomp)
-    (setq byte-compile-warnings '(not free-vars))
+    (setq byte-compile-warnings '(not free-vars unresolved))
     (setq byte-compile-dest-file-function
           (lambda (arg)(concat temporary-file-directory ".emacs.elc")))
     (byte-compile-file "~/.emacs"))
