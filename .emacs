@@ -42,7 +42,8 @@
 (delete-selection-mode 1                      ) ; typing replaces selected text
 (electric-indent-mode -1                      ) ; RET is just newline
 (prefer-coding-system 'utf-8                  ) ; utf8 if not sure
-(setq duplicate-line-final-position -1        ) ; Move cursor after duplicating
+(require 'misc)
+(setq duplicate-line-final-position -1        ) ; move cursor after duplicating
 (require 'imenu)(setq imenu-max-items 43      ) ; code navigation
 (setq initial-major-mode 'text-mode           ) ; text-mode for scratch buffer
 (setq mail-host-address "spc.int"             ) ; change-log-mode
@@ -57,7 +58,7 @@
 (setq-default major-mode 'text-mode           ) ; text-mode for new buffer
 (setq-default require-final-newline t         ) ; ensure file ends with newline
 (setq-default sentence-end-double-space nil   ) ; one space after period
-(setq-default sort-fold-case t                ) ; sort-lines ignoring case
+(require 'sort)(setq-default sort-fold-case t ) ; sort-lines ignoring case
 (setq bs-must-always-show-regexp ; include in buffer cycle
       "Help\\|R\\|SQL\\|compilation\\|gud\\|info\\|input\\|shell")
 ;;------------
@@ -181,6 +182,7 @@
 (setq auto-save-default nil)          ; no #file.txt#
 (setq auto-save-list-file-prefix nil) ; no .emacs.d/auto-save-list
 (setq create-lockfiles nil)           ; no .#files in VBox guest
+(defvar w32-get-true-file-attributes nil) ; define in Linux to suppress warning
 (defun rm-large-files (dir kb)
   "Remove files larger than KB from directory DIR."
   (let* ((w32-get-true-file-attributes nil)
