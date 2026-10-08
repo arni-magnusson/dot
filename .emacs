@@ -1927,7 +1927,7 @@ Unlike `indent-region',  also indent the first half-marked line."
 (defun convert-special ()
   "Convert special characters to Latin-1.
 Remove hex 00-08,0b-1f and convert 7f-a0
-using 'plain' \"quotes\" and double -- em dash."
+using plain quotes and double -- em dash."
   (interactive "*")
   (save-excursion
     (goto-char (point-min))
