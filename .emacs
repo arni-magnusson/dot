@@ -797,7 +797,7 @@
 (global-set-key [?\C-x ?\C-x] 'eval-expression       ) ; exchange-point-and-mark
 (global-set-key [?\C-x ?\C-y] 'beginning-of-buffer      )
 (global-set-key [?\C-x ?\C-z] 'indent-buffer            ) ; for terminal
-(global-set-key [?\C-x ?\M-j] 'join-region-or-buffer    )
+(global-set-key [?\C-x ?\M-j] 'unfill-paragraph         )
 (global-set-key [?\C-x ?\M-m] 'toggle-latin-1-coding    )
 (global-set-key [?\C-x ?\M-s] 'highlight-and-count-string)
 ;;-----------------
@@ -1719,51 +1719,12 @@ Unlike `indent-region',  also indent the first half-marked line."
 ;; The following alias is better than
 ;; `indent-relative' with `indent-according-to-mode'
 (defalias 'indent-relative-definitely 'indent-relative)
-(defun join-buffer ()
-  "Join all paragraphs into long lines."
-  (interactive "*")
-  (let ((count 0))
-    (save-excursion
-      (goto-char (point-max))
-      ;; In each iteration: skip empty lines, append lines, go one line up
-      (while (not (bobp))
-        (while (and (bolp)(eolp)(not (bobp)))
-          (forward-line -1))
-        (if (< (line-beginning-position 0)(line-end-position 0))
-            (setq count (+ count 1)))
-        (while (< (line-beginning-position 0)
-                  (line-end-position 0))
-          (delete-indentation))
-        (forward-line -1)))
-    (message "Joined %d paragraphs" count)))
 (defun join-line-nospace (&optional n)
   "Join N lines to previous with no whitespace at join."
   (interactive "*p")
   (dotimes (i n)
     (delete-indentation)
     (delete-horizontal-space)))
-(defun join-region (beg end)
-  "Join region."
-  (interactive "*r")
-  (let ((count 0))
-    (save-excursion
-      (goto-char end)
-      ;; In each iteration: skip empty lines, append lines, go one line up
-      (while (> (point) beg)
-        (while (and (bolp)(eolp)(> (point) beg))
-          (forward-line -1))
-        (while (and (> (point) beg)
-                    (< (line-beginning-position 0)(line-end-position 0)))
-          (delete-indentation)
-          (setq count (+ count 1)))
-        (forward-line -1)))
-    (message "Joined %d lines" count)))
-(defun join-region-or-buffer ()
-  "Join region or buffer."
-  (interactive "*")
-  (if (use-region-p)
-      (join-region (region-beginning)(region-end))
-    (join-buffer)))
 (defalias 'spaces-to-tabs 'tabify-spaces)
 (defun tabify-spaces ()
   "Replace all spaces with tabs."
