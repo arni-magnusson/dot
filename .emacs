@@ -42,7 +42,7 @@
 (delete-selection-mode 1                      ) ; typing replaces selected text
 (electric-indent-mode -1                      ) ; RET is just newline
 (prefer-coding-system 'utf-8                  ) ; utf8 if not sure
-(require 'misc)
+(require 'misc)                                 ; duplicate-line-final-position
 (setq duplicate-line-final-position -1        ) ; move cursor after duplicating
 (require 'imenu)(setq imenu-max-items 43      ) ; code navigation
 (setq initial-major-mode 'text-mode           ) ; text-mode for scratch buffer
