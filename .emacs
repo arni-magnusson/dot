@@ -1212,56 +1212,6 @@ See also `line-end-position'."
   (save-excursion
     (goto-char (point-min))
     (line-end-position n)))
-(defun pull-line-down (&optional n)
-  "Pull line down N lines."
-  (let ((auto-fill-function nil))
-    (drag-stuff-line-down n)))
-(defun pull-line-up (&optional n)
-  "Pull line up N lines."
-  (let ((auto-fill-function nil))
-    (drag-stuff-line-up (- n))))
-(defun pull-line-or-region-down (&optional n)
-  "Pull line or region down N lines."
-  (interactive "*p")
-  (require 'drag-stuff)
-  (if (use-region-p)
-      (pull-region-down n)
-    (pull-line-down n)))
-(defun pull-line-or-region-up (&optional n)
-  "Pull line or region up N lines."
-  (interactive "*p")
-  (require 'drag-stuff)
-  (if (use-region-p)
-      (pull-region-up n)
-    (pull-line-up n)))
-(defun pull-region-down (&optional n)
-  "Pull region down N lines."
-  (let ((auto-fill-function nil)
-        (point-first (< (point)(mark)))
-        (shrink (= (region-end)
-                   (pos-at-beginning-of-line
-                    (line-number-at-pos (region-end))))))
-    (if shrink
-        (progn (if point-first (exchange-point-and-mark))
-               (backward-char)))
-    (drag-stuff-down n)
-    (if shrink
-        (progn (forward-char)
-               (if point-first (exchange-point-and-mark))))))
-(defun pull-region-up (&optional n)
-  "Pull region up N lines."
-  (let ((auto-fill-function nil)
-        (point-first (< (point)(mark)))
-        (shrink (= (region-end)
-                   (pos-at-beginning-of-line
-                    (line-number-at-pos (region-end))))))
-    (if shrink
-        (progn (if point-first (exchange-point-and-mark))
-               (backward-char)))
-    (drag-stuff-up n)
-    (if shrink
-        (progn (forward-char)
-               (if point-first (exchange-point-and-mark))))))
 (defun region-backward-char (&optional n)
   "Extend region backward N characters."
   (interactive "p")
@@ -4925,35 +4875,6 @@ or \\code{\\link{}} if ARG is non-nil."
       (if (= (buffer-size) old-bsize)
           (message "Formatted R code (still %d bytes)" (buffer-size))
         (message "Formatted R code (%d->%d bytes)" old-bsize (buffer-size)))))
-  (defun R-header-to-roxy ()
-    "Convert R function from Arni-style comment header to Roxygen format."
-    (interactive "*")
-    (require 'drag-stuff)
-    (goto-char (point-min))
-    (while (= (char-after (line-beginning-position 2)) ?#)
-      (pull-line-down 1))
-    (kill-line -1)
-    (insert "#' @export\n\n")
-    (goto-char (point-min))
-    (kill-line 4)
-    (goto-char (point-min))
-    (while (re-search-forward "###" nil t)(replace-match "#'"))
-    (goto-char (point-min))
-    (while (re-search-forward " +#$" nil t)(replace-match ""))
-    (goto-char (point-min))
-    (while (re-search-forward "Purpose:  " nil t)(replace-match ""))
-    (goto-char (point-min))
-    (while (re-search-forward "Args:    "  nil t)(replace-match "@param"))
-    (goto-char (point-min))
-    (while (re-search-forward "Notes:   "  nil t)(replace-match "@note\n#'"))
-    (goto-char (point-min))
-    (while (re-search-forward "Returns: "  nil t)(replace-match "@return\n#'"))
-    (goto-char (point-min))
-    (kill-new (buffer-substring-no-properties (point-min)
-                                              (line-beginning-position 3)))
-    (yank)
-    (goto-char (+ (point-min) 3))
-    (titlecase-dwim))
   (defun R-template-roxygen ()
     "Insert Roxygen template."
     (interactive "*")
