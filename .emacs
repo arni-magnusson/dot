@@ -242,8 +242,12 @@
 (autoload 'tabbar-mode       "tabbar"            "Visible buffer tabs."     t)
 (autoload 'titlecase-dwim    "titlecase"         "Convert to Title Case."   t)
 (autoload 'visual-basic-mode "visual-basic-mode" "Edit Visual Basic code."  t)
+;;--------------------
+;; 3.6  Load packages
+;;--------------------
+(require 'move-text)
 ;;-------------------
-;; 3.6  Associations
+;; 3.7  Associations
 ;;-------------------
 (defalias 'aspic-mode 'conf-space-mode)
 (defun coleraine-mode ()
@@ -461,7 +465,7 @@
         ("\\.tar\\."       . tar-mode)))
 (setq auto-mode-alist (append ext-code ext-conf ext-doc ext-io ext-util))
 ;;------------------
-;; 3.7  Completions
+;; 3.8  Completions
 ;;------------------
 ;; Help find-file to complete the filename of interest
 (setq completion-ignored-extensions
@@ -668,8 +672,8 @@
 (global-set-key [?\C-x ?\C- ]  'delete-horizontal-space) ; pop-global-mark
 (global-set-key [C-up]         'previous-line          ) ; backward-paragraph
 (global-set-key [C-down]       'next-line              ) ; forward-paragraph
-(global-set-key [C-S-up]       'pull-line-or-region-up ) ; backward-paragraph
-(global-set-key [C-S-down]     'pull-line-or-region-down) ; forward-paragraph
+(global-set-key [C-S-up]       'move-text-up           ) ; backward-paragraph
+(global-set-key [C-S-down]     'move-text-down         ) ; forward-paragraph
 (global-set-key [M-left]       'split-window-top-bottom) ; backward-word
 (global-set-key [M-right]      'split-window-left-right) ; forward-word
 (global-set-key [M-up]         'scroll-other-up        )
@@ -851,8 +855,8 @@
 (global-set-key [?\C-\M-h]  'backward-delete-word    ) ; M-backspace in terminal
 (global-set-key [?\C-\M-j]  'join-line-nospace       ) ; indent-new-comment-line
 (global-set-key [?\C-\M-l]  'longlines-mode          ) ; reposition-window
-(global-set-key [?\C-\M-n]  'pull-line-or-region-down) ; forward-list
-(global-set-key [?\C-\M-p]  'pull-line-or-region-up  ) ; backward-list
+(global-set-key [?\C-\M-n]  'move-text-down          ) ; forward-list
+(global-set-key [?\C-\M-p]  'move-text-up            ) ; backward-list
 (global-set-key [?\C-\M-z]  'zap-back-to-char        )
 (if window-system                              ; keep digit-argument in terminal
     (progn (global-set-key [?\M-1] 'font-1           ) ; digit-argument
