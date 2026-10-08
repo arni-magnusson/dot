@@ -23,6 +23,10 @@
     options(width=92)
   }
 
+  # Make figure text legible on high-resolution laptop
+  if(system("xrandr --current | grep current | sed 's/.*current //' | sed 's/, maximum.*//'", intern=TRUE) == "3840 x 2400")
+    grDevices::X11.options(pointsize = 20)
+
   # remotes
   autoload("install_github", "remotes") # install package from GitHub
 
