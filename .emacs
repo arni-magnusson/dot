@@ -608,7 +608,7 @@
 (global-set-key [S-f3]         'register-jump-Y        )
 (global-set-key [f4]           'repeat                 )
 (global-set-key [S-f4]         'tags-loop-continue  ) ; continue dired-do-search
-(global-set-key [C-f4]         'kill-this-buffer       )
+(global-set-key [C-f4]         'kill-current-buffer    )
 (global-set-key [M-f4]         'save-buffers-kill-emacs)
 (global-set-key [f5]           'revert-buffer          )
 (global-set-key [S-f5]         'arni-colors            )
@@ -775,7 +775,7 @@
 (global-set-key [?\C-x ?\C-b] 'ibuffer                  ) ; list-buffers
 (global-set-key [?\C-x ?\C-e] 'region-to-eol            ) ; eval-last-sexp
 (global-set-key [?\C-x ?\C-j] 'fill-region-or-buffer    )
-(global-set-key [?\C-x ?\C-k] 'kill-this-buffer         ) ; [map]
+(global-set-key [?\C-x ?\C-k] 'kill-current-buffer      ) ; [map]
 (global-set-key [?\C-x ?\C-l] 'downcase-word-or-region  ) ; downcase-region
 (global-set-key [?\C-x ?\C-m] 'describe-current-coding-brief) ; [map]
 (global-set-key [?\C-x ?\C-n] 'forward-list             ) ; set-goal-column
@@ -883,7 +883,7 @@
 (global-set-key [?\M-h]     'font-lock-mode          ) ; mark-paragraph
 (global-set-key [?\M-i]     'overwrite-mode          ) ; tab-to-tab-stop
 (global-set-key [?\M-j]     'delete-indentation      ) ; indent-new-comment-line
-(global-set-key [?\M-k]     'kill-this-buffer        ) ; kill-sentence
+(global-set-key [?\M-k]     'kill-current-buffer     ) ; kill-sentence
 (global-set-key [?\M-l]     'delete-trailing-spc-tab-m) ; downcase-word
 (global-set-key [?\M-m]     'toggle-utf-8-coding     ) ; back-to-indentation
 (global-set-key [?\M-n]     'bs-cycle-next           )
@@ -930,15 +930,11 @@
 (defalias 'del 'delete-file)
 (defalias 'dir 'list-directory)
 (defalias 'htmlize 'htmlfontify-buffer)
-(defun kill-this-buffer ()
-  "Kill current buffer."
-  (interactive)
-  (kill-buffer (current-buffer)))
 (defun kill-buffer-maybe-window ()
   "Kill current buffer and window.
 Doesn't complain about last window, unlike `kill-buffer-and-window'."
   (interactive)
-  (kill-this-buffer)
+  (kill-current-buffer)
   (if (> (length (window-list)) 1)
       (delete-window)))
 (defun kill-process-now ()
@@ -5286,7 +5282,7 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (local-set-key [?o]
                  'Buffer-menu-view-other) ; Buffer-menu-other-window
   (local-set-key [?p]        'Buffer-menu-up               )
-  (local-set-key [?q]        'kill-this-buffer             )
+  (local-set-key [?q]        'kill-current-buffer          )
   (local-set-key [?t]
                  'Buffer-menu-toggle-files-only) ; Buffer-menu-visit-tags-table
   (local-set-key [?u]        'Buffer-menu-unmark-down      )
@@ -5454,7 +5450,7 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (local-set-key [?n] 'ibuffer-down                 ) ; ibuffer-forward-line
   (local-set-key [?o] 'ibuffer-view-other) ; ibuffer-visit-buffer-other-window
   (local-set-key [?p] 'ibuffer-up                   ) ; ibuffer-backward-line
-  (local-set-key [?q] 'kill-this-buffer             ) ; ibuffer-quit
+  (local-set-key [?q] 'kill-current-buffer          ) ; ibuffer-quit
   (local-set-key [?r] 'ibuffer-do-eval              )
   (local-set-key [?u] 'ibuffer-unmark-down          ) ; ibuffer-unmark-forward
   (local-set-key [?v] 'ibuffer-view                 ) ; ibuffer-do-view
@@ -5968,7 +5964,7 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (set-face-attribute 'diff-added nil :foreground (fg 'font-lock-keyword-face))
   (set-face-attribute 'diff-removed
                       nil :foreground (fg 'font-lock-builtin-face))
-  (local-unset-key [?\M-k]) ; reactivate kill-this-buffer
+  (local-unset-key [?\M-k]) ; reactivate kill-current-buffer
   (local-unset-key [?\M-n]) ; reactivate bs-cycle-next
   (local-unset-key [?\M-o]) ; reactivate other-window
   (local-unset-key [?\M-p]) ; reactivate bs-cycle-previous
@@ -6654,7 +6650,7 @@ See `dired-toggle-dot-files'.")
   (local-set-key [?h]          'Info-history        )
   (local-set-key [?n]          'Info-jump-down      )
   (local-set-key [?p]          'Info-jump-up        )
-  (local-set-key [?q]          'kill-this-buffer    )
+  (local-set-key [?q]          'kill-current-buffer )
   (local-set-key [?þ]          'Info-menu           )
   (defun Info-enter ()
     "Enter node."
