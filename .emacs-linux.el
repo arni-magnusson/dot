@@ -1,4 +1,4 @@
-;;; ... -*- lexical-binding: t -*-
+;;; ... -*- lexical-binding: nil -*-
 
 ;;------------
 ;; 2.3  Faces
