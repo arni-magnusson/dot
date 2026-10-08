@@ -4431,7 +4431,8 @@ This is first.
     (interactive "*")
     (let ((count 0))
       (fundamental-mode)
-      (while (re-search-forward "^([ 0-9,]+ Downloaded from .*\\\\(.*)Tj$" nil t)
+      (while
+          (re-search-forward "^([ 0-9,]+ Downloaded from .*\\\\(.*)Tj$" nil t)
         (move-to-column 1)
         (blank-to-paren)
         (setq count (+ count 1)))
