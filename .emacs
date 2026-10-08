@@ -2475,7 +2475,7 @@ See also `sh-send-line-or-region-and-step'."
     (outline-mode)
     (outline-hide-body)
     (setq outline-previous-mode '(sh-mode))
-    (set-face-attribute 'outline-1 nil :inherit font-lock-comment-face))
+    (set-face-attribute 'outline-1 nil :inherit 'font-lock-comment-face))
   (defun sh-send-line-or-region-stay ()
     "Run line or region and stay."
     (interactive)
@@ -3623,12 +3623,12 @@ echo.
   (setq html-helper-do-write-file-hooks nil))
 (add-hook 'html-helper-load-hook 'arni-html-load-hook)
 (defun arni-css-hook ()
-  (set-face-attribute 'css-property nil :inherit font-lock-keyword-face))
+  (set-face-attribute 'css-property nil :inherit 'font-lock-keyword-face))
 (add-hook 'css-mode-hook 'arni-css-hook)
 (defun arni-nxml-hook ()
   (font-lock-mode 1)
   (set-face-attribute 'nxml-element-local-name nil
-                      :inherit font-lock-keyword-face))
+                      :inherit 'font-lock-keyword-face))
 (add-hook 'nxml-mode-hook 'arni-nxml-hook)
 (defun arni-sgml-hook ()
   (setq indent-line-function 'sgml-indent-line)
@@ -3749,11 +3749,11 @@ See `LaTeX-toggle-quotes'.")
   (set-face-attribute 'font-latex-sectioning-5-face
                       nil :foreground - :inherit -) ; blue helvetica
   (set-face-attribute 'font-latex-sedate-face
-                      nil :foreground - :inherit font-lock-keyword-face) ; gray
+                      nil :foreground - :inherit 'font-lock-keyword-face) ; gray
   (set-face-attribute 'font-latex-string-face
-                      nil :foreground - :inherit font-lock-string-face ) ; rosy
+                      nil :foreground - :inherit 'font-lock-string-face ) ; rosy
   (set-face-attribute 'font-latex-verbatim-face nil :foreground -
-                      :inherit font-lock-string-face ) ; brown courier
+                      :inherit 'font-lock-string-face ) ; brown courier
   (set-face-attribute 'font-latex-warning-face nil :inherit -) ; bold
   (set-face-attribute 'font-lock-function-name-face nil
                       :weight -) ; {table}, {1mm}
@@ -5736,10 +5736,10 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
   (setq compilation-skip-to-next-location nil)
   (set-face-attribute 'compilation-column-number nil :inherit -)
   (set-face-attribute 'compilation-info nil
-                      :foreground - :weight - :inherit font-lock-keyword-face)
+                      :foreground - :weight - :inherit 'font-lock-keyword-face)
   (set-face-attribute 'compilation-line-number nil :inherit -)
   (set-face-attribute 'compilation-warning nil
-                      :foreground - :weight - :inherit font-lock-builtin-face)
+                      :foreground - :weight - :inherit 'font-lock-builtin-face)
   (set-face-attribute 'escape-glyph nil
                       :foreground (fg 'font-lock-comment-face) :weight -) ; ^L
   (local-unset-key [?\M-n]) ; reactivate bs-cycle-next
@@ -6218,7 +6218,7 @@ See `dired-toggle-dot-files'.")
   (setq ls-lisp-use-localized-time-format t   ) ; force ls-lisp-format-time-list
   (setq ls-lisp-verbosity nil                 ) ; suppress links/user/group info
   (set-face-attribute 'dired-flagged nil
-                      :foreground - :inherit font-lock-comment-face)
+                      :foreground - :inherit 'font-lock-comment-face)
   (set-face-attribute 'dired-header  nil :underline t :inherit -       )
   (set-face-attribute 'dired-ignored nil :inherit -                    )
   (set-face-attribute 'dired-mark    nil :foreground "brown4"          )
@@ -7235,14 +7235,14 @@ to the shortest `outline-regexp'.")
 (defun arni-outline-hook ()
   (set-face-attribute 'font-lock-warning-face
                       nil :foreground (fg 'font-lock-keyword-face) :weight -)
-  (set-face-attribute 'outline-1 nil :inherit font-lock-keyword-face)
-  (set-face-attribute 'outline-2 nil :inherit font-lock-keyword-face)
-  (set-face-attribute 'outline-3 nil :inherit font-lock-keyword-face)
-  (set-face-attribute 'outline-4 nil :inherit font-lock-keyword-face)
-  (set-face-attribute 'outline-5 nil :inherit font-lock-keyword-face)
-  (set-face-attribute 'outline-6 nil :inherit font-lock-keyword-face)
-  (set-face-attribute 'outline-7 nil :inherit font-lock-keyword-face)
-  (set-face-attribute 'outline-8 nil :inherit font-lock-keyword-face)
+  (set-face-attribute 'outline-1 nil :inherit 'font-lock-keyword-face)
+  (set-face-attribute 'outline-2 nil :inherit 'font-lock-keyword-face)
+  (set-face-attribute 'outline-3 nil :inherit 'font-lock-keyword-face)
+  (set-face-attribute 'outline-4 nil :inherit 'font-lock-keyword-face)
+  (set-face-attribute 'outline-5 nil :inherit 'font-lock-keyword-face)
+  (set-face-attribute 'outline-6 nil :inherit 'font-lock-keyword-face)
+  (set-face-attribute 'outline-7 nil :inherit 'font-lock-keyword-face)
+  (set-face-attribute 'outline-8 nil :inherit 'font-lock-keyword-face)
   (local-set-key [mouse-1]         'outline-mouse-select       )
   (local-set-key [escape]          'outline-window-or-return   )
   (local-set-key [f11]             'outline-return             )
@@ -7499,7 +7499,7 @@ to the shortest `outline-regexp'.")
   (setq speedbar-show-unknown-files t)
   (set-face-attribute 'speedbar-file-face nil :foreground -)
   (set-face-attribute 'speedbar-directory-face
-                      nil :foreground - :inherit font-lock-keyword-face)
+                      nil :foreground - :inherit 'font-lock-keyword-face)
   (define-key speedbar-file-key-map [backspace] 'speedbar-up-directory         )
   (define-key speedbar-file-key-map [left]      'speedbar-up-directory         )
   (define-key speedbar-file-key-map [right]     'speedbar-edit-line            )
@@ -7562,7 +7562,7 @@ to the shortest `outline-regexp'.")
 (add-hook 'mail-mode-hook 'arni-mail-hook)
 (defun arni-message-hook ()
   (set-face-attribute 'message-cited-text
-                      nil :foreground - :inherit font-lock-comment-face))
+                      nil :foreground - :inherit 'font-lock-comment-face))
 (add-hook 'message-mode-hook 'arni-message-hook)
 (defalias 'longlines-mode 'visual-line-mode)
 ;;---------
