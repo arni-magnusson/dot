@@ -577,8 +577,9 @@
 ;;------------
 ;; 4.2  Mouse
 ;;------------
-(mouse-shift-adjust-mode t)              ; extend region by shift-dragging
-(setq mouse-drag-copy-region t)          ; copy selected region to clipboard
+(if (>= emacs-major-version 31)
+    (mouse-shift-adjust-mode t))    ; extend region by shift-dragging
+(setq mouse-drag-copy-region t)     ; copy selected region to clipboard
 (setq mouse-wheel-progressive-speed nil) ; scroll at constant speed
 (setq mouse-wheel-scroll-amount '(4 ((shift) . 1))) ; scroll 4, or 1 with shift
 (global-set-key        [M-mouse-1] 'browse-url-at-mouse) ; mouse-start-secondary
