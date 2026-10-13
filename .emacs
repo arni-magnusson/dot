@@ -800,6 +800,7 @@
 (global-set-key [?\C-x ?\C-z] 'indent-buffer            ) ; for terminal
 (global-set-key [?\C-x ?\M-j] 'unfill-paragraph         )
 (global-set-key [?\C-x ?\M-m] 'toggle-latin-1-coding    )
+(global-set-key [?\C-x ?\M-o] 'insert-o-with-stroke     )
 (global-set-key [?\C-x ?\M-s] 'highlight-and-count-string)
 ;;-----------------
 ;; 4.6  One stroke
@@ -1590,6 +1591,10 @@ read or save."
   "Insert euro symbol."
   (interactive "*")
   (insert #x20ac))
+(defun insert-o-with-stroke ()
+  "Insert Danish o with stroke."
+  (interactive "*")
+  (insert #xf8))
 (defun insert-tab-char (&optional n)
   "Insert TAB character."
   (interactive "*p")
