@@ -1,4 +1,4 @@
-;;; ... -*- lexical-binding: nil -*-
+;;; -*- lexical-binding: nil -*-
 
 ;;==============================================================================
 ;;
@@ -4954,7 +4954,8 @@ or \\code{\\link{}} if ARG is non-nil."
       (switch-to-buffer original-other-buffer) ; revert secondary window
       (select-window original-window)          ; go to main window
       (switch-to-buffer inferior-ess--last-started-process-buffer)) ; show *R*
-    (comint-clear-window)))
+    (comint-clear-window))
+  (message nil))
 ;;----------
 ;; 6.18 SQL
 ;;----------
@@ -4989,6 +4990,8 @@ SQLPROMPT '> ' UNDERLINE OFF LINESIZE 60")
 ;;----------
 ;; 6.19 TMB
 ;;----------
+(provide 'ess-jags-d)
+(require 'ess-site)
 (require 'tmb nil t)
 (defun arni-tmb-hook ()
   (set-face-attribute 'font-lock-warning-face nil :weight 'normal     )
